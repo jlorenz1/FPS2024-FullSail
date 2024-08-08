@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-
+            TogglePause();
         }
     }
 
