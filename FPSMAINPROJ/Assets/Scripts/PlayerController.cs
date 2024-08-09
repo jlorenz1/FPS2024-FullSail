@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
 
@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
+    [SerializeField] int playerHP;
+
+    // Weapon Variables for player
+    [SerializeField] int shootDamage;
+    [SerializeField] int shootRate;
+    [SerializeField] int shootDistance;
 
     Vector3 move;
     Vector3 playerVel;
@@ -66,6 +72,13 @@ public class PlayerController : MonoBehaviour
             speed /= sprintMod;
             isSprinting = false;
         }
+    }
+
+    // IDamage Player Damage
+    public void takeDamage(int amountOfDamageTaken)
+    {
+        // Subtract the amount of current damage from player HP
+        playerHP -= amountOfDamageTaken;
     }
 
 }
