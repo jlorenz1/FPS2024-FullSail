@@ -8,13 +8,16 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] int HitPoints;
- 
+
+
+
+    [SerializeField] GameObject Player;
     [SerializeField] int AttackRange;
     [SerializeField] int AttackRate;
     [SerializeField] int AttackDamage;
     [SerializeField] NavMeshAgent agent;
  
-
+    
     bool isAttacking;
 
 
@@ -27,14 +30,18 @@ public class EnemyAI : MonoBehaviour, IDamage
         colorOriginal = model.material.color;
 
 
+        agent.SetDestination(Player.transform.position);
+
+        agent = GetComponent<NavMeshAgent>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-            agent.SetDestination(gameManager.gameInstance.player.transform.position);  
-        
+
+        agent.SetDestination(Player.transform.position);
+
     }
 
     public void takeDamage(int amountOfDamageTaken)

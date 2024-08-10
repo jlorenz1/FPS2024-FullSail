@@ -244,11 +244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7549089998289600971, guid: 00663b9bcaaeb5041905b121ec480917, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.27594614
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7549089998289600971, guid: 00663b9bcaaeb5041905b121ec480917, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7549089998289600971, guid: 00663b9bcaaeb5041905b121ec480917, type: 3}
       propertyPath: m_LocalPosition.z
@@ -361,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 465270188490484554, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 465270188490484554, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -532,7 +532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5362842348285855739, guid: 2ca9e576682eeb44695e35a5c82cd93d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000023841858
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5362842348285855739, guid: 2ca9e576682eeb44695e35a5c82cd93d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 1371478096}
   - component: {fileID: 1371478095}
   - component: {fileID: 1371478094}
+  - component: {fileID: 1371478100}
   m_Layer: 0
   m_Name: Test Enemy
   m_TagString: Untagged
@@ -706,7 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1371478095}
   HitPoints: 20
-  Speed: 2
+  Player: {fileID: 1549869230}
   AttackRange: 2
   AttackRate: 2
   AttackDamage: 2
@@ -736,7 +737,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 50
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -748,6 +749,42 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1371478100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371478093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 0736e0045627128448dd21de644716d1, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!1 &1549869230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3541054881267062660, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+  m_PrefabInstance: {fileID: 625932137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1567387990 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5590487039806919368, guid: 00663b9bcaaeb5041905b121ec480917, type: 3}
