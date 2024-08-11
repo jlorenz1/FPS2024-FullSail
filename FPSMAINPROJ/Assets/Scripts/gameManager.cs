@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class gameManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class gameManager : MonoBehaviour
 
     // Public static property to access the instance
     public static gameManager gameInstance
-    { 
+    {
         get
         {
             if (_gameInstance == null)
@@ -27,6 +28,17 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
+   
+
+    //Objects
+    private EnemySpawner enemySpawner;
+
+
+
+    //int variables 
+    int EnemyCount;
+
+    int GameRound = 1;
 
     // Private reference for the Player
     private GameObject _Player;
@@ -74,6 +86,8 @@ public class gameManager : MonoBehaviour
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
         // playerScript = player.GetComponent<playerController>();
+
+        enemySpawner = FindObjectOfType<EnemySpawner>();
     }
 
     // Update is called once per frame
@@ -129,6 +143,18 @@ public class gameManager : MonoBehaviour
                 gameActiveMenu.SetActive(gameIsPaused);
                 PauseGame();
             }
+        }
+    }
+    public void UpdateGameGoal(int amount)
+    {
+        EnemyCount += amount;
+
+
+        if (EnemyCount <= 0)
+        {
+            GameRound++;
+
+            enemySpawner.SpawnZombies(GameRound);
         }
     }
 }

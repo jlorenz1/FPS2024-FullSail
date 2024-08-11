@@ -10,29 +10,34 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] int HitPoints;
 
 
-
+    [SerializeField] int maxHeight;
     [SerializeField] GameObject Player;
     [SerializeField] int AttackRange;
-    [SerializeField] int AttackRate;
+    [SerializeField] int AttackDelay;
     [SerializeField] int AttackDamage;
     [SerializeField] NavMeshAgent agent;
- 
-    
+
+
+    int EnemyAmount;
+
     bool isAttacking;
 
+    bool PlayerinRange;
 
+    bool canAttack = true;
 
     Color colorOriginal;
 
- 
+
     void Start()
     {
         colorOriginal = model.material.color;
 
-
-        agent.SetDestination(Player.transform.position);
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
         agent = GetComponent<NavMeshAgent>();
+
+        gameManager.gameInstance.UpdateGameGoal(1);
 
     }
 
@@ -40,11 +45,17 @@ public class EnemyAI : MonoBehaviour, IDamage
     void Update()
     {
 
-        agent.SetDestination(Player.transform.position);
-
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+        DestroyOutOfBounds(10);
+        CheckRange();
+        if (PlayerinRange && canAttack)
+        {
+            StartCoroutine(AttackWithDelay());
+        }
     }
 
-
+    //Damage to zombie
+    /*___________________________________________________________________________________________________*/
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
@@ -74,6 +85,74 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (HitPoints <= 0)
         {
             Destroy(gameObject);
+            gameManager.gameInstance.UpdateGameGoal(-1);
         }
     }
+
+
+    void DestroyOutOfBounds(int m_MaxHieght)
+    {
+
+        m_MaxHieght = maxHeight;
+        if (gameObject.transform.position.y >= maxHeight)
+        {
+            Destroy(gameObject);
+            gameManager.gameInstance.UpdateGameGoal(-1);
+        }
+    }
+
+
+
+
+    // Damge to player 
+    /*________________________________________________________________________________________________________________*/
+    IEnumerator AttackWithDelay()
+    {
+        canAttack = false; // Prevent immediate re-attack
+
+        // Perform the attack
+        AttackPlayer();
+
+        // Wait for the specified attack delay
+        yield return new WaitForSeconds(AttackDelay);
+
+        canAttack = true; // Allow the next attack
+    }
+
+
+
+
+    void AttackPlayer( )
+    {
+        if (PlayerinRange == true)
+        {
+            IDamage DMG = gameManager.gameInstance.player.GetComponent<IDamage>();
+            DMG.takeDamage(AttackDamage);
+        }
+        else
+            return;
+        
+    }
+
+    void CheckRange()
+    {
+        if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+        {
+            PlayerinRange = true;
+        }
+        else
+            PlayerinRange = false;
+    }
+
+
+
+
+
+
+
 }
+
+    
+           
+    
+

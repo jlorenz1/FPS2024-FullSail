@@ -22,11 +22,13 @@ public class playerBulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        //ignores other triggers
         if (other.isTrigger)
         {
             return;
         }
-
+        // determins if the object has the takeDamage function
         IDamage ding = other.GetComponent<IDamage>();
         if (ding != null)
         {
