@@ -44,15 +44,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     }
 
-    public void takeDamage(int amountOfDamageTaken)
-    {
-        HitPoints -= amountOfDamageTaken;
-        StartCoroutine(flashRed());
-        if (HitPoints <= 0 )
-        {
-            Destroy(gameObject);
-        }
-    }
 
     IEnumerator flashRed()
     {
@@ -62,6 +53,27 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            takeDamage(1);
 
+            if (HitPoints <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
 
+    }
+
+    public void takeDamage(int amountOfDamageTaken)
+    {
+        HitPoints -= amountOfDamageTaken;
+        StartCoroutine(flashRed());
+        if (HitPoints <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

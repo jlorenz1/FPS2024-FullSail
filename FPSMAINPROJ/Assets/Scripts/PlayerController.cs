@@ -25,11 +25,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
     bool isSprinting;
 
+    public int damage;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        damage  = shootDamage;
+}
 
     // Update is called once per frame
     void Update()
