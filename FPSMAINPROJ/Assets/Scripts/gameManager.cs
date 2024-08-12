@@ -168,7 +168,7 @@ public class gameManager : MonoBehaviour
 
     public void CheckForEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Target");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach(GameObject enemy in enemies)
         {
