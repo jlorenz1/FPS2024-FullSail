@@ -4,86 +4,206 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Weapon : MonoBehaviour
 {
-    // The prefab of the bullet that will be instantiated and fired
-    public GameObject bulletPrefab;
+    // Bullet-related variables
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private float bulletVelocity = 30f;
+    [SerializeField] private float bulletPrefabLifeTime = 3.0f;
 
-    // The point from which the bullet will be spawned (typically the muzzle of the weapon)
-    public Transform bulletSpawn;
-
-    // The velocity at which the bullet will be fired
-    public float bulletVelocity = 30f;
-
-    // The lifetime of the bullet before it is automatically destroyed
-    public float bulletPrefabLifeTime = 3.0f;
-
-    // Boolean flag to determine if the weapon is ready to shoot again
+    // Weapon firing mode and rate of fire
+    public enum FireMode { Single, Burst, FullAuto, Sniper }
+    [SerializeField] private FireMode fireMode = FireMode.Single;
+    [SerializeField] private float weaponFireRate = 0.1f;
     private bool weaponCanShoot = true;
 
-    // The rate of fire (time delay between shots)
-    public float weaponFireRate = 0.1f;
-
-    // Update is called once per frame to check for player input
-    void Update()
+    // Magazine and ammo management
+    [System.Serializable]
+    public class Magazine
     {
-        // Check if the player is holding down the left mouse button (Mouse0) and if the weapon is ready to shoot
-        if (Input.GetButton("Fire1") && weaponCanShoot)
+        public int magazineCapacity = 30;
+        public int currentAmmoCount = 30;
+    }
+
+    [SerializeField] private Magazine[] magazines;
+    private int currentMagazineIndex = 0;
+
+    // Reloading mechanics
+    [SerializeField] private float reloadTime = 2f;
+    private bool isReloading = false;
+
+    // Burst fire specifics
+    [SerializeField] private int burstCount = 3;
+    [SerializeField] private float burstRate = 0.1f;
+
+
+    // Weapon durability
+    [SerializeField] private float maxDurability = 100f;
+    private float currentDurability;
+    [SerializeField] private float durabilityLossPerShot = 1f;
+    [SerializeField] private bool canJam = true;
+    private bool isJammed = false;
+
+    // Events
+    public event Action OnFire;
+    public event Action OnReload;
+
+    private void Start()
+    {
+        currentDurability = maxDurability;
+        ValidateMagazines();
+    }
+
+    private void Update()
+    {
+        if (isReloading || isJammed) return;
+
+        HandleFiring();
+        HandleReloading();
+        HandleFireModeSwitching();
+    }
+
+    private void ValidateMagazines()
+    {
+        if (magazines.Length == 0)
         {
-            // Call the method to handle single-shot firing
-            FireSingleShot();
+            Debug.LogError("No magazines assigned to the weapon!");
         }
     }
 
-    // Handles firing a single shot
-    private void FireSingleShot()
+    private void HandleFiring()
     {
-        // Set the weapon to not be able to shoot until the delay passes
-        weaponCanShoot = false;
-
-        // Call the method to instantiate and shoot the bullet
-        ShootBullet();
-
-        // Start the coroutine to reset the shooting ability after the specified delay
-        StartCoroutine(ResetShoot(weaponFireRate));
+        if (Input.GetButton("Fire1") && weaponCanShoot)
+        {
+            if (magazines[currentMagazineIndex].currentAmmoCount > 0)
+            {
+                FireWeapon();
+            }
+            else
+            {
+                Debug.Log("Magazine empty! Reload or switch magazines.");
+            }
+        }
     }
 
-    // Method to handle bullet instantiation, force application, and destruction
+    private void FireWeapon()
+    {
+        weaponCanShoot = false;
+        magazines[currentMagazineIndex].currentAmmoCount--;
+        DecreaseDurability();
+        ShootBullet();
+
+        OnFire?.Invoke();
+
+        switch (fireMode)
+        {
+            case FireMode.Single:
+                StartCoroutine(ResetShoot(weaponFireRate));
+                break;
+            case FireMode.Burst:
+                StartCoroutine(FireBurst());
+                break;
+            case FireMode.FullAuto:
+                StartCoroutine(ResetShoot(weaponFireRate));
+                break;
+            case FireMode.Sniper:
+                StartCoroutine(ResetShoot(weaponFireRate * 3)); // Example: Sniper has a longer delay
+                break;
+        }
+    }
+
+    private void HandleReloading()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    private void HandleFireModeSwitching()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            fireMode = (FireMode)(((int)fireMode + 1) % System.Enum.GetValues(typeof(FireMode)).Length);
+            Debug.Log("Switched to fire mode: " + fireMode);
+        }
+    }
+
     private void ShootBullet()
     {
-        // Offset the bullet's spawn position slightly forward from the spawn point
-        Vector3 spawnPosition = bulletSpawn.position + bulletSpawn.forward * 0.2f; // Adjust the 0.2f value as needed
-
-        // Instantiate the bullet prefab at the adjusted position and rotation
+        Vector3 spawnPosition = bulletSpawn.position + bulletSpawn.forward * 0.2f;
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, bulletSpawn.rotation);
 
-        // Get the Rigidbody component attached to the bullet for physics calculations
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Apply a force to the bullet in the forward direction to simulate shooting
             rb.AddForce(bulletSpawn.forward * bulletVelocity, ForceMode.Impulse);
         }
 
-        // Start a coroutine to destroy the bullet after its lifetime has elapsed
         StartCoroutine(DestroyBulletAfterTime(bullet, bulletPrefabLifeTime));
     }
 
-    // Coroutine to destroy the bullet after a set amount of time
+    private IEnumerator ResetShoot(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        weaponCanShoot = true;
+    }
+
+    private IEnumerator FireBurst()
+    {
+        for (int i = 0; i < burstCount; i++)
+        {
+            if (magazines[currentMagazineIndex].currentAmmoCount > 0)
+            {
+                ShootBullet();
+                magazines[currentMagazineIndex].currentAmmoCount--;
+                yield return new WaitForSeconds(burstRate);
+            }
+            else
+            {
+                break;
+            }
+        }
+        StartCoroutine(ResetShoot(weaponFireRate));
+    }
+
     private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
     {
-        // Wait for the specified delay
         yield return new WaitForSeconds(delay);
-
-        // Destroy the bullet GameObject to free up resources
         Destroy(bullet);
     }
 
-    // Coroutine to reset the shooting ability after the fire rate delay has passed
-    private IEnumerator ResetShoot(float delay)
+    private IEnumerator Reload()
     {
-        // Wait for the specified delay
-        yield return new WaitForSeconds(delay);
+        isReloading = true;
+        Debug.Log("Reloading...");
+        yield return new WaitForSeconds(reloadTime);
 
-        // Allow the weapon to shoot again
+        int ammoToReload = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
+        magazines[currentMagazineIndex].currentAmmoCount += ammoToReload;
+
+        OnReload?.Invoke();
+
+        isReloading = false;
         weaponCanShoot = true;
+    }
+    private void DecreaseDurability()
+    {
+        currentDurability -= durabilityLossPerShot;
+        if (currentDurability < 0) currentDurability = 0;
+
+        if (currentDurability == 0 && canJam)
+        {
+            isJammed = true;
+            Debug.Log("Weapon is jammed! Clear the jam to continue firing.");
+        }
+    }
+
+    public void ClearJam()
+    {
+        if (isJammed)
+        {
+            isJammed = false;
+            Debug.Log("Weapon jam cleared!");
+        }
     }
 }
