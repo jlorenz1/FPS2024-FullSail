@@ -171,7 +171,7 @@ public class gameManager : MonoBehaviour
         if (EnemyCount <= 0)
         {
             GameRound++;
-        
+            roundCount.text = GameRound.ToString("F0");
             enemySpawner.SpawnZombies(GameRound);
             // isNewEnemies = true;
         }
