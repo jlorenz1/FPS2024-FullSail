@@ -10,10 +10,24 @@ public class playerBulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Ignore collisions with the weapon
+        if (collision.gameObject.CompareTag("Weapon"))
+        {
+            Debug.Log("Ignored collision with Weapon");
+            return;
+        }
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            print("hit" + collision.gameObject.name);
+            Debug.Log("hit" + collision.gameObject.name);
 
+            // Apply damage if the object implements damage interface
+            IDamage  dmgDetect = collision.gameObject.GetComponent<IDamage>();
+            if (dmgDetect != null )
+            {
+                dmgDetect.takeDamage(DamageAmount);
+            }
+            // Destroy the game object that was hit
             Destroy(gameObject);
         }
         
@@ -28,11 +42,11 @@ public class playerBulletScript : MonoBehaviour
         {
             return;
         }
-        // determins if the object has the takeDamage function
-        IDamage ding = other.GetComponent<IDamage>();
-        if (ding != null)
+        // determines if the object has the takeDamage function
+        IDamage dmgDetect = other.GetComponent<IDamage>();
+        if (dmgDetect != null)
         {
-            ding.takeDamage(DamageAmount);
+            dmgDetect.takeDamage(DamageAmount);
         }
         Destroy(gameObject);
     }
