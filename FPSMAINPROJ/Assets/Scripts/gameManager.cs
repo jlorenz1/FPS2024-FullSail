@@ -30,7 +30,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
-
+  
     //Objects
     private EnemySpawner enemySpawner;
     private GameObject enemy;
@@ -39,7 +39,7 @@ public class gameManager : MonoBehaviour
     //int variables 
     int EnemyCount;
 
-    int GameRound = 1;
+    int GameRound;
 
     // Private reference for the Player
     private GameObject _Player;
@@ -89,7 +89,7 @@ public class gameManager : MonoBehaviour
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
 
-        CheckForEnemies();
+        //CheckForEnemies();
     }
 
     // Update is called once per frame
@@ -100,10 +100,10 @@ public class gameManager : MonoBehaviour
         {
             TogglePause();
         }
-        if(isNewEnemies)
-        {
-            CheckForEnemies();
-        }
+        /* if(isNewEnemies)
+         {
+             CheckForEnemies();
+         }*/
 
     }
 
@@ -154,19 +154,32 @@ public class gameManager : MonoBehaviour
     }
     public void UpdateGameGoal(int amount)
     {
+
+        if(GameRound == 0)
+        {
+            GameRound = 1;
+        }
+
+        if(EnemyCount < 0)
+        {
+            EnemyCount = 0;
+        }
+
         EnemyCount += amount;
 
         Debug.Log("enemies " + EnemyCount.ToString());
         if (EnemyCount <= 0)
-        { 
+        {
             GameRound++;
-            roundCount.text = GameRound.ToString("F00");
+        
             enemySpawner.SpawnZombies(GameRound);
-            isNewEnemies = true;
+            // isNewEnemies = true;
         }
     }
+}
 
-    public void CheckForEnemies()
+
+/*    public void CheckForEnemies()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
@@ -176,4 +189,4 @@ public class gameManager : MonoBehaviour
         }
         isNewEnemies = false;
     }    
-}
+}*/

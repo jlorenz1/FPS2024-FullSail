@@ -4,19 +4,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
 {
     [SerializeField] Renderer model;
-    [SerializeField] int HitPoints;
+    [SerializeField] int BaseHitPoints;
 
 
     [SerializeField] int maxHeight;
     [SerializeField] GameObject Player;
     [SerializeField] int AttackRange;
     [SerializeField] int AttackDelay;
-    [SerializeField] int AttackDamage;
+    [SerializeField] int BaseAttackDamage;
     [SerializeField] NavMeshAgent agent;
 
+
+    int HitPoints;
+
+    int AttackDamage;
 
     int EnemyAmount;
 
@@ -31,13 +35,19 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     void Start()
     {
+
         colorOriginal = model.material.color;
+
+        HitPoints = BaseHitPoints;
+
+        AttackDamage = BaseAttackDamage;
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
         agent = GetComponent<NavMeshAgent>();
 
         gameManager.gameInstance.UpdateGameGoal(1);
+
 
     }
 
@@ -64,7 +74,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+  /*  private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
@@ -76,7 +86,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
         }
 
-    }
+    }*/
 
     public void takeDamage(int amountOfDamageTaken)
     {
@@ -145,8 +155,35 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
 
+    // Round Updates
+
+   public void IncreaseHitPoints(int amount)
+    {
+
+        HitPoints += amount * 5;
 
 
+    }
+
+
+  public  void ScalingDamage(int amount)
+    {
+
+        AttackDamage += amount * 5;
+
+    }
+
+
+    public int CurrentHitPoints
+    {
+        get { return HitPoints; }
+    }
+
+    public void DisplayHitPoints()
+    {
+        // Display the current hit points
+        Debug.Log("Current HP: " + CurrentHitPoints);
+    }
 
 
 

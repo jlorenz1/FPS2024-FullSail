@@ -48,7 +48,23 @@ public class playerBulletScript : MonoBehaviour
         {
             dmgDetect.takeDamage(DamageAmount);
         }
+
+        IHitPoints hitPointsComponent = other.GetComponent<IHitPoints>();
+        if (hitPointsComponent != null)
+        {
+            hitPointsComponent.DisplayHitPoints();
+        }
+
+        else
+        {
+            Debug.Log("The object does not implement IHitPoints.");
+        }
+
+
+
         Destroy(gameObject);
+
+
     }
 
 }
