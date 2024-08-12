@@ -18,6 +18,28 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
 
+    // climbing video variables
+    [Header("Reference")]
+    [SerializeField] LayerMask whatIsWall;
+
+    [Header("Climbing")]
+    [SerializeField] float climbSpeed;
+    [SerializeField] float maxClimbTimer;
+    private float climbTimer;
+
+    private bool isClimbing;
+
+    [Header("Dectection")]
+    [SerializeField] float detectionLength;
+    [SerializeField] float sphereCastRadius;
+    [SerializeField] float maxWallLookAngle;
+    private float WallLookAngle;
+
+    private RaycastHit wallHit;
+    private bool wallFront;
+    // End of climbiing video variables
+
+
     Vector3 move;
     Vector3 playerVel;
 
@@ -39,6 +61,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+
+        wallCheck();
+        stateMachine();
+
+
     }
 
     void movement()
@@ -47,7 +74,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             jumpCount = 0;
             playerVel = Vector3.zero;
+            climbTimer = maxClimbTimer;
+
         }
+
+        if (isClimbing) 
+            climbingMovement();
 
         move = Input.GetAxis("Vertical") * transform.forward +
             Input.GetAxis("Horizontal") * transform.right;
@@ -75,6 +107,45 @@ public class PlayerController : MonoBehaviour, IDamage
             speed /= sprintMod;
             isSprinting = false;
         }
+    }
+    void stateMachine()
+    {
+        if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
+        {
+            if (!isClimbing && climbTimer > 0) startClimb();
+
+            if (climbTimer > 0) climbTimer -= Time.deltaTime;
+            if (climbTimer < 0) endClimbing();
+
+        }
+        else
+        {
+            if (isClimbing) endClimbing();
+        }
+
+    }
+    void wallCheck()
+    {
+        //wallFront tell if there is a wall in front
+        //                            ( starting postion,       Radius,        Directions,    location of the infomation, sphereCast length,  the layerMask)
+        wallFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out wallHit, detectionLength, whatIsWall);
+        WallLookAngle = Vector3.Angle(transform.forward, -wallHit.normal);
+
+
+    }
+    void startClimb()
+    {
+        isClimbing = true;
+    }
+    void climbingMovement()
+    {
+        playerVel = new Vector3(playerVel.x, climbSpeed, playerVel.z);
+
+    }
+
+    void endClimbing()
+    {
+        isClimbing = false;
     }
 
     // IDamage Player Damage
