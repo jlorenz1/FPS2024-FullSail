@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,11 +29,11 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
-   
+    [SerializeField] TMP_Text roundCount;
 
     //Objects
     private EnemySpawner enemySpawner;
-
+    private GameObject enemy;
 
 
     //int variables 
@@ -42,7 +43,7 @@ public class gameManager : MonoBehaviour
 
     // Private reference for the Player
     private GameObject _Player;
-
+    private bool isNewEnemies;
     // Public property to access the Player
     public GameObject player
     {
@@ -61,7 +62,6 @@ public class gameManager : MonoBehaviour
 
     // Private pause state control variable
     private bool _GameIsPaused;
-
     // Public property to access the pause state
     public bool gameIsPaused
     {
@@ -88,6 +88,8 @@ public class gameManager : MonoBehaviour
         // playerScript = player.GetComponent<playerController>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
+
+        CheckForEnemies();
     }
 
     // Update is called once per frame
@@ -98,6 +100,11 @@ public class gameManager : MonoBehaviour
         {
             TogglePause();
         }
+        if(isNewEnemies)
+        {
+            CheckForEnemies();
+        }
+
     }
 
     // Pause the Game
@@ -149,12 +156,24 @@ public class gameManager : MonoBehaviour
     {
         EnemyCount += amount;
 
-
+        Debug.Log("enemies " + EnemyCount.ToString());
         if (EnemyCount <= 0)
-        {
+        { 
             GameRound++;
-
+            roundCount.text = GameRound.ToString("F00");
             enemySpawner.SpawnZombies(GameRound);
+            isNewEnemies = true;
         }
     }
+
+    public void CheckForEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Target");
+
+        foreach(GameObject enemy in enemies)
+        {
+            UpdateGameGoal(1);
+        }
+        isNewEnemies = false;
+    }    
 }
