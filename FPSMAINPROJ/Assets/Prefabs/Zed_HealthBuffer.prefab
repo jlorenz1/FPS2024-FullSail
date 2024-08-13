@@ -1938,6 +1938,7 @@ GameObject:
   - component: {fileID: 6437690735214222031}
   - component: {fileID: 4582717572632465390}
   - component: {fileID: 8805872054073446440}
+  - component: {fileID: 7689012835588437818}
   m_Layer: 0
   m_Name: Zed_HealthBuffer
   m_TagString: Untagged
@@ -1996,7 +1997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 7136358674416233596}
-  BaseHitPoints: 200
+  BaseHitPoints: 30
   maxHeight: 20
   AttackRange: 3
   AttackDelay: 5
@@ -2010,6 +2011,7 @@ MonoBehaviour:
   HealthBuff: 5
   BuffRange: 0
   isDebuffer: 0
+  HitPoints: 0
 --- !u!195 &6437690735214222031
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2082,10 +2084,31 @@ CapsuleCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
-  m_Height: 3
+  m_Radius: 1
+  m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &7689012835588437818
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346145081859416977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8781641502311658882
 GameObject:
   m_ObjectHideFlags: 0

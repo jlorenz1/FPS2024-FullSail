@@ -37,9 +37,9 @@ public class gameManager : MonoBehaviour
 
 
     //int variables 
-    public int EnemyCount;
+     int EnemyCount;
 
-    public int GameRound;
+     int GameRound;
 
     // Private reference for the Player
     private GameObject _Player;
@@ -95,8 +95,17 @@ public class gameManager : MonoBehaviour
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
 
+
+        if (enemySpawner == null)
+        {
+            Debug.LogError("EnemySpawner not found.");
+        }
+
+
         //CheckForEnemies();
         camera = FindObjectOfType<Camera>();
+
+        GameRound = 1;
     }
 
     // Update is called once per frame
@@ -111,7 +120,7 @@ public class gameManager : MonoBehaviour
          {
              CheckForEnemies();
          }*/
-
+        CheckEnemyCount();
     }
 
     // Pause the Game
@@ -175,25 +184,42 @@ public class gameManager : MonoBehaviour
         EnemyCount += amount;
 
         Debug.Log("enemies " + EnemyCount.ToString());
-        if (EnemyCount <= 0)
+    
+    }
+
+
+    void CheckEnemyCount()
+    {
+
+       if(EnemyCount == 0)
         {
-            GameRound++;
+
+            SetGameRound(1);
             roundCount.text = GameRound.ToString("F0");
-            enemySpawner.SpawnZombies(GameRound);
-            // isNewEnemies = true;
+            enemySpawner.BaseSpawnZombies(GetGameRound());
+
+            if (GameRound % 5 == 0)
+            {
+                enemySpawner.BaseSpawnZombies(GetGameRound());
+            }
+
+
         }
+
+       
+
+    }
+
+    public int GetGameRound()
+    {
+        return GameRound;
+    }
+
+    public void SetGameRound(int amount)
+    {
+        GameRound += amount;
     }
 }
 
 
-/*    public void CheckForEnemies()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        foreach(GameObject enemy in enemies)
-        {
-            UpdateGameGoal(1);
-        }
-        isNewEnemies = false;
-    }    
-}*/
