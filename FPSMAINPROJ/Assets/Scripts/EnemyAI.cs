@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
+public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 {
     [SerializeField] Renderer model;
     [SerializeField] int BaseHitPoints;
@@ -16,6 +16,17 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
     [SerializeField] int BaseAttackDamage;
     [SerializeField] NavMeshAgent agent;
 
+
+
+    [SerializeField] bool isStrengthBuffer;
+    [SerializeField] bool isHealthBuffer;
+    [SerializeField] bool isSpeedBuffer;
+    [SerializeField] int DamageBuff;
+    [SerializeField] int SpeedBuff;
+    [SerializeField] int HealthBuff;
+    [SerializeField] int BuffRange;
+
+    [SerializeField] bool isDebuffer;
 
     int HitPoints;
 
@@ -30,6 +41,9 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
     bool canAttack = true;
 
     Color colorOriginal;
+
+
+
 
 
     void Start()
@@ -63,6 +77,38 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
         }
     }
 
+
+    void OnValidate()
+    {
+        // Automatically set `isHealthBuffer` to false if `isStrengthBuffer` is false
+        if (!isStrengthBuffer)
+        {
+            DamageBuff = 0;
+        }
+
+        if (!isHealthBuffer)
+        {
+            HealthBuff = 0;
+        }
+
+        if (!isSpeedBuffer)
+        {
+            SpeedBuff = 0;
+        }
+        if(!isSpeedBuffer && !isHealthBuffer && !isStrengthBuffer)
+        {
+            BuffRange = 0;
+
+        }
+
+
+    }
+
+
+
+
+
+
     //Damage to zombie
     /*___________________________________________________________________________________________________*/
     IEnumerator flashRed()
@@ -73,19 +119,19 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
     }
 
 
-  /*  private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            takeDamage(1);
+    /*  private void OnCollisionEnter(Collision collision)
+      {
+          if (collision.gameObject.CompareTag("Bullet"))
+          {
+              takeDamage(1);
 
-            if (HitPoints <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+              if (HitPoints <= 0)
+              {
+                  Destroy(gameObject);
+              }
+          }
 
-    }*/
+      }*/
 
     public void takeDamage(int amountOfDamageTaken)
     {
@@ -131,7 +177,7 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
 
 
 
-    void AttackPlayer( )
+    void AttackPlayer()
     {
         if (PlayerinRange == true)
         {
@@ -140,7 +186,7 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
         }
         else
             return;
-        
+
     }
 
     void CheckRange()
@@ -156,7 +202,7 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
 
     // Round Updates
 
-   public void IncreaseHitPoints(int amount)
+    public void IncreaseHitPoints(int amount)
     {
 
         HitPoints += amount * 5;
@@ -165,7 +211,7 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
     }
 
 
-  public  void ScalingDamage(int amount)
+    public void ScalingDamage(int amount)
     {
 
         AttackDamage += amount * 5;
@@ -188,7 +234,7 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
 
 }
 
-    
-           
-    
+
+
+
 
