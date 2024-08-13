@@ -176,7 +176,8 @@ public class Weapon : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
-        Debug.Log("Reloading...");
+        if (isReloading)
+            Debug.Log("Reloading...");
 
         yield return new WaitForSeconds(reloadTime);
 
