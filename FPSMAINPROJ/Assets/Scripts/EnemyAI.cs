@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     [SerializeField] bool isDebuffer;
 
-    int HitPoints;
+   public int HitPoints;
 
     int AttackDamage;
 
@@ -64,6 +64,20 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         agent = GetComponent<NavMeshAgent>();
 
         gameManager.gameInstance.UpdateGameGoal(1);
+
+        int round;
+
+        if ( gameManager.gameInstance.GetGameRound() > 0)
+        {
+            round = gameManager.gameInstance.GetGameRound();
+        }
+        else
+            round = 1;
+
+        HasHealthBuffed = false;
+        HasSpeedBuffed = false;
+        HasStrengthBuffed = false;
+
 
 
     }
@@ -236,26 +250,47 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     // Zombie Varriant;
 
-    void OnTrigger(Collider zombie)
+    void OnTriggerEnter(Collider other)
     {
+
+     
+
+    
+        
         int TotalBuff;
-        IHitPoints FellowZombie = zombie.GetComponent<IHitPoints>();
-        if(isHealthBuffer == true && HasHealthBuffed == false)
-        {
-            TotalBuff = HealthBuff * gameManager.gameInstance.GameRound;
-            FellowZombie.AddHP(TotalBuff);
+        IHitPoints FellowZombie = other.GetComponent<IHitPoints>();
 
+        if (FellowZombie != null)
+        {
+            Debug.Log("A zombie has entered the trigger zone.");
+
+
+
+
+            if (isHealthBuffer == true && HasHealthBuffed == false)
+            {
+                TotalBuff = HealthBuff * gameManager.gameInstance.GetGameRound();
+                FellowZombie.AddHP(TotalBuff);
+                HasHealthBuffed = true;
+                Debug.Log("ZombieBuffed");
+            }
+            if (isStrengthBuffer == true && HasStrengthBuffed == false)
+            {
+                TotalBuff = DamageBuff * gameManager.gameInstance.GetGameRound();
+                FellowZombie.AddHP(TotalBuff);
+                HasStrengthBuffed = true;
+                Debug.Log("ZombieBuffed");
+
+            }
+            if (isSpeedBuffer == true && HasSpeedBuffed == false)
+            {
+                TotalBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
+            }
         }
-        if (isStrengthBuffer == true&& HasStrengthBuffed == false)
-        {
-            TotalBuff = DamageBuff * gameManager.gameInstance.GameRound;
-            FellowZombie.AddHP(TotalBuff);
 
-
-        }
-        if (isSpeedBuffer == true && HasSpeedBuffed == false)
+        else
         {
-            TotalBuff = SpeedBuff * gameManager.gameInstance.GameRound;
+            Debug.Log("The object does not implement IHitPoints.");
         }
 
     }
