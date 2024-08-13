@@ -51,6 +51,12 @@ public class gameManager : MonoBehaviour
         private set { _Player = value; }
     }
 
+    private Camera camera;
+    public Camera MainCam
+    {
+        get { return camera; }
+        private set { camera = value; }
+    }
     // Private access to player script
     // private playerController _PlayerScript;
     // Public property to access the player script
@@ -90,6 +96,7 @@ public class gameManager : MonoBehaviour
         enemySpawner = FindObjectOfType<EnemySpawner>();
 
         //CheckForEnemies();
+        camera = FindObjectOfType<Camera>();
     }
 
     // Update is called once per frame

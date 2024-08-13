@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -154,5 +155,4 @@ public class PlayerController : MonoBehaviour, IDamage
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
     }
-
 }

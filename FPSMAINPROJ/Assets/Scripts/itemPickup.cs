@@ -4,43 +4,60 @@ using UnityEngine;
 
 public class itemPickup : MonoBehaviour , IPickup
 {
+    [SerializeField] int pickupDis;
+    [SerializeField] LayerMask ignoreMask;
+    [SerializeField] Camera cam;
     private GameObject pickUp; //item to pickup
     private GameObject player;
-
     private PlayerController playerController;
-
-    public ArrayList inventory = new ArrayList();
+    public ArrayList basicInventory = new ArrayList();
 
     bool isPickedUp;
+    bool inProcess;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        pickUp = this.gameObject;
     }
 
     // Update is called once per frame
-    void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.gameObject == player && pickUp.tag == "Item1")
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("hit");
-            string gun = "gun";
-            inventory.Add(gun);
-            pickUp = GameObject.FindWithTag("Item1");
-            isPickedUp = true;
-            pickUpItem(pickUp);
-            isPickedUp = false;
+            StartCoroutine(Interact());
         }
     }
 
     public void pickUpItem(GameObject item)
     {
-        if (isPickedUp && item.tag == "Item1")
+        if (item.tag == "pickup")
         {
-            Debug.Log(inventory.Count);
+            Debug.Log("hit");
+            int pickupLayer = item.layer;
+            string recived = LayerMask.LayerToName(pickupLayer);
+            Debug.Log(recived);
+            basicInventory.Add(item);
         }
         Destroy(item);
+    }
+
+    IEnumerator Interact()
+    {
+        RaycastHit hit;
+    
+        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        {
+            IPickup pickup = hit.collider.GetComponent<IPickup>();
+            Debug.Log(hit.collider.name);
+
+            if(pickup != null)
+            {
+                pickup.pickUpItem(hit.collider.gameObject);
+            }
+        }
+        yield return new WaitForSeconds(1);
+
     }
 }
