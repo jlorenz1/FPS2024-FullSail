@@ -11,7 +11,6 @@ public class EnemyAI : MonoBehaviour, IDamage,IHitPoints
 
 
     [SerializeField] int maxHeight;
-    [SerializeField] GameObject Player;
     [SerializeField] int AttackRange;
     [SerializeField] int AttackDelay;
     [SerializeField] int BaseAttackDamage;
