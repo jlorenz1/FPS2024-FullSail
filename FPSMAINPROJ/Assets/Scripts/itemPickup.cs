@@ -7,20 +7,18 @@ public class itemPickup : MonoBehaviour , IPickup
 {
     [SerializeField] int pickupDis;
     [SerializeField] LayerMask ignoreMask;
-    [SerializeField] Camera cam;
     private GameObject pickUp; //item to pickup
     private GameObject player;
     private PlayerController playerController;
-    public List<string> basicInventory;
 
     bool isPickedUp;
     bool inProcess;
-   
+      
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        basicInventory = new List<string>();
+
     }
 
     // Update is called once per frame
@@ -40,15 +38,16 @@ public class itemPickup : MonoBehaviour , IPickup
         {
             Debug.Log("hit");
             Debug.Log(recived);
-            basicInventory.Add(recived);
+            inventoryManager.Instance.AddItem(recived);
             Destroy(item);
         }
         else if (recived == "Door")
         {
-            Debug.Log(checkInventory("Key"));
-            if (checkInventory("Key"))
-            { 
-                Destroy(item);
+            Debug.Log(inventoryManager.Instance.checkInventory("Key"));
+            
+            if (inventoryManager.Instance.checkInventory("Key"))
+            {
+                StartCoroutine(slideDoor(item.transform));
             }
             else
             {
@@ -62,7 +61,7 @@ public class itemPickup : MonoBehaviour , IPickup
     {
         RaycastHit hit;
     
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             IPickup pickup = hit.collider.GetComponent<IPickup>();
             if (pickup != null)
@@ -74,17 +73,24 @@ public class itemPickup : MonoBehaviour , IPickup
 
     }
 
-    bool checkInventory(string item)
+    IEnumerator slideDoor(Transform transform)
     {
-        Debug.Log(basicInventory.Count);
-        foreach(string invItem in basicInventory)
+        //get door pos
+        Vector3 doorPos = transform.position;
+        //get desired endPos
+        Vector3 endPos = doorPos - new Vector3(0, 4, 0);
+        //speed to slide
+        float slidespeed = 1f;
+        //time it takes
+        float timeToOpen = 0f;
+
+        while (timeToOpen < slidespeed)
         {
-            Debug.Log("item in inv: " + invItem);
-            if(item == invItem)
-            {
-                return true;
-            }
+            //lerp over the positions smoothly
+            transform.position = Vector3.Lerp(doorPos, endPos, (timeToOpen / slidespeed));
+            timeToOpen += Time.deltaTime;
+            yield return null;
         }
-        return false;
+        transform.position = endPos;
     }
 }

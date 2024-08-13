@@ -103,7 +103,7 @@ public class gameManager : MonoBehaviour
 
 
         //CheckForEnemies();
-        camera = FindObjectOfType<Camera>();
+        MainCam = Camera.main;
 
         GameRound = 1;
     }

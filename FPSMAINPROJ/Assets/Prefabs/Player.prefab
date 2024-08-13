@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5210717050584315553}
   - component: {fileID: 8216761864754983274}
   - component: {fileID: 8203031564338902554}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -52,13 +52,24 @@ MonoBehaviour:
   controller: {fileID: 5719176374025190790}
   speed: 5
   sprintMod: 3
+  maxSprintTimer: 0
+  maxSprintWaitTimer: 0
   jumpMax: 2
   jumpSpeed: 15
   gravity: 55
   playerHP: 0
-  shootDamage: 0
-  shootRate: 0
-  shootDistance: 0
+  shootDamage: 1
+  shootRate: 1
+  shootDistance: 600
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
+  climbSpeed: 0
+  maxClimbTimer: 0
+  detectionLength: 0
+  sphereCastRadius: 0
+  maxWallLookAngle: 0
+  damage: 1
 --- !u!143 &5719176374025190790
 CharacterController:
   m_ObjectHideFlags: 0
@@ -218,7 +229,7 @@ Transform:
   m_GameObject: {fileID: 6410600077667808392}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.013, y: -0.15600002, z: 0.644}
+  m_LocalPosition: {x: -0.48, y: -0.15600002, z: 0.644}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.45}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,6 +252,15 @@ MonoBehaviour:
   bulletSpawn: {fileID: 1363256902415714300}
   bulletVelocity: 30
   bulletPrefabLifeTime: 3
+  fireMode: 0
+  weaponFireRate: 0.1
+  magazines: []
+  reloadTime: 2
+  burstCount: 3
+  burstRate: 0.1
+  maxDurability: 100
+  durabilityLossPerShot: 1
+  canJam: 1
 --- !u!33 &9215648570285251230
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -326,7 +346,7 @@ GameObject:
   - component: {fileID: 8278230528470485677}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
