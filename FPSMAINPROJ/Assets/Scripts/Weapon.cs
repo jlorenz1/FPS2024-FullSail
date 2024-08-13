@@ -25,11 +25,12 @@ public class Weapon : MonoBehaviour
     }
 
     [SerializeField] private Magazine[] magazines;
-    private int currentMagazineIndex = 0;
+    private int currentMagazineIndex;
 
     // Reloading mechanics
     [SerializeField] private float reloadTime = 2f;
     private bool isReloading = false;
+    // Add a timer feature to the reload mechanic if the user presses reload again within certain timeframe it achieves a perfect reload with no reload wait time
 
     // Burst fire specifics
     [SerializeField] private int burstCount = 3;
@@ -176,6 +177,7 @@ public class Weapon : MonoBehaviour
     {
         isReloading = true;
         Debug.Log("Reloading...");
+
         yield return new WaitForSeconds(reloadTime);
 
         int ammoToReload = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
