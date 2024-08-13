@@ -1265,9 +1265,10 @@ GameObject:
   - component: {fileID: 198717030066027033}
   - component: {fileID: 2844566916163035710}
   - component: {fileID: 870759692565912570}
-  - component: {fileID: 6375758748033327086}
   - component: {fileID: 2231037868274349474}
-  - component: {fileID: 3914443267199428882}
+  - component: {fileID: 6610167183049470146}
+  - component: {fileID: 1113812726474358645}
+  - component: {fileID: 2782320182778351616}
   m_Layer: 0
   m_Name: Zed_SpeedBuffer
   m_TagString: Untagged
@@ -1284,7 +1285,7 @@ Transform:
   m_GameObject: {fileID: 4975394299191973413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.79, y: 0, z: 0}
+  m_LocalPosition: {x: -7.3249393, y: 4, z: -785.47906}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1325,7 +1326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d058252466c266d4b8fafbe6776d8d1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+  model: {fileID: 1444627700564960735}
   BaseHitPoints: 200
   maxHeight: 50
   AttackRange: 5
@@ -1337,33 +1338,6 @@ MonoBehaviour:
   isSpeedBuffer: 0
   DamageBuff: 0
   SpeedBuff: 0
-  HealthBuff: 0
-  BuffRange: 0
-  isDebuffer: 0
---- !u!114 &6375758748033327086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975394299191973413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d058252466c266d4b8fafbe6776d8d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  BaseHitPoints: 200
-  maxHeight: 50
-  AttackRange: 5
-  AttackDelay: 5
-  BaseAttackDamage: 5
-  agent: {fileID: 2231037868274349474}
-  isStrengthBuffer: 0
-  isHealthBuffer: 0
-  isSpeedBuffer: 1
-  DamageBuff: 0
-  SpeedBuff: 5
   HealthBuff: 0
   BuffRange: 0
   isDebuffer: 0
@@ -1389,8 +1363,39 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &3914443267199428882
-BoxCollider:
+--- !u!114 &6610167183049470146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975394299191973413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 0cc30cb64e1188d41a109b08fc30e335, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!136 &1113812726474358645
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1407,8 +1412,31 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!135 &2782320182778351616
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975394299191973413}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 10, z: 10}
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5156123294512457333
 GameObject:
