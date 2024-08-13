@@ -42,6 +42,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool wallFront;
     // End of climbiing video variables
 
+
+    // Sliding video variables
+    
+    // End of Sliding video variables
+
     private float sprintTimer;
 
     Vector3 move;
@@ -65,9 +70,10 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         movement();
-        if (!onSprintCoolDown)
-            sprint();
-        sprintTimerUpdate();
+        //if (!onSprintCoolDown)
+        //    sprint();
+        sprint();
+        //sprintTimerUpdate();
 
         wallCheck();
         stateMachine();
@@ -109,13 +115,12 @@ public class PlayerController : MonoBehaviour, IDamage
             speed *= sprintMod;
             isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint") || sprintTimer == 0)
+        else if (Input.GetButtonUp("Sprint"))// || sprintTimer == 0)
         {
-            if (sprintTimer == 0)
-                onSprintCoolDown = true;
+            //if (sprintTimer == 0)
+            //    onSprintCoolDown = true;
             speed /= sprintMod;
             isSprinting = false;
-            return;
         }
 
     }
