@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
+    [SerializeField] float maxSprintTimer;
+    [SerializeField] float maxSprintWaitTimer;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool wallFront;
     // End of climbiing video variables
 
+    private float sprintTimer;
 
     Vector3 move;
     Vector3 playerVel;
@@ -47,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamage
     int jumpCount;
 
     bool isSprinting;
+    bool onSprintCoolDown;
 
     public int damage;
 
@@ -61,7 +65,9 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         movement();
-        sprint();
+        if (!onSprintCoolDown)
+            sprint();
+        sprintTimerUpdate();
 
         wallCheck();
         stateMachine();
@@ -103,11 +109,15 @@ public class PlayerController : MonoBehaviour, IDamage
             speed *= sprintMod;
             isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint") || sprintTimer == 0)
         {
+            if (sprintTimer == 0)
+                onSprintCoolDown = true;
             speed /= sprintMod;
             isSprinting = false;
+            return;
         }
+
     }
     void stateMachine()
     {
@@ -155,4 +165,23 @@ public class PlayerController : MonoBehaviour, IDamage
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
     }
+    void sprintTimerUpdate()
+    {
+        if (isSprinting)
+        {
+            sprintTimer -= 0.5f;
+        }
+
+        if (sprintTimer == 0)
+            StartCoroutine(waitTimer());
+
+    }
+
+    IEnumerator waitTimer()
+    {
+        yield return new WaitForSeconds(maxSprintWaitTimer);
+        sprintTimer = maxSprintTimer;
+        onSprintCoolDown = false;
+    }
+
 }
