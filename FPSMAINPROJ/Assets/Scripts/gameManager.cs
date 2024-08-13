@@ -37,9 +37,9 @@ public class gameManager : MonoBehaviour
 
 
     //int variables 
-    int EnemyCount;
+    public int EnemyCount;
 
-    int GameRound;
+    public int GameRound;
 
     // Private reference for the Player
     private GameObject _Player;

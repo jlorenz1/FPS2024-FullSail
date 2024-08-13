@@ -105,11 +105,18 @@ MonoBehaviour:
   model: {fileID: 5089689444914746868}
   BaseHitPoints: 5
   maxHeight: 15
-  Player: {fileID: 0}
   AttackRange: 5
   AttackDelay: 3
   BaseAttackDamage: 5
   agent: {fileID: 4861561477228062317}
+  isStrengthBuffer: 0
+  isHealthBuffer: 0
+  isSpeedBuffer: 0
+  DamageBuff: 0
+  SpeedBuff: 0
+  HealthBuff: 0
+  BuffRange: 0
+  isDebuffer: 0
 --- !u!195 &4861561477228062317
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -120,7 +127,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 7
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 360

@@ -42,9 +42,13 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     Color colorOriginal;
 
+    bool isBuffer;
 
+    bool HasHealthBuffed;
 
+    bool HasStrengthBuffed;
 
+    bool HasSpeedBuffed;
 
     void Start()
     {
@@ -98,9 +102,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         if(!isSpeedBuffer && !isHealthBuffer && !isStrengthBuffer)
         {
             BuffRange = 0;
+            isHealthBuffer = false;
 
         }
-
 
     }
 
@@ -229,6 +233,56 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         // Display the current hit points
         Debug.Log("Current HP: " + CurrentHitPoints);
     }
+
+    // Zombie Varriant;
+
+    void OnTrigger(Collider zombie)
+    {
+        int TotalBuff;
+        IHitPoints FellowZombie = zombie.GetComponent<IHitPoints>();
+        if(isHealthBuffer == true && HasHealthBuffed == false)
+        {
+            TotalBuff = HealthBuff * gameManager.gameInstance.GameRound;
+            FellowZombie.AddHP(TotalBuff);
+
+        }
+        if (isStrengthBuffer == true&& HasStrengthBuffed == false)
+        {
+            TotalBuff = DamageBuff * gameManager.gameInstance.GameRound;
+            FellowZombie.AddHP(TotalBuff);
+
+
+        }
+        if (isSpeedBuffer == true && HasSpeedBuffed == false)
+        {
+            TotalBuff = SpeedBuff * gameManager.gameInstance.GameRound;
+        }
+
+    }
+
+
+
+   public void AddHP(int amount)
+    {
+        HitPoints += amount;
+    }
+
+   public void AddDamage(int amount)
+    {
+
+        AttackDamage += amount;
+
+    }
+
+  public  void AddSpeed(int amount)
+    {
+
+
+    }
+
+
+
+
 
 
 

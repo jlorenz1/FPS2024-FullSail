@@ -9,4 +9,16 @@ public interface IHitPoints
 
 
     int CurrentHitPoints { get; }
+
+
+    void AddHP(int amount);
+
+    void AddDamage(int amount);
+
+    void AddSpeed(int amount);
+
+
+
+
+
 }
