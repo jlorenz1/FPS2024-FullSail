@@ -64,16 +64,16 @@ public class PlayerController : MonoBehaviour, IDamage
     void Start()
     {
         damage  = shootDamage;
-}
+        sprintTimer = maxSprintTimer;
+    }
 
     // Update is called once per frame
     void Update()
     {
         movement();
-        //if (!onSprintCoolDown)
-        //    sprint();
-        sprint();
-        //sprintTimerUpdate();
+        if (!onSprintCoolDown)
+            sprint();
+        sprintTimerUpdate();
 
         wallCheck();
         stateMachine();
@@ -115,12 +115,13 @@ public class PlayerController : MonoBehaviour, IDamage
             speed *= sprintMod;
             isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint"))// || sprintTimer == 0)
+        else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0)
         {
-            //if (sprintTimer == 0)
-            //    onSprintCoolDown = true;
+            if (sprintTimer <= 0)
+                onSprintCoolDown = true;
             speed /= sprintMod;
             isSprinting = false;
+            return;
         }
 
     }
@@ -174,10 +175,10 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (isSprinting)
         {
-            sprintTimer -= 0.5f;
+            sprintTimer -= Time.deltaTime;
         }
 
-        if (sprintTimer == 0)
+        if (onSprintCoolDown)
             StartCoroutine(waitTimer());
 
     }
