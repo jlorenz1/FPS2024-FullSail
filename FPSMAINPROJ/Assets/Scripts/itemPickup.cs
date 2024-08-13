@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class itemPickup : MonoBehaviour , IPickup
@@ -10,15 +11,16 @@ public class itemPickup : MonoBehaviour , IPickup
     private GameObject pickUp; //item to pickup
     private GameObject player;
     private PlayerController playerController;
-    public ArrayList basicInventory = new ArrayList();
+    public List<string> basicInventory;
 
     bool isPickedUp;
     bool inProcess;
-
+   
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+        basicInventory = new List<string>();
     }
 
     // Update is called once per frame
@@ -32,32 +34,57 @@ public class itemPickup : MonoBehaviour , IPickup
 
     public void pickUpItem(GameObject item)
     {
-        if (item.tag == "pickup")
+        int pickupLayer = item.layer;
+        string recived = LayerMask.LayerToName(pickupLayer);
+        if (recived == "Key")
         {
             Debug.Log("hit");
-            int pickupLayer = item.layer;
-            string recived = LayerMask.LayerToName(pickupLayer);
             Debug.Log(recived);
-            basicInventory.Add(item);
+            basicInventory.Add(recived);
+            Destroy(item);
         }
-        Destroy(item);
+        else if (recived == "Door")
+        {
+            Debug.Log(checkInventory("Key"));
+            if (checkInventory("Key"))
+            { 
+                Destroy(item);
+            }
+            else
+            {
+                Debug.Log("no key found in inv");
+            }
+            
+        }
     }
 
     IEnumerator Interact()
     {
         RaycastHit hit;
     
-        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             IPickup pickup = hit.collider.GetComponent<IPickup>();
-            Debug.Log(hit.collider.name);
-
-            if(pickup != null)
+            if (pickup != null)
             {
                 pickup.pickUpItem(hit.collider.gameObject);
             }
         }
         yield return new WaitForSeconds(1);
 
+    }
+
+    bool checkInventory(string item)
+    {
+        Debug.Log(basicInventory.Count);
+        foreach(string invItem in basicInventory)
+        {
+            Debug.Log("item in inv: " + invItem);
+            if(item == invItem)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
