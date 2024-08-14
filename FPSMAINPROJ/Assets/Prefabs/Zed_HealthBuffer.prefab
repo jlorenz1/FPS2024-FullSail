@@ -1954,7 +1954,7 @@ Transform:
   m_GameObject: {fileID: 8346145081859416977}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.726763, y: 4, z: -782.92975}
+  m_LocalPosition: {x: 39.709087, y: 3.0999994, z: -685.6814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2002,13 +2002,16 @@ MonoBehaviour:
   AttackDelay: 5
   BaseAttackDamage: 1
   agent: {fileID: 6437690735214222031}
+  HeadPos: {fileID: 2475605049352361555}
+  ViewAngle: 90
+  FacePlayerSpeed: 3
   isStrengthBuffer: 0
   isHealthBuffer: 1
   isSpeedBuffer: 0
   DamageBuff: 0
   SpeedBuff: 0
   HealthBuff: 5
-  BuffRange: 20
+  BuffRange: 50
   Speed: 0
   HitPoints: 0
   AttackDamage: 0

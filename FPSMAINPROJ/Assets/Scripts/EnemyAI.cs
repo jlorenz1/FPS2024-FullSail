@@ -106,7 +106,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
 
         UpdateSpeed();
-        GetSpeed();
+
 
     }
 
