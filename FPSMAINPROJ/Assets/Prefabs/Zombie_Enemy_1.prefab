@@ -103,9 +103,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 5089689444914746868}
-  BaseHitPoints: 5
+  BaseHitPoints: 2
   maxHeight: 15
-  AttackRange: 5
+  AttackRange: 1
   AttackDelay: 3
   BaseAttackDamage: 5
   agent: {fileID: 4861561477228062317}
@@ -117,6 +117,7 @@ MonoBehaviour:
   HealthBuff: 0
   BuffRange: 0
   isDebuffer: 0
+  HitPoints: 0
 --- !u!195 &4861561477228062317
 NavMeshAgent:
   m_ObjectHideFlags: 0

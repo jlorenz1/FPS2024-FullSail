@@ -30,6 +30,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
+    [SerializeField] TMP_Text enemyCount;
 
     //Objects
     private EnemySpawner enemySpawner;
@@ -124,10 +125,7 @@ public class gameManager : MonoBehaviour
         {
             TogglePause();
         }
-        /* if(isNewEnemies)
-         {
-             CheckForEnemies();
-         }*/
+     
         if (GetEnemyCount() == 0)
         {
 
@@ -138,6 +136,8 @@ public class gameManager : MonoBehaviour
         Debug.Log("EnemyCount: " + EnemyCount);
         Debug.Log("RoundCount" + GameRound);
 
+        roundCount.text = GameRound.ToString("F0");
+        enemyCount.text = EnemyCount.ToString("F0");
     }
 
     // Pause the Game
@@ -219,7 +219,7 @@ public class gameManager : MonoBehaviour
 
         enemySpawner.SetWaveMax(GameRound);
         
-       // roundCount.text = GameRound.ToString("F0");
+       
 
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.BaseSpawnZombies(GetGameRound());
@@ -247,11 +247,14 @@ public class gameManager : MonoBehaviour
     public int GetGameRound()
     {
         return GameRound;
+       
     }
 
     public void SetGameRound(int amount)
     {
         GameRound += amount;
+
+      
     }
 
     public void loseScreen()

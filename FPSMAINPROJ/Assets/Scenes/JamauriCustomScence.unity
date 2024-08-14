@@ -179,6 +179,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2260192702783703399, guid: 41bd666f68f0be44e9a19d01d500fce0, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1208649469}
+    - targetCorrespondingSourceObject: {fileID: 2260192702783703399, guid: 41bd666f68f0be44e9a19d01d500fce0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1208649464}
   m_SourcePrefab: {fileID: 100100000, guid: 41bd666f68f0be44e9a19d01d500fce0, type: 3}
@@ -448,6 +451,10 @@ PrefabInstance:
       value: Player (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: playerHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: maxSprintTimer
       value: 2
       objectReference: {fileID: 0}
@@ -482,14 +489,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 958976929144280843, guid: dfe0bfe5300358f4383e612dea60a140, type: 3}
-  spawnAreaCenter: {x: 2, y: 2, z: 2}
-  spawnAreaSize: {x: 2, y: 2, z: 2}
+  spawnAreaCenter: {x: 10, y: 10, z: 10}
+  spawnAreaSize: {x: 10, y: 10, z: 10}
   spawnRadius: 5
   maxAttempts: 10
   ScalingDamage: 0
   ScalingHealth: 0
   IsBufferSpawn: 0
   floorPrefab: {fileID: 1208649459}
+--- !u!114 &1208649469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208649459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c73c99eb9103794f8a0ce9fec1c3336, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab1: {fileID: 0}
+  prefab2: {fileID: 0}
+  prefab3: {fileID: 0}
+  spawnAreaCenter: {x: 0, y: 0, z: 0}
+  spawnAreaSize: {x: 0, y: 0, z: 0}
+  spawnRadius: 1
+  maxAttempts: 10
+  ScalingDamage: 0
+  ScalingHealth: 0
+  IsBufferSpawn: 0
+  floorPrefab: {fileID: 0}
 --- !u!4 &1354791426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7601987394530848931, guid: 8598b9621f22a604aa9ebc707ab99a39, type: 3}
