@@ -1967,7 +1967,6 @@ GameObject:
   - component: {fileID: 5037384042373487551}
   - component: {fileID: 2772293816689899056}
   - component: {fileID: -7884025453045009741}
-  - component: {fileID: 1570635770723293711}
   - component: {fileID: 3074570065710947807}
   m_Layer: 0
   m_Name: Zed_DamageBuffer
@@ -2033,9 +2032,6 @@ MonoBehaviour:
   AttackDelay: 5
   BaseAttackDamage: 5
   agent: {fileID: -7884025453045009741}
-  HeadPos: {fileID: 5526746726529859676}
-  ViewAngle: 90
-  FacePlayerSpeed: 3
   isStrengthBuffer: 1
   isHealthBuffer: 0
   isSpeedBuffer: 0
@@ -2068,37 +2064,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1570635770723293711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8668641669558895320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 317996698213e7e42bf2d58291f5772f, type: 2}
-  m_BuildHeightMesh: 0
 --- !u!136 &3074570065710947807
 CapsuleCollider:
   m_ObjectHideFlags: 0

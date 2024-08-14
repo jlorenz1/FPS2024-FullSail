@@ -52,8 +52,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     int round;
 
+    bool isGrounded;
+
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
 
         colorOriginal = model.material.color;
 
@@ -63,11 +66,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
-        agent = GetComponent<NavMeshAgent>();
-
         gameManager.gameInstance.UpdateGameGoal(1);
 
- 
+        agent.baseOffset = 0;
 
         if (gameManager.gameInstance.GetGameRound() > 0)
         {
@@ -86,6 +87,16 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
 
         Speed = agent.speed;
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        rb.useGravity = true;
+        rb.isKinematic = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        ApplyGravity();
     }
 
     // Update is called once per frame
@@ -107,7 +118,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         UpdateSpeed();
 
-
+        ApplyGravity();
     }
 
  
@@ -355,9 +366,21 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         return Speed;
 
     }
-
-
-
+    void ApplyGravity()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
+        {
+            float groundDistance = hit.distance;
+            if (groundDistance > 0.1f)
+            {
+                agent.Move(Vector3.down * groundDistance * Time.deltaTime);
+            }
+        }
+        else
+        {
+            agent.Move(Vector3.down * 9.81f * Time.deltaTime);
+        }
+    }
 
 
 }
