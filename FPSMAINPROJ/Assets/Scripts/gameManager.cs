@@ -120,7 +120,13 @@ public class gameManager : MonoBehaviour
          {
              CheckForEnemies();
          }*/
-        CheckEnemyCount();
+        if (GetEnemyCount() == 0)
+        {
+
+            StartNewRound();
+
+        }
+       
     }
 
     // Pause the Game
