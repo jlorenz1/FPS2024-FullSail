@@ -31,7 +31,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
-
+    public GameObject flashDamage;
     //Objects
     private EnemySpawner enemySpawner;
     private BufferSpawner bufferSpawner;

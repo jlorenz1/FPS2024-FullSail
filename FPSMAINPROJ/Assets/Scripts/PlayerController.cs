@@ -170,11 +170,19 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
+        StartCoroutine(damageFeedback());
 
         if(playerHP <= 0)
         {
             gameManager.gameInstance.loseScreen();
         }
+    }
+
+    IEnumerator damageFeedback()
+    {
+        gameManager.gameInstance.flashDamage.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.gameInstance.flashDamage.SetActive(false);
     }
     void sprintTimerUpdate()
     {
