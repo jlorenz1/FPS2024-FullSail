@@ -114,13 +114,19 @@ public class gameManager : MonoBehaviour
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-            TogglePause();
+            //TogglePause();
+            if(gameActiveMenu == null)
+            {
+                PauseGame();
+                gameActiveMenu = gamePauseMenu;
+                gameActiveMenu.SetActive(gamePauseMenu);
+            }
+            else if(gameActiveMenu == gamePauseMenu) 
+            {
+                    UnpauseGame();
+            }
         }
-        /* if(isNewEnemies)
-         {
-             CheckForEnemies();
-         }*/
-        CheckEnemyCount();
+       
     }
 
     // Pause the Game
@@ -136,11 +142,11 @@ public class gameManager : MonoBehaviour
     }
 
     // Unpause the Game
-    private void UnpauseGame()
+    public void UnpauseGame()
     {
         gameIsPaused = !gameIsPaused;
         // Adjust the timescale
-        Time.timeScale = 0;
+        Time.timeScale = 1;
         // Readjust the cursor properties and it's visibility
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -218,6 +224,13 @@ public class gameManager : MonoBehaviour
     public void SetGameRound(int amount)
     {
         GameRound += amount;
+    }
+
+    public void loseScreen()
+    {
+        PauseGame();
+        gameActiveMenu = gameLoseMenu;
+        gameActiveMenu.SetActive(gameIsPaused);
     }
 }
 

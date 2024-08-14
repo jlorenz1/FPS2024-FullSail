@@ -170,6 +170,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
+
+        if(playerHP <= 0)
+        {
+            gameManager.gameInstance.loseScreen();
+        }
     }
     void sprintTimerUpdate()
     {
