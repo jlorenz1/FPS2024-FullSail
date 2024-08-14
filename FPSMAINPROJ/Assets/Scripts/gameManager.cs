@@ -113,7 +113,12 @@ public class gameManager : MonoBehaviour
         //CheckForEnemies();
         MainCam = Camera.main;
 
-        GameRound = 1;
+
+        if(GameRound <= 0)
+        {
+            GameRound = 1;
+        }
+       
     }
 
 

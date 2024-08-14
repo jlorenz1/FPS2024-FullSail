@@ -26,11 +26,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int HealthBuff;
     [SerializeField] int BuffRange;
 
-    [SerializeField] bool isDebuffer;
+    public float Speed;
 
-   public int HitPoints;
+    public int HitPoints;
 
-    int AttackDamage;
+    public int AttackDamage;
 
     int EnemyAmount;
 
@@ -50,6 +50,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     bool HasSpeedBuffed;
 
+    int round;
+
     void Start()
     {
 
@@ -65,9 +67,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         gameManager.gameInstance.UpdateGameGoal(1);
 
-        int round;
+ 
 
-        if ( gameManager.gameInstance.GetGameRound() > 0)
+        if (gameManager.gameInstance.GetGameRound() > 0)
         {
             round = gameManager.gameInstance.GetGameRound();
         }
@@ -78,8 +80,12 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         HasSpeedBuffed = false;
         HasStrengthBuffed = false;
 
+        if (isHealthBuffer || isSpeedBuffer || isStrengthBuffer)
+        {
+            isBuffer = true;
+        }
 
-
+        Speed = agent.speed;
     }
 
     // Update is called once per frame
@@ -93,8 +99,18 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
             StartCoroutine(AttackWithDelay());
         }
+
+        if (isBuffer)
+        {
+            ApplyBuffsToNearbyZombies();
+        }
+
+        UpdateSpeed();
+        GetSpeed();
+
     }
 
+ 
 
     void OnValidate()
     {
@@ -113,7 +129,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
             SpeedBuff = 0;
         }
-        if(!isSpeedBuffer && !isHealthBuffer && !isStrengthBuffer)
+        if (!isSpeedBuffer && !isHealthBuffer && !isStrengthBuffer)
         {
             BuffRange = 0;
             isHealthBuffer = false;
@@ -136,21 +152,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         model.material.color = colorOriginal;
     }
 
-
-    /*  private void OnCollisionEnter(Collision collision)
-      {
-          if (collision.gameObject.CompareTag("Bullet"))
-          {
-              takeDamage(1);
-
-              if (HitPoints <= 0)
-              {
-                  Destroy(gameObject);
-              }
-          }
-
-      }*/
-
     public void takeDamage(int amountOfDamageTaken)
     {
         HitPoints -= amountOfDamageTaken;
@@ -159,7 +160,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
             gameManager.gameInstance.UpdateGameGoal(-1);
             Destroy(gameObject);
-          
+
         }
     }
 
@@ -251,72 +252,109 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     // Zombie Varriant;
 
-    void OnTriggerEnter(Collider other)
+    void ApplyBuffsToNearbyZombies()
     {
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+        foreach (GameObject zombie in zombies)
+        {
+            float distance = Vector3.Distance(transform.position, zombie.transform.position);
+            if (distance < BuffRange)
+            {
+                IHitPoints FellowZombie = zombie.GetComponent<IHitPoints>();
+                if (FellowZombie != null)
+                {
+                    Debug.Log("Zombie Entered buff range");
+                    ApplyBuffs(FellowZombie);
+                }
+            }
+        }
+    }
 
-     
-
-    
-        
-        int TotalBuff;
-        IHitPoints FellowZombie = other.GetComponent<IHitPoints>();
-
+    void ApplyBuffs(IHitPoints FellowZombie)
+    {
         if (FellowZombie != null)
         {
             Debug.Log("A zombie has entered the trigger zone.");
 
-
-
-
-            if (isHealthBuffer == true && HasHealthBuffed == false)
+            if (isHealthBuffer)
             {
-                TotalBuff = HealthBuff * gameManager.gameInstance.GetGameRound();
-                FellowZombie.AddHP(TotalBuff);
-                HasHealthBuffed = true;
-                Debug.Log("ZombieBuffed");
+                int totalHealthBuff = HealthBuff + round;
+                FellowZombie.AddHP(totalHealthBuff);
             }
-            if (isStrengthBuffer == true && HasStrengthBuffed == false)
-            {
-                TotalBuff = DamageBuff * gameManager.gameInstance.GetGameRound();
-                FellowZombie.AddHP(TotalBuff);
-                HasStrengthBuffed = true;
-                Debug.Log("ZombieBuffed");
 
-            }
-            if (isSpeedBuffer == true && HasSpeedBuffed == false)
+            if (isStrengthBuffer)
             {
-                TotalBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
+                int totalDamageBuff = DamageBuff * gameManager.gameInstance.GetGameRound();
+                FellowZombie.AddDamage(totalDamageBuff);
+            }
+
+            if (isSpeedBuffer)
+            {
+                int totalSpeedBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
+                FellowZombie.AddSpeed(totalSpeedBuff);
             }
         }
-
         else
         {
             Debug.Log("The object does not implement IHitPoints.");
         }
-
     }
 
-
-
-   public void AddHP(int amount)
+    public void AddHP(int amount)
     {
-        HitPoints += amount;
+        if (!HasHealthBuffed)
+        {
+            HitPoints += amount;
+            Debug.Log("Zombie health buffed by " + amount);
+            HasHealthBuffed = true;
+        }
+        else
+        {
+            Debug.Log("Health already buffed");
+        }
     }
 
-   public void AddDamage(int amount)
+    public void AddDamage(int amount)
+    {
+        if (!HasStrengthBuffed)
+        {
+            AttackDamage += amount;
+            Debug.Log("Zombie damage buffed by " + amount);
+            HasStrengthBuffed = true;
+        }
+        else
+        {
+            Debug.Log("Damage already buffed");
+        }
+    }
+
+    public void AddSpeed(int amount)
+    {
+        if (!HasSpeedBuffed)
+        {
+            agent.speed += amount;
+            Debug.Log("Zombie speed buffed by " + amount);
+            HasSpeedBuffed = true;
+        }
+        else
+        {
+            Debug.Log("Speed already buffed");
+        }
+    }
+
+    void UpdateSpeed()
     {
 
-        AttackDamage += amount;
+        Speed = agent.speed;
 
     }
 
-  public  void AddSpeed(int amount)
+    float GetSpeed()
     {
 
+        return Speed;
 
     }
-
-
 
 
 
