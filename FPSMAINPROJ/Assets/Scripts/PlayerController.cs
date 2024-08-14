@@ -183,8 +183,16 @@ public class PlayerController : MonoBehaviour, IDamage
             sprintTimer -= Time.deltaTime;
         }
 
-        if (onSprintCoolDown)
+        if (onSprintCoolDown && Input.GetButtonUp("Sprint"))
+        {
             StartCoroutine(waitTimer());
+        }
+
+        if(onSprintCoolDown && Input.GetButtonDown("Sprint"))
+        {
+            StopAllCoroutines();
+            //StopCoroutine(waitTimer());
+        }
 
     }
 
