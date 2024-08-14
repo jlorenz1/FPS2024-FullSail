@@ -30,16 +30,16 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
-  
+
     //Objects
     private EnemySpawner enemySpawner;
     private GameObject enemy;
-
+    private bool isCheckingEnemyCount = false;
 
     //int variables 
-     int EnemyCount;
+    int EnemyCount;
 
-     int GameRound;
+    int GameRound;
 
     // Private reference for the Player
     private GameObject _Player;
@@ -94,13 +94,12 @@ public class gameManager : MonoBehaviour
         // playerScript = player.GetComponent<playerController>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
-
-
         if (enemySpawner == null)
         {
             Debug.LogError("EnemySpawner not found.");
         }
-
+        else
+            Debug.Log("Enemy Spawner Valid");
 
         //CheckForEnemies();
         MainCam = Camera.main;
@@ -108,25 +107,20 @@ public class gameManager : MonoBehaviour
         GameRound = 1;
     }
 
+
     // Update is called once per frame
     void Update()
     {
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-            //TogglePause();
-            if(gameActiveMenu == null)
-            {
-                PauseGame();
-                gameActiveMenu = gamePauseMenu;
-                gameActiveMenu.SetActive(gamePauseMenu);
-            }
-            else if(gameActiveMenu == gamePauseMenu) 
-            {
-                    UnpauseGame();
-            }
+            TogglePause();
         }
-       
+        /* if(isNewEnemies)
+         {
+             CheckForEnemies();
+         }*/
+        CheckEnemyCount();
     }
 
     // Pause the Game
@@ -177,42 +171,49 @@ public class gameManager : MonoBehaviour
     public void UpdateGameGoal(int amount)
     {
 
-        if(GameRound == 0)
+        if (GameRound == 0)
         {
             GameRound = 1;
         }
 
-        if(EnemyCount < 0)
+        if (EnemyCount < 0)
         {
             EnemyCount = 0;
         }
 
-        EnemyCount += amount;
+        SetEnemyCount(amount);
 
         Debug.Log("enemies " + EnemyCount.ToString());
-    
+
     }
 
 
-    void CheckEnemyCount()
+    void SetEnemyCount(int amount)
+    {
+        EnemyCount += amount;
+    }
+
+    int GetEnemyCount()
     {
 
-       if(EnemyCount == 0)
+        return EnemyCount;
+
+    }
+
+    void StartNewRound()
+    {
+        SetGameRound(1);
+        // roundCount.text = GameRound.ToString("F0");
+
+        Debug.Log("SpanwFunctionCalled");
+        enemySpawner.BaseSpawnZombies(GetGameRound());
+
+        if (GameRound % 5 == 0)
         {
 
-            SetGameRound(1);
-            roundCount.text = GameRound.ToString("F0");
             enemySpawner.BaseSpawnZombies(GetGameRound());
-
-            if (GameRound % 5 == 0)
-            {
-                enemySpawner.BaseSpawnZombies(GetGameRound());
-            }
-
-
         }
 
-       
 
     }
 
@@ -233,6 +234,5 @@ public class gameManager : MonoBehaviour
         gameActiveMenu.SetActive(gameIsPaused);
     }
 }
-
 
 

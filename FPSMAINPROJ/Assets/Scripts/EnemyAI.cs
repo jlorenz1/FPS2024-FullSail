@@ -157,8 +157,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         StartCoroutine(flashRed());
         if (HitPoints <= 0)
         {
-            Destroy(gameObject);
             gameManager.gameInstance.UpdateGameGoal(-1);
+            Destroy(gameObject);
+          
         }
     }
 
