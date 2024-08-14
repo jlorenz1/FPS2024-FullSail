@@ -33,6 +33,7 @@ public class gameManager : MonoBehaviour
 
     //Objects
     private EnemySpawner enemySpawner;
+    private BufferSpawner bufferSpawner;
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
 
@@ -101,6 +102,13 @@ public class gameManager : MonoBehaviour
         else
             Debug.Log("Enemy Spawner Valid");
 
+        bufferSpawner = FindObjectOfType<BufferSpawner>(); 
+        if (bufferSpawner == null)
+        {
+            Debug.LogError("EnemySpawner not found.");
+        }
+        else
+            Debug.Log("Enemy Spawner Valid");
         //CheckForEnemies();
         MainCam = Camera.main;
 
@@ -126,7 +134,10 @@ public class gameManager : MonoBehaviour
             StartNewRound();
 
         }
-       
+
+        Debug.Log("EnemyCount: " + EnemyCount);
+        Debug.Log("RoundCount" + GameRound);
+
     }
 
     // Pause the Game
@@ -177,10 +188,6 @@ public class gameManager : MonoBehaviour
     public void UpdateGameGoal(int amount)
     {
 
-        if (GameRound == 0)
-        {
-            GameRound = 1;
-        }
 
         if (EnemyCount < 0)
         {
@@ -209,7 +216,10 @@ public class gameManager : MonoBehaviour
     void StartNewRound()
     {
         SetGameRound(1);
-        // roundCount.text = GameRound.ToString("F0");
+
+        enemySpawner.SetWaveMax(GameRound);
+        
+       // roundCount.text = GameRound.ToString("F0");
 
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.BaseSpawnZombies(GetGameRound());
@@ -217,11 +227,22 @@ public class gameManager : MonoBehaviour
         if (GameRound % 5 == 0)
         {
 
-            enemySpawner.BaseSpawnZombies(GetGameRound());
+            SpawnBufferZombie();
+        
         }
 
 
     }
+
+
+    void SpawnBufferZombie()
+    {
+        Debug.Log("Special Round");
+        bufferSpawner.SetWaveMax(GameRound);
+        bufferSpawner.BufferSpawnZombies(GetGameRound());
+    }
+
+
 
     public int GetGameRound()
     {

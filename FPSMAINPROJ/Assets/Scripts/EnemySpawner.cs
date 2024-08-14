@@ -26,13 +26,13 @@ public class EnemySpawner : MonoBehaviour
             spawnAreaCenter.y += 1f; // Adjust Y position if needed to spawn above the floor
         }
 
-        SetWaveMax(1); 
+        SetWaveMax(1);
     }
 
 
 
 
-    int SetWaveMax(int round)
+   public int SetWaveMax(int round)
     {
 
         WaveMax = round * 5;
@@ -85,77 +85,4 @@ public class EnemySpawner : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void BufferSpawnZombie(int round)
-    {
-        Debug.Log("Boss Wave");
-        if (IsBufferSpawn == true)
-        {
-            for (int i = 0; i < WaveMax/5; i++)
-            {
-                Vector3 spawnPosition = Vector3.zero;
-                bool positionFound = false;
-
-                for (int attempts = 0; attempts < maxAttempts; attempts++)
-                {
-                    // Generate a random position within the spawn area
-                    spawnPosition = spawnAreaCenter + new Vector3(
-                    Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
-                    spawnAreaSize.y / 2,  // Start raycast from above
-                    Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
-                    );
-
-                    // Check if the position is free
-                    if (Physics.OverlapSphere(spawnPosition, spawnRadius).Length == 0)
-                    {
-                        positionFound = true;
-                        break;
-                    }
-                }
-
-                // Instantiate the zombie if a valid position was found
-                if (positionFound)
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(spawnPosition, Vector3.down, out hit))
-                    {
-                        spawnPosition.y = hit.point.y;  // Adjust Y position to the ground level
-                        GameObject newZombie = Instantiate(prefab, spawnPosition, Quaternion.identity);
-
-                        EnemyAI zombieScript = newZombie.GetComponent<EnemyAI>();
-                        if (zombieScript != null)
-                        {
-                            if (ScalingDamage == true)
-                            {
-                                zombieScript.ScalingDamage(round);
-                            }
-
-
-                            if (ScalingHealth == true)
-                            {
-                                zombieScript.IncreaseHitPoints(round);
-                            }
-
-
-
-                        }
-
-
-
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("Could not find a free position to spawn a zombie.");
-                }
-            }
-
-
-        }
-
-
-
-
-
-
-    }
 }
