@@ -10,8 +10,7 @@ public class BufferSpawner : MonoBehaviour
     [SerializeField] GameObject prefab3;
     [SerializeField] Vector3 spawnAreaCenter;
     [SerializeField] Vector3 spawnAreaSize;
-    [SerializeField] float spawnRadius = 1f;
-    [SerializeField] int maxAttempts = 10;
+    [SerializeField] float spawnRadius = 2f;
     [SerializeField] bool ScalingDamage;
     [SerializeField] bool ScalingHealth;
     [SerializeField] bool IsBufferSpawn;
@@ -56,7 +55,7 @@ public class BufferSpawner : MonoBehaviour
             Vector3 randomPoint = GetRandomPointOnNavMesh(spawnAreaCenter, spawnRadius);
             if (randomPoint != Vector3.zero)
             {
-                if (RoundType == 1)
+              /*  if (RoundType == 0)
                 {
                     GameObject newZombie = Instantiate(prefab1, randomPoint, Quaternion.identity);
                     SetupZombie(newZombie, round);
@@ -71,15 +70,15 @@ public class BufferSpawner : MonoBehaviour
                     GameObject newZombie = Instantiate(prefab3, randomPoint, Quaternion.identity);
                     SetupZombie(newZombie, round);
                 }
-                if (RoundType == 4)
-                {
+                if (RoundType == 4 || RoundType == 1)
+                {*/
                     GameObject newZombie1 = Instantiate(prefab1, randomPoint, Quaternion.identity);
                     GameObject newZombie2 = Instantiate(prefab2, randomPoint, Quaternion.identity);
                     GameObject newZombie3 = Instantiate(prefab3, randomPoint, Quaternion.identity);
                     SetupZombie(newZombie1, round);
                     SetupZombie(newZombie2, round);
                     SetupZombie(newZombie3, round);
-                }
+              //  }
             }
         }
     }
