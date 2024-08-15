@@ -127,7 +127,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         ApplyGravity();
 
-        CanSeePlayer();
+       // CanSeePlayer();
     }
 
  
@@ -390,7 +390,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             agent.Move(Vector3.down * 9.81f * Time.deltaTime);
         }
     }
-    bool CanSeePlayer()
+  /*  bool CanSeePlayer()
     {
 
         PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
@@ -433,7 +433,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
 
     }
-
+*/
 }
 
 
