@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] float RoundDelay;
     public GameObject flashDamage;
+    public Image playerHPBar;
     //Objects
     private EnemySpawner enemySpawner;
     private BufferSpawner bufferSpawner;

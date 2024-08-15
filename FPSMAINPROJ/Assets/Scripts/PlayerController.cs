@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] int playerHP;
+    int HPorig;
 
     // Weapon Variables for player
     [SerializeField] int shootDamage;
@@ -63,6 +64,8 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        HPorig = playerHP;
+        updatePlayerUI();
         damage  = shootDamage;
         sprintTimer = maxSprintTimer;
     }
@@ -171,7 +174,7 @@ public class PlayerController : MonoBehaviour, IDamage
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
         StartCoroutine(damageFeedback());
-
+        updatePlayerUI();
         if(playerHP <= 0)
         {
             gameManager.gameInstance.loseScreen();
@@ -209,6 +212,11 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(maxSprintWaitTimer);
         sprintTimer = maxSprintTimer;
         onSprintCoolDown = false;
+    }
+
+    public void updatePlayerUI()
+    {
+        gameManager.gameInstance.playerHPBar.fillAmount = (float)playerHP / HPorig;
     }
 
 }
