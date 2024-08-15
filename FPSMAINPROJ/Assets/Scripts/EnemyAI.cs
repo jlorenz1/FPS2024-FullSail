@@ -15,6 +15,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int AttackDelay;
     [SerializeField] int BaseAttackDamage;
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] int ViewAngle;
+    [SerializeField] Transform HeadPos;
+    [SerializeField] int FacePlayerSpeed;
 
 
 
@@ -53,6 +56,10 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     int round;
 
     bool isGrounded;
+
+    float AngleToPlayer;
+
+    Vector3 PlayerDrr;
 
     void Start()
     {
@@ -119,6 +126,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         UpdateSpeed();
 
         ApplyGravity();
+
+        CanSeePlayer();
     }
 
  
@@ -381,7 +390,49 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             agent.Move(Vector3.down * 9.81f * Time.deltaTime);
         }
     }
+    bool CanSeePlayer()
+    {
 
+        PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
+        AngleToPlayer = Vector3.Angle(PlayerDrr, transform.forward);
+
+        Debug.Log(AngleToPlayer);
+        Debug.DrawRay(HeadPos.position, PlayerDrr);
+
+
+
+        RaycastHit hit;
+        if (Physics.Raycast(HeadPos.position, PlayerDrr, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && AngleToPlayer <= ViewAngle)
+            {
+                agent.SetDestination(gameManager.gameInstance.player.transform.position);
+
+           
+                return true;
+            }
+
+
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+
+                FacePlayer();
+            }
+
+        }
+
+        return false;
+
+    }
+
+    void FacePlayer()
+    {
+
+        Quaternion Rot = Quaternion.LookRotation(PlayerDrr);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * FacePlayerSpeed);
+
+
+    }
 
 }
 

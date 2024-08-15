@@ -1762,7 +1762,7 @@ Transform:
   m_GameObject: {fileID: 8149489963674234323}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 218.97382, y: 2.0982494, z: 163.95766}
+  m_LocalPosition: {x: 31.50204, y: 3.1000004, z: -670.6433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1789,6 +1789,9 @@ MonoBehaviour:
   AttackDelay: 3
   BaseAttackDamage: 2
   agent: {fileID: 4861561477228062317}
+  ViewAngle: 90
+  HeadPos: {fileID: 1528012294658502060}
+  FacePlayerSpeed: 5
   isStrengthBuffer: 0
   isHealthBuffer: 0
   isSpeedBuffer: 0
@@ -1834,7 +1837,7 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 2
+  m_StoppingDistance: 4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1869,10 +1872,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
-  m_Height: 6
+  m_Radius: 0.5
+  m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &166286035340692274
 Rigidbody:
   m_ObjectHideFlags: 0
