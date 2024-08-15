@@ -31,12 +31,15 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
+    [SerializeField] float RoundDelay;
     public GameObject flashDamage;
     //Objects
     private EnemySpawner enemySpawner;
     private BufferSpawner bufferSpawner;
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
+    private bool isNewRoundStarting = false;
+
 
     //int variables 
     int EnemyCount;
@@ -114,10 +117,10 @@ public class gameManager : MonoBehaviour
         MainCam = Camera.main;
 
 
-        if(GameRound <= 0)
+      /*  if(GameRound <= 0)
         {
             GameRound = 1;
-        }
+        }*/
        
     }
 
@@ -130,16 +133,14 @@ public class gameManager : MonoBehaviour
         {
             TogglePause();
         }
-     
-        if (GetEnemyCount() == 0)
+
+        if (!isNewRoundStarting && GetEnemyCount() == 0)
         {
-
-            StartNewRound();
-
+            StartCoroutine(DelayedStartNewRound());
         }
 
         //Debug.Log("EnemyCount: " + EnemyCount);
-       // Debug.Log("RoundCount" + GameRound);
+        // Debug.Log("RoundCount" + GameRound);
 
         roundCount.text = GameRound.ToString("F0");
         enemyCount.text = EnemyCount.ToString("F0");
@@ -216,6 +217,14 @@ public class gameManager : MonoBehaviour
 
         return EnemyCount;
 
+    }
+
+    private IEnumerator DelayedStartNewRound()
+    {
+        isNewRoundStarting = true; // Set the flag to true to prevent multiple triggers
+        yield return new WaitForSeconds(RoundDelay); // Delay for 3 seconds (you can adjust the time as needed)
+        StartNewRound();
+        isNewRoundStarting = false; // Reset the flag after the round starts
     }
 
     void StartNewRound()
