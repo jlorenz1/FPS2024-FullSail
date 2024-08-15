@@ -256,13 +256,13 @@ public class gameManager : MonoBehaviour
 
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.BaseSpawnZombies(GetGameRound());
-
+/*
         if (GameRound % 5 == 0)
         {
 
             SpawnBufferZombie();
         
-        }
+        }*/
 
     }
 
