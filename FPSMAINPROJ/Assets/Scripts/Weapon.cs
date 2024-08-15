@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -48,6 +49,7 @@ public class Weapon : MonoBehaviour
     public int currentMagazineIndex;
 
     // Reloading mechanics
+    public Animation pistolReloadAnim;
     [SerializeField] private float reloadTime = 2f;
     private bool isReloading = false;
     // Add a timer feature to the reload mechanic if the user presses reload again within certain timeframe it achieves a perfect reload with no reload wait time
@@ -76,6 +78,7 @@ public class Weapon : MonoBehaviour
 
         // Store weapon pos
         originalWeaponPosition = transform.localPosition;
+
         
     }
 
@@ -282,7 +285,11 @@ public class Weapon : MonoBehaviour
     {
         isReloading = true;
         if (isReloading)
+        {
             Debug.Log("Reloading...");
+            // play reload anim
+
+        }
 
         yield return new WaitForSeconds(reloadTime);
 
