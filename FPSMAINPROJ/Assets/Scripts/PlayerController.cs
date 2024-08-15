@@ -81,9 +81,8 @@ public class PlayerController : MonoBehaviour, IDamage
         wallCheck();
         stateMachine();
 
-
     }
-
+    
     void movement()
     {
         if (controller.isGrounded)
@@ -179,6 +178,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             gameManager.gameInstance.loseScreen();
         }
+        
     }
 
     IEnumerator damageFeedback()
@@ -218,5 +218,6 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         gameManager.gameInstance.playerHPBar.fillAmount = (float)playerHP / HPorig;
     }
+
 
 }

@@ -82,7 +82,7 @@ public class gameManager : MonoBehaviour
         private set { _GameIsPaused = value; }
     }
 
-
+    public bool hasWinCondition;
     // Using Awake, for Manager
     void Awake()
     {
@@ -240,6 +240,14 @@ public class gameManager : MonoBehaviour
 
     void StartNewRound()
     {
+        if (hasWinCondition)
+        {
+            if (GameRound == 2 && EnemyCount == 0)
+            {
+                gameManager.gameInstance.winScreen();
+            }
+        }
+
         SetGameRound(1);
 
         enemySpawner.SetWaveMax(GameRound);
@@ -255,7 +263,6 @@ public class gameManager : MonoBehaviour
             SpawnBufferZombie();
         
         }
-
 
     }
 
