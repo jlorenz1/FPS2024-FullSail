@@ -60,8 +60,12 @@ public class itemPickup : MonoBehaviour , IPickup
         {
             if (playerController.weapon != null)
             {
-                playerController.weapon.HandleAmmoDrop();
-                Destroy(item);
+                if(playerController.weapon.getAmmoCount() < playerController.weapon.getMaxAmmoCount())
+                {
+                    playerController.weapon.HandleAmmoDrop();
+                    Destroy(item);
+                }
+                else { return; }
             }
         }
     }

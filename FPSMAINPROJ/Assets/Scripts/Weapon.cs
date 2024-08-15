@@ -44,8 +44,8 @@ public class Weapon : MonoBehaviour
 
     }
 
-    [SerializeField] private Magazine[] magazines;
-    private int currentMagazineIndex;
+    [SerializeField] public Magazine[] magazines;
+    public int currentMagazineIndex;
 
     // Reloading mechanics
     [SerializeField] private float reloadTime = 2f;
@@ -317,7 +317,7 @@ public class Weapon : MonoBehaviour
 
     public void HandleAmmoDrop()
     {
-        if (magazines[currentMagazineIndex].currentAmmoCount < magazines[currentMagazineIndex].magazineCapacity)
+        if (getAmmoCount() < getMaxAmmoCount())
         {
             int amountNeeded = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
 
@@ -325,5 +325,15 @@ public class Weapon : MonoBehaviour
         }
         Debug.Log("Ammo filled");
         
+    }
+
+    public int getAmmoCount()
+    {
+        return magazines[currentMagazineIndex].currentAmmoCount;
+    }
+
+    public int getMaxAmmoCount()
+    {
+        return magazines[currentMagazineIndex].magazineCapacity;
     }
 }
