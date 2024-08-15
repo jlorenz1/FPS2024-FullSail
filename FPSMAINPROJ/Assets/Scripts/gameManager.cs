@@ -133,7 +133,16 @@ public class gameManager : MonoBehaviour
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-            TogglePause();
+            if(gameActiveMenu == null)
+            {
+                PauseGame();
+                gameActiveMenu = gamePauseMenu;
+                gameActiveMenu.SetActive(gameIsPaused);
+            }
+            else
+            {
+                UnpauseGame();
+            }
         }
 
         if (!isNewRoundStarting && GetEnemyCount() == 0)
