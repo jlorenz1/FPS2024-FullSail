@@ -97,10 +97,13 @@ MonoBehaviour:
   model: {fileID: 4248020397593440044}
   BaseHitPoints: 1
   maxHeight: 20
-  AttackRange: 1
+  AttackRange: 3
   AttackDelay: 3
   BaseAttackDamage: 2
   agent: {fileID: 6285552939331488542}
+  ViewAngle: 0
+  HeadPos: {fileID: 0}
+  FacePlayerSpeed: 0
   isStrengthBuffer: 0
   isHealthBuffer: 0
   isSpeedBuffer: 0
@@ -108,8 +111,9 @@ MonoBehaviour:
   SpeedBuff: 0
   HealthBuff: 0
   BuffRange: 0
-  isDebuffer: 0
+  Speed: 0
   HitPoints: 0
+  AttackDamage: 0
 --- !u!195 &6285552939331488542
 NavMeshAgent:
   m_ObjectHideFlags: 0
