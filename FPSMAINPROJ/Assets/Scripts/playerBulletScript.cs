@@ -17,7 +17,7 @@ public class playerBulletScript : MonoBehaviour
             return;
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Zombie"))
         {
             Debug.Log("hit" + collision.gameObject.name);
 
@@ -34,7 +34,7 @@ public class playerBulletScript : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+  /*  private void OnTriggerEnter(Collider other)
     {
 
         //ignores other triggers
@@ -65,6 +65,6 @@ public class playerBulletScript : MonoBehaviour
         Destroy(gameObject);
 
 
-    }
+    }*/
 
 }
