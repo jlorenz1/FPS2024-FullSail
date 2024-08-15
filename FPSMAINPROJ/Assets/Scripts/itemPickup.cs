@@ -10,6 +10,8 @@ public class itemPickup : MonoBehaviour , IPickup
     private GameObject pickUp; //item to pickup
     private GameObject player;
     private PlayerController playerController;
+    private Ray interactRay;
+    private RaycastHit interactHit;
     bool isPickedUp;
     bool inProcess;
     bool doorOpen = false;
@@ -28,7 +30,20 @@ public class itemPickup : MonoBehaviour , IPickup
         {
             StartCoroutine(Interact());
         }
-        
+
+        interactRay = Camera.main.ScreenPointToRay(Camera.main.transform.position);
+        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out interactHit, pickupDis, ~ignoreMask))
+        {
+
+            if (interactHit.collider.GetComponent<IPickup>() != null)
+            {
+                gameManager.gameInstance.playerInteract.SetActive(true);
+            }
+            else
+            {
+                gameManager.gameInstance.playerInteract.SetActive(false);
+            }
+        }
     }
 
     public void pickUpItem(GameObject item)

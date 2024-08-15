@@ -34,7 +34,10 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] float RoundDelay;
     public GameObject flashDamage;
+    public GameObject playerInteract;
     public Image playerHPBar;
+    
+
     //Objects
     private EnemySpawner enemySpawner;
     private BufferSpawner bufferSpawner;
@@ -301,6 +304,12 @@ public class gameManager : MonoBehaviour
         PauseGame();
         gameActiveMenu = gameWinMenu;
         gameActiveMenu.SetActive(gameIsPaused);
+    }
+
+    public void interactScreen()
+    {
+        gameManager.gameInstance.playerInteract.SetActive(true);
+        
     }
 }
 

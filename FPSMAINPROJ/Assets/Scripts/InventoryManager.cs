@@ -5,7 +5,7 @@ using UnityEngine;
 public class inventoryManager : MonoBehaviour
 {
     public static inventoryManager Instance;
-    List<string> basicInventory = new List<string>();
+    public List<string> basicInventory = new List<string>();
     // Start is called before the first frame update
     void Awake()
     {
