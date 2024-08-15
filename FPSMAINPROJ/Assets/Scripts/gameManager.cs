@@ -108,13 +108,13 @@ public class gameManager : MonoBehaviour
         else
             Debug.Log("Enemy Spawner Valid");
 
-        bufferSpawner = FindObjectOfType<BufferSpawner>(); 
-        if (bufferSpawner == null)
-        {
-            Debug.LogError("EnemySpawner not found.");
-        }
-        else
-            Debug.Log("Enemy Spawner Valid");
+        //bufferSpawner = FindObjectOfType<BufferSpawner>(); 
+        //if (bufferSpawner == null)
+        //{
+        //    Debug.LogError("EnemySpawner not found.");
+        //}
+        //else
+        //    Debug.Log("Enemy Spawner Valid");
         //CheckForEnemies();
         MainCam = Camera.main;
 
@@ -286,6 +286,13 @@ public class gameManager : MonoBehaviour
     {
         PauseGame();
         gameActiveMenu = gameLoseMenu;
+        gameActiveMenu.SetActive(gameIsPaused);
+    }
+
+    public void winScreen()
+    { 
+        PauseGame();
+        gameActiveMenu = gameWinMenu;
         gameActiveMenu.SetActive(gameIsPaused);
     }
 }
