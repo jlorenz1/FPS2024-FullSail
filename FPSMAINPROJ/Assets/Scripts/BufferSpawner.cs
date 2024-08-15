@@ -55,7 +55,7 @@ public class BufferSpawner : MonoBehaviour
             Vector3 randomPoint = GetRandomPointOnNavMesh(spawnAreaCenter, spawnRadius);
             if (randomPoint != Vector3.zero)
             {
-              /*  if (RoundType == 0)
+                if (RoundType == 0)
                 {
                     GameObject newZombie = Instantiate(prefab1, randomPoint, Quaternion.identity);
                     SetupZombie(newZombie, round);
@@ -71,14 +71,14 @@ public class BufferSpawner : MonoBehaviour
                     SetupZombie(newZombie, round);
                 }
                 if (RoundType == 4 || RoundType == 1)
-                {*/
+                {
                     GameObject newZombie1 = Instantiate(prefab1, randomPoint, Quaternion.identity);
                     GameObject newZombie2 = Instantiate(prefab2, randomPoint, Quaternion.identity);
                     GameObject newZombie3 = Instantiate(prefab3, randomPoint, Quaternion.identity);
                     SetupZombie(newZombie1, round);
                     SetupZombie(newZombie2, round);
                     SetupZombie(newZombie3, round);
-              //  }
+                }
             }
         }
     }

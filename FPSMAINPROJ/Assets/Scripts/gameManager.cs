@@ -108,13 +108,13 @@ public class gameManager : MonoBehaviour
         else
             Debug.Log("Enemy Spawner Valid");
 
-        //bufferSpawner = FindObjectOfType<BufferSpawner>(); 
-        //if (bufferSpawner == null)
-        //{
-        //    Debug.LogError("EnemySpawner not found.");
-        //}
-        //else
-        //    Debug.Log("Enemy Spawner Valid");
+        bufferSpawner = FindObjectOfType<BufferSpawner>(); 
+        if (bufferSpawner == null)
+        {
+           Debug.LogError("EnemySpawner not found.");
+        }
+        else
+            Debug.Log("Enemy Spawner Valid");
         //CheckForEnemies();
         MainCam = Camera.main;
 
@@ -256,13 +256,13 @@ public class gameManager : MonoBehaviour
 
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.BaseSpawnZombies(GetGameRound());
-/*
+
         if (GameRound % 5 == 0)
         {
 
             SpawnBufferZombie();
-        
-        }*/
+
+        }
 
     }
 
