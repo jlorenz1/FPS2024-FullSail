@@ -10,15 +10,15 @@ public class itemPickup : MonoBehaviour , IPickup
     private GameObject pickUp; //item to pickup
     private GameObject player;
     private PlayerController playerController;
-
     bool isPickedUp;
     bool inProcess;
+    bool doorOpen = false;
       
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-
+        
     }
 
     // Update is called once per frame
@@ -28,6 +28,7 @@ public class itemPickup : MonoBehaviour , IPickup
         {
             StartCoroutine(Interact());
         }
+        
     }
 
     public void pickUpItem(GameObject item)
@@ -44,7 +45,7 @@ public class itemPickup : MonoBehaviour , IPickup
         else if (recived == "Door")
         {
             Debug.Log(inventoryManager.Instance.checkInventory("Key"));
-            
+
             if (inventoryManager.Instance.checkInventory("Key"))
             {
                 StartCoroutine(slideDoor(item.transform));
@@ -53,7 +54,15 @@ public class itemPickup : MonoBehaviour , IPickup
             {
                 Debug.Log("no key found in inv");
             }
-            
+
+        }
+        else if (recived == "Ammo")
+        {
+            if (playerController.weapon != null)
+            {
+                playerController.weapon.HandleAmmoDrop();
+                Destroy(item);
+            }
         }
     }
 
@@ -75,22 +84,31 @@ public class itemPickup : MonoBehaviour , IPickup
 
     IEnumerator slideDoor(Transform transform)
     {
-        //get door pos
-        Vector3 doorPos = transform.position;
-        //get desired endPos
-        Vector3 endPos = doorPos - new Vector3(0, 4, 0);
-        //speed to slide
-        float slidespeed = 1f;
-        //time it takes
-        float timeToOpen = 0f;
-
-        while (timeToOpen < slidespeed)
+        if (doorOpen == false)
         {
-            //lerp over the positions smoothly
-            transform.position = Vector3.Lerp(doorPos, endPos, (timeToOpen / slidespeed));
-            timeToOpen += Time.deltaTime;
+            //get door pos
+            Vector3 doorPos = transform.position;
+            //get desired endPos
+            Vector3 endPos = doorPos - new Vector3(0, 4, 0);
+            //speed to slide
+            float slidespeed = 1f;
+            //time it takes
+            float timeToOpen = 0f;
+
+            while (timeToOpen < slidespeed)
+            {
+                //lerp over the positions smoothly
+                transform.position = Vector3.Lerp(doorPos, endPos, (timeToOpen / slidespeed));
+                timeToOpen += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = endPos;
+            doorOpen = true;
+        }
+        else
+        {
+            Debug.Log("doors open!");
             yield return null;
         }
-        transform.position = endPos;
     }
 }

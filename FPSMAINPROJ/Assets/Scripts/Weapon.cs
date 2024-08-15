@@ -41,6 +41,7 @@ public class Weapon : MonoBehaviour
     {
         public int magazineCapacity = 30;
         public int currentAmmoCount = 30;
+
     }
 
     [SerializeField] private Magazine[] magazines;
@@ -160,7 +161,7 @@ public class Weapon : MonoBehaviour
         magazines[currentMagazineIndex].currentAmmoCount--;
         DecreaseDurability();
         ShootBullet();
-
+        Debug.Log(magazines[currentMagazineIndex].currentAmmoCount);
         StartCoroutine(ApplyRecoil());
         OnFire?.Invoke();
 
@@ -312,5 +313,17 @@ public class Weapon : MonoBehaviour
             isJammed = false;
             Debug.Log("Weapon jam cleared!");
         }
+    }
+
+    public void HandleAmmoDrop()
+    {
+        if (magazines[currentMagazineIndex].currentAmmoCount < magazines[currentMagazineIndex].magazineCapacity)
+        {
+            int amountNeeded = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
+
+            magazines[currentMagazineIndex].currentAmmoCount += amountNeeded;
+        }
+        Debug.Log("Ammo filled");
+        
     }
 }

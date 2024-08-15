@@ -138,8 +138,8 @@ public class gameManager : MonoBehaviour
 
         }
 
-        Debug.Log("EnemyCount: " + EnemyCount);
-        Debug.Log("RoundCount" + GameRound);
+        //Debug.Log("EnemyCount: " + EnemyCount);
+       // Debug.Log("RoundCount" + GameRound);
 
         roundCount.text = GameRound.ToString("F0");
         enemyCount.text = EnemyCount.ToString("F0");

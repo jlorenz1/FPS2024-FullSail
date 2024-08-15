@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
+    public Weapon weapon;
 
     // climbing video variables
     [Header("Reference")]
@@ -58,7 +59,6 @@ public class PlayerController : MonoBehaviour, IDamage
     bool onSprintCoolDown;
 
     public int damage;
-
 
     // Start is called before the first frame update
     void Start()
