@@ -973,8 +973,6 @@ GameObject:
   - component: {fileID: 6947507821827537027}
   - component: {fileID: 1351259943420516684}
   - component: {fileID: 7681414669328806657}
-  - component: {fileID: 3897876793421276412}
-  - component: {fileID: 1643551197693223352}
   m_Layer: 0
   m_Name: TestZombieEnemy
   m_TagString: Zombie
@@ -1132,49 +1130,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &3897876793421276412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4909731680592392969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: dbbbf5f2caf7a5647918a8a818fa18f0, type: 2}
-  m_BuildHeightMesh: 0
---- !u!114 &1643551197693223352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4909731680592392969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea07f2ab620e1a44a180e292501209c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5025547218953054978
 GameObject:
   m_ObjectHideFlags: 0
