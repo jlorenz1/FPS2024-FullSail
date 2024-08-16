@@ -23,7 +23,8 @@ public class gameManager : MonoBehaviour
             return _gameInstance;
         }
     }
-
+    private float lastRoundStartTime = 0f;
+    [SerializeField] private float minRoundDuration = 10f;
     // Serialized Variables
     [SerializeField] GameObject gameActiveMenu;
     [SerializeField] GameObject gameMainMenu;
@@ -104,6 +105,7 @@ public class gameManager : MonoBehaviour
         // playerScript = player.GetComponent<playerController>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
+        enemySpawner.PopulateSpawnPoints();
         if (enemySpawner == null)
         {
             Debug.LogError("EnemySpawner not found.");
@@ -118,14 +120,13 @@ public class gameManager : MonoBehaviour
         }
         else
             Debug.Log("Enemy Spawner Valid");
-        //CheckForEnemies();
+       
         MainCam = Camera.main;
 
-
-      /*  if(GameRound <= 0)
+        if(EnemyCount == 0)
         {
-            GameRound = 1;
-        }*/
+            StartNewRound();
+        }
        
     }
 
@@ -148,13 +149,7 @@ public class gameManager : MonoBehaviour
             }
         }
 
-        if (!isNewRoundStarting && GetEnemyCount() == 0)
-        {
-            StartCoroutine(DelayedStartNewRound());
-        }
-
-        //Debug.Log("EnemyCount: " + EnemyCount);
-        // Debug.Log("RoundCount" + GameRound);
+     
 
         roundCount.text = GameRound.ToString("F0");
         enemyCount.text = EnemyCount.ToString("F0");
@@ -218,6 +213,13 @@ public class gameManager : MonoBehaviour
 
         Debug.Log("enemies " + EnemyCount.ToString());
 
+
+
+        if (EnemyCount == 0) {
+
+            StartNewRound();
+        }
+
     }
 
 
@@ -226,20 +228,23 @@ public class gameManager : MonoBehaviour
         EnemyCount += amount;
     }
 
-    int GetEnemyCount()
+
+    void UpdateEnemyCount()
+    {
+        // Reset EnemyCount based on the number of enemies tagged as "Enemy"
+        EnemyCount = GameObject.FindGameObjectsWithTag("Zombie").Length;
+        enemyCount.text = EnemyCount.ToString("F0");
+    }
+
+
+    public int GetEnemyCount()
     {
 
         return EnemyCount;
 
     }
 
-    private IEnumerator DelayedStartNewRound()
-    {
-        isNewRoundStarting = true; // Set the flag to true to prevent multiple triggers
-        yield return new WaitForSeconds(RoundDelay); // Delay for 3 seconds (you can adjust the time as needed)
-        StartNewRound();
-        isNewRoundStarting = false; // Reset the flag after the round starts
-    }
+  
 
     void StartNewRound()
     {
@@ -247,36 +252,25 @@ public class gameManager : MonoBehaviour
         {
             if (GameRound == 2 && EnemyCount == 0)
             {
-                gameManager.gameInstance.winScreen();
+                winScreen();
             }
         }
 
         SetGameRound(1);
-
-        enemySpawner.SetWaveMax(GameRound);
-        
-       
-
         Debug.Log("SpanwFunctionCalled");
-        enemySpawner.BaseSpawnZombies(GetGameRound());
-
+        enemySpawner.ZombieSpawner();
         if (GameRound % 5 == 0)
         {
-
             SpawnBufferZombie();
-
         }
-
+        
     }
-
-
     void SpawnBufferZombie()
     {
         Debug.Log("Special Round");
         bufferSpawner.SetWaveMax(GameRound);
         bufferSpawner.BufferSpawnZombies(GetGameRound());
     }
-
 
 
     public int GetGameRound()

@@ -7,6 +7,8 @@ public class EnemySpawner : MonoBehaviour
 
 {
     [SerializeField] GameObject prefab;
+    [SerializeField] int ZombiesPerRound;
+    [SerializeField] List<Transform> spawnPoints = new List<Transform>();
     [SerializeField] Vector3 spawnAreaCenter;
     [SerializeField] Vector3 spawnAreaSize;
     [SerializeField] float spawnRadius = 1f;
@@ -15,10 +17,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] bool ScalingHealth;
     [SerializeField] bool IsBufferSpawn;
     [SerializeField] private GameObject floorPrefab;
-
-    int WaveMax;
+    [SerializeField] bool UsingFloorToSpawn;
+   
     void Start()
     {
+
         if (floorPrefab != null)
         {
             // Set the spawn area center based on the floor prefab's position
@@ -26,34 +29,71 @@ public class EnemySpawner : MonoBehaviour
             spawnAreaCenter.y += 1f; // Adjust Y position if needed to spawn above the floor
         }
 
-        SetWaveMax(1);
     }
 
-
-
-
-   public int SetWaveMax(int round)
+   public void PopulateSpawnPoints()
     {
+        spawnPoints.Clear(); // Clear any existing points in the list
 
-        WaveMax = round * 5;
-
-        return WaveMax;
-
-    }
-
-    public void BaseSpawnZombies(int round)
-    {
-        for (int i = 0; i < WaveMax; i++)
+        // Find all GameObjects with the "SpawnPoint" tag and add them to the list
+        GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        foreach (GameObject obj in spawnPointObjects)
         {
-            Vector3 randomPoint = GetRandomPointOnNavMesh(spawnAreaCenter, spawnRadius);
-            if (randomPoint != Vector3.zero)
+            if (obj.transform != null)
             {
-                GameObject newZombie = Instantiate(prefab, randomPoint, Quaternion.identity);
-                SetupZombie(newZombie, round);
+                spawnPoints.Add(obj.transform);
             }
         }
     }
 
+    public void ZombieSpawner()
+    {
+
+        int Round = gameManager.gameInstance.GetGameRound();
+        int targetCount = Round * ZombiesPerRound;
+        
+
+      for(int i =0;i < targetCount; i++)
+        {
+            if (!UsingFloorToSpawn)
+            {
+                SpawnAtRandomPoint();
+            }
+            else
+            {
+                SpawnAtRandomNavMeshPoint();
+            }
+           
+        }
+    }
+
+
+    void SpawnAtRandomPoint()
+    {
+        if (spawnPoints.Count == 0)
+        {
+            Debug.LogWarning("No spawn points assigned!");
+            return;
+        }
+
+        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
+        if (randomPoint != Vector3.zero)
+        {
+            GameObject newZombie = Instantiate(prefab, randomPoint, Quaternion.identity);
+            SetupZombie(newZombie, gameManager.gameInstance.GetGameRound());
+        }
+    }
+
+    void SpawnAtRandomNavMeshPoint()
+    {
+        Vector3 randomPoint = GetRandomPointOnNavMesh(spawnAreaCenter, spawnRadius);
+        if (randomPoint != Vector3.zero)
+        {
+            GameObject newZombie = Instantiate(prefab, randomPoint, Quaternion.identity);
+            SetupZombie(newZombie, gameManager.gameInstance.GetGameRound());
+        }
+    }
     void SetupZombie(GameObject zombie, int round)
     {
         EnemyAI zombieScript = zombie.GetComponent<EnemyAI>();
