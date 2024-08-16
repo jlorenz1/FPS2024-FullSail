@@ -176,11 +176,12 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     {
         HitPoints -= amountOfDamageTaken;
         StartCoroutine(flashRed());
+
         if (HitPoints <= 0)
         {
             gameManager.gameInstance.UpdateGameGoal(-1);
             Destroy(gameObject);
-
+            gameManager.gameInstance.PointCount += 25;
         }
     }
 

@@ -33,6 +33,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
+    [SerializeField] TMP_Text pointCount;
     [SerializeField] float RoundDelay;
     public GameObject flashDamage;
     public GameObject playerInteract;
@@ -49,7 +50,7 @@ public class gameManager : MonoBehaviour
 
     //int variables 
     int EnemyCount;
-
+    public int PointCount;
     int GameRound;
 
     // Private reference for the Player
@@ -153,6 +154,7 @@ public class gameManager : MonoBehaviour
 
         roundCount.text = GameRound.ToString("F0");
         enemyCount.text = EnemyCount.ToString("F0");
+        pointCount.text = PointCount.ToString("F0");
     }
 
     // Pause the Game
