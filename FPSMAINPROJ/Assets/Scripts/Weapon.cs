@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -90,6 +91,7 @@ public class Weapon : MonoBehaviour
         HandleReloading();
         HandleFireModeSwitching();
         HandleAiming();
+        displayAmmo();
     }
 
     private void HandleAiming()
@@ -288,7 +290,7 @@ public class Weapon : MonoBehaviour
         {
             Debug.Log("Reloading...");
             // play reload anim
-
+            StartCoroutine(fillWhileReloading());
         }
 
         yield return new WaitForSeconds(reloadTime);
@@ -342,5 +344,27 @@ public class Weapon : MonoBehaviour
     public int getMaxAmmoCount()
     {
         return magazines[currentMagazineIndex].magazineCapacity;
+    }
+
+    public void displayAmmo()
+    {
+        gameManager.gameInstance.ammoCount.text = getAmmoCount().ToString("F0");
+        gameManager.gameInstance.maxAmmoCount.text = getMaxAmmoCount().ToString("F0");
+        gameManager.gameInstance.ammoCircle.fillAmount = (float)magazines[currentMagazineIndex].currentAmmoCount / (float)magazines[currentMagazineIndex].magazineCapacity;
+    }
+
+    public IEnumerator fillWhileReloading()
+    {
+        float elapsedTime = 0f;
+        float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
+
+        while (elapsedTime < reloadTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / reloadTime);
+            gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
+            yield return null;
+        }
+        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
     }
 }
