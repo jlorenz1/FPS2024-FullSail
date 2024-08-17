@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,6 +22,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private FireMode fireMode = FireMode.Single;
     [SerializeField] private float weaponFireRate = 0.1f;
     private bool weaponCanShoot = true;
+    private bool qteSuccess = false;
+    [SerializeField] float delayBeforeQTE;
+    [SerializeField] float windowForQTE;
 
     // Weapon ADS Mode variables
     [SerializeField] private float adsFOV = 35f;
@@ -37,8 +41,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float recoilIntensity = 0.1f;
     [SerializeField] private float recoilSpeed = 5f;
 
-// Magazine and ammo management
-[System.Serializable]
+    // Magazine and ammo management
+    [System.Serializable]
     public class Magazine
     {
         public int magazineCapacity = 30;
@@ -53,6 +57,7 @@ public class Weapon : MonoBehaviour
     public Animation pistolReloadAnim;
     [SerializeField] private float reloadTime = 2f;
     private bool isReloading = false;
+    int ammoToReload;
     // Add a timer feature to the reload mechanic if the user presses reload again within certain timeframe it achieves a perfect reload with no reload wait time
 
     // Burst fire specifics
@@ -71,16 +76,16 @@ public class Weapon : MonoBehaviour
     public event Action OnFire;
     public event Action OnReload;
     private Vector3 originalWeaponPosition;
-
+    float origReloadTime;
     private void Start()
     {
         currentDurability = maxDurability;
         ValidateMagazines();
-
+        origReloadTime = reloadTime;
         // Store weapon pos
         originalWeaponPosition = transform.localPosition;
 
-        
+
     }
 
     private void Update()
@@ -128,7 +133,7 @@ public class Weapon : MonoBehaviour
 
             // Lerp weapon pos to match target pos
             transform.localPosition = Vector3.Lerp(transform.localPosition, targetLocalPos, Time.deltaTime * adsSpeed);
-            
+
         }
         else
         {
@@ -286,22 +291,49 @@ public class Weapon : MonoBehaviour
     private IEnumerator Reload()
     {
         isReloading = true;
+        reloadTime = origReloadTime;
         if (isReloading)
         {
             Debug.Log("Reloading...");
             // play reload anim
-            StartCoroutine(fillWhileReloading());
+            Coroutine fillCoroutine = StartCoroutine(fillWhileReloading());
+            if (magazines[currentMagazineIndex].currentAmmoCount == 0 && qteSuccess == false)
+            {
+                gameManager.gameInstance.quickTime.SetActive(true);
+                yield return StartCoroutine(quickTimeEvent());
+
+                if (qteSuccess == true)
+                {
+                    Debug.Log("Entering");
+                    gameManager.gameInstance.quickTime.SetActive(false);
+                    magazines[currentMagazineIndex].currentAmmoCount = magazines[currentMagazineIndex].magazineCapacity;
+                    Debug.Log("qteSucces");
+                    if (fillCoroutine != null)
+                    {
+                        StopCoroutine(fillCoroutine);
+                    }
+                    completeReload();
+                }
+                else
+                {
+                    gameManager.gameInstance.quickTime.SetActive(false);
+                    StopCoroutine(fillCoroutine);
+                    StartCoroutine(fillWhileReloading());
+                    yield return new WaitForSeconds(origReloadTime);
+                    magazines[currentMagazineIndex].currentAmmoCount = magazines[currentMagazineIndex].magazineCapacity;
+
+                }
+
+            }
+            else
+            {
+                yield return new WaitForSeconds(origReloadTime);
+                magazines[currentMagazineIndex].currentAmmoCount = magazines[currentMagazineIndex].magazineCapacity;
+            }
+
+            isReloading = false;
+            weaponCanShoot = true;
         }
-
-        yield return new WaitForSeconds(reloadTime);
-
-        int ammoToReload = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
-        magazines[currentMagazineIndex].currentAmmoCount += ammoToReload;
-
-        OnReload?.Invoke();
-
-        isReloading = false;
-        weaponCanShoot = true;
     }
     private void DecreaseDurability()
     {
@@ -333,7 +365,7 @@ public class Weapon : MonoBehaviour
             magazines[currentMagazineIndex].currentAmmoCount += amountNeeded;
         }
         Debug.Log("Ammo filled");
-        
+
     }
 
     public int getAmmoCount()
@@ -357,7 +389,10 @@ public class Weapon : MonoBehaviour
     {
         float elapsedTime = 0f;
         float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
-
+        if(qteSuccess == false)
+        {
+            reloadTime = origReloadTime;
+        }
         while (elapsedTime < reloadTime)
         {
             elapsedTime += Time.deltaTime;
@@ -365,6 +400,38 @@ public class Weapon : MonoBehaviour
             gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
             yield return null;
         }
+        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
+    }
+
+    public IEnumerator quickTimeEvent()
+    {
+        yield return new WaitForSeconds(delayBeforeQTE);
+
+        float startQTE = Time.time; //start timer when event starts
+        float endQTE = startQTE + windowForQTE;
+        qteSuccess = false;
+
+        while (Time.time < endQTE) // the timed window for when the player can press
+        {
+            //Debug.Log("CAN QUICK TIME");
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                qteSuccess = true;
+                break;
+            }
+            yield return null;
+        }
+        reloadTime = Time.time - startQTE;
+        if(qteSuccess == false)
+        {
+            reloadTime = origReloadTime;
+        }
+        yield return qteSuccess;
+    }
+
+    public void completeReload()
+    {
+        OnReload?.Invoke();
         gameManager.gameInstance.ammoCircle.fillAmount = 1f;
     }
 }

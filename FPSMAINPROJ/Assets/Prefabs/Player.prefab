@@ -288,7 +288,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3541054881267062660}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -21.717262, y: 1, z: -57.74557}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -740,6 +740,8 @@ MonoBehaviour:
   shootDistance: 100
   fireMode: 2
   weaponFireRate: 0.15
+  delayBeforeQTE: 1.5
+  windowForQTE: 0.2
   adsFOV: 45
   normalFOV: 60
   adsSpeed: 10
@@ -764,6 +766,7 @@ MonoBehaviour:
   - magazineCapacity: 38
     currentAmmoCount: 38
   currentMagazineIndex: 0
+  pistolReloadAnim: {fileID: 0}
   reloadTime: 3
   burstCount: 3
   burstRate: 0.1

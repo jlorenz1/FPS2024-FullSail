@@ -4097,6 +4097,7 @@ MonoBehaviour:
   roundCount: {fileID: 5801278210249543195}
   enemyCount: {fileID: 8826643397918903054}
   pointCount: {fileID: 7108080609444296675}
+  quickTime: {fileID: 7710578995404779107}
   ammoCount: {fileID: 8884633027279799546}
   maxAmmoCount: {fileID: 8281785848334288042}
   ammoCircle: {fileID: 6784922699588143506}
@@ -4335,6 +4336,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7795016225418597152}
     m_Modifications:
+    - target: {fileID: 190016305670009601, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 429495800909775307, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_Name
       value: Ammo
@@ -4395,6 +4400,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7710578995404779107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190016305670009601, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
+  m_PrefabInstance: {fileID: 7611761136250035554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8176840361925842314 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1791184225846954216, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
