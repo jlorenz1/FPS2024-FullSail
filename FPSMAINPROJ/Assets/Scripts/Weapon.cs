@@ -335,11 +335,11 @@ public class Weapon : MonoBehaviour
             weaponAnimator.SetTrigger("ReloadPistol");
             Coroutine fillCoroutine = StartCoroutine(fillWhileReloading());
 
-            if (magazines[currentMagazineIndex].currentAmmoCount == 0 && qteSuccess == false)
+            if (magazines[currentMagazineIndex].currentAmmoCount == 0)
             {
                 gameManager.gameInstance.quickTime.SetActive(true);
                 yield return StartCoroutine(quickTimeEvent());
-
+                Debug.Log(qteSuccess);
                 if (qteSuccess == true)
                 {
                     Debug.Log("Entering");
