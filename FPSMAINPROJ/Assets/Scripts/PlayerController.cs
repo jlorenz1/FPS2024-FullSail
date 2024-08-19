@@ -1,8 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
+public enum InventoryPos //for inventory
+{
+    Slot1 = 0,
+    Slot2 = 1,
+    Slot3 = 2,
+}
 public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
@@ -14,7 +22,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-    [SerializeField] int playerHP;
+    [SerializeField] public int playerHP;
     int HPorig;
 
     // Weapon Variables for player
@@ -46,8 +54,19 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
     // Sliding video variables
-    
+
     // End of Sliding video variables
+
+
+    [Header("Interact")]
+    [SerializeField] int pickupDis;
+    [SerializeField] LayerMask ignoreMask;
+    private Ray interactRay;
+    private RaycastHit interactHit;
+    bool isPickedUp;
+    bool inProcess;
+    bool doorOpen = false;
+    public inventoryObject inventory;
 
     private float sprintTimer;
 
@@ -80,6 +99,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         wallCheck();
         stateMachine();
+        
+        interact();
+        useItemFromInv();
 
     }
     
@@ -180,6 +202,10 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         
     }
+    public void recieveHP(int amount)
+    {
+        playerHP += amount;
+    }
 
     IEnumerator damageFeedback()
     {
@@ -219,5 +245,52 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.gameInstance.playerHPBar.fillAmount = (float)playerHP / HPorig;
     }
 
+    public void interact()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+           StartCoroutine(startInteract());
+        }
+    }
 
+    public IEnumerator startInteract()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        {
+            var pickup = hit.collider.GetComponent<pickup>();
+            if (pickup != null)
+            {
+                inventory.AddItem(pickup.item, 1);
+                Destroy(hit.collider.gameObject);
+            }
+        }
+        yield return new WaitForSeconds(1);
+    }
+
+    public void useItemFromInv()
+    {
+        RaycastHit hit;
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            //using heal
+            inventory.useItem(itemType.Bandage);
+        }
+        else if(Input.GetKeyDown(KeyCode.E) && Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        {
+            UnityEngine.Debug.Log("hit");
+            var door = hit.collider.GetComponent<doorScript>();
+            if (door != null)
+            {
+                inventory.useItem(itemType.Key);
+            }
+        }
+         
+    }
+    public void OnApplicationQuit()
+    {
+        inventory.containerForInv.Clear();
+    }
 }

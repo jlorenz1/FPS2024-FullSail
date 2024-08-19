@@ -1,8 +1,9 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPickup
 {
-    public void pickUpItem(GameObject item);
+    public void useItem();
 }

@@ -311,12 +311,12 @@ MonoBehaviour:
   controller: {fileID: 5719176374025190790}
   speed: 5
   sprintMod: 3
-  maxSprintTimer: 3
-  maxSprintWaitTimer: 1
+  maxSprintTimer: 2
+  maxSprintWaitTimer: 2
   jumpMax: 2
   jumpSpeed: 15
   gravity: 55
-  playerHP: 5
+  playerHP: 15
   shootDamage: 1
   shootRate: 1
   shootDistance: 600
@@ -329,6 +329,11 @@ MonoBehaviour:
   detectionLength: 0.7
   sphereCastRadius: 0.25
   maxWallLookAngle: 0
+  pickupDis: 300
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 128
+  inventory: {fileID: 11400000, guid: 696d20c93a833b14d856c7af0bbba3d9, type: 2}
   damage: 1
 --- !u!143 &5719176374025190790
 CharacterController:
@@ -733,25 +738,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a8a6f5b33b9d64a8a72899e38a87c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 3375722415747757221, guid: 4f6909b6f81b4a64e858f2221ac3b7d7, type: 3}
-  bulletSpawn: {fileID: 8292623240948787205}
-  bulletVelocity: 550
-  bulletPrefabLifeTime: 3
-  shootDistance: 100
-  fireMode: 2
-  weaponFireRate: 0.15
+  weaponAnimator: {fileID: 0}
+  canBeShotMask:
+    serializedVersion: 2
+    m_Bits: 0
+  shootingSystem: {fileID: 0}
+  shootImpactSystem: {fileID: 0}
+  bulletTrail: {fileID: 0}
+  muzzleFlashLight: {fileID: 0}
   delayBeforeQTE: 1.5
   windowForQTE: 0.2
-  adsFOV: 45
-  normalFOV: 60
-  adsSpeed: 10
-  adsWeaponPosition: {fileID: 4351594258263406173}
-  normalWeaponPosition: {fileID: 4882290543646430797}
-  ADSoffsetX: 0.005
-  ADSoffsetY: -0.22
-  ADSoffsetZ: 0.73
-  recoilIntensity: 0.1
-  recoilSpeed: 100
   magazines:
   - magazineCapacity: 38
     currentAmmoCount: 38
@@ -765,14 +761,6 @@ MonoBehaviour:
     currentAmmoCount: 38
   - magazineCapacity: 38
     currentAmmoCount: 38
-  currentMagazineIndex: 0
-  pistolReloadAnim: {fileID: 0}
-  reloadTime: 3
-  burstCount: 3
-  burstRate: 0.1
-  maxDurability: 500
-  durabilityLossPerShot: 0.05
-  canJam: 1
 --- !u!33 &6605767701316221480
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -953,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d2087738f8134a84d9fda42efe3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sens: 300
+  sens: 100
   vertMax: 90
   vertMin: -90
   invert: 0

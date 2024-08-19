@@ -42,7 +42,7 @@ public class gameManager : MonoBehaviour
     public GameObject flashDamage;
     public GameObject playerInteract;
     public Image playerHPBar;
-    
+    public PlayerController playerScript;
 
     //Objects
     private EnemySpawner enemySpawner;
@@ -50,13 +50,13 @@ public class gameManager : MonoBehaviour
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
-
+    
 
     //int variables 
     int EnemyCount;
     public int PointCount;
     int GameRound;
-
+    public bool canUnlock;
     // Private reference for the Player
     private GameObject _Player;
     private bool isNewEnemies;
@@ -107,7 +107,7 @@ public class gameManager : MonoBehaviour
 
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
-        // playerScript = player.GetComponent<playerController>();
+        playerScript = FindObjectOfType<PlayerController>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();
