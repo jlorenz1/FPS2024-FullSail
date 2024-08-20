@@ -67,9 +67,15 @@ public class Weapon : MonoBehaviour
     {
         public int magazineCapacity = 30;   // Capacity of the magazine
         public int currentAmmoCount = 30;  // Current number of bullets within magazine
+
+        public Magazine(int _magazineCapacity, int _currentAmmoCount)
+        {
+            magazineCapacity = _magazineCapacity;
+            currentAmmoCount = _currentAmmoCount;
+        }
     }
     [SerializeField] private Magazine[] magazines; // Array of magazines used by the weapon
-
+    [SerializeField] public int maxMagazines = 10;
     #endregion
 
     #region Unity Methods
@@ -504,4 +510,27 @@ public class Weapon : MonoBehaviour
         muzzleFlashLight = currentGun.MuzzleFlash;
     }
 
+    public void addMagazine(Magazine magazine, int numberOfMagazines)
+    {
+        int currentMagazineCount = magazines.Length;
+        int avaliableSpace = maxMagazines - currentMagazineCount;
+        int magazinesToAdd = avaliableSpace;
+
+        if(magazinesToAdd > 0)
+        {
+            Magazine[] newMagazines = new Magazine[currentMagazineCount + magazinesToAdd];
+            //copying array to the new magazines 
+            System.Array.Copy(magazines, newMagazines, currentMagazineCount);
+            //make a new amount mag based on gun magazine and max magazine count
+            for(int i = 0; i < magazinesToAdd; i++)
+            {
+                newMagazines[currentMagazineCount + i] = new Magazine(magazine.magazineCapacity, magazine.currentAmmoCount);
+            }
+            magazines = newMagazines;
+        }
+        else
+        {
+            Debug.Log("At max Ammo");
+        }
+    }
 }
