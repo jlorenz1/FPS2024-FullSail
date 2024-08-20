@@ -247,9 +247,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void interact()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        RaycastHit hit;
+
+        if(Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
-           StartCoroutine(startInteract());
+            if (hit.collider.gameObject.CompareTag("pickup"))
+            {
+                gameManager.gameInstance.playerInteract.SetActive(true);
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    StartCoroutine(startInteract());
+                }
+            }
+            else
+            {
+                gameManager.gameInstance.playerInteract.SetActive(false);
+            }
         }
     }
 
@@ -267,6 +280,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
         yield return new WaitForSeconds(1);
+        gameManager.gameInstance.playerInteract.SetActive(false);
     }
 
     public void useItemFromInv()
