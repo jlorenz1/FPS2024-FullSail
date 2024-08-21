@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 {
     [SerializeField] Renderer model;
     [SerializeField] int BaseHitPoints;
-
+    [SerializeField] Animator animator;
 
     [SerializeField] int maxHeight;
     [SerializeField] int AttackRange;
@@ -18,8 +18,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int ViewAngle;
     [SerializeField] Transform HeadPos;
     [SerializeField] int FacePlayerSpeed;
-
-
+    [SerializeField] Collider MeeleDamage;
+    [SerializeField] int animatorspeedtrans;
 
     [SerializeField] bool isStrengthBuffer;
     [SerializeField] bool isHealthBuffer;
@@ -109,6 +109,10 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     // Update is called once per frame
     void Update()
     {
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), agentSpeed, Time.deltaTime * animatorspeedtrans));
+        
+
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         DestroyOutOfBounds(10);
