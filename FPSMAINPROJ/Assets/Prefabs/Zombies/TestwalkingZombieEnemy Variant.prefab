@@ -463,7 +463,6 @@ GameObject:
   - component: {fileID: 3418442488918488083}
   - component: {fileID: 6762890531109000668}
   - component: {fileID: 2703253965218316177}
-  - component: {fileID: 8134181809338889309}
   m_Layer: 0
   m_Name: TestwalkingZombieEnemy Variant
   m_TagString: Zombie
@@ -512,7 +511,7 @@ MonoBehaviour:
   ViewAngle: 90
   HeadPos: {fileID: 555787011231325921}
   FacePlayerSpeed: 5
-  MeeleDamage: {fileID: 8134181809338889309}
+  MeeleDamage: {fileID: 3073888449758171240}
   animatorspeedtrans: 5
   isStrengthBuffer: 0
   isHealthBuffer: 0
@@ -625,29 +624,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!136 &8134181809338889309
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808642605505150873}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &900014834664963509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,6 +2886,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2738756390294668413}
+  - {fileID: 8655482701328035481}
   m_Father: {fileID: 3780341975378999609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6596077887997306045
@@ -3296,6 +3273,70 @@ Transform:
   - {fileID: 7424433464420593811}
   m_Father: {fileID: 8757851106945063522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7118472659128537107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8655482701328035481}
+  - component: {fileID: 5872549369670009341}
+  - component: {fileID: 3073888449758171240}
+  m_Layer: 0
+  m_Name: 'Meele Damge '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8655482701328035481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118472659128537107}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00009298089, y: 0.0031901654, z: -0.00021647733}
+  m_LocalScale: {x: 0.001, y: 0.0060681873, z: 0.001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5074554602163103067}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5872549369670009341
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118472659128537107}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!136 &3073888449758171240
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118472659128537107}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7139128363535306794
 GameObject:
   m_ObjectHideFlags: 0
