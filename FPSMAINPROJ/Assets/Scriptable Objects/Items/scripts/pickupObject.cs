@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum itemType
 {
-    Ammo,
     Bandage,
     Key,
+    Rune,
     Default
 }
 
