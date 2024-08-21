@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
 
-    [SerializeField] int speed;
+    [SerializeField] Renderer model;
+    [SerializeField] float speed;
     [SerializeField] int sprintMod;
     [SerializeField] float maxSprintTimer;
     [SerializeField] float maxSprintWaitTimer;
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     // climbing video variables
     [Header("Reference")]
-    [SerializeField] LayerMask whatIsWall;
+    [SerializeField] LayerMask whatToClimb;
 
     [Header("Climbing")]
     [SerializeField] float climbSpeed;
@@ -54,7 +55,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
     // Sliding video variables
+    [Header("Sliding")]
+    [SerializeField] float maxSlideTime;
+    [SerializeField] float slideForce;
+    float slideTimer;
 
+    public float slideYScale;
+    float startingYScale;
+    float startingYPOS;
+    int controllerHeightOrgi;
+
+    bool isSliding;
+
+    [Header("Input")]
+    private KeyCode slideKey = KeyCode.LeftControl;
+    float horizontalInput;
+    float verticalInput;
     // End of Sliding video variables
 
 
@@ -78,15 +94,21 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isSprinting;
     bool onSprintCoolDown;
 
+    float originalSpeed;
     public int damage;
 
     // Start is called before the first frame update
     void Start()
     {
         HPorig = playerHP;
-        updatePlayerUI();
         damage  = shootDamage;
         sprintTimer = maxSprintTimer;
+        originalSpeed = speed;
+
+        startingYScale = transform.localScale.y;
+        controllerHeightOrgi = ((int)controller.height);
+
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -103,8 +125,19 @@ public class PlayerController : MonoBehaviour, IDamage
         interact();
         useItemFromInv();
 
+        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
+        {
+            startingYPOS = transform.position.y;
+            startSlide();
+        }
+        if (Input.GetKeyUp(slideKey) && isSliding)
+        {
+            stopSlide();
+        }
+
+
     }
-    
+
     void movement()
     {
         if (controller.isGrounded)
@@ -114,6 +147,8 @@ public class PlayerController : MonoBehaviour, IDamage
             climbTimer = maxClimbTimer;
 
         }
+        if (isSliding)
+            slideMovement();
 
         if (isClimbing) 
             climbingMovement();
@@ -121,6 +156,9 @@ public class PlayerController : MonoBehaviour, IDamage
         move = Input.GetAxis("Vertical") * transform.forward +
             Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move * speed * Time.deltaTime);
+
+        horizontalInput = Input.GetAxis("Vertical");
+        verticalInput = Input.GetAxis("Horizontal");
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -143,7 +181,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (sprintTimer <= 0)
                 onSprintCoolDown = true;
-            speed /= sprintMod;
+            //speed /= sprintMod;
+            speed = originalSpeed;
             isSprinting = false;
             return;
         }
@@ -153,6 +192,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
         {
+            if (isSliding)
+                stopSlide();
+
             if (!isClimbing && climbTimer > 0) startClimb();
 
             if (climbTimer > 0) climbTimer -= Time.deltaTime;
@@ -168,9 +210,9 @@ public class PlayerController : MonoBehaviour, IDamage
     void wallCheck()
     {
         //wallFront tell if there is a wall in front
-        //                            ( starting postion,       Radius,        Directions,    location of the infomation, sphereCast length,  the layerMask)
-        wallFront = Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out wallHit, detectionLength, whatIsWall);
-        WallLookAngle = Vector3.Angle(transform.forward, -wallHit.normal);
+        //                            ( starting postion,                   Radius,              Directions,    location of the infomation, sphereCast length,  the layerMask)
+        wallFront = Physics.SphereCast(Camera.main.transform.position, sphereCastRadius, Camera.main.transform.forward, out wallHit, detectionLength, whatToClimb);
+        WallLookAngle = Vector3.Angle(Camera.main.transform.forward, -wallHit.normal);
 
 
     }
@@ -187,6 +229,34 @@ public class PlayerController : MonoBehaviour, IDamage
     void endClimbing()
     {
         isClimbing = false;
+    }
+    void startSlide()
+    {
+        controller.height = slideYScale;
+        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        isSliding = true;
+        slideTimer = maxSlideTime;
+    }
+
+    void slideMovement()
+    {
+        Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
+
+        speed += slideForce;
+
+        slideTimer -= Time.deltaTime;
+
+        if (slideTimer <= 0)
+            stopSlide();
+
+    }
+
+    void stopSlide()
+    {
+        controller.height = controllerHeightOrgi;
+        model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
+        speed = originalSpeed;
+        isSliding = false;
     }
 
     // IDamage Player Damage
