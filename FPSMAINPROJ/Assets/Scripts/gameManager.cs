@@ -31,6 +31,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
+    [SerializeField] int EndRound;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
@@ -257,7 +258,7 @@ public class gameManager : MonoBehaviour
     {
         if (hasWinCondition)
         {
-            if (GameRound == 2 && EnemyCount == 0)
+            if (GameRound == EndRound && EnemyCount == 0)
             {
                 winScreen();
             }
