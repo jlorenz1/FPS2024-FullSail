@@ -33,15 +33,22 @@ public class inventoryObject : ScriptableObject
             if (containerForInv[i].pickup.type == type && containerForInv[i].amount > 0)
             {
                 IPickup pickupComponent = containerForInv[i].pickup as IPickup; //CANT USE GETCOMPONENT FOR scriptableObjects 
-                if(pickupComponent != null)
+                if (pickupComponent != null)
                 {
-                    Debug.Log("in use item inventory");
                     pickupComponent.useItem();
-                    containerForInv[i].addAmount(-1);
-
-                    if(containerForInv[i].amount <= 0)
+                    Debug.Log("in use item inventory");
+                    if (containerForInv[i].pickup.destroyAfterUse)
                     {
-                        containerForInv.RemoveAt(i);
+                        containerForInv[i].addAmount(-1);
+
+                        if (containerForInv[i].amount <= 0)
+                        {
+                            containerForInv.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Didnt destory");
                     }
                     break;
                 }
@@ -52,7 +59,18 @@ public class inventoryObject : ScriptableObject
             }
         }
     }
+
+    public void usePrimaryWeapon(itemType type)
+    {
+        useItem(itemType.Primary);
+    }
+
+    public void useSecondaryWeapon(itemType type)
+    {
+        useItem(itemType.Secondary);
+    }
 }
+
 //SO WE CAN HAVE SEPERATE SLOTS FOR EACH ITEM TYPE AND HAVE DIFFRENET TYPES OF EACH ITEM
 [System.Serializable]
 public class inventorySlot
