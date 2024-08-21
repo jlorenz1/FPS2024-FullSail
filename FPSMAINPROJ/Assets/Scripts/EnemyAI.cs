@@ -210,6 +210,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     {
         canAttack = false; // Prevent immediate re-attack
 
+        animator.SetTrigger("Hit");
+
         // Perform the attack
         AttackPlayer();
 
@@ -224,14 +226,42 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     void AttackPlayer()
     {
-        if (PlayerinRange == true)
+        if (PlayerinRange == true && CanSeePlayer() == true)
         {
-            IDamage DMG = gameManager.gameInstance.player.GetComponent<IDamage>();
-            DMG.takeDamage(AttackDamage);
+            animator.SetTrigger("Hit");
         }
         else
             return;
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Zombie"))
+        {
+            return;
+        }
+
+
+        if (other.CompareTag("Player"))
+        {
+            IDamage damageable = other.GetComponent<IDamage>();
+            {
+                damageable.takeDamage(AttackDamage); 
+            }
+        }
+    }
+
+    public void SetColiderON()
+    {
+        MeeleDamage.enabled = true;
+
+    }
+
+    public void SetColiderOFF()
+    {
+        MeeleDamage.enabled = false;
     }
 
     void CheckRange()
@@ -395,7 +425,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             agent.Move(Vector3.down * 9.81f * Time.deltaTime);
         }
     }
-  /*  bool CanSeePlayer()
+   bool CanSeePlayer()
     {
 
         PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
@@ -438,7 +468,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
 
     }
-*/
 }
 
 
