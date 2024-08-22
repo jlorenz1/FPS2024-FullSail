@@ -11,7 +11,7 @@ public class maxAmmo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weapon = gameManager.gameInstance .playerScript.weapon;
+        weapon = gameManager.gameInstance.playerScript.weapon;
         magazineCapacity = weapon.getMaxAmmoCount();
         ammoInMagazine = weapon.getMaxAmmoCount();
     }

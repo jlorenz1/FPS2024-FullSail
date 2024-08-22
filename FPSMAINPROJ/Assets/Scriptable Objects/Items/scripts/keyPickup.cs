@@ -9,6 +9,7 @@ public class keyPickup : pickupObject, IPickup
     public void Awake()
     {
         type = itemType.Key;
+        maxAmount = 3;
         destroyAfterUse = true;
     }
 

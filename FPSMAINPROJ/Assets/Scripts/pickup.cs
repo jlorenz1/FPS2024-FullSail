@@ -5,6 +5,7 @@ using UnityEngine;
 public class pickup : MonoBehaviour, IPickup
 {
     public pickupObject item;
+    internal itemType type;
 
     public void useItem()
     {
@@ -13,5 +14,8 @@ public class pickup : MonoBehaviour, IPickup
             pickupItem.useItem();
         }
     }
+
+    public itemType getType()
+        { return type; }
     
 }

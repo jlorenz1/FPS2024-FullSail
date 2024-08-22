@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
+    [SerializeField] public Transform weaponSpawn;
     public Weapon weapon;
 
     // climbing video variables
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controllerHeightOrgi = ((int)controller.height);
 
         updatePlayerUI();
+        equipStartingPistol();
     }
 
     // Update is called once per frame
@@ -342,9 +345,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
-            var pickup = hit.collider.GetComponent<pickup>();
+            pickup pickup = hit.collider.GetComponent<pickup>();
             if (pickup != null)
             {
+                if(inventory.hasItem(itemType.Secondary) ||  inventory.hasItem(itemType.Primary))
+                {
+                    yield return null;
+                    yield break;
+                    
+                }
                 inventory.AddItem(pickup.item, 1);
                 Destroy(hit.collider.gameObject);
             }
@@ -373,8 +382,37 @@ public class PlayerController : MonoBehaviour, IDamage
         }
          
     }
+
+    public void equipWeapon(GameObject weapon, itemType type)
+    {
+        Transform childOFPlayer = controller.transform.GetChild(0);
+        Transform childOfChild = childOFPlayer.transform.GetChild(0);
+        Transform childOfThatChild = childOfChild.transform.GetChild(0);
+        UnityEngine.Debug.Log(childOfThatChild.gameObject.name);
+        GameObject weaponInstance = Instantiate(weapon, childOfChild.transform.position, childOfChild.transform.rotation);
+        weaponInstance.transform.SetParent(childOfThatChild);
+
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.rotation = Quaternion.identity;
+
+        inventory.addWeapon(weapon, type);
+    }
+
+    public void equipStartingPistol()
+    {
+        if(inventory.hasItem(itemType.Secondary))
+        {
+            inventory.useItem(itemType.Secondary);
+        }
+    }
     public void OnApplicationQuit()
     {
-        inventory.containerForInv.Clear();
+        for (int i = 0; i < inventory.containerForInv.Count; i++)
+        {
+            if (inventory.containerForInv[i].pickup.type != itemType.Secondary)
+            {
+                inventory.containerForInv.Remove(inventory.containerForInv[i]);
+            }
+        }        
     }
 }

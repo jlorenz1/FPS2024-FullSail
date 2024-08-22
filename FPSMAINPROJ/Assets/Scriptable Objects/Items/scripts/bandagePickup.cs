@@ -9,6 +9,7 @@ public class bandagePickup : pickupObject, IPickup
     {
         type = itemType.Bandage;
         hpToRestore = 0;
+        maxAmount = 10;
     }
 
     public void useItem()
