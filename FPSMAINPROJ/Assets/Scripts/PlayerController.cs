@@ -15,8 +15,9 @@ public enum InventoryPos //for inventory
 public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
-
     [SerializeField] Renderer model;
+
+    [Header("PLAYER VARIABLES")]
     [SerializeField] float speed;
     [SerializeField] int sprintMod;
     //[SerializeField] int crouchSpeed;
@@ -30,10 +31,12 @@ public class PlayerController : MonoBehaviour, IDamage
     int HPorig;
 
     // Weapon Variables for player
+    [Header("WEAPON VARIABLES")]
     [SerializeField] int shootDamage;
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] public Transform weaponSpawn;
+    [SerializeField] pickupObject startingPistol;
     public Weapon weapon;
 
     // climbing video variables
@@ -87,7 +90,6 @@ public class PlayerController : MonoBehaviour, IDamage
     bool inProcess;
     bool doorOpen = false;
     public inventoryObject inventory;
-
     private float sprintTimer;
 
     Vector3 move;
@@ -110,12 +112,10 @@ public class PlayerController : MonoBehaviour, IDamage
         sprintTimer = maxSprintTimer;
         originalSpeed = speed;
         crouchSpeed = speed / 2;
-
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
-
-        updatePlayerUI();
         equipStartingPistol();
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -381,15 +381,18 @@ public class PlayerController : MonoBehaviour, IDamage
             pickup pickup = hit.collider.GetComponent<pickup>();
             if (pickup != null)
             {
-                if(inventory.hasItem(itemType.Secondary))
+                if(pickup.item.type == itemType.Secondary || pickup.item.type == itemType.Primary)
                 {
-                   inventory.removeWeapon(itemType.Secondary);
+                   if(inventory.hasItem(pickup.item.type))
+                   {
+                        inventory.removeWeapon(pickup.item.type);
+                   }
+                   inventory.AddItem(pickup.item, 1);
                 }
-                else if(inventory.hasItem(itemType.Primary))
+                else
                 {
-                    inventory.removeWeapon(itemType.Primary); 
+                    inventory.AddItem(pickup.item, 1);
                 }
-                inventory.AddItem(pickup.item, 1);
                 Destroy(hit.collider.gameObject);
             }
         }
@@ -433,19 +436,21 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void equipStartingPistol()
     {
-        if(inventory.hasItem(itemType.Secondary))
+        inventory.AddItem(startingPistol, 1);
+
+        if(startingPistol != null)
         {
             inventory.useItem(itemType.Secondary);
         }
     }
+
     public void OnApplicationQuit()
     {
-        for (int i = 0; i < inventory.containerForInv.Count; i++)
+        //set inventory back to the original starting loadout.
+        for(int i = 0; i < inventory.containerForInv.Count; i++)
         {
-            if (inventory.containerForInv[i].pickup.type != itemType.Secondary)
-            {
-                inventory.containerForInv.Remove(inventory.containerForInv[i]);
-            }
-        }        
+            inventory.containerForInv.Clear();
+        }
+            
     }
 }

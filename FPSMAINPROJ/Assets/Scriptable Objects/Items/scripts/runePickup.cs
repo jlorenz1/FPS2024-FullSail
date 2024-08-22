@@ -8,7 +8,6 @@ public class runePickup : pickupObject, IPickup
     void Start()
     {
         type = itemType.Rune;
-        maxAmount = 3;
     }
 
     public void useItem()

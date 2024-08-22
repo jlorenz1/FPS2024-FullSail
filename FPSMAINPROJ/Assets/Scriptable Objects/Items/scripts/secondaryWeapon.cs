@@ -7,9 +7,12 @@ public class secondaryPickup : pickupObject, IPickup
     public void Awake()
     {
         type = itemType.Secondary;
-        maxAmount = 1;
     }
 
+    public secondaryPickup GetPistol()
+    {
+        return this;
+    }
     public void useItem()
     {
         PlayerController controller = gameManager.gameInstance.playerScript;

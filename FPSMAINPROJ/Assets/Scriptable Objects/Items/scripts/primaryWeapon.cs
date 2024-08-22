@@ -8,7 +8,6 @@ public class primaryWeapon : pickupObject, IPickup
     public void Awake()
     {
         type = itemType.Primary;
-        maxAmount = 1;
     }
 
     public void useItem()
