@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] float speed;
     [SerializeField] int sprintMod;
+    //[SerializeField] int crouchSpeed;
+    float crouchSpeed;
     [SerializeField] float maxSprintTimer;
     [SerializeField] float maxSprintWaitTimer;
     [SerializeField] int jumpMax;
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     bool isSprinting;
     bool onSprintCoolDown;
+    bool isCrouching;
 
     float originalSpeed;
     public int damage;
@@ -106,6 +109,7 @@ public class PlayerController : MonoBehaviour, IDamage
         damage  = shootDamage;
         sprintTimer = maxSprintTimer;
         originalSpeed = speed;
+        crouchSpeed = speed / 2;
 
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
@@ -118,7 +122,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         movement();
-        if (!onSprintCoolDown)
+        if (!onSprintCoolDown && !isCrouching)
             sprint();
         sprintTimerUpdate();
 
@@ -128,15 +132,7 @@ public class PlayerController : MonoBehaviour, IDamage
         interact();
         useItemFromInv();
 
-        if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
-        {
-            startingYPOS = transform.position.y;
-            startSlide();
-        }
-        if (Input.GetKeyUp(slideKey) && isSliding)
-        {
-            stopSlide();
-        }
+        
 
 
     }
@@ -170,6 +166,15 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
+
+        if(Input.GetKeyDown(slideKey) && !isSprinting)
+        {
+            startCrouch();
+        }
+        else if (Input.GetKeyUp(slideKey))
+        {
+            stopCrouch();
+        }
 
     }
 
@@ -207,6 +212,19 @@ public class PlayerController : MonoBehaviour, IDamage
         else
         {
             if (isClimbing) endClimbing();
+        }
+
+        if (isSprinting)
+        {
+            if (Input.GetKeyDown(slideKey))
+            {
+                startingYPOS = transform.position.y;
+                startSlide();
+            }
+            if (Input.GetKeyUp(slideKey) && isSliding)
+            {
+                stopSlide();
+            }
         }
 
     }
@@ -260,6 +278,21 @@ public class PlayerController : MonoBehaviour, IDamage
         model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
         speed = originalSpeed;
         isSliding = false;
+    }
+
+    void startCrouch()
+    {
+        controller.height = slideYScale;
+        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        isCrouching = true;
+        speed = crouchSpeed;
+    }
+    void stopCrouch()
+    {
+        controller.height = controllerHeightOrgi;
+        model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
+        isCrouching = false;
+        speed = originalSpeed;
     }
 
     // IDamage Player Damage
