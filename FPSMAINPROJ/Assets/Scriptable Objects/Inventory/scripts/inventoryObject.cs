@@ -100,41 +100,15 @@ public class inventoryObject : ScriptableObject
         return null;
     }
 
-    public void addWeapon(GameObject weapon, itemType type)
+    public void removeWeapon(itemType type)
     {
-        if(type == itemType.Primary)
+        for (int i = 0; i < containerForInv.Count; i++)
         {
-            //swap to secondary
-            equipWeapon(primary, weapon);
+            if (containerForInv[i].pickup.type == type)
+            {
+                containerForInv.RemoveAt(i);
+            }
         }
-        else if(type == itemType.Secondary)
-        {
-            //equipping primary
-            equipWeapon(secondary, weapon);
-        }
-    }
-
-    public void equipWeapon(GameObject weapon, GameObject newWeapon)
-    {
-        if(weapon != null)
-        {
-            weapon.SetActive(false);
-        }
-
-        weapon = newWeapon;
-        if(weapon != null)
-        {
-            weapon.SetActive(true); 
-        }
-    }
-    public void usePrimaryWeapon(itemType type)
-    {
-        useItem(itemType.Primary);
-    }
-
-    public void useSecondaryWeapon(itemType type)
-    {
-        useItem(itemType.Secondary);
     }
 }
 

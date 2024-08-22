@@ -348,11 +348,13 @@ public class PlayerController : MonoBehaviour, IDamage
             pickup pickup = hit.collider.GetComponent<pickup>();
             if (pickup != null)
             {
-                if(inventory.hasItem(itemType.Secondary) ||  inventory.hasItem(itemType.Primary))
+                if(inventory.hasItem(itemType.Secondary))
                 {
-                    yield return null;
-                    yield break;
-                    
+                   inventory.removeWeapon(itemType.Secondary);
+                }
+                else if(inventory.hasItem(itemType.Primary))
+                {
+                    inventory.removeWeapon(itemType.Primary); 
                 }
                 inventory.AddItem(pickup.item, 1);
                 Destroy(hit.collider.gameObject);
@@ -394,8 +396,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.rotation = Quaternion.identity;
-
-        inventory.addWeapon(weapon, type);
     }
 
     public void equipStartingPistol()
