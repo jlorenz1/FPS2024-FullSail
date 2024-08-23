@@ -40,6 +40,7 @@ public class gameManager : MonoBehaviour
     public TMP_Text maxAmmoCount;
     public Image ammoCircle;
     [SerializeField] float RoundDelay;
+    [SerializeField] int SpecialZombieIncrament;
     public GameObject flashDamage;
     public GameObject playerInteract;
     public Image playerHPBar;
@@ -47,7 +48,7 @@ public class gameManager : MonoBehaviour
 
     //Objects
     private EnemySpawner enemySpawner;
-    private BufferSpawner bufferSpawner;
+  
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
@@ -119,14 +120,7 @@ public class gameManager : MonoBehaviour
         else
             Debug.Log("Enemy Spawner Valid");
 
-        bufferSpawner = FindObjectOfType<BufferSpawner>(); 
-        if (bufferSpawner == null)
-        {
-           Debug.LogError("EnemySpawner not found.");
-        }
-        else
-            Debug.Log("Enemy Spawner Valid");
-       
+   
         MainCam = Camera.main;
 
         if(EnemyCount == 0)
@@ -267,17 +261,12 @@ public class gameManager : MonoBehaviour
         SetGameRound(1);
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.ZombieSpawner();
-        if (GameRound % 5 == 0)
+        if (GameRound % SpecialZombieIncrament == 0)
         {
-            SpawnBufferZombie();
+            Debug.Log("Special Round");
+            enemySpawner.SpecialZombieSpawner(SpecialZombieIncrament);
         }
         
-    }
-    void SpawnBufferZombie()
-    {
-        Debug.Log("Special Round");
-        bufferSpawner.SetWaveMax(GameRound);
-        bufferSpawner.BufferSpawnZombies(GetGameRound());
     }
 
 

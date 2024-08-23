@@ -18,16 +18,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] bool IsBufferSpawn;
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] bool UsingFloorToSpawn;
-   
+    [SerializeField] List<GameObject> MeeleZombies;
+    [SerializeField] List<GameObject> RangedZombies;
+    [SerializeField] List<GameObject> SpecialZombies;
+
+    int TypeSplit; 
+
     void Start()
     {
 
-        if (floorPrefab != null)
-        {
-            // Set the spawn area center based on the floor prefab's position
-            spawnAreaCenter = floorPrefab.transform.position;
-            spawnAreaCenter.y += 1f; // Adjust Y position if needed to spawn above the floor
-        }
+        
 
     }
 
@@ -59,11 +59,20 @@ public class EnemySpawner : MonoBehaviour
             {
                 SpawnAtRandomPoint();
             }
-            else
-            {
-                SpawnAtRandomNavMeshPoint();
-            }
-           
+          
+        }
+    }
+
+    public void SpecialZombieSpawner(int Interval)
+    {
+
+        int Round = gameManager.gameInstance.GetGameRound();
+        int targetCount = Round / Interval;
+
+
+        for (int i = 0; i < targetCount; i++)
+        {
+            SpawnSpecialAtRandomPoint();
         }
     }
 
@@ -76,24 +85,71 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
+        // Select a random spawn point
         Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+        // Get a random point on the NavMesh near the selected spawn point
         Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
+
         if (randomPoint != Vector3.zero)
         {
-            GameObject newZombie = Instantiate(prefab, randomPoint, Quaternion.identity);
+            // Determine whether to spawn a melee or ranged zombie based on the 80/20 split
+            GameObject randomZombiePrefab;
+            float chance = Random.Range(0f, 1f);
+
+            if (chance <= 0.8f)
+            {
+                // 80% chance: Select a random melee zombie from the list
+                randomZombiePrefab = MeeleZombies[Random.Range(0, MeeleZombies.Count)];
+            }
+            else
+            {
+                // 20% chance: Select a random ranged zombie from the list
+                randomZombiePrefab = RangedZombies[Random.Range(0, RangedZombies.Count)];
+            }
+
+            // Instantiate the selected zombie at the random point
+            GameObject newZombie = Instantiate(randomZombiePrefab, randomPoint, Quaternion.identity);
+
+            // Set up the zombie's stats
             SetupZombie(newZombie, gameManager.gameInstance.GetGameRound());
         }
     }
 
-    void SpawnAtRandomNavMeshPoint()
+
+  public void SpawnSpecialAtRandomPoint()
     {
-        Vector3 randomPoint = GetRandomPointOnNavMesh(spawnAreaCenter, spawnRadius);
+        if (spawnPoints.Count == 0)
+        {
+            Debug.LogWarning("No spawn points assigned!");
+            return;
+        }
+
+        // Select a random spawn point
+        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+
+        // Get a random point on the NavMesh near the selected spawn point
+        Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
+
         if (randomPoint != Vector3.zero)
         {
-            GameObject newZombie = Instantiate(prefab, randomPoint, Quaternion.identity);
+            // Determine whether to spawn a melee or ranged zombie based on the 80/20 split
+            GameObject randomZombiePrefab;
+            float chance = Random.Range(0f, 1f);
+
+             randomZombiePrefab = SpecialZombies[Random.Range(0, SpecialZombies.Count)];
+
+            // Instantiate the selected zombie at the random point
+            GameObject newZombie = Instantiate(randomZombiePrefab, randomPoint, Quaternion.identity);
+
+            // Set up the zombie's stats
             SetupZombie(newZombie, gameManager.gameInstance.GetGameRound());
         }
+
+
     }
+
+
     void SetupZombie(GameObject zombie, int round)
     {
         EnemyAI zombieScript = zombie.GetComponent<EnemyAI>();

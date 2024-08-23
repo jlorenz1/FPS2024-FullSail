@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7199756417100949057}
   - component: {fileID: 2180796171255640709}
   - component: {fileID: 974978323342846017}
-  - component: {fileID: 1277601445472306774}
+  - component: {fileID: 6082332855559244765}
   m_Layer: 0
   m_Name: 'SpawnInitiator '
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1277601445472306774
+--- !u!114 &6082332855559244765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18b2254d568ce1d4fb00447d2ef1519f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 808642605505150873, guid: 3dfe5f10de5ce8640b89cc349d2bb89a, type: 3}
-  spawnPoints:
-  - {fileID: 0}
+  prefab: {fileID: 0}
+  ZombiesPerRound: 10
+  spawnPoints: []
   spawnAreaCenter: {x: 0, y: 0, z: 0}
   spawnAreaSize: {x: 0, y: 0, z: 0}
   spawnRadius: 1
@@ -129,3 +129,35 @@ MonoBehaviour:
   ScalingHealth: 0
   IsBufferSpawn: 0
   floorPrefab: {fileID: 0}
+  UsingFloorToSpawn: 0
+  MeeleZombies:
+  - {fileID: 2363140973358938583, guid: 005c008284876f347bada30b5fd6edef, type: 3}
+  - {fileID: 4930436916230144460, guid: 13cfadbe7b6f0ca4d9b45caf9cde1d29, type: 3}
+  - {fileID: 971869098849838280, guid: 160989f7c60722544b5c0d08afddbc27, type: 3}
+  - {fileID: 4010497072842455143, guid: 05f19cb0392a8a54fb66f6a17fe9efe5, type: 3}
+  - {fileID: 5588818921207868545, guid: 733453717221f7640aa80f19b1b8f240, type: 3}
+  - {fileID: 6322534212771460741, guid: 7afe465db97ba1e47ab985fd7c8acc40, type: 3}
+  - {fileID: 5588818921207868545, guid: 733453717221f7640aa80f19b1b8f240, type: 3}
+  - {fileID: 8052753063835766205, guid: 675d31c33b2ca8b40bf6387e8b24d9fe, type: 3}
+  - {fileID: 5619329418605560781, guid: d25ebe0f933dbc348acb47397796d8c3, type: 3}
+  - {fileID: 5289822767113936146, guid: df114f1f59f7ebb4ea10c2b5ef92d322, type: 3}
+  - {fileID: 1219853096873554131, guid: 4a77e6cc459939a4d9aa3e7b619cc80a, type: 3}
+  - {fileID: 6140720925495114109, guid: 1d393e8a1d1251e41a3dbb5e6d972891, type: 3}
+  - {fileID: 1219853096873554131, guid: 4a77e6cc459939a4d9aa3e7b619cc80a, type: 3}
+  - {fileID: 6140720925495114109, guid: 1d393e8a1d1251e41a3dbb5e6d972891, type: 3}
+  - {fileID: 6645988180750589813, guid: 56552f0b14665ce48b693716862dd9ad, type: 3}
+  - {fileID: 458431545900900429, guid: ca58b4f163812244dad74717a895942f, type: 3}
+  - {fileID: 6569612200080339258, guid: bbb97f1ea7fe2ec4fa06ca3c77c9e7f9, type: 3}
+  - {fileID: 63645569077408015, guid: e465b10fb4d8e324fa0cfe50aeef4ae4, type: 3}
+  - {fileID: 6569612200080339258, guid: bbb97f1ea7fe2ec4fa06ca3c77c9e7f9, type: 3}
+  - {fileID: 63645569077408015, guid: e465b10fb4d8e324fa0cfe50aeef4ae4, type: 3}
+  - {fileID: 6642676679216252979, guid: 77f5f841e60897c449d4973a5fa30899, type: 3}
+  - {fileID: 1581944448178011244, guid: bdb3836d7c40d02409c2b847f6ce32cb, type: 3}
+  - {fileID: 6908932817107844743, guid: a5a2e2fc1bb904d4dac49158d792cdc8, type: 3}
+  - {fileID: 1916399560658103995, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
+  RangedZombies:
+  - {fileID: 8344886063889778198, guid: 8dccdf3bbf520d24c9f89d7f83492e8b, type: 3}
+  SpecialZombies:
+  - {fileID: 8668641669558895320, guid: 5e2e0218d1490bc4bbd75bae9bd214b0, type: 3}
+  - {fileID: 8346145081859416977, guid: bf195f43214208d45a98ee146c752daa, type: 3}
+  - {fileID: 4975394299191973413, guid: 7fa04dd02b84fea4b9ded5dbbf83e1a8, type: 3}
