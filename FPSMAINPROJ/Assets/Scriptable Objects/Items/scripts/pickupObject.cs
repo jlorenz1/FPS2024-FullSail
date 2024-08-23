@@ -7,8 +7,6 @@ public enum itemType
     Bandage,
     Key,
     Rune,
-    Primary,
-    Secondary,
     Default
 }
 

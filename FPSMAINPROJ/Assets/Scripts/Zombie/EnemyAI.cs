@@ -490,7 +490,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
         AngleToPlayer = Vector3.Angle(PlayerDrr, transform.forward);
 
-        Debug.Log(AngleToPlayer);
+        //Debug.Log(AngleToPlayer);
         Debug.DrawRay(HeadPos.position, PlayerDrr);
 
 

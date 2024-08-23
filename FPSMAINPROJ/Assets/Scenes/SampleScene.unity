@@ -1551,54 +1551,14 @@ PrefabInstance:
       value: Player (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: weapon
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: pickupDis
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: weaponSpawn
-      value: 
-      objectReference: {fileID: 861615745}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: startingPistol
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a1bec3dbcd09e4489050a364b8678f3, type: 2}
-    - target: {fileID: 8203031564338902554, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_Radius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8365533079530394693, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.33018863
-      objectReference: {fileID: 0}
-    - target: {fileID: 8365533079530394693, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.33018863
-      objectReference: {fileID: 0}
-    - target: {fileID: 8365533079530394693, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.3333333
+      propertyPath: playerHP
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5595609850535922399, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8965837617522185451, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1436678519}
-    - targetCorrespondingSourceObject: {fileID: 8965837617522185451, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1436678518}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
---- !u!4 &861615745 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5872704800924629557, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-  m_PrefabInstance: {fileID: 861615744}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &902409478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,93 +2318,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6b2676781f2d114b9324c61e61e1364, type: 3}
---- !u!1 &1436678513 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8965837617522185451, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-  m_PrefabInstance: {fileID: 861615744}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1436678514 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3719972434953410602, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-  m_PrefabInstance: {fileID: 861615744}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1436678518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436678513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 21b58e426921fc24c9834922346b78d4, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
---- !u!114 &1436678519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436678513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1436678514}
-  volumeLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 0
-  antialiasingMode: 0
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
 --- !u!1001 &1543998212
 PrefabInstance:
   m_ObjectHideFlags: 0

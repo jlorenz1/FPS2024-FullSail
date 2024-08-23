@@ -25,14 +25,6 @@ public class inventoryObject : ScriptableObject
             containerForInv.Add(new inventorySlot(_pickup, _amount));
             
         }
-        if (_pickup.type == itemType.Primary)
-        {
-            useItem(itemType.Primary);
-        }
-        else if(_pickup.type == itemType.Secondary)
-        {
-            useItem(itemType.Secondary);
-        }
             
     }
 
@@ -95,19 +87,6 @@ public class inventoryObject : ScriptableObject
 
         }
         return null;
-    }
-
-    public void removeWeapon(itemType type)
-    {
-        for (int i = 0; i < containerForInv.Count; i++)
-        {
-            if (containerForInv[i].pickup.type == type)
-            {
-                
-                containerForInv.RemoveAt(i);
-                return;
-            }
-        }
     }
 }
 

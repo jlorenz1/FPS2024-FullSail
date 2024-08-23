@@ -36,6 +36,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
     [SerializeField] public GameObject quickTime;
+    [SerializeField] TMP_Text requiredItemsDis;
     public TMP_Text ammoCount;
     public TMP_Text maxAmmoCount;
     public Image ammoCircle;
@@ -301,6 +302,13 @@ public class gameManager : MonoBehaviour
     {
         gameManager.gameInstance.playerInteract.SetActive(true);
         
+    }
+
+    public IEnumerator requiredItemsUI(string textToDisplay, float duration)
+    {
+        requiredItemsDis.text = textToDisplay;
+        yield return new WaitForSeconds(duration);
+        requiredItemsDis.text = "";
     }
 }
 

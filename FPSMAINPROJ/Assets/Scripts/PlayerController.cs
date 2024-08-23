@@ -136,10 +136,10 @@ public class PlayerController : MonoBehaviour, IDamage
         
         interact();
         useItemFromInv();
-
-        
-
-
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            checkForRequiredItems();
+        }
     }
 
     void movement()
@@ -390,18 +390,8 @@ public class PlayerController : MonoBehaviour, IDamage
             pickup pickup = hit.collider.GetComponent<pickup>();
             if (pickup != null)
             {
-                if(pickup.item.type == itemType.Secondary || pickup.item.type == itemType.Primary)
-                {
-                   if(inventory.hasItem(pickup.item.type))
-                   {
-                        inventory.removeWeapon(pickup.item.type);
-                   }
-                   inventory.AddItem(pickup.item, 1);
-                }
-                else
-                {
-                    inventory.AddItem(pickup.item, 1);
-                }
+                inventory.AddItem(pickup.item, 1);
+                checkForRequiredItems();
                 Destroy(hit.collider.gameObject);
             }
         }
@@ -441,6 +431,70 @@ public class PlayerController : MonoBehaviour, IDamage
 
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.rotation = Quaternion.identity;
+    }
+
+    public bool checkForRequiredItems()
+    {
+        bool hasRunes = false;
+        bool hasLighter = false;
+
+        for (int i = 0; i < inventory.containerForInv.Count; i++)
+        {
+            if (inventory.containerForInv[i].pickup.type == itemType.Rune)
+            {
+                
+
+                if (inventory.containerForInv[i].amount >= 3)
+                {
+                    hasRunes = true;
+                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes!"), 2f));
+                    if(hasLighter)
+                    {
+                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!" ), 6f));
+
+                    }
+                    UnityEngine.Debug.Log(hasRunes);
+                }
+                else
+                {
+                    UnityEngine.Debug.Log("Not enough runes");
+
+                    StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + " runes in Inventory"), 2f));
+                    //set UI active coroutine 
+                }
+            }
+            else if (inventory.containerForInv[i].pickup.type == itemType.Default)
+            {
+           
+                if (inventory.containerForInv[i].amount >= 1)
+                {
+                    hasLighter = true;
+                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter!"), 2f));
+                    if(hasRunes)
+                    {
+                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter and have " + inventory.containerForInv[i].amount.ToString()) + " Runes!", 2f));
+                    }
+                    UnityEngine.Debug.Log(hasLighter);
+                }
+                else
+                {
+                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Doesnt have lighter!"), 2f));
+                    UnityEngine.Debug.Log("Doesnt have lighter");
+                    //set UI active coroutine 
+                }
+            }
+        }
+        if (hasRunes && hasLighter)
+        {
+            UnityEngine.Debug.Log("can now spawn boss");
+            return true;
+           
+        }
+        else
+        {
+            UnityEngine.Debug.Log("required items missing");
+            return false; 
+        }
     }
 
     public void OnApplicationQuit()
