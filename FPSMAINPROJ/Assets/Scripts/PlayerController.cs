@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] public Transform weaponSpawn;
-    [SerializeField] pickupObject startingPistol;
     public Weapon weapon;
 
     // climbing video variables
@@ -121,7 +120,6 @@ public class PlayerController : MonoBehaviour, IDamage
         crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
-        equipStartingPistol();
         updatePlayerUI();
     }
 
@@ -443,16 +441,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.rotation = Quaternion.identity;
-    }
-
-    public void equipStartingPistol()
-    {
-        inventory.AddItem(startingPistol, 1);
-
-        if(startingPistol != null)
-        {
-            inventory.useItem(itemType.Secondary);
-        }
     }
 
     public void OnApplicationQuit()
