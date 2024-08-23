@@ -440,6 +440,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         bool hasRunes = false;
         bool hasLighter = false;
+        bool hasLighterOnce = false;
+        bool runeMessageShown = false;
+        bool lighterMessageShown = false;
 
         for (int i = 0; i < inventory.containerForInv.Count; i++)
         {
@@ -450,8 +453,13 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (inventory.containerForInv[i].amount >= 3)
                 {
                     hasRunes = true;
-                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes!"), 2f));
-                    if(hasLighter)
+                    if(!runeMessageShown)
+                    {
+                       StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes!"), 3f));
+                       runeMessageShown = true;
+                    }
+                    
+                    if(hasLighter && !lighterMessageShown)
                     {
                         StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!" ), 6f));
 
@@ -461,8 +469,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 else
                 {
                     UnityEngine.Debug.Log("Not enough runes");
-
-                    StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + " runes in Inventory"), 2f));
+                    if(!runeMessageShown)
+                    {
+                        StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + "/3 Runes collected!"), 3f));
+                    }
                     //set UI active coroutine 
                 }
             }
@@ -471,19 +481,13 @@ public class PlayerController : MonoBehaviour, IDamage
            
                 if (inventory.containerForInv[i].amount >= 1)
                 {
+                    
                     hasLighter = true;
-                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter!"), 2f));
-                    if(hasRunes)
+                    if(!hasLighterOnce)
                     {
-                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter and have " + inventory.containerForInv[i].amount.ToString()) + " Runes!", 2f));
+                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter!"), 3f));
+                        hasLighterOnce = true;
                     }
-                    UnityEngine.Debug.Log(hasLighter);
-                }
-                else
-                {
-                    StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Doesnt have lighter!"), 2f));
-                    UnityEngine.Debug.Log("Doesnt have lighter");
-                    //set UI active coroutine 
                 }
             }
         }
