@@ -52,7 +52,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 429cd55815b002b48bfa2100d00b188c, type: 2}
   - {fileID: 2100000, guid: 429cd55815b002b48bfa2100d00b188c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -10761,7 +10761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4003582514227378516}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.07037631, z: -0, w: 0.99752057}
+  m_LocalRotation: {x: 0, y: 0.07037457, z: 0, w: 0.9975207}
   m_LocalPosition: {x: 516.90607, y: 0.083333336, z: -100.19971}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
@@ -10769,7 +10769,7 @@ Transform:
   - {fileID: 3585207132328945054}
   - {fileID: 5930424835859055718}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 8.071, z: 0}
 --- !u!114 &6779941659643987403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10790,7 +10790,7 @@ MonoBehaviour:
   FacePlayerSpeed: 45
   ViewAngle: 90
   HeadPos: {fileID: 5461553350142711767}
-  launchPoint: {fileID: 6540735404290366358}
+  launchPoint: {fileID: 7404511587739969967}
   CastPortal1: {fileID: 7174969257213477383}
   CastPortal2: {fileID: 4977902655218246861}
   MeeleDamage: {fileID: 572863289381099251}
@@ -36190,6 +36190,7 @@ Transform:
   - {fileID: 1156687061698361277}
   - {fileID: 5799647357156308050}
   - {fileID: 6540735404290366358}
+  - {fileID: 7404511587739969967}
   m_Father: {fileID: 3175701661391310825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8123977516671728548
@@ -36215,6 +36216,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8123977516671728548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00027, y: 0.0029, z: 0.0006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8711692411054066021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8233120251663659093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7404511587739969967}
+  m_Layer: 0
+  m_Name: CastPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7404511587739969967
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8233120251663659093}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.00027, y: 0.0029, z: 0.0006}
