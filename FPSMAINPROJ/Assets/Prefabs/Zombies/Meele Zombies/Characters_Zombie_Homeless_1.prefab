@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 519291772255476882}
   serializedVersion: 2
   m_LocalRotation: {x: -0.026872065, y: 0.009752027, z: -0.026452826, w: 0.99924123}
-  m_LocalPosition: {x: 0.00874721, y: -0.1331337, z: 0.01989453}
+  m_LocalPosition: {x: 0.0004, y: 0.0076, z: -0.0008}
   m_LocalScale: {x: 0.0009999003, y: 0.008555001, z: 0.0009999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -197,7 +197,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1380661317014967727}
   BaseHitPoints: 20
-  animator: {fileID: 0}
+  animator: {fileID: 4950298196991275013}
   maxHeight: 15
   AttackRange: 3
   AttackDelay: 3

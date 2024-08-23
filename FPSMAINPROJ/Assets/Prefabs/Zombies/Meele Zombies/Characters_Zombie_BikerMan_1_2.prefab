@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 5940582135452978963}
   BaseHitPoints: 20
-  animator: {fileID: 0}
+  animator: {fileID: 5572211029577484706}
   maxHeight: 15
   AttackRange: 3
   AttackDelay: 3
@@ -365,8 +365,8 @@ Transform:
   m_GameObject: {fileID: 1302097967384806889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.001, y: 0.0071, z: 0.001}
+  m_LocalPosition: {x: 0.00039, y: 0.00436, z: -0.00046}
+  m_LocalScale: {x: 0.001, y: 0.009503351, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5240076161544395840}
@@ -386,9 +386,9 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -1293,9 +1293,9 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 25245585344754351}
   - {fileID: 1360719730417114082}
   - {fileID: 1763516601965895807}
-  - {fileID: 25245585344754351}
   m_Father: {fileID: 8865211111288601850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6094651311905547368

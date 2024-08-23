@@ -320,7 +320,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.001, y: 0.0112222, z: 0.001}
+  m_LocalScale: {x: 0.001, y: 0.018984595, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5729414847278087542}
@@ -342,7 +342,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -1400,7 +1400,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.026872, y: 0.009752051, z: -0.026452806, w: 0.99924123}
   m_LocalPosition: {x: 0.0000000013271346, y: 0.0026283544, z: 1.4901161e-10}
-  m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
+  m_LocalScale: {x: 0.99999994, y: 2.3225996, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7533175530575394769}
@@ -1681,7 +1681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 545750265483207377}
   BaseHitPoints: 20
-  animator: {fileID: 0}
+  animator: {fileID: 8693530508217171373}
   maxHeight: 15
   AttackRange: 3
   AttackDelay: 3

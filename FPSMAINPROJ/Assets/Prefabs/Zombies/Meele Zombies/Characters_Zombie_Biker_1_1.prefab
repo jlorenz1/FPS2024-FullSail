@@ -1612,7 +1612,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 6941598598992079426}
   BaseHitPoints: 20
-  animator: {fileID: 0}
+  animator: {fileID: 6446909580127203317}
   maxHeight: 15
   AttackRange: 3
   AttackDelay: 3
@@ -1684,9 +1684,9 @@ Transform:
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6115644324162057904}
   - {fileID: 1632843376730224181}
   - {fileID: 7962941916294998026}
-  - {fileID: 6115644324162057904}
   m_Father: {fileID: 6059128146940853244}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7259720829918015341
@@ -1909,8 +1909,8 @@ Transform:
   m_GameObject: {fileID: 8146633512669975380}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.001, y: 0.0054801004, z: 0.001}
+  m_LocalPosition: {x: 0.00009, y: 0.00365, z: -0.00037}
+  m_LocalScale: {x: 0.001, y: 0.014186774, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6178658257119425698}
@@ -1982,7 +1982,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
