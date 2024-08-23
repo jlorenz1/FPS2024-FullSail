@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     float originalSpeed;
     public int damage;
-
+    public bool hasItems;
     // Start is called before the first frame update
     void Start()
     {
@@ -136,10 +136,6 @@ public class PlayerController : MonoBehaviour, IDamage
         
         interact();
         useItemFromInv();
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            checkForRequiredItems();
-        }
     }
 
     void movement()
@@ -391,8 +387,11 @@ public class PlayerController : MonoBehaviour, IDamage
             if (pickup != null)
             {
                 inventory.AddItem(pickup.item, 1);
-                checkForRequiredItems();
                 Destroy(hit.collider.gameObject);
+            }
+            if (pickup.item.type == itemType.Default || pickup.item.type == itemType.Rune)
+            {
+                checkForRequiredItems();
             }
         }
         yield return new WaitForSeconds(1);
@@ -403,37 +402,41 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         RaycastHit hit;
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
-            //using heal
-            inventory.useItem(itemType.Bandage);
-        }
-        else if(Input.GetKeyDown(KeyCode.E) && Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
-        {
-            UnityEngine.Debug.Log("hit");
-            var door = hit.collider.GetComponent<doorScript>();
-            if (door != null)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                inventory.useItem(itemType.Key);
+                //using heal
+                inventory.useItem(itemType.Bandage);
+            }
+            else if(Input.GetKeyDown(KeyCode.E))
+            {
+                if (hit.collider != null)
+                {
+                    var door = hit.collider.GetComponent<doorScript>();
+                    if (door != null)
+                    {
+                        inventory.useItem(itemType.Key);
+                    }
+                    else
+                    {
+                        var bossInteraction = hit.collider.GetComponent<bossInteraction>();
+                        if (bossInteraction != null)
+                        {
+                            bossInteraction.spawnBoss();
+                            Destroy(hit.collider);
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.Log("not spawning");
+                        }
+                    }
+                }
             }
         }
-         
     }
 
-    public void equipWeapon(GameObject weapon, itemType type)
-    {
-        Transform childOFPlayer = controller.transform.GetChild(0);
-        Transform childOfChild = childOFPlayer.transform.GetChild(0);
-        Transform childOfThatChild = childOfChild.transform.GetChild(0);
-        UnityEngine.Debug.Log(childOfThatChild.gameObject.name);
-        GameObject weaponInstance = Instantiate(weapon, childOfChild.transform.position, childOfChild.transform.rotation);
-        weaponInstance.transform.SetParent(childOfThatChild);
-
-        weapon.transform.localPosition = Vector3.zero;
-        weapon.transform.rotation = Quaternion.identity;
-    }
-
-    public bool checkForRequiredItems()
+    public void checkForRequiredItems()
     {
         bool hasRunes = false;
         bool hasLighter = false;
@@ -487,13 +490,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if (hasRunes && hasLighter)
         {
             UnityEngine.Debug.Log("can now spawn boss");
-            return true;
+            hasItems = true;
            
         }
         else
         {
             UnityEngine.Debug.Log("required items missing");
-            return false; 
+
+            hasItems = false;
         }
     }
 

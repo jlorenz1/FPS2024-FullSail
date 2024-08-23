@@ -311,7 +311,7 @@ public class gameManager : MonoBehaviour
     {
         requiredItemsDis.text = textToDisplay;
         yield return new WaitForSeconds(duration);
-        requiredItemsDis.text = "";
+        requiredItemsDis.text = " ";
     }
 }
 
