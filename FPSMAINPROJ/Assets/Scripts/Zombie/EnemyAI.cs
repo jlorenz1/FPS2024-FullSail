@@ -19,6 +19,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int ViewAngle;
     [SerializeField] Transform HeadPos;
     [SerializeField] Transform launchPoint;
+    [SerializeField] GameObject CastPortal1;
+    [SerializeField] GameObject CastPortal2;
+    [SerializeField] Collider MeeleDamage;
+    [SerializeField] Collider KickDamage;
+
     float AngleToPlayer;
     Color colorOriginal;
 
@@ -26,14 +31,15 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] GameObject NoramalProjectilePrefab;
     [SerializeField] GameObject SlowProjectilePrefab;
     [SerializeField] GameObject GroundProjectilePrefab;
-  
+    [SerializeField] GameObject BossProjectilePrefab;
 
     [Header("-----Stats-----")]
     [SerializeField] int maxHeight;
     [SerializeField] int AttackRange;
+    [SerializeField] int CastRange;
     [SerializeField] float AttackDelay;
     [SerializeField] int BaseAttackDamage;
-    [SerializeField] Collider MeeleDamage;
+
     public float Speed;
     public int HitPoints;
     public int AttackDamage;
@@ -46,6 +52,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] bool IsSpecialCaster;
     [SerializeField] bool Slower;
     [SerializeField] bool Grounder;
+    [SerializeField] bool IsBoss;
 
     bool isBuffer;
     [Header("-----Ability Stats-----")]
@@ -54,17 +61,21 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int HealthBuff;
     [SerializeField] int BuffRange;
 
-// --------------------------------------------------------------------------------------------------\\
+
+
+    // --------------------------------------------------------------------------------------------------\\
     int EnemyAmount;
     bool isAttacking;
-    bool PlayerinRange;
+    bool PlayerinAttackRange;
+    bool PlayerinCastRange;
     bool canAttack = true;
     bool HasHealthBuffed;
     bool HasStrengthBuffed;
     bool HasSpeedBuffed;
     bool isGrounded;
-    int AttackCount;
-  // --------------------------------------------------------------------------------------------------\\
+    int AttackCount, BossAttackCount;
+
+    // --------------------------------------------------------------------------------------------------\\
     int round;
     Vector3 PlayerDrr;
 
@@ -115,7 +126,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         ApplyGravity();
 
-        if(isRanged)
+        if (isRanged && !IsBoss)
         {
             agent.stoppingDistance = AttackRange / 2;
         }
@@ -132,7 +143,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         DestroyOutOfBounds(10);
         CheckRange();
-        if (PlayerinRange && canAttack)
+        if (PlayerinAttackRange || PlayerinCastRange && canAttack)
         {
             StartCoroutine(AttackWithDelay());
         }
@@ -146,15 +157,15 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         ApplyGravity();
 
-         CanSeePlayer();
+        CanSeePlayer();
 
 
-       
+
 
 
     }
 
- 
+
 
     void OnValidate()
     {
@@ -228,14 +239,32 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     /*________________________________________________________________________________________________________________*/
     IEnumerator AttackWithDelay()
     {
-        canAttack = false; // Prevent immediate re-attack
-        if (!isRanged)
+        if (!IsBoss)
         {
-            AttackPlayer();
+            canAttack = false; // Prevent immediate re-attack
+            if (!isRanged)
+            {
+                AttackPlayer();
+            }
+            else
+            {
+                CastAtPlayer();
+            }
+
         }
-        else
+
+        else if (IsBoss)
         {
-            CastAtPlayer();
+
+            if (PlayerinCastRange)
+            {
+                CastAtPlayer();
+            }
+            else if (PlayerinAttackRange)
+            {
+                AttackPlayer();
+            }
+
         }
         yield return new WaitForSeconds(AttackDelay);
         canAttack = true; // Allow the next attack
@@ -246,47 +275,85 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     void AttackPlayer()
     {
-        if (PlayerinRange == true && CanSeePlayer() == true)
+
+        if (!IsBoss)
         {
-            animator.SetTrigger("Hit");
+            if (PlayerinAttackRange == true && CanSeePlayer() == true)
+            {
+                animator.SetTrigger("Hit");
+            }
+            else
+
+                return;
         }
-        else
-            return;
+        else if (IsBoss)
+        {
+
+            if (PlayerinAttackRange == true && CanSeePlayer() == true)
+            {
+                int randomAction = Random.Range(0, 2); // Generates a random number 0 or 1
+
+                if (randomAction == 0)
+                {
+                    animator.SetTrigger("Kick");
+                }
+                else
+                {
+                    animator.SetTrigger("Hit");
+                }
+            }
+            else
+                return;
+
+        }
 
     }
 
     void CastAtPlayer()
     {
-        if (PlayerinRange == true && CanSeePlayer() == true)
+        if (PlayerinCastRange == true && CanSeePlayer() == true)
         {
             animator.SetTrigger("Shoot");
         }
         else
             return;
-       
+
     }
 
     void CastAttack()
     {
         GameObject projectile;
+
+        if(BossAttackCount == 10 && IsBoss)
+        {
+            projectile = Instantiate(BossProjectilePrefab, launchPoint.position, launchPoint.rotation);
+            BossAttackCount = 0;
+
+
+        }
+
+
+
         if (AttackCount == 5 && IsSpecialCaster)
         {
 
             if (Slower)
             {
-                 projectile = Instantiate(SlowProjectilePrefab, launchPoint.position, launchPoint.rotation);
+                projectile = Instantiate(SlowProjectilePrefab, launchPoint.position, launchPoint.rotation);
                 AttackCount = 0;
             }
 
-           else if(Grounder) 
-            { 
+            else if (Grounder)
+            {
                 projectile = Instantiate(GroundProjectilePrefab, launchPoint.position, launchPoint.rotation);
                 AttackCount = 0;
             }
 
         }
 
-        else{
+
+        else
+        {
 
             projectile = Instantiate(NoramalProjectilePrefab, launchPoint.position, launchPoint.rotation);
             AttackCount++;
@@ -307,7 +374,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
             IDamage damageable = other.GetComponent<IDamage>();
             {
-                damageable.takeDamage(AttackDamage); 
+                damageable.takeDamage(AttackDamage);
             }
         }
     }
@@ -323,14 +390,94 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         MeeleDamage.enabled = false;
     }
 
+    public void SetKickColiderON()
+    {
+        KickDamage.enabled = true;
+
+    }
+
+    public void SetKickColiderOFF()
+    {
+        KickDamage.enabled = false;
+    }
+
     void CheckRange()
     {
-        if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+        if (!isRanged)
         {
-            PlayerinRange = true;
+            if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            {
+                PlayerinAttackRange = true;
+            }
+            else
+                PlayerinAttackRange = false;
         }
-        else
-            PlayerinRange = false;
+
+        if (isRanged && !IsBoss)
+        {
+            if (CastRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            {
+                PlayerinCastRange = true;
+            }
+            else
+                PlayerinCastRange = false;
+        }
+
+        if (IsBoss)
+        {
+            if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            {
+                PlayerinAttackRange = true;
+                PlayerinCastRange = false;
+            }
+            else if (CastRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position) && AttackRange < Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            {
+
+                PlayerinCastRange = true;
+                PlayerinAttackRange = false;
+            }
+            else
+            {
+                PlayerinCastRange = false;
+                PlayerinAttackRange = false;
+            }
+
+        }
+
+
+
+
+    }
+
+    void TurnOnPortals()
+    {
+        if (CastPortal1 != null)
+        {
+            CastPortal1.SetActive(true);
+        }
+
+        if (CastPortal2 != null)
+        {
+            CastPortal2.SetActive(true);
+        }
+
+
+    }
+    void TurnOffPortals()
+    {
+
+        if (CastPortal1 != null)
+        {
+            CastPortal1.SetActive(false);
+        }
+
+        if (CastPortal2 != null)
+        {
+            CastPortal2.SetActive(false);
+        }
+
+
+
     }
 
 
@@ -484,7 +631,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             agent.Move(Vector3.down * 9.81f * Time.deltaTime);
         }
     }
-   bool CanSeePlayer()
+    bool CanSeePlayer()
     {
 
         PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
@@ -502,7 +649,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             {
                 agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
-           
+
                 return true;
             }
 
@@ -572,7 +719,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
     }
 
- 
+
 
 }
 

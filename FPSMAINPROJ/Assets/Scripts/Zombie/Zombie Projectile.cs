@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
    [SerializeField] bool IsNormal;
    [SerializeField] bool IsSlow;
    [SerializeField] bool IsGround;
+   [SerializeField] bool IsBossAttack;
    [SerializeField] int projectileDamage;
 
     Rigidbody rb;
@@ -63,23 +64,20 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-
         if (IsNormal)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
                 gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
                 Destroy(gameObject);
             }
-
         }
-        // Check if the collision is with the player
-       else  if (collision.gameObject.CompareTag("Player"))
+        else if (other.CompareTag("Player"))
         {
             // Stick to the player
-            player = collision.gameObject;
+            player = other.gameObject;
             transform.parent = player.transform;
 
             // Apply debuffs immediately
@@ -95,7 +93,6 @@ public class Projectile : MonoBehaviour
     }
 
 
-   
 
     void ApplyDebufs()
     {
@@ -114,6 +111,18 @@ public class Projectile : MonoBehaviour
             gameManager.gameInstance.playerScript.SetJumpCount(0);
         }
        
+       if(IsBossAttack)
+        {
+            if (OriginalSpeed / Nerf >= 1)
+            {
+                gameManager.gameInstance.playerScript.SetSpeed(OriginalSpeed / Nerf);
+            }
+            else
+                gameManager.gameInstance.playerScript.SetSpeed(1);
+
+            gameManager.gameInstance.playerScript.SetJumpCount(0);
+
+        }
     }
 
     IEnumerator StatReset()
