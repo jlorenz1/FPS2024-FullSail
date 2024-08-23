@@ -145,10 +145,10 @@ GameObject:
   m_Component:
   - component: {fileID: 465270188490484554}
   - component: {fileID: 7417277121821538128}
+  - component: {fileID: 8203031564338902554}
   - component: {fileID: 5719176374025190790}
   - component: {fileID: 5210717050584315553}
   - component: {fileID: 8216761864754983274}
-  - component: {fileID: 8203031564338902554}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -187,6 +187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5719176374025190790}
   model: {fileID: 5783144160728014893}
+  playerCollider: {fileID: 8203031564338902554}
+  dodgeDuration: 1
+  dodgeCooldown: 5
   speed: 5
   sprintMod: 3
   maxSprintTimer: 2
@@ -199,6 +202,7 @@ MonoBehaviour:
   shootRate: 1
   shootDistance: 600
   weaponSpawn: {fileID: 0}
+  startingPistol: {fileID: 0}
   weapon: {fileID: 0}
   whatToClimb:
     serializedVersion: 2
@@ -217,6 +221,29 @@ MonoBehaviour:
     m_Bits: 128
   inventory: {fileID: 11400000, guid: 696d20c93a833b14d856c7af0bbba3d9, type: 2}
   damage: 1
+--- !u!136 &8203031564338902554
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541054881267062660}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &5719176374025190790
 CharacterController:
   m_ObjectHideFlags: 0
@@ -293,29 +320,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8203031564338902554
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541054881267062660}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5081635666664980135
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [Header("-----Stats-----")]
     [SerializeField] int maxHeight;
     [SerializeField] int AttackRange;
-    [SerializeField] int AttackDelay;
+    [SerializeField] float AttackDelay;
     [SerializeField] int BaseAttackDamage;
     [SerializeField] Collider MeeleDamage;
     public float Speed;

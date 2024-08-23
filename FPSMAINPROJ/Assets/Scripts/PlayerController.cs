@@ -17,6 +17,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
 
+    [Header("Doging")]
+    [SerializeField] Collider playerCollider;
+    [SerializeField] float dodgeDuration;
+    [SerializeField] float dodgeCooldown;
+    [SerializeField] float dodgeDistance;
+    private bool canDodge = true;
+
     [Header("PLAYER VARIABLES")]
     [SerializeField] float speed;
     [SerializeField] int sprintMod;
@@ -175,7 +182,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             stopCrouch();
         }
-
+        if (Input.GetButtonDown("Dodge") && canDodge)
+        {
+            UnityEngine.Debug.LogError("Dodge input detected");
+            StartCoroutine(PerformDodge());
+        }
     }
 
     void sprint()
@@ -453,7 +464,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
             
     }
-
+    // Things Added by Jamauri 
     public void SetSpeed(float Modifier)
     {
         speed = Modifier;
@@ -473,4 +484,47 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         return jumpMax;
     }
+
+
+    private IEnumerator PerformDodge()
+    {
+        // Start the dodge
+        canDodge = false;
+
+        // Disable the collider
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = false;
+        }
+
+        // Shift left
+        Vector3 dodgeDirection = transform.right * -dodgeDistance;
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = startPosition + dodgeDirection;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < dodgeDuration)
+        {
+            transform.position = Vector3.Lerp(startPosition, targetPosition, (elapsedTime / dodgeDuration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure final position is exactly the target
+        transform.position = targetPosition;
+
+        // Re-enable the collider
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = true;
+        }
+
+        // Wait for the cooldown duration
+        yield return new WaitForSeconds(dodgeCooldown);
+
+        // End the dodge cooldown
+        canDodge = true;
+    }
+
+
 }
