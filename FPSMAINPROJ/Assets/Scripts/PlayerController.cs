@@ -453,4 +453,24 @@ public class PlayerController : MonoBehaviour, IDamage
         }
             
     }
+
+    public void SetSpeed(float Modifier)
+    {
+        speed = Modifier;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetJumpCount(int Modifier)
+    {
+        jumpMax = Modifier;
+    }
+
+    public int GetJumpCount()
+    {
+        return jumpMax;
+    }
 }

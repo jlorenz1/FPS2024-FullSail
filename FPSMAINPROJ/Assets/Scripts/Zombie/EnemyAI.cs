@@ -6,64 +6,74 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 {
+
+
+
+    [Header("-----Model/Animation-----")]
     [SerializeField] Renderer model;
     [SerializeField] int BaseHitPoints;
     [SerializeField] Animator animator;
+    [SerializeField] int animatorspeedtrans;
+    [SerializeField] NavMeshAgent agent;
+    [SerializeField] int FacePlayerSpeed;
+    [SerializeField] int ViewAngle;
+    [SerializeField] Transform HeadPos;
+    [SerializeField] Transform launchPoint;
+    float AngleToPlayer;
+    Color colorOriginal;
 
+    [Header("-----Projectile Type-----")]
+    [SerializeField] GameObject NoramalProjectilePrefab;
+    [SerializeField] GameObject SlowProjectilePrefab;
+    [SerializeField] GameObject GroundProjectilePrefab;
+  
+
+    [Header("-----Stats-----")]
     [SerializeField] int maxHeight;
     [SerializeField] int AttackRange;
     [SerializeField] int AttackDelay;
     [SerializeField] int BaseAttackDamage;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] int ViewAngle;
-    [SerializeField] Transform HeadPos;
-    [SerializeField] int FacePlayerSpeed;
     [SerializeField] Collider MeeleDamage;
-    [SerializeField] int animatorspeedtrans;
+    public float Speed;
+    public int HitPoints;
+    public int AttackDamage;
 
+    [Header("-----Type-----")]
     [SerializeField] bool isStrengthBuffer;
     [SerializeField] bool isHealthBuffer;
     [SerializeField] bool isSpeedBuffer;
+    [SerializeField] bool isRanged;
+    [SerializeField] bool IsSpecialCaster;
+    [SerializeField] bool Slower;
+    [SerializeField] bool Grounder;
+
+    bool isBuffer;
+    [Header("-----Ability Stats-----")]
     [SerializeField] int DamageBuff;
     [SerializeField] int SpeedBuff;
     [SerializeField] int HealthBuff;
     [SerializeField] int BuffRange;
 
-    public float Speed;
-
-    public int HitPoints;
-
-    public int AttackDamage;
-
+// --------------------------------------------------------------------------------------------------\\
     int EnemyAmount;
-
     bool isAttacking;
-
     bool PlayerinRange;
-
     bool canAttack = true;
-
-    Color colorOriginal;
-
-    bool isBuffer;
-
     bool HasHealthBuffed;
-
     bool HasStrengthBuffed;
-
     bool HasSpeedBuffed;
-
-    int round;
-
     bool isGrounded;
-
-    float AngleToPlayer;
-
+    int AttackCount;
+  // --------------------------------------------------------------------------------------------------\\
+    int round;
     Vector3 PlayerDrr;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+
+
 
         colorOriginal = model.material.color;
 
@@ -104,6 +114,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         rb.isKinematic = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         ApplyGravity();
+
+        if(isRanged)
+        {
+            agent.stoppingDistance = AttackRange / 2;
+        }
     }
 
     // Update is called once per frame
@@ -214,15 +229,15 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     IEnumerator AttackWithDelay()
     {
         canAttack = false; // Prevent immediate re-attack
-
-        animator.SetTrigger("Hit");
-
-        // Perform the attack
-        AttackPlayer();
-
-        // Wait for the specified attack delay
+        if (!isRanged)
+        {
+            AttackPlayer();
+        }
+        else
+        {
+            CastAtPlayer();
+        }
         yield return new WaitForSeconds(AttackDelay);
-
         canAttack = true; // Allow the next attack
     }
 
@@ -239,6 +254,45 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             return;
 
     }
+
+    void CastAtPlayer()
+    {
+        if (PlayerinRange == true && CanSeePlayer() == true)
+        {
+            animator.SetTrigger("Shoot");
+        }
+        else
+            return;
+       
+    }
+
+    void CastAttack()
+    {
+        GameObject projectile;
+        if (AttackCount == 5 && IsSpecialCaster)
+        {
+
+            if (Slower)
+            {
+                 projectile = Instantiate(SlowProjectilePrefab, launchPoint.position, launchPoint.rotation);
+                AttackCount = 0;
+            }
+
+           else if(Grounder) 
+            { 
+                projectile = Instantiate(GroundProjectilePrefab, launchPoint.position, launchPoint.rotation);
+                AttackCount = 0;
+            }
+
+        }
+
+        else{
+
+            projectile = Instantiate(NoramalProjectilePrefab, launchPoint.position, launchPoint.rotation);
+            AttackCount++;
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
