@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3adb6a7cc6489546bf260cdaa58b278, type: 3}
+  m_Name: Gun - AssaultRifle
+  m_EditorClassIdentifier: 
+  gunName: AssaultRifle
+  gunModel: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: 71c2d3aba6ef9fb4f8d6c1c669be0c93, type: 2}
+  reloadAnimation: {fileID: 7400000, guid: d16e614c5bf1a954a8f4597acfa1d852, type: 2}
+  shootingAnimation: {fileID: 7400000, guid: f9d7d1caabfee3047b06d0e6642b81a3, type: 2}
+  idleAnimation: {fileID: 7400000, guid: d16e614c5bf1a954a8f4597acfa1d852, type: 2}
+  shootDamage: 2
+  shootingDistance: 200
+  rateOfFire: 0.1
+  recoilIntensity: 0
+  recoilSpeed: 0
+  magazineCapacity: 36
+  currentAmmoCount: 36
+  maxMagazines: 8
+  startingAmmo: 36
+  currentFireMode: 2
+  availableFireModes: 01000000
+  burstCount: 3
+  burstRate: 0.3
+  maxDurability: 1000
+  durabilityLossPerShot: 0.05
+  canJam: 1
+  qteDelay: 2
+  qteWindow: 3

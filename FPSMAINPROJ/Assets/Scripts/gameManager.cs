@@ -46,6 +46,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerInteract;
     public Image playerHPBar;
     public PlayerController playerScript;
+    public Weapon weaponScript;
 
     //Objects
     private EnemySpawner enemySpawner;
@@ -111,6 +112,8 @@ public class gameManager : MonoBehaviour
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
         playerScript = FindObjectOfType<PlayerController>();
+
+        weaponScript = FindObjectOfType<Weapon>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();

@@ -13,54 +13,45 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    #region Weapon Fire Mode
+    public enum FireMode
+    {
+        Single,
+        Burst,
+        FullAuto
+    }
+    #endregion
+
     #region Serialized Fields
 
-    [Header("Weapon Settings")]
-    [Tooltip("Animator responsible for controlling weapon animations.")]
-    [SerializeField] private Animator weaponAnimator;
+    [Header("----- Weapon Settings -----")]
     [Tooltip("The LayerMask used to determine which objects the bullets can hit.")]
     [SerializeField] private LayerMask canBeShotMask;
 
-    [Header("Shooting System")]
-    [Tooltip("Particle system for gun muzzle flash.")]
-    [SerializeField] private ParticleSystem shootingSystem;
-    [Tooltip("Particle system for when a bullet impacts a target")]
-    [SerializeField] private ParticleSystem shootImpactSystem;
-    [Tooltip("Trail renderer for bullet trails.")]
-    [SerializeField] private TrailRenderer bulletTrail;
-    [Tooltip("Light to simulate muzzle flash lighting.")]
-    [SerializeField] private Light muzzleFlashLight;
-
-    [Header("Reload Settings")]
-    [Tooltip("Additional logic for reload mechanic.")]
-    [SerializeField] float delayBeforeQTE; // Delay before the QTE starts
-    [SerializeField] float windowForQTE; // Time window for the QTE
+    [Header("----- Gun Stats -----")]
+    [Tooltip("Gun stats scriptable object containing weapon configuration.")]
+    [SerializeField] private GunStats gunStats;
 
     #endregion
 
     #region Private Fields
 
-    private IGun.FireMode[] availableFireModes;
-    private float shootDistance;
-    private float weaponFireRate;
-    private float recoilIntensity;
-    private float recoilSpeed;
-    private float maxDurability;
-    private float durabilityLossPerShot;
-    private float burstRate;
-    private int burstCount;
+    private FireMode[] availableFireModes;
+    private float shootDistance, weaponFireRate, recoilIntensity, recoilSpeed, lastShotTime, maxDurability, currentDurability, durabilityLossPerShot, burstRate, reloadTime;
+    private int shootDamage, burstCount, ammoToReload;
     private bool canJam;
     private bool weaponCanShoot = true;             // Indicates if the weapon is ready to shoot
     private bool isReloading = false;              // Indicates if the weapon is currently reloading
     private bool isJammed = false;                // Indicates if the weapon is jammed
     private int currentMagazineIndex = 0;        // Tracks the current magazine being used
-    private float currentDurability;            // Tracks the current durability of the weapon
-    private IGun currentGun;                   // Reference to the current gun configuration
-    private float lastShotTime;               // Tracks the last time a shot was fired
     private float shootDelay = 0.5f;         // Prevents weapon from being immediately fired
-    private int ammoToReload;              // Amount of ammo to reload
     private bool qteSuccess = false;      // Tracks success of Quick Time Event (QTE)
-    private float reloadTime;
+    private bool isShooting = false;
+    private string gunName;
+    private Animator weaponAnimator;
+    private AnimationClip reloadAnimation;
+    private AnimationClip shootAnimation;
+    private AnimationClip idleAnimation;
 
     [Serializable]
     public class Magazine
@@ -76,6 +67,8 @@ public class Weapon : MonoBehaviour
     }
     [SerializeField] private Magazine[] magazines; // Array of magazines used by the weapon
     [SerializeField] public int maxMagazines = 10;
+
+    private Vector3 originalWeaponPosition;
     #endregion
 
     #region Unity Methods
@@ -86,25 +79,22 @@ public class Weapon : MonoBehaviour
     // Events
     public event Action OnFire;
     public event Action OnReload;
-    private Vector3 originalWeaponPosition;
-    float origReloadTime;
+
+
     private void Awake()
     {
-        // Initialize gun configuration
-        currentGun = GetComponent<IGun>();
-        if (currentGun != null)
-        {
-            currentGun.InitializeGun(this);
-        }
-        originalWeaponPosition = transform.localPosition;
+        SetGunConfiguration(gunStats);
+        originalWeaponPosition = transform.position;
 
         weaponAnimator = GetComponent<Animator>();
-        weaponAnimator.SetBool("IsIdle", true); // Ensure IsIdle is true on start
-        weaponAnimator.Play("Idle");
 
-        currentDurability = currentGun.MaxDurability;
+        if (gunStats != null)
+        {
+            SetGunConfiguration(gunStats);
+        }
+
         ValidateMagazines();
-        origReloadTime = currentGun.ReloadTime;
+        reloadTime = gunStats.reloadAnimation.length;
     }
 
     private void Update()
@@ -112,36 +102,49 @@ public class Weapon : MonoBehaviour
 
         if (isReloading || isJammed) return;
 
-        HandleFiring();
-        HandleReloading();
+        HandleWeaponStates();
+
+
+        if (CanShoot())
+        {
+            HandleFiring();
+        }
+        else if (!CanShoot())
+        {
+            HandleReloading();
+        }
+
         HandleFireModeSwitching();
-        HandleIdleState();
         displayAmmo();
     }
 
     #endregion
 
-    private void HandleIdleState()
+    #region Init Method
+    public void SetGunConfiguration(GunStats gun)
     {
-        // Check if the player is moving
-        bool isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
+        gunStats = gun;
 
-        // Check if the player is shooting, aiming, or reloading
-        bool isIdle = !isMoving && !Input.GetButton("Fire1") && !Input.GetMouseButton(1) && !isReloading;
+        gunName = gunStats.gunName;
+        shootDamage = gunStats.shootDamage;
+        weaponFireRate = gunStats.rateOfFire;
+        recoilIntensity = gunStats.recoilIntensity;
+        recoilSpeed = gunStats.recoilSpeed;
+        maxDurability = gunStats.maxDurability;
+        durabilityLossPerShot = gunStats.durabilityLossPerShot;
+        canJam = gunStats.canJam;
+        burstCount = gunStats.burstCount;
+        
+        availableFireModes = gunStats.availableFireModes;
 
-        // Set the animation param
-        weaponAnimator.SetBool("IsIdle", isIdle);
-
-        if (isIdle)
+        if (weaponAnimator != null && gunStats.animatorController != null)
         {
-            weaponAnimator.ResetTrigger("ReloadPistol");
+            weaponAnimator.runtimeAnimatorController = gunStats.animatorController;
         }
-
+        reloadAnimation = gunStats.reloadAnimation;
+        shootAnimation = gunStats.shootingAnimation;
+        idleAnimation = gunStats.idleAnimation;
     }
-
-    /// <summary>
-    /// Validates the magazine count.
-    /// </summary>
     private void ValidateMagazines()
     {
         if (magazines.Length == 0)
@@ -149,7 +152,36 @@ public class Weapon : MonoBehaviour
             Debug.LogError("No magazines assigned to the weapon!");
         }
     }
+    #endregion
 
+    #region State Detection Methods
+    private bool CanShoot()
+    {
+        return !isReloading && !isJammed && weaponCanShoot;
+    }
+
+    private IEnumerator ResetShoot(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        weaponCanShoot = true;
+    }
+
+    private IEnumerator ResetShootingState(float weaponFireRate)
+    {
+        yield return new WaitForSeconds(weaponFireRate);
+        isShooting = false;
+        weaponCanShoot = true;
+    }
+
+    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(bullet);
+    }
+
+    #endregion
+
+    #region UpdateHandling Methods
     /// <summary>
     /// Handles input for firing the weapon.
     /// </summary>
@@ -168,6 +200,104 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    private void HandleWeaponStates()
+    {
+        if (gunStats.gunName == "Pistol")
+        {
+
+            if (Input.GetButtonDown("Fire1") && !isShooting && !isReloading)
+            {
+                StartCoroutine(PlayShootAnimation("pistolShoot", 0.05f));
+            }
+            else if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+            {
+                StartCoroutine(PlayReloadAnimation("pistolReload", 0.25f));
+            }
+            else if (!isShooting && !isReloading)
+            {
+                PlayIdleAnimation("pistolIdle", 0.15f);
+            }
+        }
+        else if (gunStats.gunName == "AssaultRifle")
+        {
+            if (Input.GetButtonDown("Fire1") && !isShooting && !isReloading)
+            {
+                StartCoroutine(PlayShootAnimation("assaultRifleShoot", 0.05f));
+            }
+            else if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+            {
+                StartCoroutine(PlayReloadAnimation("assaultRifleReload", 0.2f));
+            }
+            else if (!isShooting && !isReloading)
+            {
+                PlayIdleAnimation("assaultRifleIdle", 0.2f);
+            }
+        }
+
+
+
+    }
+
+    public void HandleAmmoDrop()
+    {
+        if (getAmmoCount() < getMaxAmmoCount())
+        {
+            int amountNeeded = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
+
+            magazines[currentMagazineIndex].currentAmmoCount += amountNeeded;
+        }
+        Debug.Log("Ammo filled");
+
+    }
+
+    private void HandleFireModeSwitching()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            int currentIndex = Array.IndexOf(availableFireModes, gunStats.currentFireMode);
+            gunStats.currentFireMode = availableFireModes[(currentIndex + 1) % availableFireModes.Length];
+            Debug.Log("Switched fire mode to: " + gunStats.currentFireMode);
+        }
+    }
+
+    private void HandleReloading()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && !isShooting)
+        {
+            Debug.Log("Reload Triggered");
+
+            StartCoroutine(Reload());
+        }
+    }
+
+    #endregion
+
+    #region Shooting Methods
+
+    private void ShootRaycastBullet()
+    {
+        Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+
+        if (Physics.Raycast(reticleRay, out hit, gunStats.shootingDistance, canBeShotMask))
+        {
+            // Apply damage
+            IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
+            if (target != null)
+            {
+                target.takeDamage(gunStats.shootDamage);
+            }
+
+            // VFX effects
+
+
+
+        }
+
+        // Trigger shooting system (muzzle flash, sounds, etc)
+
+    }
+
     private void FireWeapon()
     {
         // Check if enough time has passed before last shot
@@ -180,11 +310,9 @@ public class Weapon : MonoBehaviour
 
         if (magazines[currentMagazineIndex].currentAmmoCount > 0)
         {
+            isShooting = true;
             weaponCanShoot = false; // Prevents immediate re-firing of weapon
             magazines[currentMagazineIndex].currentAmmoCount--; // reduce ammo acount
-
-            // Set IsShooting to true to trigger shooting anim
-            weaponAnimator.SetBool("IsShooting", true);
 
             DecreaseDurability();   // Apply durability loss
             ShootRaycastBullet();   // Perform raycast shooting
@@ -193,152 +321,43 @@ public class Weapon : MonoBehaviour
 
             Debug.Log(magazines[currentMagazineIndex].currentAmmoCount);
         }
-        StartCoroutine(ResetShootingState(currentGun.RateOfFire));
-    }
-
-    private IEnumerator DisableMuzzleFlashLight()
-    {
-        yield return new WaitForSeconds(0.2f);
-        if (muzzleFlashLight != null)
-        {
-            muzzleFlashLight.enabled = false;
-        }
-    }
-
-    private IEnumerator ResetShootingState(float weaponFireRate)
-    {
-        yield return new WaitForSeconds(weaponFireRate);
-        weaponCanShoot = true;
-        weaponAnimator.SetBool("IsShooting", false);
-    }
-
-    private void HandleReloading()
-    {
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && !weaponAnimator.GetBool("IsShooting"))
-        {
-            Debug.Log("Reload Triggered");
-            weaponAnimator.SetTrigger("ReloadPistol");
-            StartCoroutine(Reload());
-        }
-    }
-
-    private void HandleFireModeSwitching()
-    {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            currentGun.SwitchFireMode();
-            Debug.Log("Switched to fire mode: " + currentGun.CurrentFireMode);
-        }
-    }
-
-    private IEnumerator ApplyRecoil()
-    {
-        Vector3 originalPos = transform.localPosition;
-
-        transform.localPosition -= new Vector3(0, 0, currentGun.RecoilIntensity);
-
-        yield return new WaitForSeconds(0.05f);
-
-        transform.localPosition = originalPos;
-    }
-
-    private void ShootRaycastBullet()
-    {
-        Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-        RaycastHit hit;
-
-        if (Physics.Raycast(reticleRay, out hit, currentGun.ShootingDistance, canBeShotMask))
-        {
-            // spawn bullet trail
-            if (bulletTrail != null)
-            {
-                TrailRenderer trail = Instantiate(bulletTrail, transform.position, Quaternion.identity);
-                StartCoroutine(SpawnTrail(trail, hit));
-            }
-            // trigger hit effect
-            if (shootImpactSystem != null)
-            {
-                Instantiate(shootImpactSystem, hit.point, Quaternion.LookRotation(hit.normal));
-            }
-        }
-
-        // trigger muzzle flash
-        if (shootingSystem != null)
-        {
-            shootingSystem.Play();
-        }
-
-        // Activate muzzle flash light
-        if (muzzleFlashLight != null)
-        {
-            muzzleFlashLight.enabled = true;
-            StartCoroutine(DisableMuzzleFlashLight());
-        }
-    }
-
-    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
-    {
-        float time = 0;
-        Vector3 startPos = trail.transform.position;
-
-        while (time < 1)
-        {
-            trail.transform.position = Vector3.Lerp(startPos, hit.point, time);
-            time += Time.deltaTime / trail.time;
-
-            yield return null;
-        }
-
-        trail.transform.position = hit.point;
-        Instantiate(shootImpactSystem, hit.point, Quaternion.LookRotation(hit.normal));
-
-        Destroy(trail.gameObject, trail.time);
-
-        weaponAnimator.SetBool("IsShooting", false);
-    }
-
-    private IEnumerator ResetShoot(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        weaponCanShoot = true;
+        StartCoroutine(ResetShootingState(gunStats.rateOfFire));
     }
 
     private IEnumerator FireBurst()
     {
-        for (int i = 0; i < currentGun.BurstCount; i++)
+        for (int i = 0; i < gunStats.burstCount; i++)
         {
             if (magazines[currentMagazineIndex].currentAmmoCount > 0)
             {
                 FireWeapon();
                 magazines[currentMagazineIndex].currentAmmoCount--;
-                yield return new WaitForSeconds(currentGun.BurstRate);
+                yield return new WaitForSeconds(gunStats.burstRate);
             }
             else
             {
                 break;
             }
         }
-        StartCoroutine(ResetShoot(currentGun.RateOfFire));
+        StartCoroutine(ResetShoot(gunStats.rateOfFire));
 
-        StartCoroutine(ResetShootingState(currentGun.BurstRate * currentGun.BurstCount));
+        StartCoroutine(ResetShootingState(gunStats.burstRate * gunStats.burstCount));
     }
 
-    private IEnumerator DestroyBulletAfterTime(GameObject bullet, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(bullet);
-    }
+    #endregion
+
+    #region Reload Methods
 
     private IEnumerator Reload()
     {
         isReloading = true;
-        reloadTime = origReloadTime;
+        reloadTime = gunStats.reloadAnimation.length;
 
         if (isReloading)
         {
             Debug.Log("Reloading...");
             // play reload anim
-            weaponAnimator.SetTrigger("ReloadPistol");
+
             Coroutine fillCoroutine = StartCoroutine(fillWhileReloading());
 
             if (magazines[currentMagazineIndex].currentAmmoCount == 0)
@@ -363,7 +382,7 @@ public class Weapon : MonoBehaviour
                     gameManager.gameInstance.quickTime.SetActive(false);
                     StopCoroutine(fillCoroutine);
                     StartCoroutine(fillWhileReloading());
-                    yield return new WaitForSeconds(origReloadTime);
+                    yield return new WaitForSeconds(reloadTime);
                     magazines[currentMagazineIndex].currentAmmoCount = magazines[currentMagazineIndex].magazineCapacity;
 
                 }
@@ -371,30 +390,124 @@ public class Weapon : MonoBehaviour
             }
             else
             {
-                yield return new WaitForSeconds(origReloadTime);
+                yield return new WaitForSeconds(reloadTime);
                 magazines[currentMagazineIndex].currentAmmoCount = magazines[currentMagazineIndex].magazineCapacity;
             }
 
             isReloading = false;
             weaponCanShoot = true;
-            
-            if (Input.GetButton("Fire1"))
-            {
-                weaponAnimator.SetBool("IsShooting", true);
-                FireWeapon();
-            }
-            else
-            {
-                weaponAnimator.ResetTrigger("ReloadPistol");
-            }
         }
     }
+
+    public IEnumerator fillWhileReloading()
+    {
+        float elapsedTime = 0f;
+        float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
+        if (qteSuccess == false)
+        {
+            reloadTime = gunStats.reloadAnimation.length;
+        }
+        while (elapsedTime < reloadTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / reloadTime);
+            gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
+            yield return null;
+        }
+        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
+    }
+
+    public IEnumerator quickTimeEvent()
+    {
+        yield return new WaitForSeconds(gunStats.qteDelay);
+
+        float startQTE = Time.time; //start timer when event starts
+        float endQTE = startQTE + gunStats.qteWindow;
+        qteSuccess = false;
+
+        while (Time.time < endQTE) // the timed window for when the player can press
+        {
+            //Debug.Log("CAN QUICK TIME");
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                qteSuccess = true;
+                break;
+            }
+            yield return null;
+        }
+        reloadTime = Time.time - startQTE;
+        if (qteSuccess == false)
+        {
+            reloadTime = gunStats.reloadAnimation.length;
+        }
+        yield return qteSuccess;
+    }
+
+    public void completeReload()
+    {
+        OnReload?.Invoke();
+        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
+    }
+
+
+    #endregion
+
+    #region Animation Methods
+
+    private IEnumerator PlayShootAnimation(string animationName, float customBlendTime)
+    {
+        isShooting = true;
+        PlayAnimation(animationName, customBlendTime);
+        yield return new WaitForSeconds(gunStats.rateOfFire);
+        isShooting = false;
+
+    }
+
+    private IEnumerator PlayReloadAnimation(string animationName, float customBlendTime)
+    {
+        isReloading = true;
+        PlayAnimation(animationName, customBlendTime);
+        yield return new WaitForSeconds(3f);
+        isReloading = false;
+    }
+
+    private void PlayIdleAnimation(string animationName, float customBlendTime)
+    {
+        PlayAnimation(animationName, customBlendTime);
+    }
+
+    private void PlayAnimation(string animationName, float customBlendTime)
+    {
+        if (weaponAnimator != null)
+        {
+            weaponAnimator.CrossFadeInFixedTime(animationName, customBlendTime);
+        }
+    }
+
+    #endregion
+
+    #region Recoil Methods
+
+    private IEnumerator ApplyRecoil()
+    {
+        Vector3 originalPos = transform.localPosition;
+
+        transform.localPosition -= new Vector3(0, 0, gunStats.recoilIntensity);
+
+        yield return new WaitForSeconds(0.05f);
+
+        transform.localPosition = originalPos;
+    }
+
+    #endregion
+
+    #region Durability/Jamming Methods
     private void DecreaseDurability()
     {
-        currentDurability -= currentGun.DurabilityLossPerShot;
+        currentDurability -= gunStats.durabilityLossPerShot;
         if (currentDurability < 0) currentDurability = 0;
 
-        if (currentDurability == 0 && currentGun.CanJam)
+        if (currentDurability == 0 && gunStats.canJam)
         {
             isJammed = true;
             Debug.Log("Weapon is jammed! Clear the jam to continue firing.");
@@ -410,18 +523,9 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void HandleAmmoDrop()
-    {
-        if (getAmmoCount() < getMaxAmmoCount())
-        {
-            int amountNeeded = magazines[currentMagazineIndex].magazineCapacity - magazines[currentMagazineIndex].currentAmmoCount;
+    #endregion
 
-            magazines[currentMagazineIndex].currentAmmoCount += amountNeeded;
-        }
-        Debug.Log("Ammo filled");
-
-    }
-
+    #region Ammo Methods
     public int getAmmoCount()
     {
         return magazines[currentMagazineIndex].currentAmmoCount;
@@ -437,77 +541,6 @@ public class Weapon : MonoBehaviour
         gameManager.gameInstance.ammoCount.text = getAmmoCount().ToString("F0");
         gameManager.gameInstance.maxAmmoCount.text = getMaxAmmoCount().ToString("F0");
         gameManager.gameInstance.ammoCircle.fillAmount = (float)magazines[currentMagazineIndex].currentAmmoCount / (float)magazines[currentMagazineIndex].magazineCapacity;
-    }
-
-    public IEnumerator fillWhileReloading()
-    {
-        float elapsedTime = 0f;
-        float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
-        if(qteSuccess == false)
-        {
-            reloadTime = origReloadTime;
-        }
-        while (elapsedTime < reloadTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / reloadTime);
-            gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
-            yield return null;
-        }
-        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
-    }
-
-    public IEnumerator quickTimeEvent()
-    {
-        yield return new WaitForSeconds(delayBeforeQTE);
-
-        float startQTE = Time.time; //start timer when event starts
-        float endQTE = startQTE + windowForQTE;
-        qteSuccess = false;
-
-        while (Time.time < endQTE) // the timed window for when the player can press
-        {
-            //Debug.Log("CAN QUICK TIME");
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                qteSuccess = true;
-                break;
-            }
-            yield return null;
-        }
-        reloadTime = Time.time - startQTE;
-        if(qteSuccess == false)
-        {
-            reloadTime = origReloadTime;
-        }
-        yield return qteSuccess;
-    }
-
-    public void completeReload()
-    {
-        OnReload?.Invoke();
-        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
-    }
-
-    public void SetGunConfiguration(IGun currentGun)
-    {
-        // Assign gun properties from the IGun interface to local variables in Weapon class
-        availableFireModes = currentGun.AvailableFireModes;
-        shootDistance = currentGun.ShootingDistance;
-        weaponFireRate = currentGun.RateOfFire;
-        recoilIntensity = currentGun.RecoilIntensity;
-        recoilSpeed = currentGun.RecoilSpeed;
-        maxDurability = currentGun.MaxDurability;
-        durabilityLossPerShot = currentGun.DurabilityLossPerShot;
-        canJam = currentGun.CanJam;
-        burstCount = currentGun.BurstCount;
-        burstRate = currentGun.BurstRate;
-
-        // Assign systems and effects
-        shootingSystem = currentGun.ShootingSystem;
-        shootImpactSystem = currentGun.ShootImpactSystem;
-        bulletTrail = currentGun.BulletTrail;
-        muzzleFlashLight = currentGun.MuzzleFlash;
     }
 
     public void addMagazine(Magazine magazine, int numberOfMagazines)
@@ -533,4 +566,5 @@ public class Weapon : MonoBehaviour
             Debug.Log("At max Ammo");
         }
     }
+    #endregion
 }

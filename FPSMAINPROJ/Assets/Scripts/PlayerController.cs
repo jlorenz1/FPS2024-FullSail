@@ -567,6 +567,4 @@ public class PlayerController : MonoBehaviour, IDamage
         // End the dodge cooldown
         canDodge = true;
     }
-
-
 }
