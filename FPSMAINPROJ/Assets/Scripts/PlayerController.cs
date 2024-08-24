@@ -436,75 +436,14 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 checkForRequiredItems();
             }
+            else if(pickup.item.type == itemType.Key)
+            {
+                StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected back cabin key!"), 3f));
+            }
         }
         yield return new WaitForSeconds(1);
         gameManager.gameInstance.playerInteract.SetActive(false);
     }
-
-    //public void useItemFromInv()
-    //{
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
-    //    {
-    //        if (hit.collider.gameObject.CompareTag("interactable"))
-    //        {
-    //            if (hit.collider.GetComponent<pickup>())
-    //            {
-    //                return;
-    //            }
-    //            gameManager.gameInstance.playerInteract.SetActive(true);
-    //            if (Input.GetKeyDown(KeyCode.E))
-    //            {
-    //                if (hit.collider != null)
-    //                {
-    //                    var door = hit.collider.GetComponent<doorScript>();
-    //                    if (door != null)
-    //                    {
-    //                        if (inventory.hasItem(itemType.Key))
-    //                        {
-    //                            inventory.useItem(itemType.Key);
-    //                        }
-    //                        else
-    //                        {
-    //                            StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
-    //                        }
-
-    //                    }
-    //                    else
-    //                    {
-    //                        var bossInteraction = hit.collider.GetComponent<bossInteraction>();
-    //                        if (bossInteraction != null)
-    //                        {
-    //                            bossInteraction.spawnBoss();
-    //                            Destroy(hit.collider);
-    //                        }
-    //                        else
-    //                        {
-    //                            UnityEngine.Debug.Log("not spawning");
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-            
-    //    }
-        
-    //    //if (Input.GetKeyDown(KeyCode.Q))
-    //    //{
-    //    //    if(inventory.hasItem(itemType.Bandage))
-    //    //    {
-    //    //        inventory.useItem(itemType.Bandage);
-    //    //    }
-    //    //    else
-    //    //    {
-    //    //        StartCoroutine(gameManager.gameInstance.requiredItemsUI("No bandages!", 3f));
-    //    //    }
-    //    //}
-    //}
 
     public void checkForRequiredItems()
     {
@@ -520,7 +459,7 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 
 
-                if (inventory.containerForInv[i].amount >= 3)
+                if (inventory.containerForInv[i].amount >= 4)
                 {
                     hasRunes = true;
                     if(!runeMessageShown)
@@ -541,7 +480,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     UnityEngine.Debug.Log("Not enough runes");
                     if(!runeMessageShown)
                     {
-                        StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + "/3 Runes collected!"), 3f));
+                        StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!"), 3f));
                     }
                     //set UI active coroutine 
                 }

@@ -1136,7 +1136,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 550.6541, y: 6.062397, z: -157.3994}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8852181590466487449}
@@ -1158,26 +1158,40 @@ MonoBehaviour:
   model: {fileID: 5847688684080831865}
   BaseHitPoints: 20
   animator: {fileID: 4694024503079820166}
-  maxHeight: 15
-  AttackRange: 3
-  AttackDelay: 3
-  BaseAttackDamage: 10
+  animatorspeedtrans: 5
   agent: {fileID: 0}
+  FacePlayerSpeed: 40
   ViewAngle: 90
   HeadPos: {fileID: 4846290141210874534}
-  FacePlayerSpeed: 40
+  launchPoint: {fileID: 0}
+  CastPortal1: {fileID: 0}
+  CastPortal2: {fileID: 0}
   MeeleDamage: {fileID: 1446462736698798181}
-  animatorspeedtrans: 5
+  KickDamage: {fileID: 0}
+  NoramalProjectilePrefab: {fileID: 0}
+  SlowProjectilePrefab: {fileID: 0}
+  GroundProjectilePrefab: {fileID: 0}
+  BossProjectilePrefab: {fileID: 0}
+  maxHeight: 15
+  AttackRange: 3
+  CastRange: 0
+  AttackDelay: 3
+  BaseAttackDamage: 10
+  Speed: 0
+  HitPoints: 0
+  AttackDamage: 0
   isStrengthBuffer: 0
   isHealthBuffer: 0
   isSpeedBuffer: 0
+  isRanged: 0
+  IsSpecialCaster: 0
+  Slower: 0
+  Grounder: 0
+  IsBoss: 0
   DamageBuff: 0
   SpeedBuff: 0
   HealthBuff: 0
   BuffRange: 0
-  Speed: 0
-  HitPoints: 0
-  AttackDamage: 0
 --- !u!95 &4694024503079820166
 Animator:
   serializedVersion: 5

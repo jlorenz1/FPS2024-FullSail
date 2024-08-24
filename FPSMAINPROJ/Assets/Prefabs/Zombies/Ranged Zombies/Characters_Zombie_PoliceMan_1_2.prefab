@@ -1601,7 +1601,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.750082, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2199417891800984639}
@@ -1629,14 +1629,19 @@ MonoBehaviour:
   ViewAngle: 90
   HeadPos: {fileID: 529161000759003885}
   launchPoint: {fileID: 3468672603146239808}
+  CastPortal1: {fileID: 0}
+  CastPortal2: {fileID: 0}
+  MeeleDamage: {fileID: 0}
+  KickDamage: {fileID: 0}
   NoramalProjectilePrefab: {fileID: 5937798083382408143, guid: f304f3c705c9bdc408a82ced14e1fa0a, type: 3}
   SlowProjectilePrefab: {fileID: 0}
   GroundProjectilePrefab: {fileID: 0}
+  BossProjectilePrefab: {fileID: 0}
   maxHeight: 15
   AttackRange: 10
+  CastRange: 0
   AttackDelay: 1
   BaseAttackDamage: 5
-  MeeleDamage: {fileID: 0}
   Speed: 15
   HitPoints: 0
   AttackDamage: 0
@@ -1647,6 +1652,7 @@ MonoBehaviour:
   IsSpecialCaster: 0
   Slower: 0
   Grounder: 0
+  IsBoss: 0
   DamageBuff: 0
   SpeedBuff: 0
   HealthBuff: 0
@@ -1693,14 +1699,19 @@ MonoBehaviour:
   ViewAngle: 0
   HeadPos: {fileID: 0}
   launchPoint: {fileID: 0}
+  CastPortal1: {fileID: 0}
+  CastPortal2: {fileID: 0}
+  MeeleDamage: {fileID: 0}
+  KickDamage: {fileID: 0}
   NoramalProjectilePrefab: {fileID: 0}
   SlowProjectilePrefab: {fileID: 0}
   GroundProjectilePrefab: {fileID: 0}
+  BossProjectilePrefab: {fileID: 0}
   maxHeight: 0
   AttackRange: 0
+  CastRange: 0
   AttackDelay: 0
   BaseAttackDamage: 0
-  MeeleDamage: {fileID: 0}
   Speed: 0
   HitPoints: 0
   AttackDamage: 0
@@ -1711,6 +1722,7 @@ MonoBehaviour:
   IsSpecialCaster: 0
   Slower: 0
   Grounder: 0
+  IsBoss: 0
   DamageBuff: 0
   SpeedBuff: 0
   HealthBuff: 0
