@@ -266,10 +266,14 @@ public class gameManager : MonoBehaviour
         SetGameRound(1);
         Debug.Log("SpanwFunctionCalled");
         enemySpawner.ZombieSpawner();
-        if (GameRound % SpecialZombieIncrament == 0)
+
+        if (SpecialZombieIncrament > 0)
         {
-            Debug.Log("Special Round");
-            enemySpawner.SpecialZombieSpawner(SpecialZombieIncrament);
+            if (GameRound % SpecialZombieIncrament == 0)
+            {
+                Debug.Log("Special Round");
+                enemySpawner.SpecialZombieSpawner(SpecialZombieIncrament);
+            }
         }
         
     }

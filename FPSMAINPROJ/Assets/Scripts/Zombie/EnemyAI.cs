@@ -39,7 +39,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int CastRange;
     [SerializeField] float AttackDelay;
     [SerializeField] int BaseAttackDamage;
-
+    float startSpeed;
     public float Speed;
     public int HitPoints;
     public int AttackDamage;
@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     {
         agent = GetComponent<NavMeshAgent>();
 
-
+        startSpeed = agent.speed;
 
 
         colorOriginal = model.material.color;
@@ -319,6 +319,16 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             return;
 
     }
+
+    void Stop()
+    {
+        agent.speed = 0;
+    }
+    void Go()
+    {
+        agent.speed = startSpeed;
+    }
+
 
     void CastAttack()
     {

@@ -65,15 +65,19 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpecialZombieSpawner(int Interval)
     {
-
-        int Round = gameManager.gameInstance.GetGameRound();
-        int targetCount = Round / Interval;
-
-
-        for (int i = 0; i < targetCount; i++)
+        if (Interval > 0)
         {
-            SpawnSpecialAtRandomPoint();
+            int Round = gameManager.gameInstance.GetGameRound();
+            int targetCount = Round / Interval;
+
+
+            for (int i = 0; i < targetCount; i++)
+            {
+                SpawnSpecialAtRandomPoint();
+            }
         }
+        else
+            return;
     }
 
 

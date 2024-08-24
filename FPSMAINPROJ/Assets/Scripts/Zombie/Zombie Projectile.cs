@@ -66,29 +66,37 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (IsNormal)
-        {
-            if (other.CompareTag("Player"))
-            {
-                gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
-                Destroy(gameObject);
-            }
-        }
-        else if (other.CompareTag("Player"))
-        {
-            // Stick to the player
-            player = other.gameObject;
-            transform.parent = player.transform;
 
-            // Apply debuffs immediately
-            ApplyDebufs();
-
-            // Start the coroutine to reset stats and destroy the projectile
-            StartCoroutine(StatReset());
+        if (other.isTrigger || other.CompareTag("Zombie"))
+        {
+            return;
         }
         else
         {
-            Destroy(gameObject);
+            if (IsNormal)
+            {
+                if (other.CompareTag("Player"))
+                {
+                    gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
+                    Destroy(gameObject);
+                }
+            }
+            else if (other.CompareTag("Player"))
+            {
+                // Stick to the player
+                player = other.gameObject;
+                transform.parent = player.transform;
+
+                // Apply debuffs immediately
+                ApplyDebufs();
+
+                // Start the coroutine to reset stats and destroy the projectile
+                StartCoroutine(StatReset());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
