@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         if (Input.GetButtonDown("Dodge") && canDodge)
         {
-            UnityEngine.Debug.LogError("Dodge input detected");
+            UnityEngine.Debug.Log("Dodge input detected");
             StartCoroutine(PerformDodge());
         }
     }
