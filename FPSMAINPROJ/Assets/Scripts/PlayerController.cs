@@ -416,7 +416,15 @@ public class PlayerController : MonoBehaviour, IDamage
                     var door = hit.collider.GetComponent<doorScript>();
                     if (door != null)
                     {
-                        inventory.useItem(itemType.Key);
+                        if(inventory.hasItem(itemType.Key))
+                        {
+                            inventory.useItem(itemType.Key);
+                        }
+                        else
+                        {
+                            StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
+                        }
+                        
                     }
                     else
                     {
