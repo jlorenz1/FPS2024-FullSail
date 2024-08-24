@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour, IDamage
         stateMachine();
         
         interact();
-        useItemFromInv();
+        //useItemFromInv();
     }
 
     void movement()
@@ -359,7 +359,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void interact()
     {
         RaycastHit hit;
-
+        bool isInteractable = false;
         if(Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             if (hit.collider.gameObject.CompareTag("pickup"))
@@ -369,11 +369,54 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     StartCoroutine(startInteract());
                 }
+                isInteractable = true;
+            }
+            else if (hit.collider.gameObject.CompareTag("interactable"))
+            {
+                gameManager.gameInstance.playerInteract.SetActive(true);
+                isInteractable = true;
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if (hit.collider != null)
+                    {
+                        var door = hit.collider.GetComponent<doorScript>();
+                        if (door != null)
+                        {
+                            if (inventory.hasItem(itemType.Key))
+                            {
+                                inventory.useItem(itemType.Key);
+                            }
+                            else
+                            {
+                                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
+                            }
+
+                        }
+                        else
+                        {
+                            var bossInteraction = hit.collider.GetComponent<bossInteraction>();
+                            if (bossInteraction != null)
+                            {
+                                bossInteraction.spawnBoss();
+                                Destroy(hit.collider);
+                            }
+                            else
+                            {
+                                UnityEngine.Debug.Log("not spawning");
+                            }
+                        }
+                    }
+                }
             }
             else
             {
                 gameManager.gameInstance.playerInteract.SetActive(false);
             }
+        }
+
+        if(!isInteractable)
+        {
+            gameManager.gameInstance.playerInteract.SetActive(false);
         }
     }
 
@@ -398,51 +441,70 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.gameInstance.playerInteract.SetActive(false);
     }
 
-    public void useItemFromInv()
-    {
-        RaycastHit hit;
+    //public void useItemFromInv()
+    //{
+    //    RaycastHit hit;
 
-        if(Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                //using heal
-                inventory.useItem(itemType.Bandage);
-            }
-            else if(Input.GetKeyDown(KeyCode.E))
-            {
-                if (hit.collider != null)
-                {
-                    var door = hit.collider.GetComponent<doorScript>();
-                    if (door != null)
-                    {
-                        if(inventory.hasItem(itemType.Key))
-                        {
-                            inventory.useItem(itemType.Key);
-                        }
-                        else
-                        {
-                            StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
-                        }
-                        
-                    }
-                    else
-                    {
-                        var bossInteraction = hit.collider.GetComponent<bossInteraction>();
-                        if (bossInteraction != null)
-                        {
-                            bossInteraction.spawnBoss();
-                            Destroy(hit.collider);
-                        }
-                        else
-                        {
-                            UnityEngine.Debug.Log("not spawning");
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //    if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+    //    {
+    //        if (hit.collider.gameObject.CompareTag("interactable"))
+    //        {
+    //            if (hit.collider.GetComponent<pickup>())
+    //            {
+    //                return;
+    //            }
+    //            gameManager.gameInstance.playerInteract.SetActive(true);
+    //            if (Input.GetKeyDown(KeyCode.E))
+    //            {
+    //                if (hit.collider != null)
+    //                {
+    //                    var door = hit.collider.GetComponent<doorScript>();
+    //                    if (door != null)
+    //                    {
+    //                        if (inventory.hasItem(itemType.Key))
+    //                        {
+    //                            inventory.useItem(itemType.Key);
+    //                        }
+    //                        else
+    //                        {
+    //                            StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
+    //                        }
+
+    //                    }
+    //                    else
+    //                    {
+    //                        var bossInteraction = hit.collider.GetComponent<bossInteraction>();
+    //                        if (bossInteraction != null)
+    //                        {
+    //                            bossInteraction.spawnBoss();
+    //                            Destroy(hit.collider);
+    //                        }
+    //                        else
+    //                        {
+    //                            UnityEngine.Debug.Log("not spawning");
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+            
+    //    }
+        
+    //    //if (Input.GetKeyDown(KeyCode.Q))
+    //    //{
+    //    //    if(inventory.hasItem(itemType.Bandage))
+    //    //    {
+    //    //        inventory.useItem(itemType.Bandage);
+    //    //    }
+    //    //    else
+    //    //    {
+    //    //        StartCoroutine(gameManager.gameInstance.requiredItemsUI("No bandages!", 3f));
+    //    //    }
+    //    //}
+    //}
 
     public void checkForRequiredItems()
     {
