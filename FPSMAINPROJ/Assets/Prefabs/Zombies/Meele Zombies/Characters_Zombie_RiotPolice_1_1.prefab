@@ -1137,6 +1137,7 @@ GameObject:
   - component: {fileID: 7592922288619165393}
   - component: {fileID: 3158228651923180301}
   - component: {fileID: 5174311556859175620}
+  - component: {fileID: 151331473774688300}
   m_Layer: 0
   m_Name: Characters_Zombie_RiotPolice_1_1
   m_TagString: Untagged
@@ -1256,6 +1257,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &151331473774688300
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930436916230144460}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5093394526328554879
 GameObject:
   m_ObjectHideFlags: 0

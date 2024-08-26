@@ -138,7 +138,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         float agentSpeed = agent.velocity.normalized.magnitude;
         animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), agentSpeed, Time.deltaTime * animatorspeedtrans));
 
-        ApplySeparationAndRandomMovement();
+      //  ApplySeparationAndRandomMovement();
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         DestroyOutOfBounds(10);
@@ -627,7 +627,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         return Speed;
 
     }
-    void ApplyGravity()
+    private void ApplyGravity()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
         {
@@ -686,12 +686,12 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     }
 
-    void ApplySeparationAndRandomMovement()
+ /*   void ApplySeparationAndRandomMovement()
     {
         Vector3 separationForce = Vector3.zero;
         float separationRadius = 3f; // Radius within which zombies will try to separate
-        float separationStrength = 6f; // How strongly zombies try to separate
-        float randomMovementStrength = 2f; // Random movement intensity
+        float separationStrength = 1f; // How strongly zombies try to separate
+        float randomMovementStrength = 1f; // Random movement intensity
 
         // Find all zombies in the scene
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
@@ -728,7 +728,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             Vector3 newDestination = transform.position + finalMovement.normalized;
             agent.SetDestination(newDestination);
         }
-    }
+    }*/
 
     void LootRoll()
     {

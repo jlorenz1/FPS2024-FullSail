@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDistance;
     [SerializeField] public Transform weaponSpawn;
     public Weapon weapon;
+    [SerializeField] Collider meleeWeapon;
 
     // climbing video variables
     [Header("Reference")]
@@ -77,7 +78,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float startingYScale;
     float startingYPOS;
     int controllerHeightOrgi;
-
+    float meeleDuration;
     bool isSliding;
 
     [Header("Input")]
@@ -106,7 +107,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isSprinting;
     bool onSprintCoolDown;
     bool isCrouching;
-
+    bool canMelee;
     float originalSpeed;
     public int damage;
     public bool hasItems;
@@ -121,6 +122,8 @@ public class PlayerController : MonoBehaviour, IDamage
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
         updatePlayerUI();
+        meeleDuration = 2;
+        canMelee = true;
     }
 
     // Update is called once per frame
@@ -181,6 +184,15 @@ public class PlayerController : MonoBehaviour, IDamage
             UnityEngine.Debug.Log("Dodge input detected");
             StartCoroutine(PerformDodge());
         }
+
+
+        if (Input.GetButtonDown("Melee") && canMelee)
+        {
+            UnityEngine.Debug.Log("Melee input detected");
+            StartCoroutine(PerformMelee());
+        }
+
+
     }
 
     void sprint()
@@ -585,4 +597,26 @@ public class PlayerController : MonoBehaviour, IDamage
         // End the dodge cooldown
         canDodge = true;
     }
+
+
+    private IEnumerator PerformMelee()
+    {
+        canMelee = false;
+
+
+        meleeWeapon.enabled = true;
+        float elapsedTime = 0f;
+        while (elapsedTime < meeleDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        meleeWeapon.enabled = false;
+
+        yield return new WaitForSeconds(1f);
+
+        canMelee = true;
+    }
+
 }

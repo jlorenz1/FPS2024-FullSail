@@ -1486,6 +1486,7 @@ GameObject:
   - component: {fileID: 4383260742876277971}
   - component: {fileID: 5363153113376287671}
   - component: {fileID: 8744556823137364821}
+  - component: {fileID: -8168765677744147678}
   m_Layer: 0
   m_Name: Characters_Zombie_Mustached_Dude_1_2
   m_TagString: Untagged
@@ -1605,6 +1606,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &-8168765677744147678
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5588818921207868545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5594404877560221684
 GameObject:
   m_ObjectHideFlags: 0

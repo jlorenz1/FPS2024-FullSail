@@ -1233,6 +1233,7 @@ GameObject:
   - component: {fileID: 2655920380991531532}
   - component: {fileID: 8544342286399720204}
   - component: {fileID: 6762992293927256085}
+  - component: {fileID: -2006165825648019802}
   m_Layer: 0
   m_Name: Characters_Zombie_Sherif_1_2
   m_TagString: Untagged
@@ -1352,6 +1353,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &-2006165825648019802
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4260171090478821281}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4272671313395825603
 GameObject:
   m_ObjectHideFlags: 0

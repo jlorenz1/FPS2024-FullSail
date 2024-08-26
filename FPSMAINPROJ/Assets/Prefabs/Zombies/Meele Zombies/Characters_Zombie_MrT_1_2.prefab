@@ -1656,6 +1656,7 @@ GameObject:
   - component: {fileID: 149313943181770407}
   - component: {fileID: 4834027451690789097}
   - component: {fileID: 1533031283850298973}
+  - component: {fileID: 4940366747121260432}
   m_Layer: 0
   m_Name: Characters_Zombie_MrT_1_2
   m_TagString: Untagged
@@ -1775,6 +1776,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &4940366747121260432
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8052753063835766205}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8057881347932740666
 GameObject:
   m_ObjectHideFlags: 0

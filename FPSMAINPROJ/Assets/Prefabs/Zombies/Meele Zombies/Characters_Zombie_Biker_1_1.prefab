@@ -1553,6 +1553,7 @@ GameObject:
   - component: {fileID: 6446909580127203317}
   - component: {fileID: 5289726874207346648}
   - component: {fileID: 5090988303387719941}
+  - component: {fileID: 1849366076548276752}
   m_Layer: 0
   m_Name: Characters_Zombie_Biker_1_1
   m_TagString: Untagged
@@ -1672,6 +1673,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &1849366076548276752
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6908932817107844743}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7100143249008365497
 GameObject:
   m_ObjectHideFlags: 0

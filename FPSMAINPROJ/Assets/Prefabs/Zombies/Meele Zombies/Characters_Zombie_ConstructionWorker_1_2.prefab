@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 1982183496980609430}
   - component: {fileID: 4271854221239145674}
   - component: {fileID: 7437124371270736719}
+  - component: {fileID: -3767272418431073706}
   m_Layer: 0
   m_Name: Characters_Zombie_ConstructionWorker_1_2
   m_TagString: Untagged
@@ -259,6 +260,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &-3767272418431073706
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458431545900900429}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &537660583267392407
 GameObject:
   m_ObjectHideFlags: 0

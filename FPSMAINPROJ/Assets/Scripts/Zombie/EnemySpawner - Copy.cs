@@ -55,11 +55,9 @@ public class EnemySpawner : MonoBehaviour
 
       for(int i =0;i < targetCount; i++)
         {
-            if (!UsingFloorToSpawn)
-            {
+           
                 SpawnAtRandomPoint();
-            }
-          
+           
         }
     }
 

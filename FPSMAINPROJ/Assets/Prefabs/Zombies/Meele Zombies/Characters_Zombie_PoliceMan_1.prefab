@@ -1119,6 +1119,7 @@ GameObject:
   - component: {fileID: 4403788961024620286}
   - component: {fileID: 4694024503079820166}
   - component: {fileID: 3995759031714486013}
+  - component: {fileID: 4779152286432543837}
   m_Layer: 0
   m_Name: Characters_Zombie_PoliceMan_1
   m_TagString: Untagged
@@ -1238,6 +1239,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &4779152286432543837
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4010497072842455143}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4134624907677881251
 GameObject:
   m_ObjectHideFlags: 0

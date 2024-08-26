@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 5345946510820684707}
   - component: {fileID: 1127109193954832266}
   - component: {fileID: 6255299992463790818}
+  - component: {fileID: 2866083484274626341}
   m_Layer: 0
   m_Name: Boss Zombie  1
   m_TagString: Zombie
@@ -375,6 +376,7 @@ MonoBehaviour:
   SpeedBuff: 2
   HealthBuff: 50
   BuffRange: 200
+  Drops: []
 --- !u!95 &5345946510820684707
 Animator:
   serializedVersion: 5
@@ -445,6 +447,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &2866083484274626341
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990372450328734922}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2052476790976729767
 GameObject:
   m_ObjectHideFlags: 0
