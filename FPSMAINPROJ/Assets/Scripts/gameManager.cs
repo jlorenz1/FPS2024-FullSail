@@ -24,28 +24,38 @@ public class gameManager : MonoBehaviour
         }
     }
     private float lastRoundStartTime = 0f;
+    [Header("----ROUND SETTINGS----")]
     [SerializeField] private float minRoundDuration = 10f;
+    [SerializeField] int EndRound;
+    [SerializeField] float RoundDelay;
+    [SerializeField] int SpecialZombieIncrament;
     // Serialized Variables
+    [Header("----UI----")]
     [SerializeField] GameObject gameActiveMenu;
     [SerializeField] GameObject gameMainMenu;
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
-    [SerializeField] int EndRound;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
+    [SerializeField] public GameObject inventoryMenu;
+    [SerializeField] public TMP_Text runesCount;
+    [SerializeField] public TMP_Text lighterCount;
+    [SerializeField] public TMP_Text keyCount;
+    [SerializeField] public TMP_Text itemsCompleteText;
+    [SerializeField] public GameObject ritualInProgress;
     [SerializeField] public GameObject quickTime;
     [SerializeField] public GameObject requiredItemsContainer;
     [SerializeField] TMP_Text requiredItemsDis;
     public TMP_Text ammoCount;
     public TMP_Text maxAmmoCount;
     public Image ammoCircle;
-    [SerializeField] float RoundDelay;
-    [SerializeField] int SpecialZombieIncrament;
     public GameObject flashDamage;
     public GameObject playerInteract;
     public Image playerHPBar;
+
+    [Header("----PLAYER----")]
     public PlayerController playerScript;
     public Weapon weaponScript;
 
@@ -62,6 +72,7 @@ public class gameManager : MonoBehaviour
     public int PointCount;
     int GameRound;
     public bool canUnlock;
+    public bool hasStartedRitual = false;
     // Private reference for the Player
     private GameObject _Player;
     private bool isNewEnemies;
@@ -154,7 +165,7 @@ public class gameManager : MonoBehaviour
             }
         }
 
-     
+        displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");
         enemyCount.text = EnemyCount.ToString("F0");
@@ -319,6 +330,32 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         requiredItemsDis.text = string.Empty;
         requiredItemsContainer.SetActive(false);
+    }
+
+    public void displayInventoryMenu()
+    {
+        if (!hasStartedRitual)
+        {
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                inventoryMenu.SetActive(true);
+            }
+            else
+            {
+                inventoryMenu.SetActive(false);
+            }
+        }
+        else if (hasStartedRitual)
+        {
+            if(Input.GetKey(KeyCode.Tab)) 
+            {
+                ritualInProgress.SetActive(true);
+            }
+            else
+            {
+                ritualInProgress.SetActive(false);
+            }
+        }
     }
 }
 

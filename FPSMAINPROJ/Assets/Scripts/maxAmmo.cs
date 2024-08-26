@@ -12,8 +12,8 @@ public class maxAmmo : MonoBehaviour
     void Start()
     {
         weapon = gameManager.gameInstance.playerScript.weapon;
-        magazineCapacity = weapon.getMaxAmmoCount();
-        ammoInMagazine = weapon.getMaxAmmoCount();
+        //magazineCapacity = weapon.getMaxAmmoCount();
+        //ammoInMagazine = weapon.getMaxAmmoCount();
     }
 
     // Update is called once per frame

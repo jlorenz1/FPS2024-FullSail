@@ -14,6 +14,7 @@ public class bossInteraction : MonoBehaviour
         if (gameManager.gameInstance.playerScript.hasItems)
         {
             Instantiate(bossRitualPrefab, spawnLoaction.position, spawnLoaction.rotation);
+            gameManager.gameInstance.hasStartedRitual = true;
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Boss is spawning, defeat to survive!", 6f));
             //SPAWN BOSS FUNTION FOR ENEMIES
         }

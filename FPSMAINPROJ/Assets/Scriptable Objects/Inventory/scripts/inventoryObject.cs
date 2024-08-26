@@ -88,7 +88,28 @@ public class inventoryObject : ScriptableObject
         }
         return null;
     }
+
+    public void updateInventoryUI()
+    {
+        for(int i = 0; i < containerForInv.Count;i++)
+        {
+            if (containerForInv[i].pickup.type == itemType.Key)
+            {
+                gameManager.gameInstance.keyCount.text = containerForInv[i].amount.ToString();
+            }
+            else if(containerForInv[i].pickup.type == itemType.Default)
+            {
+                gameManager.gameInstance.lighterCount.text = containerForInv[i].amount.ToString();
+            }
+            else if (containerForInv[i].pickup.type == itemType.Rune)
+            {
+                gameManager.gameInstance.runesCount.text = containerForInv[i].amount.ToString();
+            }
+        }
+    }
 }
+
+    
 
 //SO WE CAN HAVE SEPERATE SLOTS FOR EACH ITEM TYPE AND HAVE DIFFRENET TYPES OF EACH ITEM
 [System.Serializable]

@@ -410,8 +410,15 @@ public class PlayerController : MonoBehaviour, IDamage
                             var bossInteraction = hit.collider.GetComponent<bossInteraction>();
                             if (bossInteraction != null)
                             {
-                                bossInteraction.spawnBoss();
-                                Destroy(hit.collider);
+                                if(hasItems)
+                                {
+                                    bossInteraction.spawnBoss();
+                                    Destroy(hit.collider);
+                                }
+                                else
+                                {
+                                    StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have required items!", 3f));
+                                }
                             }
                             else
                             {
@@ -443,20 +450,25 @@ public class PlayerController : MonoBehaviour, IDamage
             if (pickup != null)
             {
                 inventory.AddItem(pickup.item, 1);
+                inventory.updateInventoryUI();
                 Destroy(hit.collider.gameObject);
             }
             if (pickup.item.type == itemType.Default || pickup.item.type == itemType.Rune)
             {
                 checkForRequiredItems();
+                
             }
             else if(pickup.item.type == itemType.Key)
             {
                 StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected back cabin key!"), 3f));
             }
         }
+        
         yield return new WaitForSeconds(1);
         gameManager.gameInstance.playerInteract.SetActive(false);
     }
+
+   
 
     public void checkForRequiredItems()
     {
@@ -494,6 +506,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     if(!runeMessageShown)
                     {
                         StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!"), 3f));
+                        runeMessageShown = true;
                     }
                     //set UI active coroutine 
                 }
@@ -516,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (hasRunes && hasLighter)
         {
             UnityEngine.Debug.Log("can now spawn boss");
+            gameManager.gameInstance.itemsCompleteText.gameObject.SetActive(true);
             hasItems = true;
            
         }
