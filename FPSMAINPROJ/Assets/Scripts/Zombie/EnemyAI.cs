@@ -61,7 +61,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] int HealthBuff;
     [SerializeField] int BuffRange;
 
-
+    [SerializeField] List<GameObject> Drops;
 
     // --------------------------------------------------------------------------------------------------\\
     int EnemyAmount;
@@ -217,6 +217,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             gameManager.gameInstance.UpdateGameGoal(-1);
             Destroy(gameObject);
             gameManager.gameInstance.PointCount += 25;
+            LootRoll();
         }
     }
 
@@ -729,7 +730,24 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
     }
 
+    void LootRoll()
+    {
 
+       if(Drops.Count > 0)
+        {
+
+            int chance = UnityEngine.Random.Range(0, 100);
+
+            if (chance < 15)
+            {
+
+                int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
+
+                Instantiate(Drops[randomIndex], agent.transform.position, agent.transform.rotation);
+            }
+        }
+
+    }
 
 }
 

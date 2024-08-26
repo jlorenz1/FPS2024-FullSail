@@ -359,7 +359,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152981829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f375d663dfc194749a349359cce294c5, type: 2}
   m_CullingMode: 0
@@ -499,6 +499,9 @@ MonoBehaviour:
   IsBufferSpawn: 0
   floorPrefab: {fileID: 137791809}
   UsingFloorToSpawn: 0
+  MeeleZombies: []
+  RangedZombies: []
+  SpecialZombies: []
 --- !u!114 &1675435977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,16 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c73c99eb9103794f8a0ce9fec1c3336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab1: {fileID: 8149489963674234323, guid: f1de2e4fdb4d9224f9e8efc44322e2e3, type: 3}
-  prefab2: {fileID: 8149489963674234323, guid: f1de2e4fdb4d9224f9e8efc44322e2e3, type: 3}
-  prefab3: {fileID: 8149489963674234323, guid: f1de2e4fdb4d9224f9e8efc44322e2e3, type: 3}
-  spawnAreaCenter: {x: 1, y: 1, z: 1}
-  spawnAreaSize: {x: 2, y: 1, z: 2}
-  spawnRadius: 2
-  ScalingDamage: 0
-  ScalingHealth: 0
-  IsBufferSpawn: 0
-  floorPrefab: {fileID: 137791809}
 --- !u!1 &2139702595
 GameObject:
   m_ObjectHideFlags: 0
