@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d50ecbafbee8445828391bcc36a1fe, type: 3}
   m_Name: Bandage
   m_EditorClassIdentifier: 
-  profab: {fileID: 0}
-  type: 1
+  prefab: {fileID: 0}
+  type: 0
   amount: 0
+  destroyAfterUse: 0
+  triggerType: 1
   description: To restore player hp
-  hpToRestore: 10
+  hpToRestore: 250

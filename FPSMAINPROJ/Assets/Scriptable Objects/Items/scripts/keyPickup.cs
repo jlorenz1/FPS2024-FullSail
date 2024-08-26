@@ -9,7 +9,7 @@ public class keyPickup : pickupObject, IPickup
     public void Awake()
     {
         type = itemType.Key;
-
+        triggerType = false;
         destroyAfterUse = true;
     }
 

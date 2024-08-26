@@ -16,6 +16,7 @@ public abstract class pickupObject : ScriptableObject
     public itemType type; //what type of object
     public int amount;
     public bool destroyAfterUse;
+    public bool triggerType;
     [TextArea(10, 10)]
     public string description;
 }

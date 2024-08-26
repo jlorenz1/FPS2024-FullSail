@@ -8,6 +8,7 @@ public class runePickup : pickupObject, IPickup
     void Start()
     {
         type = itemType.Rune;
+        triggerType = false;   
     }
 
     public void useItem()

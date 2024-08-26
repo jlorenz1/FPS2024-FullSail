@@ -316,6 +316,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void recieveHP(int amount)
     {
         playerHP += amount;
+        updatePlayerUI();
     }
 
     IEnumerator damageFeedback()

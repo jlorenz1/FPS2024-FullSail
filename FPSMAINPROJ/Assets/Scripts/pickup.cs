@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,21 @@ public class pickup : MonoBehaviour, IPickup
         if (item is IPickup pickupItem)
         {
             pickupItem.useItem();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(item.triggerType == true)
+        {
+            if(type == itemType.Bandage)
+            {
+                if(other.gameObject.CompareTag("Player"))
+                {
+                    useItem();
+                    Destroy(gameObject);
+                }    
+            }
         }
     }
 

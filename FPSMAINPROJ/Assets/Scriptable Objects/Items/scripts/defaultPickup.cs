@@ -8,5 +8,6 @@ public class defaultPickup : pickupObject
     public void Awake()
     {
         type = itemType.Default;
+        triggerType = false;
     }
 }
