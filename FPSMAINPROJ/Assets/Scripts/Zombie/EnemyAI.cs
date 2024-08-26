@@ -737,13 +737,14 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
 
             int chance = UnityEngine.Random.Range(0, 100);
+            float yOffset = 1.0f;
 
             if (chance < 15)
             {
 
                 int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
 
-                Instantiate(Drops[randomIndex], agent.transform.position, agent.transform.rotation);
+                Instantiate(Drops[randomIndex], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
             }
         }
 
