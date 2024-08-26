@@ -1582,7 +1582,6 @@ GameObject:
   - component: {fileID: 7507640677965893672}
   - component: {fileID: 2599887937466371388}
   - component: {fileID: 4041835159704222849}
-  - component: {fileID: 5155833048004145015}
   - component: {fileID: 2326200042662517921}
   - component: {fileID: -4355888319516282436}
   m_Layer: 0
@@ -1623,7 +1622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 5041747476261715}
   BaseHitPoints: 20
-  animator: {fileID: 4041835159704222849}
+  animator: {fileID: 0}
   animatorspeedtrans: 5
   agent: {fileID: 2326200042662517921}
   FacePlayerSpeed: 90
@@ -1670,7 +1669,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7168516504443308690}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9cece17c33b75c4498f7d7b409f2d85b, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 4dd08149a73761d46945acc455781ac0, type: 3}
   m_Controller: {fileID: 9100000, guid: 7b8574cb2315b234f8a142dd460f153b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -1682,56 +1681,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5155833048004145015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168516504443308690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d058252466c266d4b8fafbe6776d8d1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  BaseHitPoints: 0
-  animator: {fileID: 0}
-  animatorspeedtrans: 0
-  agent: {fileID: 0}
-  FacePlayerSpeed: 0
-  ViewAngle: 0
-  HeadPos: {fileID: 0}
-  launchPoint: {fileID: 0}
-  CastPortal1: {fileID: 0}
-  CastPortal2: {fileID: 0}
-  MeeleDamage: {fileID: 0}
-  KickDamage: {fileID: 0}
-  NoramalProjectilePrefab: {fileID: 0}
-  SlowProjectilePrefab: {fileID: 0}
-  GroundProjectilePrefab: {fileID: 0}
-  BossProjectilePrefab: {fileID: 0}
-  maxHeight: 0
-  AttackRange: 0
-  CastRange: 0
-  AttackDelay: 0
-  BaseAttackDamage: 0
-  Speed: 0
-  HitPoints: 0
-  AttackDamage: 0
-  isStrengthBuffer: 0
-  isHealthBuffer: 0
-  isSpeedBuffer: 0
-  isRanged: 0
-  IsSpecialCaster: 0
-  Slower: 0
-  Grounder: 0
-  IsBoss: 0
-  DamageBuff: 0
-  SpeedBuff: 0
-  HealthBuff: 0
-  BuffRange: 0
-  Drops: []
 --- !u!195 &2326200042662517921
 NavMeshAgent:
   m_ObjectHideFlags: 0
