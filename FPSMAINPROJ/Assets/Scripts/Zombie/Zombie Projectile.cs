@@ -64,41 +64,71 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+   void OnTriggerEnter(Collider other)
+{
+    if (other.isTrigger || other.CompareTag("Zombie"))
     {
+        return;
+    }
 
-        if (other.isTrigger || other.CompareTag("Zombie"))
+    if (!IsBossAttack)
+    {
+        HandleNonBossAttack(other);
+    }
+    else
+    {
+        HandleBossAttack(other);
+    }
+}
+
+void HandleNonBossAttack(Collider other)
+{
+    if (!other.CompareTag("Player"))
+    {
+        Destroy(gameObject);
+        return;
+    }
+
+    if (IsNormal)
+    {
+        gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
+        Destroy(gameObject);
+    }
+    else
+    {
+        StickToPlayer(other);
+    }
+}
+
+void HandleBossAttack(Collider other)
+{
+    if (!other.CompareTag("Player"))
+    {
+        Destroy(other.gameObject);
+        Destroy(gameObject);
+    }
+    else
+    {
+        if (IsNormal)
         {
-            return;
+            gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
+            Destroy(gameObject);
         }
         else
         {
-            if (IsNormal)
-            {
-                if (other.CompareTag("Player"))
-                {
-                    gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
-                    Destroy(gameObject);
-                }
-            }
-            else if (other.CompareTag("Player"))
-            {
-                // Stick to the player
-                player = other.gameObject;
-                transform.parent = player.transform;
-
-                // Apply debuffs immediately
-                ApplyDebufs();
-
-                // Start the coroutine to reset stats and destroy the projectile
-                StartCoroutine(StatReset());
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            StickToPlayer(other);
         }
     }
+}
+
+void StickToPlayer(Collider other)
+{
+    player = other.gameObject;
+    transform.parent = player.transform;
+
+    ApplyDebufs();
+    StartCoroutine(StatReset());
+}
 
 
 
