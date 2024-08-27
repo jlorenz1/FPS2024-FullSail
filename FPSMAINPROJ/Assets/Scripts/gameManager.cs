@@ -348,6 +348,7 @@ public class gameManager : MonoBehaviour
             if (Input.GetKey(KeyCode.Tab))
             {
                 inventoryMenu.SetActive(true);
+
             }
             else
             {
