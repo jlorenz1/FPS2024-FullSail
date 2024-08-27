@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] public int playerHP;
+    [SerializeField] Light flashLight;
+    private bool isLit = false;
+
     int HPorig;
 
     // Weapon Variables for player
@@ -124,6 +127,7 @@ public class PlayerController : MonoBehaviour, IDamage
         updatePlayerUI();
         meeleDuration = 2;
         canMelee = true;
+        flashLight.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -190,6 +194,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             UnityEngine.Debug.Log("Melee input detected");
             StartCoroutine(PerformMelee());
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            enableFlashLight();
         }
 
 
@@ -630,6 +639,13 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(1f);
 
         canMelee = true;
+    }
+
+    void enableFlashLight()
+    {
+        isLit = !isLit;
+        flashLight.gameObject.SetActive(isLit);
+        
     }
 
 }
