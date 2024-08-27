@@ -24,6 +24,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject BossZombie;
     int TypeSplit; 
 
+
+
     void Start()
     {
 

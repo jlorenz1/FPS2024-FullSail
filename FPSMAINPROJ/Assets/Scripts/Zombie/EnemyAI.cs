@@ -148,7 +148,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         float agentSpeed = agent.velocity.normalized.magnitude;
         animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), agentSpeed, Time.deltaTime * animatorspeedtrans));
 
-        //  ApplySeparationAndRandomMovement();
+       //  ApplySeparationAndRandomMovement();
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         DestroyOutOfBounds(10);
@@ -337,7 +337,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     void Stop()
     {
-        agent.speed = 0;
+        agent.speed = startSpeed;
     }
     void Go()
     {
@@ -692,49 +692,49 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     }
 
-    /*   void ApplySeparationAndRandomMovement()
-       {
-           Vector3 separationForce = Vector3.zero;
-           float separationRadius = 3f; // Radius within which zombies will try to separate
-           float separationStrength = 1f; // How strongly zombies try to separate
-           float randomMovementStrength = 1f; // Random movement intensity
+    void ApplySeparationAndRandomMovement()
+    {
+        Vector3 separationForce = Vector3.zero;
+        float separationRadius = 3f; // Radius within which zombies will try to separate
+        float separationStrength = 1f; // How strongly zombies try to separate
+        float randomMovementStrength = 1f; // Random movement intensity
 
-           // Find all zombies in the scene
-           GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+        // Find all zombies in the scene
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
 
-           foreach (GameObject zombie in zombies)
-           {
-               if (zombie != gameObject)
-               {
-                   float distance = Vector3.Distance(transform.position, zombie.transform.position);
-                   if (distance < separationRadius && distance > 0.1f)
-                   {
-                       Vector3 directionAwayFromZombie = transform.position - zombie.transform.position;
-                       separationForce += (directionAwayFromZombie.normalized / distance) * separationStrength;
-                   }
-               }
-           }
+        foreach (GameObject zombie in zombies)
+        {
+            if (zombie != gameObject)
+            {
+                float distance = Vector3.Distance(transform.position, zombie.transform.position);
+                if (distance < separationRadius && distance > 0.1f)
+                {
+                    Vector3 directionAwayFromZombie = transform.position - zombie.transform.position;
+                    separationForce += (directionAwayFromZombie.normalized / distance) * separationStrength;
+                }
+            }
+        }
 
-           // Calculate the direction towards the player with a slight random offset
-           Vector3 directionToPlayer = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
-           Vector3 randomOffset = new Vector3(
-               Random.Range(-1f, 1f),
-               0f, // Keep the offset on the XZ plane
-               Random.Range(-1f, 1f)
-           ) * randomMovementStrength;
+        // Calculate the direction towards the player with a slight random offset
+        Vector3 directionToPlayer = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
+        Vector3 randomOffset = new Vector3(
+            Random.Range(-1f, 1f),
+            0f, // Keep the offset on the XZ plane
+            Random.Range(-1f, 1f)
+        ) * randomMovementStrength;
 
-           Vector3 finalDirection = directionToPlayer + randomOffset;
+        Vector3 finalDirection = directionToPlayer + randomOffset;
 
-           // Combine separation force and the directed random movement towards the player
-           Vector3 finalMovement = separationForce + finalDirection;
+        // Combine separation force and the directed random movement towards the player
+        Vector3 finalMovement = separationForce + finalDirection;
 
-           // Apply the final movement to the NavMeshAgent
-           if (finalMovement != Vector3.zero)
-           {
-               Vector3 newDestination = transform.position + finalMovement.normalized;
-               agent.SetDestination(newDestination);
-           }
-       }*/
+        // Apply the final movement to the NavMeshAgent
+        if (finalMovement != Vector3.zero)
+        {
+            Vector3 newDestination = transform.position + finalMovement.normalized;
+            agent.SetDestination(newDestination);
+        }
+    }
 
     void LootRoll()
     {
