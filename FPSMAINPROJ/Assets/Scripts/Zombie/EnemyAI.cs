@@ -789,6 +789,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             // Check if the zombie has been standing still for too long
             if (timeStandingStill >= deathTime)
             {
+                if(!IsBoss)
                 Die();
             }
         }
