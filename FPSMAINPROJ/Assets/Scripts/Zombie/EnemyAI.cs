@@ -29,8 +29,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     [Header("-----Projectile Type-----")]
     [SerializeField] GameObject NoramalProjectilePrefab;
-    [SerializeField] GameObject SlowProjectilePrefab;
-    [SerializeField] GameObject GroundProjectilePrefab;
+    [SerializeField] GameObject SpecialProjectile;
     [SerializeField] GameObject BossProjectilePrefab;
 
     [Header("-----Stats-----")]
@@ -140,7 +139,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         float agentSpeed = agent.velocity.normalized.magnitude;
         animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), agentSpeed, Time.deltaTime * animatorspeedtrans));
 
-      //  ApplySeparationAndRandomMovement();
+        //  ApplySeparationAndRandomMovement();
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         DestroyOutOfBounds(10);
@@ -337,30 +336,18 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     {
         GameObject projectile;
 
-        if(BossAttackCount == 10 && IsBoss)
+        if (BossAttackCount == 10 && IsBoss)
         {
             projectile = Instantiate(BossProjectilePrefab, launchPoint.position, launchPoint.rotation);
             BossAttackCount = 0;
-
-
         }
 
 
 
         if (AttackCount == 5 && IsSpecialCaster)
         {
-
-            if (Slower)
-            {
-                projectile = Instantiate(SlowProjectilePrefab, launchPoint.position, launchPoint.rotation);
-                AttackCount = 0;
-            }
-
-            else if (Grounder)
-            {
-                projectile = Instantiate(GroundProjectilePrefab, launchPoint.position, launchPoint.rotation);
-                AttackCount = 0;
-            }
+            projectile = Instantiate(SpecialProjectile, launchPoint.position, launchPoint.rotation);
+            AttackCount = 0;
 
         }
 
@@ -416,9 +403,12 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     void CheckRange()
     {
+
+        float Distance = Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position);
+
         if (!isRanged)
         {
-            if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            if (AttackRange >= Distance)
             {
                 PlayerinAttackRange = true;
             }
@@ -428,22 +418,23 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         if (isRanged && !IsBoss)
         {
-            if (CastRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            if (CastRange >= Distance)
             {
                 PlayerinCastRange = true;
             }
+
             else
                 PlayerinCastRange = false;
         }
 
         if (IsBoss)
         {
-            if (AttackRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            if (AttackRange >= Distance)
             {
                 PlayerinAttackRange = true;
                 PlayerinCastRange = false;
             }
-            else if (CastRange >= Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position) && AttackRange < Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position))
+            else if (CastRange >= Distance && AttackRange < Distance)
             {
 
                 PlayerinCastRange = true;
@@ -688,54 +679,54 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     }
 
- /*   void ApplySeparationAndRandomMovement()
-    {
-        Vector3 separationForce = Vector3.zero;
-        float separationRadius = 3f; // Radius within which zombies will try to separate
-        float separationStrength = 1f; // How strongly zombies try to separate
-        float randomMovementStrength = 1f; // Random movement intensity
+    /*   void ApplySeparationAndRandomMovement()
+       {
+           Vector3 separationForce = Vector3.zero;
+           float separationRadius = 3f; // Radius within which zombies will try to separate
+           float separationStrength = 1f; // How strongly zombies try to separate
+           float randomMovementStrength = 1f; // Random movement intensity
 
-        // Find all zombies in the scene
-        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+           // Find all zombies in the scene
+           GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
 
-        foreach (GameObject zombie in zombies)
-        {
-            if (zombie != gameObject)
-            {
-                float distance = Vector3.Distance(transform.position, zombie.transform.position);
-                if (distance < separationRadius && distance > 0.1f)
-                {
-                    Vector3 directionAwayFromZombie = transform.position - zombie.transform.position;
-                    separationForce += (directionAwayFromZombie.normalized / distance) * separationStrength;
-                }
-            }
-        }
+           foreach (GameObject zombie in zombies)
+           {
+               if (zombie != gameObject)
+               {
+                   float distance = Vector3.Distance(transform.position, zombie.transform.position);
+                   if (distance < separationRadius && distance > 0.1f)
+                   {
+                       Vector3 directionAwayFromZombie = transform.position - zombie.transform.position;
+                       separationForce += (directionAwayFromZombie.normalized / distance) * separationStrength;
+                   }
+               }
+           }
 
-        // Calculate the direction towards the player with a slight random offset
-        Vector3 directionToPlayer = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
-        Vector3 randomOffset = new Vector3(
-            Random.Range(-1f, 1f),
-            0f, // Keep the offset on the XZ plane
-            Random.Range(-1f, 1f)
-        ) * randomMovementStrength;
+           // Calculate the direction towards the player with a slight random offset
+           Vector3 directionToPlayer = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
+           Vector3 randomOffset = new Vector3(
+               Random.Range(-1f, 1f),
+               0f, // Keep the offset on the XZ plane
+               Random.Range(-1f, 1f)
+           ) * randomMovementStrength;
 
-        Vector3 finalDirection = directionToPlayer + randomOffset;
+           Vector3 finalDirection = directionToPlayer + randomOffset;
 
-        // Combine separation force and the directed random movement towards the player
-        Vector3 finalMovement = separationForce + finalDirection;
+           // Combine separation force and the directed random movement towards the player
+           Vector3 finalMovement = separationForce + finalDirection;
 
-        // Apply the final movement to the NavMeshAgent
-        if (finalMovement != Vector3.zero)
-        {
-            Vector3 newDestination = transform.position + finalMovement.normalized;
-            agent.SetDestination(newDestination);
-        }
-    }*/
+           // Apply the final movement to the NavMeshAgent
+           if (finalMovement != Vector3.zero)
+           {
+               Vector3 newDestination = transform.position + finalMovement.normalized;
+               agent.SetDestination(newDestination);
+           }
+       }*/
 
     void LootRoll()
     {
 
-       if(Drops.Count > 0)
+        if (Drops.Count > 0)
         {
 
             int chance = UnityEngine.Random.Range(0, 100);
@@ -771,7 +762,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         else
             return;
-    
+
     }
 
 }

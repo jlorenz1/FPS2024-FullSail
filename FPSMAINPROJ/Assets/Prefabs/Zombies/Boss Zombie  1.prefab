@@ -353,8 +353,7 @@ MonoBehaviour:
   MeeleDamage: {fileID: 7408522890195007431}
   KickDamage: {fileID: 2388980068100517662}
   NoramalProjectilePrefab: {fileID: 796538474141022772, guid: 193e48abf1d21da49b497a893d687f29, type: 3}
-  SlowProjectilePrefab: {fileID: 199015425848759702, guid: 06c6b21436efe59469b35eade284ff0e, type: 3}
-  GroundProjectilePrefab: {fileID: 261205670013082325, guid: 86a06dfea1aa01e44ab9da5a4182361e, type: 3}
+  SpecialProjectile: {fileID: 199015425848759702, guid: 06c6b21436efe59469b35eade284ff0e, type: 3}
   BossProjectilePrefab: {fileID: 3173530186808218144, guid: 20936dea28cb3c54aa64c4a4de8076e6, type: 3}
   maxHeight: 15
   AttackRange: 4
@@ -377,6 +376,7 @@ MonoBehaviour:
   HealthBuff: 50
   BuffRange: 200
   Drops: []
+  BoostRange: 40
 --- !u!95 &5345946510820684707
 Animator:
   serializedVersion: 5
