@@ -1456,7 +1456,7 @@ MonoBehaviour:
   BaseAttackDamage: 5
   Speed: 0
   HitPoints: 0
-  AttackDamage: 0
+  AttackDamage: 7
   isStrengthBuffer: 0
   isHealthBuffer: 0
   isSpeedBuffer: 1
@@ -1466,9 +1466,11 @@ MonoBehaviour:
   Grounder: 0
   IsBoss: 0
   DamageBuff: 0
-  SpeedBuff: 5
+  SpeedBuff: 10
   HealthBuff: 0
   BuffRange: 50
+  Drops: []
+  BoostRange: 40
 --- !u!195 &2231037868274349474
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1479,7 +1481,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 9
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

@@ -1713,7 +1713,7 @@ MonoBehaviour:
   maxHeight: 15
   AttackRange: 3
   CastRange: 0
-  AttackDelay: 3
+  AttackDelay: 2
   BaseAttackDamage: 10
   Speed: 0
   HitPoints: 0
@@ -1733,6 +1733,7 @@ MonoBehaviour:
   Drops:
   - {fileID: 5661173919019611973, guid: 43e2fa7cb8349284395bbbdd3f540ce1, type: 3}
   - {fileID: 2881220496469332687, guid: 1612c64997b87b3488adeb74c63669fc, type: 3}
+  BoostRange: 40
 --- !u!95 &4834027451690789097
 Animator:
   serializedVersion: 5
@@ -1764,7 +1765,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 12
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

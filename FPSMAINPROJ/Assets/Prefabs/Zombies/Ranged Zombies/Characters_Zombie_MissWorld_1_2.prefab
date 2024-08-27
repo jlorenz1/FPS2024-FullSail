@@ -917,11 +917,11 @@ MonoBehaviour:
   GroundProjectilePrefab: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
   maxHeight: 15
-  AttackRange: 10
-  CastRange: 0
+  AttackRange: 0
+  CastRange: 15
   AttackDelay: 1
   BaseAttackDamage: 5
-  Speed: 15
+  Speed: 9
   HitPoints: 0
   AttackDamage: 0
   isStrengthBuffer: 0
@@ -939,6 +939,7 @@ MonoBehaviour:
   Drops:
   - {fileID: 5661173919019611973, guid: 43e2fa7cb8349284395bbbdd3f540ce1, type: 3}
   - {fileID: 2881220496469332687, guid: 1612c64997b87b3488adeb74c63669fc, type: 3}
+  BoostRange: 40
 --- !u!195 &2632881371052350020
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -949,7 +950,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 9
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
