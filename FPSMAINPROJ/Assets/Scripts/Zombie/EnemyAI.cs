@@ -763,7 +763,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         if (BoostRange <= distanceToPlayer && !RangeBoosted)
         {
-            agent.speed = startSpeed + 100;
+            agent.speed = startSpeed + 30;
             RangeBoosted = true;
         }
         else if (RangeBoosted && BoostRange >= distanceToPlayer)
