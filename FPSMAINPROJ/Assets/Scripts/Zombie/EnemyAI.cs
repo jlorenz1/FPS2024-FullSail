@@ -74,6 +74,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     bool HasSpeedBuffed;
     bool isGrounded;
     int AttackCount, BossAttackCount;
+    public int BoostRange = 40;
+    bool RangeBoosted;
 
     // --------------------------------------------------------------------------------------------------\\
     int round;
@@ -159,7 +161,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         CanSeePlayer();
 
-
+        OutOfRangeBoost();
 
 
 
@@ -748,6 +750,28 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             }
         }
 
+    }
+
+    void OutOfRangeBoost()
+    {
+
+        float distanceToPlayer = Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position);
+
+        if (BoostRange <= distanceToPlayer && !RangeBoosted)
+        {
+            agent.speed = startSpeed + 100;
+            RangeBoosted = true;
+        }
+        else if (RangeBoosted && BoostRange >= distanceToPlayer)
+        {
+
+            agent.speed = startSpeed;
+            RangeBoosted = false;
+        }
+
+        else
+            return;
+    
     }
 
 }
