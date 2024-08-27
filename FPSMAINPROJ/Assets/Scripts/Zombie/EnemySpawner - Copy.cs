@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<GameObject> MeeleZombies;
     [SerializeField] List<GameObject> RangedZombies;
     [SerializeField] List<GameObject> SpecialZombies;
-
+    [SerializeField] GameObject BossZombie;
     int TypeSplit; 
 
     void Start()
@@ -78,6 +78,12 @@ public class EnemySpawner : MonoBehaviour
             return;
     }
 
+    public void SpawnBoss()
+    {
+        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
+        GameObject newZombie = Instantiate(BossZombie, randomPoint, Quaternion.identity);
+    }
 
     void SpawnAtRandomPoint()
     {
@@ -137,7 +143,7 @@ public class EnemySpawner : MonoBehaviour
         {
             // Determine whether to spawn a melee or ranged zombie based on the 80/20 split
             GameObject randomZombiePrefab;
-            float chance = Random.Range(0f, 1f);
+           
 
              randomZombiePrefab = SpecialZombies[Random.Range(0, SpecialZombies.Count)];
 
