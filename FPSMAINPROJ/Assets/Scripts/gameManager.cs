@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] int SpecialZombieIncrament;
     // Serialized Variables
     [Header("----UI----")]
+    [SerializeField] public Image fadeOverlay;
+    public float fadeDuration;
     [SerializeField] GameObject gameActiveMenu;
     [SerializeField] GameObject gameMainMenu;
     [SerializeField] GameObject gamePauseMenu;
@@ -111,6 +114,7 @@ public class gameManager : MonoBehaviour
     // Using Awake, for Manager
     void Awake()
     {
+        fadeOverlay.gameObject.SetActive(true);
         // If instance already exists and it is not the game Manager, destroy this instance
         if (_gameInstance != null && _gameInstance != this)
         {
@@ -144,6 +148,11 @@ public class gameManager : MonoBehaviour
             StartNewRound();
         }
        
+    }
+
+    void Start()
+    {
+        StartCoroutine(fadeOut());
     }
 
 
@@ -356,6 +365,24 @@ public class gameManager : MonoBehaviour
                 ritualInProgress.SetActive(false);
             }
         }
+    }
+
+    public IEnumerator fadeOut()
+    {
+        Color fadeOutColor = fadeOverlay.color;
+        float startAlpha = fadeOutColor.a;
+        float endAlpha = 0f;
+        float elapsed = 0f;
+
+        while (elapsed < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsed / fadeDuration);
+            fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, alpha);
+            elapsed += Time.deltaTime; 
+            yield return null;
+        }
+
+        fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, endAlpha);
     }
 }
 

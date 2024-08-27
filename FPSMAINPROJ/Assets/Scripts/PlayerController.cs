@@ -531,7 +531,6 @@ public class PlayerController : MonoBehaviour, IDamage
             UnityEngine.Debug.Log("can now spawn boss");
             gameManager.gameInstance.itemsCompleteText.gameObject.SetActive(true);
             hasItems = true;
-           
         }
         else
         {
