@@ -80,6 +80,11 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     int round;
     Vector3 PlayerDrr;
 
+    public float deathTime = 10f;  // Time in seconds before the zombie dies if it doesn't move
+    private Vector3 lastPosition;
+    private float timeStandingStill;
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -131,6 +136,10 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         {
             agent.stoppingDistance = AttackRange / 2;
         }
+
+        lastPosition = transform.position;
+        timeStandingStill = 0f;
+
     }
 
     // Update is called once per frame
@@ -162,7 +171,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         OutOfRangeBoost();
 
-
+        CheckMovement();
 
     }
 
@@ -222,6 +231,10 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
     }
 
+    private void Die()
+    {
+        takeDamage(HitPoints);
+    }
 
     void DestroyOutOfBounds(int m_MaxHieght)
     {
@@ -765,6 +778,29 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     }
 
+    void CheckMovement()
+    {
+        // Check if the zombie has moved
+        if (transform.position == lastPosition)
+        {
+            // Increment the time standing still
+            timeStandingStill += Time.deltaTime;
+
+            // Check if the zombie has been standing still for too long
+            if (timeStandingStill >= deathTime)
+            {
+                Die();
+            }
+        }
+        else
+        {
+            // Reset the timer if the zombie has moved
+            timeStandingStill = 0f;
+        }
+
+        // Update last position
+        lastPosition = transform.position;
+    }
 }
 
 
