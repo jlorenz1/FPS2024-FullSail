@@ -63,7 +63,7 @@ public class gameManager : MonoBehaviour
     public Weapon weaponScript;
 
     //Objects
-    private EnemySpawner enemySpawner;
+    public EnemySpawner enemySpawner;
   
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;

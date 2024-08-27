@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2272895759095662070}
   - component: {fileID: 2272895759096661814}
   - component: {fileID: 7259960527505680378}
+  - component: {fileID: 6727954915195076327}
   m_Layer: 0
   m_Name: Wall_Wide_01_b (2)
   m_TagString: Untagged
@@ -210,6 +211,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.30940127, y: 5.856467, z: 2.1192615}
   m_Center: {x: 0, y: -0.00000035762795, z: -0.00000011920926}
+--- !u!114 &6727954915195076327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2272895759094405622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 1
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 7668cd4dd6bd7a646b538250edbfc819, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &2281111998940976144
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +254,7 @@ GameObject:
   - component: {fileID: 2281111998944102416}
   - component: {fileID: 2281111998942972624}
   - component: {fileID: 8127930577991619448}
+  - component: {fileID: 2799739464582873743}
   m_Layer: 0
   m_Name: Wall_Narrow_02_b
   m_TagString: Untagged
@@ -315,6 +348,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.6031914, y: 0.26179802, z: 2.3126974}
   m_Center: {x: 0, y: 0, z: -0.00000017881395}
+--- !u!114 &2799739464582873743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281111998940976144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 1
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 54e4ae62ba213a34185e6b2313b63873, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &3911960079555044679
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +511,7 @@ GameObject:
   - component: {fileID: 7263124596021796501}
   - component: {fileID: 7263124596022926421}
   - component: {fileID: 121047938564453349}
+  - component: {fileID: 1536254111386468121}
   m_Layer: 0
   m_Name: Wall_Wide_01_b (1)
   m_TagString: Untagged
@@ -540,6 +605,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.30940127, y: 5.856467, z: 2.1192615}
   m_Center: {x: 0, y: -0.00000035762795, z: -0.00000011920926}
+--- !u!114 &1536254111386468121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263124596025180821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 1
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: b622e1cad76d2d64bb3494d4060fcc64, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &7613270430845745398
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +650,7 @@ GameObject:
   - component: {fileID: 8424298121357568418}
   - component: {fileID: 999542034016226009}
   - component: {fileID: 2250327831270203457}
+  - component: {fileID: 8806228496634396353}
   m_Layer: 0
   m_Name: Wall_Narrow_01_b
   m_TagString: Untagged
@@ -689,3 +786,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.6031914, y: 0.32697394, z: 0.7043578}
   m_Center: {x: 0, y: 0.00000010430812, z: 0.8028193}
+--- !u!114 &8806228496634396353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7613270430845745398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 1
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: cbb90a7066d1dea44b6b652a5647266c, type: 2}
+  m_BuildHeightMesh: 0

@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 6462956624765141165}
   - component: {fileID: 7596346939471922369}
   - component: {fileID: 2047804549084521261}
+  - component: {fileID: 7409590913556768199}
   m_Layer: 0
   m_Name: Characters_Zombie_Biker_1_2
   m_TagString: Untagged
@@ -480,8 +481,7 @@ MonoBehaviour:
   MeeleDamage: {fileID: 7522710212555452166}
   KickDamage: {fileID: 0}
   NoramalProjectilePrefab: {fileID: 0}
-  SlowProjectilePrefab: {fileID: 0}
-  GroundProjectilePrefab: {fileID: 0}
+  SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
   maxHeight: 15
   AttackRange: 3
@@ -573,6 +573,33 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &7409590913556768199
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581944448178011244}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1627297307916536271
 GameObject:
   m_ObjectHideFlags: 0

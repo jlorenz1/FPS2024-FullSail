@@ -1375,6 +1375,7 @@ GameObject:
   - component: {fileID: 870759692565912570}
   - component: {fileID: 2231037868274349474}
   - component: {fileID: 1113812726474358645}
+  - component: {fileID: 9191446423474736885}
   m_Layer: 0
   m_Name: Zed_SpeedBuffer
   m_TagString: Zombie
@@ -1446,8 +1447,7 @@ MonoBehaviour:
   MeeleDamage: {fileID: 6126390162973874481}
   KickDamage: {fileID: 0}
   NoramalProjectilePrefab: {fileID: 0}
-  SlowProjectilePrefab: {fileID: 0}
-  GroundProjectilePrefab: {fileID: 0}
+  SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
   maxHeight: 50
   AttackRange: 5
@@ -1516,6 +1516,33 @@ CapsuleCollider:
   m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &9191446423474736885
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975394299191973413}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5156123294512457333
 GameObject:
   m_ObjectHideFlags: 0

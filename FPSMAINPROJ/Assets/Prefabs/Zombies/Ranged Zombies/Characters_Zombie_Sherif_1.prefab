@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 7344618670152340511}
   - component: {fileID: 1366138763224988208}
   - component: {fileID: 2649256169521178544}
+  - component: {fileID: 8142986154619739428}
   m_Layer: 0
   m_Name: Characters_Zombie_Sherif_1
   m_TagString: Untagged
@@ -437,8 +438,7 @@ MonoBehaviour:
   MeeleDamage: {fileID: 0}
   KickDamage: {fileID: 0}
   NoramalProjectilePrefab: {fileID: 5937798083382408143, guid: f304f3c705c9bdc408a82ced14e1fa0a, type: 3}
-  SlowProjectilePrefab: {fileID: 0}
-  GroundProjectilePrefab: {fileID: 0}
+  SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
   maxHeight: 15
   AttackRange: 0
@@ -509,6 +509,33 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &8142986154619739428
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584919346376330516}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1606574473981431089
 GameObject:
   m_ObjectHideFlags: 0
