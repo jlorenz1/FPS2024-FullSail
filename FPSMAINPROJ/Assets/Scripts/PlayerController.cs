@@ -102,6 +102,9 @@ public class PlayerController : MonoBehaviour, IDamage
     public inventoryObject inventory;
     private float sprintTimer;
 
+    [Header("Sounds")]
+    public AudioClip[] interactSounds;
+    [Range(0,1)][SerializeField] public float interactVol;
     Vector3 move;
     Vector3 playerVel;
 
@@ -459,6 +462,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public IEnumerator startInteract()
     {
         RaycastHit hit;
+        AudioManager.audioInstance.playAudio(interactSounds[Random.Range(0, interactSounds.Length)], interactVol);
 
         if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {

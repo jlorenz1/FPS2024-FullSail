@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    void playAudio(AudioClip audClip, float vol)
+    public void playAudio(AudioClip audClip, float vol)
     {
         _audioSource.PlayOneShot(audClip, vol);
     }
