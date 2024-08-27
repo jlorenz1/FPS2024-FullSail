@@ -198,7 +198,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            enableFlashLight();
+            if(inventory.hasItem(itemType.flashlight)) 
+            {
+                enableFlashLight();
+            }
+            else
+            {
+                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have flashlight! Check your campsite for it!", 3.0f));
+            }
         }
 
 
@@ -471,8 +478,13 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected back cabin key!"), 3f));
             }
+            else if (pickup.item.type == itemType.flashlight)
+            {
+                StartCoroutine(gameManager.gameInstance.requiredItemsUI(("'F' to use flashlight"), 3f));
+
+            }
         }
-        
+
         yield return new WaitForSeconds(1);
         gameManager.gameInstance.playerInteract.SetActive(false);
     }

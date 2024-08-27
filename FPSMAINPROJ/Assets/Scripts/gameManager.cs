@@ -334,11 +334,18 @@ public class gameManager : MonoBehaviour
 
     public IEnumerator requiredItemsUI(string textToDisplay, float duration)
     {
+        float givenDuration = duration;
         requiredItemsContainer.SetActive(true);
         requiredItemsDis.text = textToDisplay;
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(givenDuration);
+        givenDuration = 0;
         requiredItemsDis.text = string.Empty;
         requiredItemsContainer.SetActive(false);
+
+        if(requiredItemsDis.text != string.Empty)
+        {
+            requiredItemsDis.text = "";
+        }
     }
 
     public void displayInventoryMenu()
