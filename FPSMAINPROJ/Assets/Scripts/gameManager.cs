@@ -66,7 +66,7 @@ public class gameManager : MonoBehaviour
 
     //Objects
     public EnemySpawner enemySpawner;
-  
+    public bool isReqItemsUIDisplay = false;
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
@@ -334,8 +334,18 @@ public class gameManager : MonoBehaviour
         
     }
 
+    public void displayRequiredIemsUI(string message, float duration)
+    {
+        if(isReqItemsUIDisplay)
+        {
+            StopCoroutine("requiredItemsUI");
+        }
+        StartCoroutine(requiredItemsUI(message, duration));
+    }
+
     public IEnumerator requiredItemsUI(string textToDisplay, float duration)
     {
+        isReqItemsUIDisplay = true;
         float givenDuration = duration;
         requiredItemsContainer.SetActive(true);
         requiredItemsDis.text = textToDisplay;
@@ -343,11 +353,7 @@ public class gameManager : MonoBehaviour
         givenDuration = 0;
         requiredItemsDis.text = string.Empty;
         requiredItemsContainer.SetActive(false);
-
-        if(requiredItemsDis.text != string.Empty)
-        {
-            requiredItemsDis.text = "";
-        }
+        isReqItemsUIDisplay = false;
     }
 
     public void displayInventoryMenu()

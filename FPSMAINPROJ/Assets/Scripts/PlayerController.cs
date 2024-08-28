@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
@@ -509,11 +510,11 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else if(pickup.item.type == itemType.Key)
             {
-                StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected back cabin key!"), 3f));
+                gameManager.gameInstance.displayRequiredIemsUI("Collected back cabin key!", 3f);
             }
             else if (pickup.item.type == itemType.flashlight)
             {
-                StartCoroutine(gameManager.gameInstance.requiredItemsUI(("'F' to use flashlight"), 3f));
+                gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
 
             }
         }
@@ -542,15 +543,15 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     hasRunes = true;
                     if(!runeMessageShown)
-                    {
-                       StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes!"), 3f));
-                       runeMessageShown = true;
+                    { 
+                       gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes!", 3f);
+
+                        runeMessageShown = true;
                     }
                     
                     if(hasLighter && !lighterMessageShown)
                     {
-                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!" ), 6f));
-
+                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!", 3f);
                     }
                     UnityEngine.Debug.Log(hasRunes);
                 }
@@ -559,7 +560,8 @@ public class PlayerController : MonoBehaviour, IDamage
                     UnityEngine.Debug.Log("Not enough runes");
                     if(!runeMessageShown)
                     {
-                        StartCoroutine(gameManager.gameInstance.requiredItemsUI((inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!"), 3f));
+                        gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!", 3f);
+
                         runeMessageShown = true;
                     }
                     //set UI active coroutine 
@@ -574,7 +576,8 @@ public class PlayerController : MonoBehaviour, IDamage
                     hasLighter = true;
                     if(!hasLighterOnce)
                     {
-                        StartCoroutine(gameManager.gameInstance.requiredItemsUI(("Collected Lighter!"), 3f));
+                        gameManager.gameInstance.displayRequiredIemsUI("Collected Lighter!", 3f);
+
                         hasLighterOnce = true;
                     }
                 }
