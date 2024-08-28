@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator playStep()
     {
         isplayingStep = true;
-
+        
         AudioManager.audioInstance.playAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
 
         if (!isSprinting)
@@ -256,6 +256,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             speed *= sprintMod;
             isSprinting = true;
+            onSprintCoolDown = false;
         }
         else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0)
         {
@@ -284,10 +285,10 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(waitTimer());
         }
-        if (!onSprintCoolDown && Input.GetButtonDown("Sprint"))
-        {
-            StopAllCoroutines();
-        }
+        //if (!onSprintCoolDown && Input.GetButtonDown("Sprint"))
+        //{
+        //    //StopAllCoroutines();
+        //}
 
     }
 
