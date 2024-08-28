@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public int damage;
     public bool hasItems;
     bool isplayingStep;
-
+    private Coroutine waitTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -283,11 +283,16 @@ public class PlayerController : MonoBehaviour, IDamage
         
         if (Input.GetButtonUp("Sprint"))
         {
-            StartCoroutine(waitTimer());
+            waitTime = StartCoroutine(waitTimer());
         }
         if (!onSprintCoolDown && Input.GetButtonDown("Sprint"))
         {
-            StopCoroutine(waitTimer());
+            if(waitTime != null)
+            {
+                StopCoroutine(waitTime);
+                waitTime = null;
+            }
+           
         }
 
     }
