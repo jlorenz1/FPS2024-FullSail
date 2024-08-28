@@ -663,7 +663,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isLit = !isLit;
         flashLight.gameObject.SetActive(isLit);
-        AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, interactSounds.Length)], flashlightVol);
+        AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, flashlightSounds.Length)], flashlightVol);
     }
 
 }
