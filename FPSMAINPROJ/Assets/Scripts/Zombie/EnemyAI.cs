@@ -48,6 +48,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] AudioClip[] ZombieAttack;
     [SerializeField, Range(0f, 1f)] float ZombieAttackVol;
 
+    [SerializeField] AudioClip[] ZombieAttackRanged;
+    [SerializeField, Range(0f, 1f)] float ZombieAttackRangedVol;
+
     float AngleToPlayer;
     Color colorOriginal;
 
@@ -391,10 +394,14 @@ void OnValidate()
                 if (randomAction == 0)
                 {
                     animator.SetTrigger("Kick");
+                    PlayAudio(ZombieAttack[Random.Range(0, ZombieAttack.Length)], ZombieAttackVol);
+
                 }
                 else
                 {
                     animator.SetTrigger("Hit");
+                    PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+
                 }
             }
             else
@@ -409,6 +416,7 @@ void OnValidate()
         if (PlayerinCastRange == true && CanSeePlayer() == true)
         {
             animator.SetTrigger("Shoot");
+           
         }
         else
             return;
@@ -431,6 +439,7 @@ void OnValidate()
 
         if (BossAttackCount == 10 && IsBoss)
         {
+            PlayAudio(ZombieAttackRanged[Random.Range(0, ZombieAttackRanged.Length)], ZombieAttackRangedVol);
             projectile = Instantiate(BossProjectilePrefab, launchPoint.position, launchPoint.rotation);
             BossAttackCount = 0;
         }
@@ -468,6 +477,7 @@ void OnValidate()
             IDamage damageable = other.GetComponent<IDamage>();
             {
                 damageable.takeDamage(AttackDamage);
+                PlayAudio(ZombieHit[0], ZombieHitVol);
             }
         }
     }
