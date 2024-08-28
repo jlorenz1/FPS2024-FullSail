@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint  (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -231,6 +235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint  (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -244,13 +252,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 394445090797202819, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
+      propertyPath: MinDistance
+      value: 2.496048
+      objectReference: {fileID: 0}
     - target: {fileID: 1284576561685459969, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
       propertyPath: m_LocalPosition.x
       value: 550.6541
       objectReference: {fileID: 0}
     - target: {fileID: 1284576561685459969, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.062397
+      value: 0.45000005
       objectReference: {fileID: 0}
     - target: {fileID: 1284576561685459969, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
       propertyPath: m_LocalPosition.z
@@ -292,6 +304,18 @@ PrefabInstance:
       propertyPath: Zombie
       value: 
       objectReference: {fileID: 797106359}
+    - target: {fileID: 7739522942319171765, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
+      propertyPath: ZombieGrowlVol
+      value: 0.657
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739522942319171765, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
+      propertyPath: ZombieGrowl.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7739522942319171765, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
+      propertyPath: ZombieGrowl.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
     - target: {fileID: 7739522942319171765, guid: df7d4a199fc5d3843b811a512d916f67, type: 3}
       propertyPath: ZombieFootSteps.Array.size
       value: 4
@@ -368,6 +392,10 @@ PrefabInstance:
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_Name
       value: SpawnPoint  (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -716,6 +744,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint  (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -772,6 +804,10 @@ PrefabInstance:
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_Name
       value: SpawnPoint  (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -830,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint  (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -886,6 +926,10 @@ PrefabInstance:
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_Name
       value: SpawnPoint  (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1049,6 +1093,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnPoint  (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1105,6 +1153,10 @@ PrefabInstance:
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_Name
       value: SpawnPoint  (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1223,6 +1275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'SpawnInitiator '
       objectReference: {fileID: 0}
+    - target: {fileID: 2568560236411018617, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6082332855559244765, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
       propertyPath: ZombiesPerRound
       value: 20
@@ -1283,6 +1339,10 @@ PrefabInstance:
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_Name
       value: 'SpawnPoint '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8436267311498778926, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_TagString

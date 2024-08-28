@@ -515,6 +515,7 @@ MonoBehaviour:
   ZombieFootStepsVol: 0.007
   ZombieGrowl:
   - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+  - {fileID: 8300000, guid: 7cd898929a4ea4443ad44c0345438f18, type: 3}
   ZombieGrowlVol: 1
   ZombieHit:
   - {fileID: 8300000, guid: b1fd01cbde3db4d4cb8a87ae701032f5, type: 3}
@@ -637,7 +638,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

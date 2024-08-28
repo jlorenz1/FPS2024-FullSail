@@ -384,6 +384,7 @@ GameObject:
   - component: {fileID: 5345946510820684707}
   - component: {fileID: 1127109193954832266}
   - component: {fileID: 2866083484274626341}
+  - component: {fileID: 4068589319682474022}
   m_Layer: 0
   m_Name: Boss Zombie  1
   m_TagString: Zombie
@@ -400,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 1990372450328734922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.07037457, z: 0, w: 0.9975207}
-  m_LocalPosition: {x: 553.84644, y: 0.76, z: -153.33}
+  m_LocalPosition: {x: 553.84644, y: 0.87, z: -153.33}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -435,6 +436,24 @@ MonoBehaviour:
   CastPortal2: {fileID: 7532450311715841634}
   MeeleDamage: {fileID: 7408522890195007431}
   KickDamage: {fileID: 2388980068100517662}
+  Zombie: {fileID: 4068589319682474022}
+  ZombieFootSteps:
+  - {fileID: 8300000, guid: 34e1f4d693666dc48a2bd2f245b83c9c, type: 3}
+  - {fileID: 8300000, guid: e5e1c47de1ba5f64a94f06f8e5da33a8, type: 3}
+  - {fileID: 8300000, guid: 0485203c064e1ac48ba42ab12e1ffc80, type: 3}
+  - {fileID: 8300000, guid: 08ab2abd3b75a62418a853905e8c1518, type: 3}
+  ZombieFootStepsVol: 0.5
+  ZombieGrowl:
+  - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+  ZombieGrowlVol: 0.5
+  ZombieHit: []
+  ZombieHitVol: 0
+  ZombieDeath: []
+  ZombieDeathVol: 0
+  ZombieBuff: {fileID: 0}
+  ZombieBuffVol: 0
+  ZombieAttack: []
+  ZombieAttackVol: 0
   NoramalProjectilePrefab: {fileID: 796538474141022772, guid: 193e48abf1d21da49b497a893d687f29, type: 3}
   SpecialProjectile: {fileID: 199015425848759702, guid: 06c6b21436efe59469b35eade284ff0e, type: 3}
   BossProjectilePrefab: {fileID: 3173530186808218144, guid: 20936dea28cb3c54aa64c4a4de8076e6, type: 3}
@@ -527,6 +546,102 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!82 &4068589319682474022
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990372450328734922}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 19.111784
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2052476790976729767
 GameObject:
   m_ObjectHideFlags: 0

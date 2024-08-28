@@ -2129,6 +2129,7 @@ MonoBehaviour:
   ZombieFootStepsVol: 0.007
   ZombieGrowl:
   - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+  - {fileID: 8300000, guid: 7cd898929a4ea4443ad44c0345438f18, type: 3}
   ZombieGrowlVol: 0
   ZombieHit:
   - {fileID: 8300000, guid: b1fd01cbde3db4d4cb8a87ae701032f5, type: 3}
@@ -2138,6 +2139,8 @@ MonoBehaviour:
   ZombieDeathVol: 0.5
   ZombieBuff: {fileID: 8300000, guid: dad51a6509285da4fa5e41b1a345a9f9, type: 3}
   ZombieBuffVol: 0.525
+  ZombieAttack: []
+  ZombieAttackVol: 0
   NoramalProjectilePrefab: {fileID: 0}
   SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
@@ -2247,7 +2250,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2256,7 +2259,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 2.2403564
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -2292,7 +2295,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -79,7 +79,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
   
     bool isBuffer;
     bool canBuff;
-    bool canGroan;
+    bool canGroan = true;
 
     [Header("-----Ability Stats-----")]
     [SerializeField] int DamageBuff;
@@ -190,7 +190,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
            StartCoroutine(ApplyBuffsToNearbyZombies());
         }
 
-        if(canGroan == true)
+        if (canGroan == true)
         {
             StartCoroutine(Groan());
         }
@@ -231,8 +231,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
 
         PlayAudio(Hit, ZombieGrowlVol);
-
-        yield return new WaitForSeconds(8);
+        float delay = Random.Range(5f, 10f);
+        //use a random delay so each instance doesnt do it at the same time.
+        yield return new WaitForSeconds(delay);
 
         canGroan = true;
     }

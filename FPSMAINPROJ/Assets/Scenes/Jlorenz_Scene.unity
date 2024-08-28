@@ -342,6 +342,7 @@ MonoBehaviour:
   MeeleZombies: []
   RangedZombies: []
   SpecialZombies: []
+  BossZombie: {fileID: 0}
 --- !u!4 &375610354
 Transform:
   m_ObjectHideFlags: 0
@@ -963,6 +964,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &849564385
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1990372450328734922, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_Name
+      value: Boss Zombie  1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 221.08183
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 225.30226
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9975207
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.07037457
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 8.071
+      objectReference: {fileID: 0}
+    - target: {fileID: 2662966213855661829, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903374200451626798, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: ZombieGrowlVol
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903374200451626798, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: ZombieGrowl.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903374200451626798, guid: d915d36540908874a80516d9baa02ba3, type: 3}
+      propertyPath: ZombieGrowl.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d915d36540908874a80516d9baa02ba3, type: 3}
 --- !u!1001 &898951397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1148,18 +1218,6 @@ PrefabInstance:
     - target: {fileID: 3541054881267062660, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: inventory
-      value: 
-      objectReference: {fileID: 11400000, guid: 696d20c93a833b14d856c7af0bbba3d9, type: 2}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: pickupDis
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: ignoreMask.m_Bits
-      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2125,3 +2183,4 @@ SceneRoots:
   - {fileID: 1691107906}
   - {fileID: 456078252}
   - {fileID: 7125660538106897789}
+  - {fileID: 849564385}
