@@ -110,6 +110,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(0,1)][SerializeField] public float interactVol;
     public AudioClip[] flashlightSounds;
     [Range(0, 1)][SerializeField] public float flashlightVol;
+    public AudioClip[] jumpSounds;
+    [Range(0, 1)][SerializeField] public float jumpVol;
+    public AudioClip[] stepSounds;
+    [Range(0, 1)][SerializeField] public float stepVol;
+    public AudioClip[] slideSounds;
+    [Range(0, 1)][SerializeField] public float slideVol;
+    public AudioClip[] hurtSounds;
+    [Range(0, 1)][SerializeField] public float hurtVol;
+
     Vector3 move;
     Vector3 playerVel;
 
@@ -122,6 +131,8 @@ public class PlayerController : MonoBehaviour, IDamage
     float originalSpeed;
     public int damage;
     public bool hasItems;
+    bool isplayingStep;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -142,8 +153,9 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         movement();
-        if (!onSprintCoolDown && !isCrouching)
-            sprint();
+        //if (!onSprintCoolDown && !isCrouching)
+        //    sprint();
+        sprint();
         sprintTimerUpdate();
 
         wallCheck();
@@ -179,11 +191,13 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
+            AudioManager.audioInstance.playAudio(jumpSounds[Random.Range(0, jumpSounds.Length)], jumpVol);
         }
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
-        if(Input.GetKeyDown(slideKey) && !isSprinting)
+
+        if (Input.GetKeyDown(slideKey) && !isSprinting)
         {
             startCrouch();
         }
@@ -191,6 +205,10 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             stopCrouch();
         }
+
+        if (controller.isGrounded && move.magnitude > 0.2f && !isplayingStep)
+            StartCoroutine(playStep());
+
         if (Input.GetButtonDown("Dodge") && canDodge)
         {
             UnityEngine.Debug.Log("Dodge input detected");
@@ -217,6 +235,19 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
 
+    }
+
+    IEnumerator playStep()
+    {
+        isplayingStep = true;
+
+        AudioManager.audioInstance.playAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+        isplayingStep = false;
     }
 
     void sprint()
@@ -391,6 +422,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         // Subtract the amount of current damage from player HP
         playerHP -= amountOfDamageTaken;
+        AudioManager.audioInstance.playAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
         StartCoroutine(damageFeedback());
         updatePlayerUI();
         if(playerHP <= 0)
