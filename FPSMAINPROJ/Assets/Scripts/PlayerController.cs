@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("Sounds")]
     public AudioClip[] interactSounds;
     [Range(0,1)][SerializeField] public float interactVol;
+    public AudioClip[] flashlightSounds;
+    [Range(0, 1)][SerializeField] public float flashlightVol;
     Vector3 move;
     Vector3 playerVel;
 
@@ -661,7 +663,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isLit = !isLit;
         flashLight.gameObject.SetActive(isLit);
-        
+        AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, interactSounds.Length)], flashlightVol);
     }
 
 }
