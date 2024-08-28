@@ -21,9 +21,9 @@ public class maxAmmo : MonoBehaviour
     {
        if (other.CompareTag("Player"))
         {
-            Weapon.Magazine newMagazine = new Weapon.Magazine(magazineCapacity, ammoInMagazine);
+            //Weapon.Magazine newMagazine = new Weapon.Magazine(magazineCapacity, ammoInMagazine);
 
-            weapon.addMagazine(newMagazine, weapon.maxMagazines);
+            //weapon.addMagazine(newMagazine, weapon.maxMagazines);
             Destroy(gameObject);
         }
     }
