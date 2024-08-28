@@ -24,6 +24,12 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] Collider MeeleDamage;
     [SerializeField] Collider KickDamage;
 
+    [Header("-----Audio-----")]
+    [SerializeField] AudioSource Zombie;
+
+    [SerializeField] AudioClip[] ZombieFootSteps;
+    [SerializeField, Range(0f, 1f)] float ZombieFootStepsVol = 0.1f;
+
     float AngleToPlayer;
     Color colorOriginal;
 
@@ -52,8 +58,9 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] bool Slower;
     [SerializeField] bool Grounder;
     [SerializeField] bool IsBoss;
-
+  
     bool isBuffer;
+
     [Header("-----Ability Stats-----")]
     [SerializeField] int DamageBuff;
     [SerializeField] int SpeedBuff;
@@ -175,9 +182,22 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
     }
 
+    public void PlayFootstep()
+    {
+        if (ZombieFootSteps.Length > 0)
+        {
+            // Randomly select a footstep clip from the array
+            int index = Random.Range(0, ZombieFootSteps.Length);
+            AudioClip footstep = ZombieFootSteps[index];
+
+            // Play the selected clip through the AudioSource
+            Zombie.PlayOneShot(footstep, ZombieFootStepsVol);
+        }
+    }
 
 
-    void OnValidate()
+
+void OnValidate()
     {
         // Automatically set `isHealthBuffer` to false if `isStrengthBuffer` is false
         if (!isStrengthBuffer)
