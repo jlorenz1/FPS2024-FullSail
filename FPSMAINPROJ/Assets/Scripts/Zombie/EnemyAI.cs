@@ -28,7 +28,25 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] AudioSource Zombie;
 
     [SerializeField] AudioClip[] ZombieFootSteps;
-    [SerializeField, Range(0f, 1f)] float ZombieFootStepsVol = 0.1f;
+    [SerializeField, Range(0f, 1f)] float ZombieFootStepsVol;
+
+    [SerializeField] AudioClip[] ZombieGrowl;
+    [SerializeField, Range(0f, 1f)] float ZombieGrowlVol;
+
+
+    [SerializeField] AudioClip[] ZombieHit;
+    [SerializeField, Range(0f, 1f)] float ZombieHitVol;
+
+
+    [SerializeField] AudioClip[] ZombieDeath;
+    [SerializeField, Range(0f, 1f)] float ZombieDeathVol;
+
+    [SerializeField] AudioClip ZombieBuff;
+    [SerializeField, Range(0f, 1f)] float ZombieBuffVol;
+
+
+    [SerializeField] AudioClip[] ZombieAttack;
+    [SerializeField, Range(0f, 1f)] float ZombieAttackVol;
 
     float AngleToPlayer;
     Color colorOriginal;
@@ -60,6 +78,8 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] bool IsBoss;
   
     bool isBuffer;
+    bool canBuff;
+    bool canGroan;
 
     [Header("-----Ability Stats-----")]
     [SerializeField] int DamageBuff;
@@ -146,7 +166,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         lastPosition = transform.position;
         timeStandingStill = 0f;
-
+        canBuff = true;
     }
 
     // Update is called once per frame
@@ -165,10 +185,17 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
             StartCoroutine(AttackWithDelay());
         }
 
-        if (isBuffer)
+        if (isBuffer && canBuff)
         {
-            ApplyBuffsToNearbyZombies();
+           StartCoroutine(ApplyBuffsToNearbyZombies());
         }
+
+        if(canGroan == true)
+        {
+            StartCoroutine(Groan());
+        }
+
+
 
         UpdateSpeed();
 
@@ -196,6 +223,26 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     }
 
 
+    IEnumerator Groan()
+    {
+        canGroan = false;
+        int index = Random.Range(0, ZombieGrowl.Length);
+        AudioClip Hit = ZombieGrowl[index];
+
+
+        PlayAudio(Hit, ZombieGrowlVol);
+
+        yield return new WaitForSeconds(8);
+
+        canGroan = true;
+    }
+
+
+
+    void PlayAudio(AudioClip audio, float volume)
+    {
+        Zombie.PlayOneShot(audio, volume);
+    }
 
 void OnValidate()
     {
@@ -241,9 +288,21 @@ void OnValidate()
     {
         HitPoints -= amountOfDamageTaken;
         StartCoroutine(flashRed());
-
-        if (HitPoints <= 0)
+        if(HitPoints > 0)
         {
+            int index = Random.Range(0, ZombieHit.Length);
+            AudioClip Hit = ZombieHit[index];
+
+
+            PlayAudio(Hit, ZombieHitVol);
+        }
+       else if (HitPoints <= 0)
+        {
+            int index = Random.Range(0, ZombieDeath.Length);
+            AudioClip Hit = ZombieDeath[index];
+
+
+            PlayAudio(Hit, ZombieDeathVol);
             gameManager.gameInstance.UpdateGameGoal(-1);
             Destroy(gameObject);
             gameManager.gameInstance.PointCount += 25;
@@ -550,8 +609,9 @@ void OnValidate()
 
     // Zombie Varriant;
 
-    void ApplyBuffsToNearbyZombies()
+    IEnumerator ApplyBuffsToNearbyZombies()
     {
+        canBuff = false;
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
         foreach (GameObject zombie in zombies)
         {
@@ -566,6 +626,8 @@ void OnValidate()
                 }
             }
         }
+        yield return new WaitForSeconds(15);
+        canBuff = true;
     }
 
     void ApplyBuffs(IHitPoints FellowZombie)
@@ -591,6 +653,7 @@ void OnValidate()
                 int totalSpeedBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
                 FellowZombie.AddSpeed(totalSpeedBuff);
             }
+            PlayAudio(ZombieBuff, 0.5f);
         }
         else
         {
