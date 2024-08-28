@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isLit = false;
 
     int HPorig;
+    float Sprintorig;
 
     // Weapon Variables for player
     [Header("WEAPON VARIABLES")]
@@ -112,7 +114,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     int jumpCount;
 
-    bool isSprinting;
+    public bool isSprinting;
     bool onSprintCoolDown;
     bool isCrouching;
     bool canMelee;
@@ -234,6 +236,56 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
     }
+    void sprintTimerUpdate()
+    {
+        if (isSprinting)
+            gameManager.gameInstance.SprintBarBoarder.transform.GameObject().SetActive(true);
+
+        gameManager.gameInstance.playerSprintBar.color = Color.white;
+        gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
+        if (isSprinting)
+        {
+            sprintTimer -= Time.deltaTime;
+        }
+        
+        if (Input.GetButtonUp("Sprint"))
+        {
+            StartCoroutine(waitTimer());
+        }
+        if (!onSprintCoolDown && Input.GetButtonDown("Sprint"))
+        {
+            StopAllCoroutines();
+        }
+
+    }
+
+    IEnumerator waitTimer()
+    {
+        float startingFill = gameManager.gameInstance.playerSprintBar.fillAmount;
+        while (sprintTimer < maxSprintTimer)
+        {
+            if (!onSprintCoolDown)
+                gameManager.gameInstance.playerSprintBar.color = Color.white;
+            else
+            {
+                gameManager.gameInstance.playerSprintBar.color = new Color(Color.grey.r, Color.grey.g, Color.grey.b, 0.3f);
+            }
+
+
+
+            sprintTimer += Time.deltaTime;
+            float fillAmount = Mathf.Lerp(startingFill, 1f, sprintTimer / maxSprintTimer);
+            gameManager.gameInstance.playerSprintBar.fillAmount = fillAmount;
+            yield return null;
+        }
+        gameManager.gameInstance.playerSprintBar.fillAmount = 1f;
+        onSprintCoolDown = false;
+
+        yield return new WaitForSeconds(.3f);
+        gameManager.gameInstance.SprintBarBoarder.transform.GameObject().SetActive(false);
+
+    }
+
     void stateMachine()
     {
         if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
@@ -358,36 +410,11 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         gameManager.gameInstance.flashDamage.SetActive(false);
     }
-    void sprintTimerUpdate()
-    {
-        if (isSprinting)
-        {
-            sprintTimer -= Time.deltaTime;
-        }
-
-        if (onSprintCoolDown && Input.GetButtonUp("Sprint"))
-        {
-            StartCoroutine(waitTimer());
-        }
-
-        if(onSprintCoolDown && Input.GetButtonDown("Sprint"))
-        {
-            StopAllCoroutines();
-            //StopCoroutine(waitTimer());
-        }
-
-    }
-
-    IEnumerator waitTimer()
-    {
-        yield return new WaitForSeconds(maxSprintWaitTimer);
-        sprintTimer = maxSprintTimer;
-        onSprintCoolDown = false;
-    }
 
     public void updatePlayerUI()
     {
         gameManager.gameInstance.playerHPBar.fillAmount = (float)playerHP / HPorig;
+        gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
     }
 
     public void interact()
