@@ -743,10 +743,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4933451883905219209, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -147.6
-      objectReference: {fileID: 0}
     - target: {fileID: 7135984206584528781, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_Name
       value: UI
@@ -2511,6 +2507,14 @@ PrefabInstance:
     - target: {fileID: 3541054881267062660, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: m_Name
       value: Player (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: jumpMax
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: jumpSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: interactVol
