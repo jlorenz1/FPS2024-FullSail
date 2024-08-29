@@ -9802,11 +9802,11 @@ MonoBehaviour:
   IsNormal: 1
   IsSlow: 0
   IsGround: 0
-  IsBossAttack: 0
+  IsBossAttack: 1
   projectileDamage: 50
   ProjectileAudio: {fileID: -5568339962705930923}
   ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
-  ZombieProjectileAudioVol: 0
+  ZombieProjectileAudioVol: 0.045
 --- !u!135 &5105917485678787543
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9823,7 +9823,7 @@ SphereCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
-  m_ProvidesContacts: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 2.1300998

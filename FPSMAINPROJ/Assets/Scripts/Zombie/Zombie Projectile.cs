@@ -129,7 +129,13 @@ void HandleNonBossAttack(Collider other)
 
 void HandleBossAttack(Collider other)
 {
-    if (!other.CompareTag("Player"))
+if (other.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+
+
+    if (!other.CompareTag("Player") && other.CompareTag("TerrainDestroyer"))
     {
         Destroy(other.gameObject);
         Destroy(gameObject);
