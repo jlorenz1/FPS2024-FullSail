@@ -735,21 +735,12 @@ public class PlayerController : MonoBehaviour, IDamage
             playerCollider.enabled = false;
         }
 
-        // Shift left
-        Vector3 dodgeDirection = transform.right * -dodgeDistance;
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = startPosition + dodgeDirection;
-
         float elapsedTime = 0f;
         while (elapsedTime < dodgeDuration)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, (elapsedTime / dodgeDuration));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        // Ensure final position is exactly the target
-        transform.position = targetPosition;
 
         // Re-enable the collider
         if (playerCollider != null)

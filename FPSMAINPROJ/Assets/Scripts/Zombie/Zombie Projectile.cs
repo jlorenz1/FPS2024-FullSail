@@ -30,6 +30,11 @@ public class Projectile : MonoBehaviour
     int round;
     void Start()
     {
+
+        int projectileLayer = gameObject.layer;
+        int zombieLayer = LayerMask.NameToLayer("Zombie");
+        Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
+
         if (ProjectileAudio != null)
         {
             ProjectileAudio.clip = ZombieProjectileAudio;
