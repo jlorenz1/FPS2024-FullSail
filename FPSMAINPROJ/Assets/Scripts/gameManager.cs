@@ -147,7 +147,7 @@ public class gameManager : MonoBehaviour
 
         if(EnemyCount == 0)
         {
-            StartNewRound();
+            delayRoundStart();
         }
        
     }
@@ -246,7 +246,7 @@ public class gameManager : MonoBehaviour
 
         if (EnemyCount == 0) {
 
-            StartNewRound();
+            delayRoundStart();
         }
 
     }
@@ -273,7 +273,12 @@ public class gameManager : MonoBehaviour
 
     }
 
-  
+  IEnumerator delayRoundStart()
+    {
+        yield return new WaitForSeconds(RoundDelay);
+        StartNewRound();
+
+    }
 
     void StartNewRound()
     {
