@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour, IDamage
         damage  = shootDamage;
         sprintTimer = maxSprintTimer;
         originalSpeed = speed;
-        crouchSpeed = speed / 2;
+        crouchSpeed = speed / 3;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
         updatePlayerUI();
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour, IDamage
             stopCrouch();
         }
 
-        if (controller.isGrounded && move.magnitude > 0.2f && !isplayingStep)
+        if (controller.isGrounded && move.magnitude > 0.2f && !isplayingStep &&!isSliding)
             StartCoroutine(playStep());
 
         if (Input.GetButtonDown("Dodge") && canDodge)
@@ -285,13 +285,18 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator playStep()
     {
         isplayingStep = true;
-        
+
         AudioManager.audioInstance.playAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
 
-        if (!isSprinting)
-            yield return new WaitForSeconds(0.5f);
+        if (!isSprinting && !isCrouching)
+            yield return new WaitForSeconds(0.45f);
         else
             yield return new WaitForSeconds(0.3f);
+
+        if (isCrouching)
+            yield return new WaitForSeconds(0.5f);
+
+
         isplayingStep = false;
     }
 
