@@ -157,7 +157,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
         rb.useGravity = true;
         rb.isKinematic = true;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+       // rb.constraints = RigidbodyConstraints.FreezeRotation;
         ApplyGravity();
 
         if (isRanged && !IsBoss)
@@ -206,7 +206,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         OutOfRangeBoost();
 
-        CheckMovement();
+      //  CheckMovement();
 
     }
 
@@ -771,6 +771,7 @@ void OnValidate()
             }
 
         }
+
 
         return false;
 
