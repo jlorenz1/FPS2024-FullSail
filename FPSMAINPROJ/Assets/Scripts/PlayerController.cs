@@ -344,7 +344,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Reload"))
 
         {
-            activeWeapon.HandleReloading();
+            activeWeapon.TempReload();
         }
 
 

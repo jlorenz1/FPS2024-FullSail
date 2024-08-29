@@ -354,6 +354,10 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region Reload Methods
+    public void TempReload()
+    {
+        magazines[currentMagazineIndex].currentAmmoCount = magazines[1].magazineCapacity;
+    }
 
     private IEnumerator Reload()
     {
