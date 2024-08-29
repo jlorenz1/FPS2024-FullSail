@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float originalSpeed;
     public int damage;
     public bool hasItems;
-    bool isplayingStep;
+    bool isPlayingSound;
     private Coroutine waitTime;
     // Start is called before the first frame update
     void Start()
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour, IDamage
             stopCrouch();
         }
 
-        if (controller.isGrounded && move.magnitude > 0.2f && !isplayingStep &&!isSliding)
+        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound &&!isSliding)
             StartCoroutine(playStep());
 
         if (Input.GetButtonDown("Dodge") && canDodge)
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator playStep()
     {
-        isplayingStep = true;
+        isPlayingSound = true;
 
         AudioManager.audioInstance.playAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
 
@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour, IDamage
             yield return new WaitForSeconds(0.5f);
 
 
-        isplayingStep = false;
+        isPlayingSound = false;
     }
 
     void sprint()
@@ -439,7 +439,8 @@ public class PlayerController : MonoBehaviour, IDamage
     void slideMovement()
     {
         Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
-
+        if(!isPlayingSound)
+            StartCoroutine(slideAud());
         speed += slideForce;
 
         slideTimer -= Time.deltaTime;
@@ -447,6 +448,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if (slideTimer <= 0)
             stopSlide();
 
+    }
+
+    IEnumerator slideAud()
+    {
+        isPlayingSound = true;
+        AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
+        yield return new WaitForSeconds(.05f);
+        isPlayingSound = false;
     }
 
     void stopSlide()
