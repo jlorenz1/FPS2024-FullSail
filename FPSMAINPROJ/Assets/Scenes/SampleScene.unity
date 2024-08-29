@@ -2767,7 +2767,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 535116781322052700, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.52596
+      value: -15.36
       objectReference: {fileID: 0}
     - target: {fileID: 535116781322052700, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3056,6 +3056,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4492157331276140382, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: SpecialZombieIncrament
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7135984206584528781, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_Name
       value: UI
@@ -3228,7 +3232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 535116781322052700, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -85.7262
+      value: -81.59
       objectReference: {fileID: 0}
     - target: {fileID: 535116781322052700, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
       propertyPath: m_LocalRotation.w
@@ -69180,11 +69184,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6082332855559244765, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
       propertyPath: spawnRadius
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6082332855559244765, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
+      propertyPath: ScalingDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6082332855559244765, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
+      propertyPath: ScalingHealth
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6082332855559244765, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
       propertyPath: ZombiesPerRound
-      value: 45
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2180796171255640709, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
@@ -70550,6 +70562,10 @@ PrefabInstance:
     - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: jumpMax
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: playerHP
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7417277121821538128, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: jumpSpeed
