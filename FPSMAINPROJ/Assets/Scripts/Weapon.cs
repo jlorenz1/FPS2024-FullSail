@@ -31,7 +31,8 @@ public class Weapon : MonoBehaviour
     [Header("----- Gun Stats -----")]
     [Tooltip("Gun stats scriptable object containing weapon configuration.")]
     [SerializeField] private GunStats gunStats;
-
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform shootLocation;
     #endregion
 
     #region Private Fields
@@ -276,6 +277,10 @@ public class Weapon : MonoBehaviour
 
     public void ShootRaycastBullet()
     {
+
+        GameObject bullet = Instantiate(bulletPrefab, shootLocation.position, shootLocation.rotation);
+
+
         Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
 
