@@ -187,7 +187,7 @@ public class Weapon : MonoBehaviour
     /// </summary>
     private void HandleFiring()
     {
-        if (Input.GetButtonDown("Fire1") && weaponCanShoot)
+        if (Input.GetButtonDown("Fire1") && weaponCanShoot && gameObject.activeSelf)
         {
             if (magazines[currentMagazineIndex].currentAmmoCount > 0)
             {

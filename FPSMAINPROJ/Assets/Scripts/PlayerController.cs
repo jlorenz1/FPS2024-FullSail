@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour, IDamage
     public AudioClip[] hurtSounds;
     [Range(0, 1)][SerializeField] public float hurtVol;
 
+    // Weapon Vars
+    public Weapon primaryWeapon;
+    public Weapon secondaryWeapon;
+    private Weapon activeWeapon;
+
     Vector3 move;
     Vector3 playerVel;
 
@@ -147,7 +152,12 @@ public class PlayerController : MonoBehaviour, IDamage
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
+
+        activeWeapon = primaryWeapon;
+        EquipWeapon(activeWeapon);
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -163,6 +173,29 @@ public class PlayerController : MonoBehaviour, IDamage
         
         interact();
         //useItemFromInv();
+
+        HandleWeaponSwitching();
+    }
+    private void EquipWeapon(Weapon activeWeapon)
+    {
+        primaryWeapon.gameObject.SetActive(false);
+        secondaryWeapon.gameObject.SetActive(false);
+
+        activeWeapon.gameObject.SetActive(true);
+    }
+
+    void HandleWeaponSwitching()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            activeWeapon = primaryWeapon;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            activeWeapon = secondaryWeapon;
+        }
+
+        EquipWeapon(activeWeapon);
     }
 
     void movement()
