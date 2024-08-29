@@ -225,6 +225,18 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
     }
 
+    public void PlayCastSound()
+    {
+        if (ZombieFootSteps.Length > 0)
+        {
+            // Randomly select a footstep clip from the array
+            int index = Random.Range(0, ZombieAttackRanged.Length);
+            AudioClip Cast = ZombieAttackRanged[index];
+
+            // Play the selected clip through the AudioSource
+            Zombie.PlayOneShot(Cast, ZombieAttackRangedVol);
+        }
+    }
 
     IEnumerator Groan()
     {
