@@ -178,19 +178,31 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     private void EquipWeapon(Weapon activeWeapon)
     {
-        primaryWeapon.gameObject.SetActive(false);
-        secondaryWeapon.gameObject.SetActive(false);
+
+        if (activeWeapon == null)
+        {
+            UnityEngine.Debug.LogWarning("Weapon to equip is null");
+            return;
+        }
+
+
+
+        if (primaryWeapon != null)
+            primaryWeapon.gameObject.SetActive(false);
+        
+        if (secondaryWeapon != null)
+            secondaryWeapon.gameObject.SetActive(false);
 
         activeWeapon.gameObject.SetActive(true);
     }
 
     void HandleWeaponSwitching()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon != primaryWeapon)
         {
             activeWeapon = primaryWeapon;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon != secondaryWeapon)
         {
             activeWeapon = secondaryWeapon;
         }
