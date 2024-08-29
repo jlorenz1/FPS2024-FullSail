@@ -14,6 +14,11 @@ public class Projectile : MonoBehaviour
    [SerializeField] bool IsBossAttack;
    [SerializeField] int projectileDamage;
 
+    [SerializeField] AudioSource ProjectileAudio;
+
+    [SerializeField] AudioClip ZombieProjectileAudio;
+    [SerializeField, Range(0f, 1f)] float ZombieProjectileAudioVol;
+
     Rigidbody rb;
     Transform playerTransform;
 
@@ -25,11 +30,19 @@ public class Projectile : MonoBehaviour
     int round;
     void Start()
     {
+        if (ProjectileAudio != null)
+        {
+            ProjectileAudio.clip = ZombieProjectileAudio;
+            ProjectileAudio.volume = ZombieProjectileAudioVol;
+            ProjectileAudio.loop = true; // Enable looping
+            ProjectileAudio.Play(); // Start playing the audio
+        }
 
         OriginalSpeed = gameManager.gameInstance.playerScript.GetSpeed();
         OriginalJumpCount = gameManager.gameInstance.playerScript.GetJumpCount();
         // Destroy the projectile after a certain amount of time
         Destroy(gameObject, lifetime);
+
 
 
         rb = GetComponent<Rigidbody>();
@@ -64,7 +77,17 @@ public class Projectile : MonoBehaviour
         }
     }
 
-   void OnTriggerEnter(Collider other)
+
+    void OnDestroy()
+    {
+        // Stop the audio when the object is destroyed
+        if (ProjectileAudio != null)
+        {
+            ProjectileAudio.Stop();
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
 {
     if (other.isTrigger || other.CompareTag("Zombie"))
     {
@@ -125,8 +148,8 @@ void StickToPlayer(Collider other)
 {
     player = other.gameObject;
     transform.parent = player.transform;
-
-    ApplyDebufs();
+        ProjectileAudio.Stop();
+        ApplyDebufs();
     StartCoroutine(StatReset());
 }
 
