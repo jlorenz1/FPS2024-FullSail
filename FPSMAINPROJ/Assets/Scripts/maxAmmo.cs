@@ -7,6 +7,8 @@ public class maxAmmo : MonoBehaviour
     Weapon weapon;
     int magazineCapacity;
     int ammoInMagazine;
+    [SerializeFeild] public AudioClip pickupSound;
+    [Range(0, 1)][SerializeFeild] public float pickupVol;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class maxAmmo : MonoBehaviour
             //Weapon.Magazine newMagazine = new Weapon.Magazine(magazineCapacity, ammoInMagazine);
 
             //weapon.addMagazine(newMagazine, weapon.maxMagazines);
+            AudioManager.audioInstance.playAudio(pickupSound, pickupVol);
             Destroy(gameObject);
         }
     }
