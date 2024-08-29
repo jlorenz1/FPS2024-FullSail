@@ -319,6 +319,37 @@ Transform:
   - {fileID: 329202084693052161}
   m_Father: {fileID: 8719777863950817741}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2476660070140567582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8632285294345674710}
+  m_Layer: 0
+  m_Name: CastPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8632285294345674710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476660070140567582}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.026872065, y: 0.009752027, z: -0.026452826, w: 0.99924123}
+  m_LocalPosition: {x: 0.0013434147, y: -0.015030337, z: 0.004867387}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2208336487309471676}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2645708598812345762
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +940,7 @@ MonoBehaviour:
   FacePlayerSpeed: 90
   ViewAngle: 90
   HeadPos: {fileID: 2501539591688374556}
-  launchPoint: {fileID: 1568246061728496817}
+  launchPoint: {fileID: 8632285294345674710}
   CastPortal1: {fileID: 0}
   CastPortal2: {fileID: 0}
   MeeleDamage: {fileID: 0}
@@ -938,8 +969,6 @@ MonoBehaviour:
   ZombieBuffVol: 1
   ZombieAttack: []
   ZombieAttackVol: 1
-  ZombieAttackRanged: []
-  ZombieAttackRangedVol: 0
   NoramalProjectilePrefab: {fileID: 821761514288190251, guid: 16fe531888471374e979277fa8567159, type: 3}
   SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
@@ -1847,6 +1876,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1568246061728496817}
+  - {fileID: 8632285294345674710}
   m_Father: {fileID: 1400421896809069417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7497754612661815626

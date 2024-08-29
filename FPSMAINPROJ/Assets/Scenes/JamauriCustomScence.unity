@@ -542,7 +542,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1006778480529000924, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+    - {fileID: 9086858922916061086, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 465270188490484554, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       insertIndex: -1
@@ -1542,6 +1544,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 670450931}
     m_Modifications:
+    - target: {fileID: 5794976127654122530, guid: 59026dd87785606459875b5f329c328d, type: 3}
+      propertyPath: MeleeDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6508881105461970575, guid: 59026dd87785606459875b5f329c328d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0060424805

@@ -126,6 +126,7 @@ Transform:
   m_Children:
   - {fileID: 5770300659310080322}
   - {fileID: 9168057201924148260}
+  - {fileID: 413872235655867921}
   m_Father: {fileID: 4748705871045957606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556812648714338262
@@ -498,7 +499,7 @@ MonoBehaviour:
   FacePlayerSpeed: 90
   ViewAngle: 90
   HeadPos: {fileID: 9075911586903077190}
-  launchPoint: {fileID: 5368532623447000299}
+  launchPoint: {fileID: 413872235655867921}
   CastPortal1: {fileID: 0}
   CastPortal2: {fileID: 0}
   MeeleDamage: {fileID: 0}
@@ -527,8 +528,6 @@ MonoBehaviour:
   ZombieBuffVol: 1
   ZombieAttack: []
   ZombieAttackVol: 1
-  ZombieAttackRanged: []
-  ZombieAttackRangedVol: 0
   NoramalProjectilePrefab: {fileID: 821761514288190251, guid: 16fe531888471374e979277fa8567159, type: 3}
   SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
@@ -1943,6 +1942,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4982161114065068409}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6193034149662235553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 413872235655867921}
+  m_Layer: 0
+  m_Name: CastPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &413872235655867921
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6193034149662235553}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.00000005960463, y: -0.000000054016695, z: -0.0000000799482, w: 1}
+  m_LocalPosition: {x: -0.00038, y: 0.00334, z: -0.00031}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5368532623447000299}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7295419737226916276
 GameObject:
