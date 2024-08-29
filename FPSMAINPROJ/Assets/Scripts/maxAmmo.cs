@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class maxAmmo : MonoBehaviour
 {
-    Weapon weapon;
+    //Weapon weapon;
     int magazineCapacity;
     int ammoInMagazine;
     [SerializeFeild] public AudioClip pickupSound;
@@ -13,7 +13,7 @@ public class maxAmmo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        weapon = gameManager.gameInstance.playerScript.weapon;
+        //weapon = gameManager.gameInstance.playerScript.weapon;
         //magazineCapacity = weapon.getMaxAmmoCount();
         //ammoInMagazine = weapon.getMaxAmmoCount();
     }
@@ -26,6 +26,7 @@ public class maxAmmo : MonoBehaviour
             //Weapon.Magazine newMagazine = new Weapon.Magazine(magazineCapacity, ammoInMagazine);
 
             //weapon.addMagazine(newMagazine, weapon.maxMagazines);
+            //weapon.HandleAmmoDrop();
             AudioManager.audioInstance.playAudio(pickupSound, pickupVol);
             Destroy(gameObject);
         }

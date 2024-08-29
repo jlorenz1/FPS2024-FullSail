@@ -45,14 +45,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     // Weapon Variables for player
     [Header("WEAPON VARIABLES")]
+    [SerializeField] List<weaponStats> gunList = new List<weaponStats>();
+    [SerializeFeild] public GameObject gunModel;
     [SerializeField] int shootDamage;
-    [SerializeField] int shootRate;
+    [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] LayerMask canBeShotMask;
-    [SerializeField] public Transform weaponSpawn;
-    public Weapon weapon;
-    private float lastShotTime;
-    private bool weaponCanShoot;
+    [SerializeField] Transform gunTransform;
+
+    //public Weapon weapon;
+    //private float lastShotTime;
+    //private bool weaponCanShoot;
 
 
     [SerializeField] Collider meleeWeapon;
@@ -125,15 +128,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(0, 1)][SerializeField] public float hurtVol;
 
     // Weapon Vars
-    public Weapon primaryWeapon;
-    public Weapon secondaryWeapon;
-    public Weapon activeWeapon;
+    //public Weapon primaryWeapon;
+    //public Weapon secondaryWeapon;
+    //public Weapon activeWeapon;
 
     Vector3 move;
     Vector3 playerVel;
 
     int jumpCount;
-
+    int selectedGun;
     public bool isSprinting;
     public bool isShooting;
     bool onSprintCoolDown;
@@ -159,10 +162,10 @@ public class PlayerController : MonoBehaviour, IDamage
         canMelee = true;
         flashLight.gameObject.SetActive(false);
 
-        lastShotTime = -shootRate; // Allows immediate shooting
-        weaponCanShoot = true;
-        activeWeapon = primaryWeapon;
-        EquipWeapon(activeWeapon);
+        //lastShotTime = -shootRate; // Allows immediate shooting
+        //weaponCanShoot = true;
+        //activeWeapon = primaryWeapon;
+        //EquipWeapon(activeWeapon);
     }
 
 
@@ -170,7 +173,6 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        movement();
         if (!onSprintCoolDown && !isCrouching)
             sprint();
         sprintTimerUpdate();
@@ -182,91 +184,113 @@ public class PlayerController : MonoBehaviour, IDamage
         //useItemFromInv();
 
         // Check for shooting input (left mouse button)
-        if (Input.GetButtonDown("Fire1"))
+
+        //HandleWeaponSwitching();
+
+        if(!gameManager.gameInstance.gameIsPaused)
         {
-            FireWeapon();
+            movement();
+            selectGun();
         }
-
-        HandleWeaponSwitching();
     }
 
-    void FireWeapon()
+    IEnumerator shoot()
     {
-        // Check if enough time has passed before last shot
-        if (Time.time - lastShotTime < shootRate) return;
+        isShooting = true;
 
-        // Update the last fire time
-        lastShotTime = Time.time;
-
-        ShootRaycastBullet();
-
-        StartCoroutine(ResetShootingState(shootRate));
-    }
-
-    void ShootRaycastBullet()
-    {
-        Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
 
-        if (Physics.Raycast(reticleRay, out hit, shootDistance, canBeShotMask))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
         {
-            // Apply damage
-            IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
-            if (target != null)
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            if(dmg != null)
             {
-                target.takeDamage(shootDamage);
+                dmg.takeDamage(shootDamage);
             }
-
-            // VFX effects
-
-
-            UnityEngine.Debug.Log("Hit " + hit.collider.name + " for " + shootDamage + " damage.");
+            
         }
-
-        // Trigger shooting system (muzzle flash, sounds, etc)
-
-    }
-
-
-    IEnumerator ResetShootingState(float weaponFireRate)
-    {
-        yield return new WaitForSeconds(weaponFireRate);
+        yield return new WaitForSeconds(shootRate);
         isShooting = false;
-        weaponCanShoot = true;
-    }
-    void EquipWeapon(Weapon activeWeapon)
-    {
-
-        if (activeWeapon == null)
-        {
-            UnityEngine.Debug.LogWarning("Weapon to equip is null");
-            return;
-        }
-
-
-
-        if (primaryWeapon != null)
-            primaryWeapon.gameObject.SetActive(false);
-
-        if (secondaryWeapon != null)
-            secondaryWeapon.gameObject.SetActive(false);
-
-        activeWeapon.gameObject.SetActive(true);
     }
 
-    void HandleWeaponSwitching()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon != primaryWeapon)
-        {
-            activeWeapon = primaryWeapon;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon != secondaryWeapon)
-        {
-            activeWeapon = secondaryWeapon;
-        }
+    //void FireWeapon()
+    //{
+    //    // Check if enough time has passed before last shot
+    //    if (Time.time - lastShotTime < shootRate) return;
 
-        EquipWeapon(activeWeapon);
-    }
+    //    // Update the last fire time
+    //    lastShotTime = Time.time;
+
+    //    ShootRaycastBullet();
+
+    //    StartCoroutine(ResetShootingState(shootRate));
+    //}
+
+    //void ShootRaycastBullet()
+    //{
+    //    Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+    //    RaycastHit hit;
+
+    //    if (Physics.Raycast(reticleRay, out hit, shootDistance, canBeShotMask))
+    //    {
+    //        // Apply damage
+    //        IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
+    //        if (target != null)
+    //        {
+    //            target.takeDamage(shootDamage);
+    //        }
+
+    //        // VFX effects
+
+
+    //        UnityEngine.Debug.Log("Hit " + hit.collider.name + " for " + shootDamage + " damage.");
+    //    }
+
+    //    // Trigger shooting system (muzzle flash, sounds, etc)
+
+    //}
+
+
+    //IEnumerator ResetShootingState(float weaponFireRate)
+    //{
+    //    yield return new WaitForSeconds(weaponFireRate);
+    //    isShooting = false;
+    //    weaponCanShoot = true;
+    //}
+
+    //void EquipWeapon(Weapon activeWeapon)
+    //{
+
+    //    if (activeWeapon == null)
+    //    {
+    //        UnityEngine.Debug.LogWarning("Weapon to equip is null");
+    //        return;
+    //    }
+
+
+
+    //    if (primaryWeapon != null)
+    //        primaryWeapon.gameObject.SetActive(false);
+
+    //    if (secondaryWeapon != null)
+    //        secondaryWeapon.gameObject.SetActive(false);
+
+    //    activeWeapon.gameObject.SetActive(true);
+    //}
+
+    //void HandleWeaponSwitching()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon != primaryWeapon)
+    //    {
+    //        activeWeapon = primaryWeapon;
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon != secondaryWeapon)
+    //    {
+    //        activeWeapon = secondaryWeapon;
+    //    }
+
+    //    EquipWeapon(activeWeapon);
+    //}
 
     void movement()
     {
@@ -339,22 +363,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Fire1"))
         {
-                activeWeapon.HandleFiring();
+            StartCoroutine(shoot());
         }
-        if (Input.GetButtonDown("Reload"))
+        //if (Input.GetButtonDown("Reload"))
 
-        {
-            activeWeapon.TempReload();
-        }
+        //{
+        //    activeWeapon.TempReload();
+        //}
 
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-           activeWeapon.HandleFireModeSwitching();
-        }
+        //if (Input.GetKeyDown(KeyCode.V))
+        //{
+        //   activeWeapon.HandleFireModeSwitching();
+        //}
 
-            //  activeWeapon.HandleFireModeSwitching();
-            activeWeapon.displayAmmo();
+        //    //  activeWeapon.HandleFireModeSwitching();
+        //    activeWeapon.displayAmmo();
 
 
     }
@@ -859,6 +883,40 @@ public class PlayerController : MonoBehaviour, IDamage
         isLit = !isLit;
         flashLight.gameObject.SetActive(isLit);
         AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, flashlightSounds.Length)], flashlightVol);
+    }
+
+    public void getWeaponStats(weaponStats gun)
+    {
+        gunList.Add(gun);
+        selectedGun = gunList.Count - 1;
+        shootDamage = gun.shootDamage;
+        shootDistance = gun.shootingDistance;
+        shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectGun()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
+        {
+            selectedGun++;
+            changeGun();
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+        {
+            selectedGun--;
+            changeGun();
+        } 
+    }
+    void changeGun()
+    {
+        shootDamage = gunList[selectedGun].shootDamage;
+        shootRate = gunList[selectedGun].shootRate;
+        shootDistance = gunList[selectedGun].shootingDistance;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
 }
