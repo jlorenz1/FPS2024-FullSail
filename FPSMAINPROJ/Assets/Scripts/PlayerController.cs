@@ -207,9 +207,14 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 dmg.takeDamage(shootDamage);
             }
+            else
+            {
+                Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+            }
             
         }
         yield return new WaitForSeconds(shootRate);
+
         isShooting = false;
     }
 
@@ -361,7 +366,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
         {
             StartCoroutine(shoot());
         }
