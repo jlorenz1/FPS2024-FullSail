@@ -48,8 +48,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootRate;
     [SerializeField] int shootDistance;
+    [SerializeField] LayerMask canBeShotMask;
     [SerializeField] public Transform weaponSpawn;
     public Weapon weapon;
+    private float lastShotTime;
+    private bool weaponCanShoot;
+
+
     [SerializeField] Collider meleeWeapon;
 
     // climbing video variables
@@ -130,6 +135,7 @@ public class PlayerController : MonoBehaviour, IDamage
     int jumpCount;
 
     public bool isSprinting;
+    public bool isShooting;
     bool onSprintCoolDown;
     bool isCrouching;
     bool canMelee;
@@ -153,6 +159,8 @@ public class PlayerController : MonoBehaviour, IDamage
         canMelee = true;
         flashLight.gameObject.SetActive(false);
 
+        lastShotTime = -shootRate; // Allows immediate shooting
+        weaponCanShoot = true;
         activeWeapon = primaryWeapon;
         EquipWeapon(activeWeapon);
     }
@@ -173,9 +181,60 @@ public class PlayerController : MonoBehaviour, IDamage
         interact();
         //useItemFromInv();
 
+        // Check for shooting input (left mouse button)
+        if (Input.GetButtonDown("Fire1"))
+        {
+            FireWeapon();
+        }
+
         HandleWeaponSwitching();
     }
-    private void EquipWeapon(Weapon activeWeapon)
+
+    void FireWeapon()
+    {
+        // Check if enough time has passed before last shot
+        if (Time.time - lastShotTime < shootRate) return;
+
+        // Update the last fire time
+        lastShotTime = Time.time;
+
+        ShootRaycastBullet();
+
+        StartCoroutine(ResetShootingState(shootRate));
+    }
+
+    void ShootRaycastBullet()
+    {
+        Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        RaycastHit hit;
+
+        if (Physics.Raycast(reticleRay, out hit, shootDistance, canBeShotMask))
+        {
+            // Apply damage
+            IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
+            if (target != null)
+            {
+                target.takeDamage(shootDamage);
+            }
+
+            // VFX effects
+
+
+            UnityEngine.Debug.Log("Hit " + hit.collider.name + " for " + shootDamage + " damage.");
+        }
+
+        // Trigger shooting system (muzzle flash, sounds, etc)
+
+    }
+
+
+    IEnumerator ResetShootingState(float weaponFireRate)
+    {
+        yield return new WaitForSeconds(weaponFireRate);
+        isShooting = false;
+        weaponCanShoot = true;
+    }
+    void EquipWeapon(Weapon activeWeapon)
     {
 
         if (activeWeapon == null)
