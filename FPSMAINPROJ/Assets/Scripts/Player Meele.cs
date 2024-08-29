@@ -8,7 +8,7 @@ public class PlayerMeele : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.isTrigger)
+        if (other.isTrigger || other.CompareTag("Player"))
         {
             return;
         }
