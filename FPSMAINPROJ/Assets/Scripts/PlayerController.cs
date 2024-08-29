@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("Sounds")]
     public AudioClip[] interactSounds;
-    [Range(0,1)][SerializeField] public float interactVol;
+    [Range(0, 1)][SerializeField] public float interactVol;
     public AudioClip[] flashlightSounds;
     [Range(0, 1)][SerializeField] public float flashlightVol;
     public AudioClip[] jumpSounds;
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour, IDamage
     // Weapon Vars
     public Weapon primaryWeapon;
     public Weapon secondaryWeapon;
-    private Weapon activeWeapon;
+    public Weapon activeWeapon;
 
     Vector3 move;
     Vector3 playerVel;
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Start()
     {
         HPorig = playerHP;
-        damage  = shootDamage;
+        damage = shootDamage;
         sprintTimer = maxSprintTimer;
         originalSpeed = speed;
         crouchSpeed = speed / 3;
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         wallCheck();
         stateMachine();
-        
+
         interact();
         //useItemFromInv();
 
@@ -247,7 +247,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (primaryWeapon != null)
             primaryWeapon.gameObject.SetActive(false);
-        
+
         if (secondaryWeapon != null)
             secondaryWeapon.gameObject.SetActive(false);
 
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (isSliding)
             slideMovement();
 
-        if (isClimbing) 
+        if (isClimbing)
             climbingMovement();
 
         move = Input.GetAxis("Vertical") * transform.forward +
@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour, IDamage
             stopCrouch();
         }
 
-        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound &&!isSliding)
+        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound && !isSliding)
             StartCoroutine(playStep());
 
         if (Input.GetButtonDown("Dodge") && canDodge)
@@ -327,7 +327,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if(inventory.hasItem(itemType.flashlight)) 
+            if (inventory.hasItem(itemType.flashlight))
             {
                 enableFlashLight();
             }
@@ -336,6 +336,25 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have flashlight! Check your campsite for it!", 3.0f));
             }
         }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+                activeWeapon.HandleFiring();
+        }
+        if (Input.GetButtonDown("Reload"))
+
+        {
+            activeWeapon.HandleReloading();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+           activeWeapon.HandleFireModeSwitching();
+        }
+
+            //  activeWeapon.HandleFireModeSwitching();
+            activeWeapon.displayAmmo();
 
 
     }
@@ -364,7 +383,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             speed *= sprintMod;
             isSprinting = true;
-           
+
         }
         else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0)
         {
@@ -388,19 +407,19 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             sprintTimer -= Time.deltaTime;
         }
-        
+
         if (Input.GetButtonUp("Sprint"))
         {
             waitTime = StartCoroutine(waitTimer());
         }
         if (!onSprintCoolDown && Input.GetButtonDown("Sprint"))
         {
-            if(waitTime != null)
+            if (waitTime != null)
             {
                 StopCoroutine(waitTime);
                 waitTime = null;
             }
-           
+
         }
 
     }
@@ -498,7 +517,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void slideMovement()
     {
         Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
-        if(!isPlayingSound)
+        if (!isPlayingSound)
             StartCoroutine(slideAud());
         speed += slideForce;
 
@@ -548,11 +567,11 @@ public class PlayerController : MonoBehaviour, IDamage
         AudioManager.audioInstance.playAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
         StartCoroutine(damageFeedback());
         updatePlayerUI();
-        if(playerHP <= 0)
+        if (playerHP <= 0)
         {
             gameManager.gameInstance.loseScreen();
         }
-        
+
     }
     public void recieveHP(int amount)
     {
@@ -577,7 +596,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         RaycastHit hit;
         bool isInteractable = false;
-        if(Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
+        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             if (hit.collider.gameObject.CompareTag("pickup"))
             {
@@ -614,7 +633,7 @@ public class PlayerController : MonoBehaviour, IDamage
                             var bossInteraction = hit.collider.GetComponent<bossInteraction>();
                             if (bossInteraction != null)
                             {
-                                if(hasItems)
+                                if (hasItems)
                                 {
                                     bossInteraction.spawnBoss();
                                     Destroy(hit.collider);
@@ -638,7 +657,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        if(!isInteractable)
+        if (!isInteractable)
         {
             gameManager.gameInstance.playerInteract.SetActive(false);
         }
@@ -661,9 +680,9 @@ public class PlayerController : MonoBehaviour, IDamage
             if (pickup.item.type == itemType.Default || pickup.item.type == itemType.Rune)
             {
                 checkForRequiredItems();
-                
+
             }
-            else if(pickup.item.type == itemType.Key)
+            else if (pickup.item.type == itemType.Key)
             {
                 gameManager.gameInstance.displayRequiredIemsUI("Collected back cabin key!", 3f);
             }
@@ -678,7 +697,7 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.gameInstance.playerInteract.SetActive(false);
     }
 
-   
+
 
     public void checkForRequiredItems()
     {
@@ -692,19 +711,19 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (inventory.containerForInv[i].pickup.type == itemType.Rune)
             {
-                
+
 
                 if (inventory.containerForInv[i].amount >= 4)
                 {
                     hasRunes = true;
-                    if(!runeMessageShown)
-                    { 
-                       gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes!", 3f);
+                    if (!runeMessageShown)
+                    {
+                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes!", 3f);
 
                         runeMessageShown = true;
                     }
-                    
-                    if(hasLighter && !lighterMessageShown)
+
+                    if (hasLighter && !lighterMessageShown)
                     {
                         gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!", 3f);
                     }
@@ -713,7 +732,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 else
                 {
                     UnityEngine.Debug.Log("Not enough runes");
-                    if(!runeMessageShown)
+                    if (!runeMessageShown)
                     {
                         gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!", 3f);
 
@@ -724,12 +743,12 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else if (inventory.containerForInv[i].pickup.type == itemType.Default)
             {
-           
+
                 if (inventory.containerForInv[i].amount >= 1)
                 {
-                    
+
                     hasLighter = true;
-                    if(!hasLighterOnce)
+                    if (!hasLighterOnce)
                     {
                         gameManager.gameInstance.displayRequiredIemsUI("Collected Lighter!", 3f);
 
@@ -755,11 +774,11 @@ public class PlayerController : MonoBehaviour, IDamage
     public void OnApplicationQuit()
     {
         //set inventory back to the original starting loadout.
-        for(int i = 0; i < inventory.containerForInv.Count; i++)
+        for (int i = 0; i < inventory.containerForInv.Count; i++)
         {
             inventory.containerForInv.Clear();
         }
-            
+
     }
     // Things Added by Jamauri 
     public void SetSpeed(float Modifier)

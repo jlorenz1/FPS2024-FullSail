@@ -44,7 +44,7 @@ public class Weapon : MonoBehaviour
     private bool isReloading = false;              // Indicates if the weapon is currently reloading
     private bool isJammed = false;                // Indicates if the weapon is jammed
     private int currentMagazineIndex = 0;        // Tracks the current magazine being used
-    private float shootDelay = 0.5f;         // Prevents weapon from being immediately fired
+    private float shootDelay = 0.05f;         // Prevents weapon from being immediately fired
     private bool qteSuccess = false;      // Tracks success of Quick Time Event (QTE)
     private bool isShooting = false;
     private string gunName;
@@ -99,23 +99,13 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        CanShoot();
 
         if (isReloading || isJammed) return;
 
         HandleWeaponStates();
 
 
-        if (CanShoot())
-        {
-            HandleFiring();
-        }
-        else if (!CanShoot())
-        {
-            HandleReloading();
-        }
-
-        HandleFireModeSwitching();
-        displayAmmo();
     }
 
     #endregion
@@ -155,9 +145,12 @@ public class Weapon : MonoBehaviour
     #endregion
 
     #region State Detection Methods
-    private bool CanShoot()
+    public bool CanShoot()
     {
-        return !isReloading && !isJammed && weaponCanShoot;
+        if (!isReloading && !isJammed && weaponCanShoot)
+            return true;
+        else
+            return false;
     }
 
     private IEnumerator ResetShoot(float delay)
@@ -166,9 +159,17 @@ public class Weapon : MonoBehaviour
         weaponCanShoot = true;
     }
 
-    private IEnumerator ResetShootingState(float weaponFireRate)
+    private IEnumerator ResetShootingState()
     {
-        yield return new WaitForSeconds(weaponFireRate);
+        StopAllCoroutines();
+        yield return new WaitForSeconds(gunStats.rateOfFire);
+        isShooting = false;
+        weaponCanShoot = true;
+    }
+
+    private void ResetShootingStatetwo()
+    {
+       
         isShooting = false;
         weaponCanShoot = true;
     }
@@ -185,9 +186,9 @@ public class Weapon : MonoBehaviour
     /// <summary>
     /// Handles input for firing the weapon.
     /// </summary>
-    private void HandleFiring()
+    public void HandleFiring()
     {
-        if (Input.GetButtonDown("Fire1") && weaponCanShoot && gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
             if (magazines[currentMagazineIndex].currentAmmoCount > 0)
             {
@@ -250,31 +251,30 @@ public class Weapon : MonoBehaviour
 
     }
 
-    private void HandleFireModeSwitching()
+    public void HandleFireModeSwitching()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
+        
+        
             int currentIndex = Array.IndexOf(availableFireModes, gunStats.currentFireMode);
             gunStats.currentFireMode = availableFireModes[(currentIndex + 1) % availableFireModes.Length];
             Debug.Log("Switched fire mode to: " + gunStats.currentFireMode);
-        }
+        
     }
 
-    private void HandleReloading()
+    public void HandleReloading()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !isReloading && !isShooting)
-        {
+       
             Debug.Log("Reload Triggered");
 
             StartCoroutine(Reload());
-        }
+        
     }
 
     #endregion
 
     #region Shooting Methods
 
-    private void ShootRaycastBullet()
+    public void ShootRaycastBullet()
     {
         Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
         RaycastHit hit;
@@ -298,7 +298,7 @@ public class Weapon : MonoBehaviour
 
     }
 
-    private void FireWeapon()
+    public void FireWeapon()
     {
         // Check if enough time has passed before last shot
         if (Time.time - lastShotTime < shootDelay) return;
@@ -321,7 +321,9 @@ public class Weapon : MonoBehaviour
 
             Debug.Log(magazines[currentMagazineIndex].currentAmmoCount);
         }
-        StartCoroutine(ResetShootingState(gunStats.rateOfFire));
+        ResetShootingStatetwo();
+
+
     }
 
     private IEnumerator FireBurst()
@@ -341,7 +343,7 @@ public class Weapon : MonoBehaviour
         }
         StartCoroutine(ResetShoot(gunStats.rateOfFire));
 
-        StartCoroutine(ResetShootingState(gunStats.burstRate * gunStats.burstCount));
+        StartCoroutine(ResetShootingState());
     }
 
     #endregion
