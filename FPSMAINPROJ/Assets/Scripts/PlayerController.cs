@@ -163,9 +163,8 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         movement();
-        //if (!onSprintCoolDown && !isCrouching)
-        //    sprint();
-        sprint();
+        if (!onSprintCoolDown && !isCrouching)
+            sprint();
         sprintTimerUpdate();
 
         wallCheck();
