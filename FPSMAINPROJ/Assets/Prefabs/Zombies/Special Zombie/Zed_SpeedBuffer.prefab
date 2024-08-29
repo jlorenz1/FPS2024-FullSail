@@ -1471,6 +1471,8 @@ MonoBehaviour:
   ZombieBuffVol: 0.5
   ZombieAttack: []
   ZombieAttackVol: 0
+  ZombieAttackRanged: []
+  ZombieAttackRangedVol: 0
   NoramalProjectilePrefab: {fileID: 0}
   SpecialProjectile: {fileID: 0}
   BossProjectilePrefab: {fileID: 0}
@@ -1535,13 +1537,13 @@ CapsuleCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 6
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &9191446423474736885
 Rigidbody:
   m_ObjectHideFlags: 0
