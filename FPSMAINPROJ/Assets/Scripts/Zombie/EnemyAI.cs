@@ -48,8 +48,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     [SerializeField] AudioClip[] ZombieAttack;
     [SerializeField, Range(0f, 1f)] float ZombieAttackVol;
 
-    [SerializeField] AudioClip[] ZombieAttackRanged;
-    [SerializeField, Range(0f, 1f)] float ZombieAttackRangedVol;
 
     float AngleToPlayer;
     Color colorOriginal;
@@ -164,7 +162,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
 
         if (isRanged && !IsBoss)
         {
-            agent.stoppingDistance = AttackRange / 2;
+            agent.stoppingDistance = CastRange / 2;
         }
 
         lastPosition = transform.position;
@@ -225,18 +223,6 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
         }
     }
 
-    public void PlayCastSound()
-    {
-        if (ZombieFootSteps.Length > 0)
-        {
-            // Randomly select a footstep clip from the array
-            int index = Random.Range(0, ZombieAttackRanged.Length);
-            AudioClip Cast = ZombieAttackRanged[index];
-
-            // Play the selected clip through the AudioSource
-            Zombie.PlayOneShot(Cast, ZombieAttackRangedVol);
-        }
-    }
 
     IEnumerator Groan()
     {
@@ -451,7 +437,6 @@ void OnValidate()
 
         if (BossAttackCount == 10 && IsBoss)
         {
-            PlayAudio(ZombieAttackRanged[Random.Range(0, ZombieAttackRanged.Length)], ZombieAttackRangedVol);
             projectile = Instantiate(BossProjectilePrefab, launchPoint.position, launchPoint.rotation);
             BossAttackCount = 0;
         }
