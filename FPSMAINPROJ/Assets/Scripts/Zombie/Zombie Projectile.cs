@@ -111,10 +111,9 @@ void HandleNonBossAttack(Collider other)
         Destroy(gameObject);
         return;
     }
-
+        gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
     if (IsNormal)
     {
-        gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
         Destroy(gameObject);
     }
     else

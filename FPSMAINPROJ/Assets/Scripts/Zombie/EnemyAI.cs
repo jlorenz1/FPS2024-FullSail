@@ -108,7 +108,7 @@ public class EnemyAI : MonoBehaviour, IDamage, IHitPoints
     int round;
     Vector3 PlayerDrr;
 
-    public float deathTime = 10f;  // Time in seconds before the zombie dies if it doesn't move
+    public float deathTime = 20f;  // Time in seconds before the zombie dies if it doesn't move
     private Vector3 lastPosition;
     private float timeStandingStill;
 
@@ -434,6 +434,8 @@ void OnValidate()
     void CastAttack()
     {
         GameObject projectile;
+
+        timeStandingStill = 0;
 
         if (BossAttackCount == 10 && IsBoss)
         {

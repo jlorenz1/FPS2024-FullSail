@@ -49,13 +49,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 10
   lifetime: 5
   IsNormal: 1
-  IsSlow: 1
+  IsSlow: 0
   IsGround: 0
   IsBossAttack: 0
-  projectileDamage: 50
+  projectileDamage: 10
   ProjectileAudio: {fileID: -7130716218616038107}
   ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
   ZombieProjectileAudioVol: 0.307
@@ -125,7 +125,7 @@ SphereCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
-  m_ProvidesContacts: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
