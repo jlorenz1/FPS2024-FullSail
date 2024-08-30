@@ -81,7 +81,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2242797809241619125}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -366,7 +366,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -21.717262, y: 1, z: -57.74557}
-  m_LocalScale: {x: 1, y: 1.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3719972434953410602}
@@ -401,7 +401,7 @@ MonoBehaviour:
   playerHP: 100
   flashLight: {fileID: 5962712083955961086}
   gunList: []
-  gunModel: {fileID: 0}
+  gunModel: {fileID: 6409642837922477515}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   muzzleFlashTransform: {fileID: 2500066329293394852}
   shootDamage: 0
@@ -410,7 +410,7 @@ MonoBehaviour:
   canBeShotMask:
     serializedVersion: 2
     m_Bits: 128
-  gunTransform: {fileID: 0}
+  gunTransform: {fileID: 1244221119058567285}
   meleeWeapon: {fileID: 0}
   whatToClimb:
     serializedVersion: 2
@@ -876,7 +876,7 @@ Transform:
   m_GameObject: {fileID: 8965837617522185451}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.52, z: -0.04}
+  m_LocalPosition: {x: 0, y: 1.27, z: -0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
