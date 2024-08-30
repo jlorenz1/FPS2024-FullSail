@@ -290,13 +290,14 @@ void OnValidate()
     {
         HitPoints -= amountOfDamageTaken;
         StartCoroutine(flashRed());
-        if(HitPoints > 0)
+        AudioManager.audioInstance.playAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+        if (HitPoints > 0)
         {
-            int index = Random.Range(0, ZombieHit.Length);
-            AudioClip Hit = ZombieHit[index];
+            //int index = Random.Range(0, ZombieHit.Length);
+            //AudioClip Hit = ZombieHit[index];
 
-
-            PlayAudio(Hit, ZombieHitVol);
+            
+            //PlayAudio(Hit, ZombieHitVol);
         }
        else if (HitPoints <= 0)
         {
