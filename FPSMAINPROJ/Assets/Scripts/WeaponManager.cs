@@ -4,13 +4,36 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    private static WeaponManager _WeaponsInstance;
+    public static WeaponManager WeaponsInstance
+    {
+        get
+        {
+            if (_WeaponsInstance == null)
+            {
+                Debug.LogError("weaponinstance is null");
+            }
+            return _WeaponsInstance;
+        }
+    }
     public weaponStats[] allWeaponsInScene;
+    private void Awake()
+    {
+        if (_WeaponsInstance != null && _WeaponsInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _WeaponsInstance = this;
+        }
+    }
     void Start()
     {
         resetAllMags();
     }
 
-    private void resetAllMags()
+    public void resetAllMags()
     {
         for(int i = 0; i < allWeaponsInScene.Length; i++)
         {
