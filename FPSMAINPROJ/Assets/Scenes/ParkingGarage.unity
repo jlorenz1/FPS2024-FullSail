@@ -130,6 +130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4899965737396658698, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
+      propertyPath: bobbingAmount
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6965690405334661032, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
       propertyPath: m_Name
       value: M1Garand
@@ -227,29 +231,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1244221119058567285, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244221119058567285, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244221119058567285, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.56
-      objectReference: {fileID: 0}
     - target: {fileID: 3541054881267062660, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: m_Name
       value: Player (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229361147743948734, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5783144160728014893, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -358,6 +342,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2374380308722073564, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 548.10785
+      objectReference: {fileID: 0}
     - target: {fileID: 4492157331276140382, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: playerScript
       value: 
@@ -453,6 +441,10 @@ PrefabInstance:
     - target: {fileID: 7795016225418597152, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7905124186557331789, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 589
       objectReference: {fileID: 0}
     - target: {fileID: 8938132374905958566, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: allWeaponsInScene.Array.size
@@ -740,18 +732,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1662409557282862655, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1662409557282862655, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1662409557282862655, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1662409557282862655, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 149.439
       objectReference: {fileID: 0}
@@ -791,10 +771,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2256016997646494704, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
-      propertyPath: gun
-      value: 
-      objectReference: {fileID: 11400000, guid: 54cd48405f7a60549b9300d2e6102a5d, type: 2}
     - target: {fileID: 6172119232467583249, guid: 3e44159720eb8944b84bd8998f724ee5, type: 3}
       propertyPath: m_Name
       value: pistol2

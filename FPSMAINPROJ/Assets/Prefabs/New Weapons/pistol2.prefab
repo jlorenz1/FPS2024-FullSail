@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8775328776208925903}
   - component: {fileID: 2256016997646494704}
   - component: {fileID: 2296391651022952194}
+  - component: {fileID: 1490038608555655333}
   m_Layer: 0
   m_Name: pistol2
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6172119232467583249}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 149.439, y: 28.247, z: -67.47863}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9c8d901cbb654e44ba17820d50606df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 0}
+  gun: {fileID: 11400000, guid: 54cd48405f7a60549b9300d2e6102a5d, type: 2}
 --- !u!65 &2296391651022952194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -119,3 +120,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.26056075, y: 0.971557, z: 1.6699742}
   m_Center: {x: 0, y: 0.050266325, z: -0.10166764}
+--- !u!114 &1490038608555655333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172119232467583249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4c3fa685f825f4b8cd03fb41ec6a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  bobbingAmount: 0.2
+  bobbingSpeed: 0.2

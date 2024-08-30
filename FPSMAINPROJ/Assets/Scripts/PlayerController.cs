@@ -49,7 +49,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
     [SerializeFeild] public GameObject gunModel;
     [SerializeField] public GameObject muzzleFlash;
+    [SerializeField] public GameObject casingEffect;
     [SerializeField] public Transform muzzleFlashTransform;
+    [SerializeField] public Transform casingSpawnTransform;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
@@ -212,6 +214,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
+     
+
         if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1)
         {
             UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
@@ -219,7 +223,8 @@ public class PlayerController : MonoBehaviour, IDamage
             isShooting = true;
             //StartCoroutine(flashMuzzel());
             AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
-            //Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+            Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+            Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
 
             RaycastHit hit;
 
@@ -251,7 +256,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator reload()
     {
         var currentWeapon = gunList[selectedGun];
-
+        StartCoroutine(fillWhileReloading());
         yield return new WaitForSeconds(currentWeapon.reloadTime);
         //checks if there are mags to reload with
         if(currentWeapon.currentMagazineIndex + 1 < currentWeapon.magazines.Length)
@@ -265,6 +270,24 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         isReloading = false;   
     
+    }
+
+    public IEnumerator fillWhileReloading()
+    {
+        float elapsedTime = 0f;
+        float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
+        //if (qteSuccess == false)
+        //{
+        //    reloadTime = gunStats.reloadAnimation.length;
+        //}
+        while (elapsedTime < gunList[selectedGun].reloadTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / gunList[selectedGun].reloadTime);
+            gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
+            yield return null;
+        }
+        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
     }
 
     public void displayAmmo()
