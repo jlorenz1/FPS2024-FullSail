@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     // Weapon Variables for player
     [Header("WEAPON VARIABLES")]
-    [SerializeField] List<weaponStats> gunList = new List<weaponStats>();
+    [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
     [SerializeFeild] public GameObject gunModel;
     [SerializeField] public GameObject muzzleFlash;
     [SerializeField] public Transform muzzleFlashTransform;

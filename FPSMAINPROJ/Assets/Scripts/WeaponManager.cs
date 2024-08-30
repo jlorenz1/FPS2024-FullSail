@@ -44,4 +44,17 @@ public class WeaponManager : MonoBehaviour
             }
         }
     }
+
+    public void resetAllPlayerWeapons()
+    {
+        List<weaponStats> playerWeapons = gameManager.gameInstance.playerScript.gunList;
+        for(int i = 0; i < playerWeapons.Count; i++)
+        {
+            playerWeapons[i].currentMagazineIndex = 0;
+            for (int magIndex = 0; magIndex < playerWeapons[i].magazines.Length; magIndex++)
+            {
+                playerWeapons[i].magazines[magIndex].currentAmmoCount = playerWeapons[i].magazines[magIndex].magazineCapacity;
+            }
+        }
+    }
 }
