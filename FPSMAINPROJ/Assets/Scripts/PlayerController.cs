@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isShooting = true;
             //StartCoroutine(flashMuzzel());
             AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
-            Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+            //Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
 
             RaycastHit hit;
 
@@ -269,8 +269,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void displayAmmo()
     {
+        int amountToDisplay = 0;
         gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
-        gameManager.gameInstance.maxAmmoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity.ToString("F0");
+        for(int i = 0; i < gunList[selectedGun].magazines.Length; i++)
+        {
+            amountToDisplay += gunList[selectedGun].magazines[i].currentAmmoCount;
+        }
+        UnityEngine.Debug.Log(amountToDisplay);
+        gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
         gameManager.gameInstance.ammoCircle.fillAmount = (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount / (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
     }
 

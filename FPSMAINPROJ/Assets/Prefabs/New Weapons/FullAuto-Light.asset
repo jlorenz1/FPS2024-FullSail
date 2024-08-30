@@ -16,12 +16,10 @@ MonoBehaviour:
   shootDamage: 10
   shootingDistance: 400
   shootRate: 0.1
-  reloadTime: 0
+  reloadTime: 3
   magazines:
   - magazineCapacity: 30
-    currentAmmoCount: 0
-  - magazineCapacity: 30
-    currentAmmoCount: 6
+    currentAmmoCount: 25
   - magazineCapacity: 30
     currentAmmoCount: 30
   - magazineCapacity: 30
@@ -30,7 +28,9 @@ MonoBehaviour:
     currentAmmoCount: 30
   - magazineCapacity: 30
     currentAmmoCount: 30
-  currentMagazineIndex: 2
+  - magazineCapacity: 30
+    currentAmmoCount: 30
+  currentMagazineIndex: 0
   hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
   zombieHitEffect: {fileID: 198000013597187216, guid: 83e55d3418297934fab882559d009285, type: 3}
   shootSound:
