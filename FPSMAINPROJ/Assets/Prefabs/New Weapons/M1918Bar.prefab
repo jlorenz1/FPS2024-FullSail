@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6743599524987099392}
   - component: {fileID: 95300795804042594}
   - component: {fileID: 165292285035431901}
+  - component: {fileID: 8215838736888734682}
   m_Layer: 0
   m_Name: M1918Bar
   m_TagString: Untagged
@@ -119,3 +120,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 11400000, guid: fafbdd50ec0170b478327442630ad025, type: 2}
+--- !u!114 &8215838736888734682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619644521198700177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4c3fa685f825f4b8cd03fb41ec6a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  bobbingAmount: 0.5
+  bobbingSpeed: 0.2

@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +7,6 @@ using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.AI;
 
 public enum InventoryPos //for inventory
 {
@@ -208,6 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if(dmg != null)
             {
                 dmg.takeDamage(shootDamage);
+                Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
             }
             else
             {

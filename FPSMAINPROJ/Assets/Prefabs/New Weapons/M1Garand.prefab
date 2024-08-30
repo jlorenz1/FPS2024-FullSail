@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6843452967585629367}
   - component: {fileID: 2789517627678615397}
   - component: {fileID: -2566543098947009602}
+  - component: {fileID: 4899965737396658698}
   m_Layer: 0
   m_Name: M1Garand
   m_TagString: Untagged
@@ -119,3 +120,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.23610464, y: 0.91282344, z: 2.7652621}
   m_Center: {x: 0.016660038, y: -0.24138336, z: -0.04827386}
+--- !u!114 &4899965737396658698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6965690405334661032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca4c3fa685f825f4b8cd03fb41ec6a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+  bobbingAmount: 0.5
+  bobbingSpeed: 0.2
