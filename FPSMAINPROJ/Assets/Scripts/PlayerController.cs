@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] List<weaponStats> gunList = new List<weaponStats>();
     [SerializeFeild] public GameObject gunModel;
     [SerializeField] public GameObject muzzleFlash;
+    [SerializeField] public Transform muzzleFlashTransform;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
@@ -212,7 +213,10 @@ public class PlayerController : MonoBehaviour, IDamage
             UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
             gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
             isShooting = true;
-            StartCoroutine(flashMuzzel());
+            //StartCoroutine(flashMuzzel());
+            AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
+            Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
@@ -259,12 +263,12 @@ public class PlayerController : MonoBehaviour, IDamage
     
     }
 
-    IEnumerator flashMuzzel()
-    {
-        muzzleFlash.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        muzzleFlash.SetActive(false);
-    }
+    //IEnumerator flashMuzzel()
+    //{
+    //    muzzleFlash.SetActive(true);
+    //    yield return new WaitForSeconds(0.5f);
+    //    muzzleFlash.SetActive(false);
+    //}
 
     //void FireWeapon()
     //{

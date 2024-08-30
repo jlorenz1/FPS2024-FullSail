@@ -15,11 +15,11 @@ MonoBehaviour:
   gunModel: {fileID: 4619644521198700177, guid: df32622ef0e64364aadab782d9dc8b41, type: 3}
   shootDamage: 15
   shootingDistance: 600
-  shootRate: 0.3
+  shootRate: 0.15
   reloadTime: 5
   magazines:
   - magazineCapacity: 45
-    currentAmmoCount: 45
+    currentAmmoCount: 44
   - magazineCapacity: 45
     currentAmmoCount: 45
   - magazineCapacity: 45
@@ -31,7 +31,8 @@ MonoBehaviour:
   - magazineCapacity: 45
     currentAmmoCount: 45
   currentMagazineIndex: 0
-  hitEffect: {fileID: 2029768300284227837, guid: 50fcce2295cd9e44eb4d7d25558efc1a, type: 3}
+  hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
   zombieHitEffect: {fileID: 198000013597187216, guid: 83e55d3418297934fab882559d009285, type: 3}
-  shootSound: []
-  shootVol: 0
+  shootSound:
+  - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
+  shootVol: 0.1
