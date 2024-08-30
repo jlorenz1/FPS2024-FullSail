@@ -204,6 +204,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(reload());
             }
         }
+        if (gunList.Count >= 1)
+        {
+            displayAmmo();
+        }
     }
 
     IEnumerator shoot()
@@ -261,6 +265,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         isReloading = false;   
     
+    }
+
+    public void displayAmmo()
+    {
+        gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
+        gameManager.gameInstance.maxAmmoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity.ToString("F0");
+        gameManager.gameInstance.ammoCircle.fillAmount = (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount / (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
     }
 
     //IEnumerator flashMuzzel()
