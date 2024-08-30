@@ -7,6 +7,7 @@ using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Experimental.AI;
 
 public enum InventoryPos //for inventory
 {
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("WEAPON VARIABLES")]
     [SerializeField] List<weaponStats> gunList = new List<weaponStats>();
     [SerializeFeild] public GameObject gunModel;
+    [SerializeField] public GameObject muzzleFlash;
     [SerializeField] int shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
@@ -197,7 +199,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-
+        StartCoroutine(flashMuzzel());
         RaycastHit hit;
 
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
@@ -216,6 +218,13 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(shootRate);
 
         isShooting = false;
+    }
+
+    IEnumerator flashMuzzel()
+    {
+        muzzleFlash.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        muzzleFlash.SetActive(false);
     }
 
     //void FireWeapon()

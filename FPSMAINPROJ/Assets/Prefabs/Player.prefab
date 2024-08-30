@@ -202,8 +202,9 @@ MonoBehaviour:
   flashLight: {fileID: 5962712083955961086}
   gunList: []
   gunModel: {fileID: 2665502672421863674}
-  shootDamage: 1
-  shootRate: 1
+  muzzleFlash: {fileID: 0}
+  shootDamage: 0
+  shootRate: 0
   shootDistance: 600
   canBeShotMask:
     serializedVersion: 2
@@ -490,11 +491,11 @@ Transform:
   m_GameObject: {fileID: 7968692417210946864}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5320015, y: -0.033, z: -0.083}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.16799927, y: 0.32439995, z: -0.32}
+  m_LocalScale: {x: 1, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3719972434953410602}
+  m_Father: {fileID: 4333952890614934028}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &5962712083955961086
 Light:
@@ -594,7 +595,6 @@ Transform:
   m_Children:
   - {fileID: 4333952890614934028}
   - {fileID: 7601987394530848931}
-  - {fileID: 517729233006014298}
   m_Father: {fileID: 465270188490484554}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4764079534928337755
@@ -847,7 +847,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -2566543098947009602, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8679444989232520542, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 517729233006014298}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
 --- !u!1 &2665502672421863674 stripped
