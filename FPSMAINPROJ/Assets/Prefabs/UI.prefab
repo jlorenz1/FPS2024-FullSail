@@ -4139,6 +4139,58 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4298233255603946664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1852428275522557050}
+  - component: {fileID: 8938132374905958566}
+  m_Layer: 5
+  m_Name: Weapon Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1852428275522557050
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298233255603946664}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7795016225418597152}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8938132374905958566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298233255603946664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7959dabd99701e7458b7ba3ff84b211b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allWeaponsInScene:
+  - {fileID: 11400000, guid: fafbdd50ec0170b478327442630ad025, type: 2}
+  - {fileID: 11400000, guid: d66ee92d4af3e6b47836ab296ed409d7, type: 2}
+  - {fileID: 11400000, guid: cb4908ffbd17f0e4798aeb86a93b383d, type: 2}
 --- !u!1 &4388877180368167511
 GameObject:
   m_ObjectHideFlags: 0
@@ -5748,6 +5800,7 @@ RectTransform:
   m_Children:
   - {fileID: 2166281080974887133}
   - {fileID: 7892074985098926213}
+  - {fileID: 1852428275522557050}
   - {fileID: 4049783691296228970}
   - {fileID: 4933451883905219209}
   - {fileID: 6236326819003801552}
@@ -7528,7 +7581,7 @@ MonoBehaviour:
   minRoundDuration: 1
   EndRound: 5
   RoundDelay: 5
-  SpecialZombieIncrament: 5
+  SpecialZombieIncrament: 2
   fadeOverlay: {fileID: 658039065387965180}
   fadeDuration: 3
   gameActiveMenu: {fileID: 0}
@@ -7557,7 +7610,6 @@ MonoBehaviour:
   playerSprintBar: {fileID: 4559074701623437196}
   SprintBarBoarder: {fileID: 2084273941344638362}
   playerScript: {fileID: 0}
-  weaponScript: {fileID: 0}
   enemySpawner: {fileID: 0}
   isReqItemsUIDisplay: 0
   PointCount: 0

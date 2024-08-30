@@ -26,7 +26,7 @@ public class maxAmmo : MonoBehaviour
             //Weapon.Magazine newMagazine = new Weapon.Magazine(magazineCapacity, ammoInMagazine);
 
             //weapon.addMagazine(newMagazine, weapon.maxMagazines);
-            //weapon.HandleAmmoDrop();
+           
             AudioManager.audioInstance.playAudio(pickupSound, pickupVol);
             Destroy(gameObject);
         }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDistance;
     [SerializeField] LayerMask canBeShotMask;
     [SerializeField] Transform gunTransform;
-
+    bool isReloading;
     //public Weapon weapon;
     //private float lastShotTime;
     //private bool weaponCanShoot;
@@ -193,31 +194,69 @@ public class PlayerController : MonoBehaviour, IDamage
             movement();
             selectGun();
         }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (!isReloading)
+            {
+                isReloading = true;
+                StartCoroutine(reload());
+            }
+        }
     }
 
     IEnumerator shoot()
     {
-        isShooting = true;
-        StartCoroutine(flashMuzzel());
-        RaycastHit hit;
-
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
+        if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1)
         {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if(dmg != null)
-            {
-                dmg.takeDamage(shootDamage);
-                Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
-            }
-            else
-            {
-                Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-            }
-            
-        }
-        yield return new WaitForSeconds(shootRate);
+            UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
+            gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
+            isShooting = true;
+            StartCoroutine(flashMuzzel());
+            RaycastHit hit;
 
-        isShooting = false;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
+            {
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+                if (dmg != null)
+                {
+                    dmg.takeDamage(shootDamage);
+                    Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                }
+
+            }
+            yield return new WaitForSeconds(shootRate);
+
+            isShooting = false;
+        }
+        else
+        {
+            UnityEngine.Debug.Log("need to reload");
+           
+        }
+    }
+
+    IEnumerator reload()
+    {
+        var currentWeapon = gunList[selectedGun];
+
+        yield return new WaitForSeconds(currentWeapon.reloadTime);
+        //checks if there are mags to reload with
+        if(currentWeapon.currentMagazineIndex + 1 < currentWeapon.magazines.Length)
+        {
+            currentWeapon.currentMagazineIndex++;
+            currentWeapon.magazines[currentWeapon.currentMagazineIndex].currentAmmoCount = currentWeapon.magazines[currentWeapon.currentMagazineIndex].magazineCapacity;
+        }
+        else
+        {
+            UnityEngine.Debug.Log("No more mags!");
+        }
+        isReloading = false;   
+    
     }
 
     IEnumerator flashMuzzel()
