@@ -3056,6 +3056,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4630038757795920074, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7135984206584528781, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_Name
       value: UI
@@ -3140,6 +3144,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8938132374905958566, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: allWeaponsInScene.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8938132374905958566, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: allWeaponsInScene.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: fafbdd50ec0170b478327442630ad025, type: 2}
+    - target: {fileID: 8938132374905958566, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: allWeaponsInScene.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: d66ee92d4af3e6b47836ab296ed409d7, type: 2}
+    - target: {fileID: 8938132374905958566, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: allWeaponsInScene.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: cb4908ffbd17f0e4798aeb86a93b383d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

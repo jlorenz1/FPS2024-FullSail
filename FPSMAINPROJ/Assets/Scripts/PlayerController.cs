@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] LayerMask canBeShotMask;
     [SerializeField] Transform gunTransform;
     bool isReloading;
+    private weaponStats currGun;
+  
     //public Weapon weapon;
     //private float lastShotTime;
     //private bool weaponCanShoot;
@@ -198,12 +200,16 @@ public class PlayerController : MonoBehaviour, IDamage
             selectGun();
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if (currGun != null)
         {
-            if (!isReloading)
+
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                isReloading = true;
-                StartCoroutine(reload());
+                if (!isReloading)
+                {
+                    isReloading = true;
+                    StartCoroutine(reload());
+                }
             }
         }
         if (gunList.Count >= 1)
@@ -216,7 +222,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
      
 
-        if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1)
+        if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
         {
             UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
             gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
@@ -255,14 +261,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator reload()
     {
-        var currentWeapon = gunList[selectedGun];
-        StartCoroutine(fillWhileReloading());
-        yield return new WaitForSeconds(currentWeapon.reloadTime);
+        
+        //StartCoroutine(fillWhileReloading());
+        yield return new WaitForSeconds(currGun.reloadTime);
         //checks if there are mags to reload with
-        if(currentWeapon.currentMagazineIndex + 1 < currentWeapon.magazines.Length)
+        
+        if(currGun.currentMagazineIndex + 1 < currGun.magazines.Length)
         {
-            currentWeapon.currentMagazineIndex++;
-            currentWeapon.magazines[currentWeapon.currentMagazineIndex].currentAmmoCount = currentWeapon.magazines[currentWeapon.currentMagazineIndex].magazineCapacity;
+            currGun.currentMagazineIndex++;
+            currGun.magazines[currGun.currentMagazineIndex].currentAmmoCount = currGun.magazines[currGun.currentMagazineIndex].magazineCapacity;
         }
         else
         {
@@ -272,23 +279,23 @@ public class PlayerController : MonoBehaviour, IDamage
     
     }
 
-    public IEnumerator fillWhileReloading()
-    {
-        float elapsedTime = 0f;
-        float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
-        //if (qteSuccess == false)
-        //{
-        //    reloadTime = gunStats.reloadAnimation.length;
-        //}
-        while (elapsedTime < gunList[selectedGun].reloadTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / gunList[selectedGun].reloadTime);
-            gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
-            yield return null;
-        }
-        gameManager.gameInstance.ammoCircle.fillAmount = 1f;
-    }
+    //public IEnumerator fillWhileReloading()
+    //{
+    //    float elapsedTime = 0f;
+    //    float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
+    //    //if (qteSuccess == false)
+    //    //{
+    //    //    reloadTime = gunStats.reloadAnimation.length;
+    //    //}
+    //    while (elapsedTime < gunList[selectedGun].reloadTime)
+    //    {
+    //        elapsedTime += Time.deltaTime;
+    //        float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / gunList[selectedGun].reloadTime);
+    //        gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
+    //        yield return null;
+    //    }
+    //    gameManager.gameInstance.ammoCircle.fillAmount = 1f;
+    //}
 
     public void displayAmmo()
     {
@@ -300,7 +307,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         UnityEngine.Debug.Log(amountToDisplay);
         gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
-        gameManager.gameInstance.ammoCircle.fillAmount = (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount / (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
+        //gameManager.gameInstance.ammoCircle.fillAmount = (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount / (float)gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
     }
 
     //IEnumerator flashMuzzel()
@@ -458,10 +465,17 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
+       
         if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
         {
             StartCoroutine(shoot());
         }
+        
+        else
+        {
+            UnityEngine.Debug.Log("no gun");
+        }
+     
         //if (Input.GetButtonDown("Reload"))
 
         //{
@@ -984,6 +998,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void getWeaponStats(weaponStats gun)
     {
+        currGun = gun;
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
         shootDamage = gun.shootDamage;
@@ -998,17 +1013,21 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if(Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
         {
+           
             selectedGun++;
             changeGun();
         }
         else if(Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
+            
             selectedGun--;
             changeGun();
-        } 
+        }
+    
     }
     void changeGun()
     {
+        currGun = gunList[selectedGun];
         shootDamage = gunList[selectedGun].shootDamage;
         shootRate = gunList[selectedGun].shootRate;
         shootDistance = gunList[selectedGun].shootingDistance;
