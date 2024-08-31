@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (currGun != null)
         {
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && !currGun.magazines[currGun.currentMagazineIndex].weaponFull())
             {
                 if (!isReloading)
                 {

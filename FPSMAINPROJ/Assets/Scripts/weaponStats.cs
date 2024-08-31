@@ -39,4 +39,17 @@ public class Magazines
         currentAmmoCount = _currentAmmoCount;
     }
 
+    public bool weaponFull()
+    {
+        if(currentAmmoCount == magazineCapacity)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+            
+    }
+
 }
