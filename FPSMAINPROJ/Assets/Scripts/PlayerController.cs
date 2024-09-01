@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] public GameObject casingEffect;
     [SerializeField] public Transform muzzleFlashTransform;
     [SerializeField] public Transform casingSpawnTransform;
-    [SerializeField] int shootDamage;
+    [SerializeField] float shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeField] LayerMask canBeShotMask;
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isCrouching;
     bool canMelee;
     float originalSpeed;
-    public int damage;
+    public float damage;
     public bool hasItems;
     bool isPlayingSound;
     private Coroutine waitTime;
@@ -221,43 +221,50 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-     
 
-        if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
+        if (selectedGun >= 0 && selectedGun < gunList.Count)
         {
-            UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
-            gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
-            isShooting = true;
-            //StartCoroutine(flashMuzzel());
-            AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
-            Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
-            Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
+            if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
             {
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-                if (dmg != null)
+                UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
+                gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
+                isShooting = true;
+                //StartCoroutine(flashMuzzel());
+                AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
+                Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+                Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
                 {
-                    dmg.takeDamage(shootDamage);
-                    Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+                    if (dmg != null)
+                    {
+                        dmg.takeDamage(shootDamage);
+                        Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                    }
+
                 }
-                else
-                {
-                    Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-                }
+                yield return new WaitForSeconds(shootRate);
+
+                isShooting = false;
+            }
+            else
+            {
+                UnityEngine.Debug.Log("need to reload");
 
             }
-            yield return new WaitForSeconds(shootRate);
-
-            isShooting = false;
         }
         else
-        {
-            UnityEngine.Debug.Log("need to reload");
-           
-        }
+            UnityEngine.Debug.LogError("selectedGun index out of range");
+
+
+
     }
 
     IEnumerator reload()

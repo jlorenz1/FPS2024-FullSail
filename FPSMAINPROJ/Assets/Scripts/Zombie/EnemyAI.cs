@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDamage
 {
     protected int round;
     [SerializeField] protected AudioSource Zombie;
@@ -91,10 +91,10 @@ public class EnemyAI : MonoBehaviour
 
     // Death and Damage mechanics 
 
-    public virtual void TakeDamage(float amount)
+    public virtual void takeDamage(float amount)
     {
-        StartCoroutine(flashRed());
-        PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+       // StartCoroutine(flashRed());
+      //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         health -= amount;
         if (health <= 0)
         {

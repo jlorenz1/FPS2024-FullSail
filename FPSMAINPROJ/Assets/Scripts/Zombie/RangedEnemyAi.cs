@@ -13,27 +13,36 @@ public class RangedEnemy : EnemyAI
    
     [SerializeField] float castDelay;
     [SerializeField] float castRange;
-    bool canCast;
+    bool canAttack;
+
+
+
+    protected override void Start()
+    {
+        base.Start();
+        agent.stoppingDistance = castRange / 2;
+    }
+
+
 
     protected override void Update()
     {
         base.Update();
 
-        if (Vector3.Distance(gameManager.gameInstance.player.transform.position, transform.position) <= castRange && canCast)
+        if (PlayerinAttackRange && canAttack)
         {
-            delayCast();
-           
+            StartCoroutine(delayCast());
         }
     }
 
 
     IEnumerator delayCast()
     {
-        canCast = false;
+        canAttack = false;
         animator.SetTrigger("Shoot");
 
         yield return new WaitForSeconds(castDelay);
-        canCast = true;
+        canAttack = true;
     }
 
     private void Cast()

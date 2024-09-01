@@ -55,8 +55,20 @@ public class MeleeEnemy : EnemyAI
         MeeleColider.enabled = !MeeleColider.enabled;
     }
 
+
+    public override void takeDamage(float amount)
+    {
+        base.takeDamage(amount);
+    }
+
     protected override void Die()
     {
         base.Die();
     }
+
+    
+
+
+
+
 }

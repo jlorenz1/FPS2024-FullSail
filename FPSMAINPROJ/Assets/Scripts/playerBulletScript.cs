@@ -35,7 +35,7 @@ public class playerBulletScript : MonoBehaviour
     }
 
 
-  /*  private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 
         //ignores other triggers
@@ -66,6 +66,6 @@ public class playerBulletScript : MonoBehaviour
         Destroy(gameObject);
 
 
-    }*/
+    }
 
 }
