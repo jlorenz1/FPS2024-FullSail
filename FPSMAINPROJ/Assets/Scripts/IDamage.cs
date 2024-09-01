@@ -5,5 +5,5 @@ using UnityEngine;
 public interface IDamage
 { 
     // Interface to assign damage to an object
-    void takeDamage(int amountOfDamageTaken);
+    void takeDamage(float amountOfDamageTaken);
 }

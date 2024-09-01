@@ -38,11 +38,11 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-    [SerializeField] public int playerHP;
+    [SerializeField] public float playerHP;
     [SerializeField] Light flashLight;
     private bool isLit = false;
 
-    int HPorig;
+    float HPorig;
     float Sprintorig;
 
     // Weapon Variables for player
@@ -696,7 +696,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     // IDamage Player Damage
-    public void takeDamage(int amountOfDamageTaken)
+    public void takeDamage(float amountOfDamageTaken)
     {
         if(!invincible)
         {
