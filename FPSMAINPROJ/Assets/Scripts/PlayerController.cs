@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float dodgeCooldown;
     [SerializeField] float dodgeDistance;
     private bool canDodge = true;
+    private bool invincible = false;
 
     [Header("PLAYER VARIABLES")]
     [SerializeField] float speed;
@@ -405,8 +406,8 @@ public class PlayerController : MonoBehaviour, IDamage
             climbTimer = maxClimbTimer;
 
         }
-        if (isSliding)
-            slideMovement();
+        //if (isSliding)
+        //    slideMovement();
 
         if (isClimbing)
             climbingMovement();
@@ -437,7 +438,7 @@ public class PlayerController : MonoBehaviour, IDamage
             stopCrouch();
         }
 
-        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound && !isSliding)
+        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound)// && !isSliding)
             StartCoroutine(playStep());
 
         if (Input.GetButtonDown("Dodge") && canDodge)
@@ -590,8 +591,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
         {
-            if (isSliding)
-                stopSlide();
+            //if (isSliding)
+            //    stopSlide();
 
             if (!isClimbing && climbTimer > 0) startClimb();
 
@@ -604,18 +605,18 @@ public class PlayerController : MonoBehaviour, IDamage
             if (isClimbing) endClimbing();
         }
 
-        if (isSprinting)
-        {
-            if (Input.GetKeyDown(slideKey))
-            {
-                startingYPOS = transform.position.y;
-                startSlide();
-            }
-            if (Input.GetKeyUp(slideKey) && isSliding)
-            {
-                stopSlide();
-            }
-        }
+        //if (isSprinting)
+        //{
+        //    if (Input.GetKeyDown(slideKey))
+        //    {
+        //        startingYPOS = transform.position.y;
+        //        startSlide();
+        //    }
+        //    if (Input.GetKeyUp(slideKey) && isSliding)
+        //    {
+        //        stopSlide();
+        //    }
+        //}
 
     }
     void wallCheck()
@@ -641,43 +642,43 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isClimbing = false;
     }
-    void startSlide()
-    {
-        controller.height = slideYScale;
-        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
-        isSliding = true;
-        slideTimer = maxSlideTime;
-    }
+    //void startSlide()
+    //{
+    //    controller.height = slideYScale;
+    //    model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+    //    isSliding = true;
+    //    slideTimer = maxSlideTime;
+    //}
 
-    void slideMovement()
-    {
-        Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
-        if (!isPlayingSound)
-            StartCoroutine(slideAud());
-        speed += slideForce;
+    //void slideMovement()
+    //{
+    //    Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
+    //    if (!isPlayingSound)
+    //        StartCoroutine(slideAud());
+    //    speed += slideForce;
 
-        slideTimer -= Time.deltaTime;
+    //    slideTimer -= Time.deltaTime;
 
-        if (slideTimer <= 0)
-            stopSlide();
+    //    if (slideTimer <= 0)
+    //        stopSlide();
 
-    }
+    //}
 
-    IEnumerator slideAud()
-    {
-        isPlayingSound = true;
-        AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
-        yield return new WaitForSeconds(.05f);
-        isPlayingSound = false;
-    }
+    //IEnumerator slideAud()
+    //{
+    //    isPlayingSound = true;
+    //    AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
+    //    yield return new WaitForSeconds(.05f);
+    //    isPlayingSound = false;
+    //}
 
-    void stopSlide()
-    {
-        controller.height = controllerHeightOrgi;
-        model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
-        speed = originalSpeed;
-        isSliding = false;
-    }
+    //void stopSlide()
+    //{
+    //    controller.height = controllerHeightOrgi;
+    //    model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
+    //    speed = originalSpeed;
+    //    isSliding = false;
+    //}
 
     void startCrouch()
     {
@@ -697,15 +698,20 @@ public class PlayerController : MonoBehaviour, IDamage
     // IDamage Player Damage
     public void takeDamage(int amountOfDamageTaken)
     {
-        // Subtract the amount of current damage from player HP
-        playerHP -= amountOfDamageTaken;
-        AudioManager.audioInstance.playAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
-        StartCoroutine(damageFeedback());
-        updatePlayerUI();
-        if (playerHP <= 0)
+        if(!invincible)
         {
-            gameManager.gameInstance.loseScreen();
+            // Subtract the amount of current damage from player HP
+            playerHP -= amountOfDamageTaken;
+            AudioManager.audioInstance.playAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
+            StartCoroutine(damageFeedback());
+            updatePlayerUI();
+            if (playerHP <= 0)
+            {
+                gameManager.gameInstance.loseScreen();
+            }
+
         }
+        
 
     }
     public void recieveHP(int amount)
@@ -941,25 +947,30 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         // Start the dodge
         canDodge = false;
+        invincible = true;
 
         // Disable the collider
-        if (playerCollider != null)
-        {
-            playerCollider.enabled = false;
-        }
+            //if (playerCollider != null)
+            //{
+            //    playerCollider.enabled = false;
+            //}
 
         float elapsedTime = 0f;
         while (elapsedTime < dodgeDuration)
         {
+            //Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
+            speed += dodgeDistance;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        speed = originalSpeed;
 
         // Re-enable the collider
-        if (playerCollider != null)
-        {
-            playerCollider.enabled = true;
-        }
+            //if (playerCollider != null)
+            //{
+            //    playerCollider.enabled = true;
+            //}
+        invincible = false;
 
         // Wait for the cooldown duration
         yield return new WaitForSeconds(dodgeCooldown);
