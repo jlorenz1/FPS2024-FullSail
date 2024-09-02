@@ -62,7 +62,7 @@ public class gameManager : MonoBehaviour
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
-    //public Weapon weaponScript;
+    public WeaponController playerWeapon;
 
     //Objects
     public EnemySpawner enemySpawner;
@@ -130,7 +130,7 @@ public class gameManager : MonoBehaviour
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
         playerScript = FindObjectOfType<PlayerController>();
-
+        playerWeapon = FindObjectOfType<WeaponController>();
         //weaponScript = FindObjectOfType<Weapon>();
 
         enemySpawner = FindObjectOfType<EnemySpawner>();

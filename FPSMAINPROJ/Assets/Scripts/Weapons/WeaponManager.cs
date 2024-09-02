@@ -47,7 +47,7 @@ public class WeaponManager : MonoBehaviour
 
     public void resetAllPlayerWeapons()
     {
-        List<weaponStats> playerWeapons = gameManager.gameInstance.playerScript.gunList;
+        List<weaponStats> playerWeapons = gameManager.gameInstance.playerWeapon.gunList;
         for(int i = 0; i < playerWeapons.Count; i++)
         {
             playerWeapons[i].currentMagazineIndex = 0;

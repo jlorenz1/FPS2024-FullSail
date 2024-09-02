@@ -96,7 +96,7 @@ public class Interact : MonoBehaviour
                         var weapon = hit.collider.GetComponent<weaponPickup>();
                         if(weapon != null)
                         {
-                            gameManager.gameInstance.playerScript.getWeaponStats(weapon.gun);
+                            gameManager.gameInstance.playerWeapon.getWeaponStats(weapon.gun);
                             Destroy(hit.collider.gameObject);
                         }
                         else
