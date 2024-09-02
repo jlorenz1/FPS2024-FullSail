@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] Light flashLight;
     private bool isLit = false;
 
-    float HPorig;
+    public float HPorig;
     float Sprintorig;
 
     // Weapon Variables for player
@@ -738,7 +738,7 @@ public class PlayerController : MonoBehaviour, IDamage
         
 
     }
-    public void recieveHP(int amount)
+    public void recieveHP(float amount)
     {
         playerHP += amount;
         updatePlayerUI();
@@ -753,7 +753,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void updatePlayerUI()
     {
-        gameManager.gameInstance.playerHPBar.fillAmount = (float)playerHP / HPorig;
+        gameManager.gameInstance.playerHPBar.fillAmount = playerHP / HPorig;
         gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
     }
 

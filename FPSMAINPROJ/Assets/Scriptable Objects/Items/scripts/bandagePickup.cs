@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Banadage Pickup", menuName = "Inventory/pickups/Banadage")]
 public class bandagePickup : pickupObject, IPickup
 {
-    public int hpToRestore;
     public void Awake()
     {
         type = itemType.Bandage;
@@ -22,7 +21,16 @@ public class bandagePickup : pickupObject, IPickup
     }
     public void useItem()
     {
-        gameManager.gameInstance.playerScript.recieveHP(hpToRestore);
-        Destroy(prefab);
+        float currentHP = gameManager.gameInstance.playerScript.playerHP;
+        float maxHp = gameManager.gameInstance.playerScript.HPorig;
+
+        float hpNeeded = maxHp - currentHP;
+
+
+        if(hpNeeded > 0)
+        {
+            gameManager.gameInstance.playerScript.recieveHP(hpNeeded);
+            Destroy(prefab);
+        }
     }
 }
