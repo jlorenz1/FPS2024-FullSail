@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player flashlight
       objectReference: {fileID: 0}
+    - target: {fileID: 3429743365584752690, guid: ef1f2d850f3d65c459300381eb336b97, type: 3}
+      propertyPath: m_TagString
+      value: pickup
+      objectReference: {fileID: 0}
     - target: {fileID: 3789806691642585575, guid: ef1f2d850f3d65c459300381eb336b97, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -63,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3429743365584752690, guid: ef1f2d850f3d65c459300381eb336b97, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4891064335086869881}
+    - targetCorrespondingSourceObject: {fileID: 3429743365584752690, guid: ef1f2d850f3d65c459300381eb336b97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6305896499997590936}
   m_SourcePrefab: {fileID: 100100000, guid: ef1f2d850f3d65c459300381eb336b97, type: 3}
 --- !u!1 &2325416457558717300 stripped
 GameObject:
@@ -90,3 +97,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.08503299, y: 0.294284, z: 0.085033014}
   m_Center: {x: 0.0000000043851727, y: 0.147142, z: -0.00000048582046}
+--- !u!114 &-6305896499997590936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2325416457558717300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76682bfe9ef54b948a0b42e9d7c809f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: bfaa9a7e465b7d3449ac2b12fc1a3f06, type: 2}

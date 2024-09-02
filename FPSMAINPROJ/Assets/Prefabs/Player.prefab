@@ -380,6 +380,7 @@ GameObject:
   - component: {fileID: 5719176374025190790}
   - component: {fileID: 5210717050584315553}
   - component: {fileID: 8216761864754983274}
+  - component: {fileID: 2279828800420457110}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -422,7 +423,7 @@ MonoBehaviour:
   dodgeDuration: 1
   dodgeCooldown: 5
   dodgeDistance: 0.15
-  speed: 5.3
+  speed: 20
   sprintMod: 2
   maxSprintTimer: 2
   maxSprintWaitTimer: 2
@@ -431,6 +432,7 @@ MonoBehaviour:
   gravity: 55
   playerHP: 100
   flashLight: {fileID: 5962712083955961086}
+  HPorig: 0
   gunList: []
   gunModel: {fileID: 6409642837922477515}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
@@ -456,10 +458,6 @@ MonoBehaviour:
   maxSlideTime: 0.7
   slideForce: 0.05
   slideYScale: 0.5
-  pickupDis: 200
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 128
   inventory: {fileID: 11400000, guid: 696d20c93a833b14d856c7af0bbba3d9, type: 2}
   interactSounds:
   - {fileID: 8300000, guid: 7df1ed58a829d9a47932c4ba72b77d74, type: 3}
@@ -615,6 +613,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2279828800420457110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541054881267062660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8c52ab3b27ebc4f9ad50735d62c04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupDis: 100
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 128
+  hasItems: 0
 --- !u!1 &5081635666664980135
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d2087738f8134a84d9fda42efe3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sens: 100
+  sens: 700
   vertMax: 90
   vertMin: -90
   invert: 0

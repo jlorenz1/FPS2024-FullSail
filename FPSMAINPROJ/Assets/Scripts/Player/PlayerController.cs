@@ -107,19 +107,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private KeyCode slideKey = KeyCode.LeftControl;
     float horizontalInput;
     float verticalInput;
-    // End of Sliding video variables
-
-
-    [Header("Interact")]
-    [SerializeField] int pickupDis;
-    [SerializeField] LayerMask ignoreMask;
-    private Ray interactRay;
-    private RaycastHit interactHit;
-    bool isPickedUp;
-    bool inProcess;
-    bool doorOpen = false;
-    public inventoryObject inventory;
     private float sprintTimer;
+
+
+    public inventoryObject inventory;
+
 
     [Header("Sounds")]
     public AudioClip[] interactSounds;
@@ -187,14 +179,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         wallCheck();
         stateMachine();
-
-        interact();
-        //useItemFromInv();
-
-        // Check for shooting input (left mouse button)
-
-        //HandleWeaponSwitching();
-
         if(!gameManager.gameInstance.gameIsPaused)
         {
             movement();
@@ -755,195 +739,6 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         gameManager.gameInstance.playerHPBar.fillAmount = playerHP / HPorig;
         gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
-    }
-
-    public void interact()
-    {
-        RaycastHit hit;
-        bool isInteractable = false;
-        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
-        {
-            if (hit.collider.gameObject.CompareTag("pickup"))
-            {
-                gameManager.gameInstance.playerInteract.SetActive(true);
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    StartCoroutine(startInteract());
-                }
-                isInteractable = true;
-            }
-            else if (hit.collider.gameObject.CompareTag("interactable"))
-            {
-                gameManager.gameInstance.playerInteract.SetActive(true);
-                isInteractable = true;
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    if (hit.collider != null)
-                    {
-                        var door = hit.collider.GetComponent<doorScript>();
-                        if (door != null)
-                        {
-                            if (inventory.hasItem(itemType.Key))
-                            {
-                                inventory.useItem(itemType.Key);
-                            }
-                            else
-                            {
-                                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
-                            }
-
-                        }
-                        else
-                        {
-                            var bossInteraction = hit.collider.GetComponent<bossInteraction>();
-                            if (bossInteraction != null)
-                            {
-                                if (hasItems)
-                                {
-                                    bossInteraction.spawnBoss();
-                                    Destroy(hit.collider);
-                                }
-                                else
-                                {
-                                    StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have required items!", 3f));
-                                }
-                            }
-                            else
-                            {
-                                UnityEngine.Debug.Log("not spawning");
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                gameManager.gameInstance.playerInteract.SetActive(false);
-            }
-        }
-
-        if (!isInteractable)
-        {
-            gameManager.gameInstance.playerInteract.SetActive(false);
-        }
-    }
-
-    public IEnumerator startInteract()
-    {
-        RaycastHit hit;
-        AudioManager.audioInstance.playAudio(interactSounds[Random.Range(0, interactSounds.Length)], interactVol);
-
-        if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
-        {
-            pickup pickup = hit.collider.GetComponent<pickup>();
-            if (pickup != null)
-            {
-                inventory.AddItem(pickup.item, 1);
-                inventory.updateInventoryUI();
-                Destroy(hit.collider.gameObject);
-            }
-            if (pickup.item.type == itemType.Default || pickup.item.type == itemType.Rune)
-            {
-                checkForRequiredItems();
-
-            }
-            else if (pickup.item.type == itemType.Key)
-            {
-                gameManager.gameInstance.displayRequiredIemsUI("Collected back cabin key!", 3f);
-            }
-            else if (pickup.item.type == itemType.flashlight)
-            {
-                gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
-
-            }
-        }
-
-        yield return new WaitForSeconds(1);
-        gameManager.gameInstance.playerInteract.SetActive(false);
-    }
-
-
-
-    public void checkForRequiredItems()
-    {
-        bool hasRunes = false;
-        bool hasLighter = false;
-        bool hasLighterOnce = false;
-        bool runeMessageShown = false;
-        bool lighterMessageShown = false;
-
-        for (int i = 0; i < inventory.containerForInv.Count; i++)
-        {
-            if (inventory.containerForInv[i].pickup.type == itemType.Rune)
-            {
-
-
-                if (inventory.containerForInv[i].amount >= 4)
-                {
-                    hasRunes = true;
-                    if (!runeMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes!", 3f);
-
-                        runeMessageShown = true;
-                    }
-
-                    if (hasLighter && !lighterMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!", 3f);
-                    }
-                    UnityEngine.Debug.Log(hasRunes);
-                }
-                else
-                {
-                    UnityEngine.Debug.Log("Not enough runes");
-                    if (!runeMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!", 3f);
-
-                        runeMessageShown = true;
-                    }
-                    //set UI active coroutine 
-                }
-            }
-            else if (inventory.containerForInv[i].pickup.type == itemType.Default)
-            {
-
-                if (inventory.containerForInv[i].amount >= 1)
-                {
-
-                    hasLighter = true;
-                    if (!hasLighterOnce)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected Lighter!", 3f);
-
-                        hasLighterOnce = true;
-                    }
-                }
-            }
-        }
-        if (hasRunes && hasLighter)
-        {
-            UnityEngine.Debug.Log("can now spawn boss");
-            gameManager.gameInstance.itemsCompleteText.gameObject.SetActive(true);
-            hasItems = true;
-        }
-        else
-        {
-            UnityEngine.Debug.Log("required items missing");
-
-            hasItems = false;
-        }
-    }
-
-    public void OnApplicationQuit()
-    {
-        //set inventory back to the original starting loadout.
-        for (int i = 0; i < inventory.containerForInv.Count; i++)
-        {
-            inventory.containerForInv.Clear();
-        }
-
     }
     // Things Added by Jamauri 
     public void SetSpeed(float Modifier)
