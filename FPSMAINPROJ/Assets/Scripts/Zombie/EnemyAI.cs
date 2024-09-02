@@ -116,7 +116,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     protected virtual void Die()
     {
         // Common death logic
-        LootRoll(15);
+        LootRoll(5);
+        gameManager.gameInstance.UpdateGameGoal(-1);
         Destroy(gameObject);
     }
 
