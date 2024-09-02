@@ -4,12 +4,12 @@ public class SpecialEnemy : EnemyAI
 {
 
     public float specialAbilityCooldown = 5f;
-    private float nextAbilityTime = 0f;
-    float BuffRange = 30;
-    bool HealthBuffer;
-    bool SpeedBuffer;
-    bool damageBUffer;
-    bool SpecailCaster;
+    private float nextAbilityTime = 5f;
+    [SerializeField] float BuffRange = 30;
+    [SerializeField] bool HealthBuffer;
+    [SerializeField] bool SpeedBuffer;
+    [SerializeField] bool damageBUffer;
+    [SerializeField] bool SpecailCaster;
 
     [Header("-----Ability Stats-----")]
     [SerializeField] int DamageBuff;
@@ -34,6 +34,7 @@ public class SpecialEnemy : EnemyAI
         if (Time.time >= nextAbilityTime)
         {
             UseSpecialAbility();
+            PlayAudio(ZombieBuff, ZombieBuffVol);
             nextAbilityTime = Time.time + specialAbilityCooldown;
         }
     }
@@ -71,7 +72,7 @@ public class SpecialEnemy : EnemyAI
                         int totalSpeedBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
                         FellowZombie.AddSpeed(totalSpeedBuff);
                     }
-                    PlayAudio(ZombieBuff, 0.5f);
+                   
                 }
             }
         }

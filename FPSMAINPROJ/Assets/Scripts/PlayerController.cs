@@ -241,7 +241,24 @@ public class PlayerController : MonoBehaviour, IDamage
                     IDamage dmg = hit.collider.GetComponent<IDamage>();
                     if (dmg != null)
                     {
-                        dmg.takeDamage(shootDamage);
+                        float actualDamage = shootDamage; // Start with the base damage
+
+                        // Example condition to modify the damage
+                        if (hit.collider.CompareTag("Zombie Head"))
+                        {
+                            actualDamage *= 2.0f; // Double damage for headshots
+                        }
+                        else if (hit.collider.CompareTag("Zombie Body"))
+                        {
+                            actualDamage *= 1.0f; // Normal damage for body shots
+                        }
+                        else if (hit.collider.CompareTag("Zombie Legs"))
+                        {
+                            actualDamage *= 0.5f; // Reduced damage for leg shots
+                        }
+
+                        // Apply the modified damage
+                        dmg.takeDamage(actualDamage);
                         Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
                     }
                     else

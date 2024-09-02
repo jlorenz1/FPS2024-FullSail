@@ -52,7 +52,18 @@ public class EnemyAI : MonoBehaviour, IDamage
     protected virtual void Start()
     {
 
+        Body.gameObject.tag = "Zombie Body";
+        Head.gameObject.tag = "Zombie Head";
+        for(int i = 0; i < Legs.Length; i++)
+        {
+            Legs[i].gameObject.tag = "Zombie Legs";
+        }
 
+
+        for (int i = 0; i < Arms.Length; i++)
+        {
+            Arms[i].gameObject.tag = "Zombie Arms";
+        }
 
         agent = GetComponent<NavMeshAgent>();
         if(agent == null)

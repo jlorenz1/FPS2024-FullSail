@@ -21,6 +21,7 @@ public class RangedEnemy : EnemyAI
     {
         base.Start();
         agent.stoppingDistance = castRange / 2;
+        canAttack = true;
     }
 
 
@@ -45,7 +46,7 @@ public class RangedEnemy : EnemyAI
         canAttack = true;
     }
 
-    private void Cast()
+    public void CastAttack()
     {
         // Ranged attack logic
         Debug.Log("Ranged attack");
