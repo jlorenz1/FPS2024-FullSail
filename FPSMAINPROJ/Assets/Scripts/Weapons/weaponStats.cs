@@ -20,6 +20,7 @@ public class weaponStats : ScriptableObject
     public int currentMagazineIndex = 0;
 
     [Header("----- Gun SFX/FX -----")]
+    public GameObject muzzleFlash;
     public ParticleSystem hitEffect;
     public ParticleSystem zombieHitEffect;
     public AudioClip[] shootSound;

@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    [Header("WEAPON VARIABLES")]
+    [SerializeField] LayerMask ignoreMask;
+
+    [Header("WEAPON MODEL/POSTIONS")]
     [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
-    [SerializeFeild] public GameObject gunModel;
-    [SerializeField] public GameObject muzzleFlash;
-    [SerializeField] public GameObject casingEffect;
+    [SerializeFeild] GameObject currentWeaponInstance;
+    [SerializeFeild] public Transform gunModel;
     [SerializeField] public Transform muzzleFlashTransform;
     [SerializeField] public Transform casingSpawnTransform;
+    [SerializeField] Transform gunTransform;
+
+    [Header("WEAPON SPECIALTIES")]
     [SerializeField] public float shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
-    [SerializeField] LayerMask canBeShotMask;
-    [SerializeField] Transform gunTransform;
+
+    [Header("WEAPON VFX")]
+    [SerializeField] public GameObject muzzleFlash;
+    [SerializeField] public GameObject casingEffect;
+
 
     int selectedGun;
     bool isReloading;
@@ -75,7 +83,7 @@ public class WeaponController : MonoBehaviour
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~canBeShotMask))
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
                 {
                     IDamage dmg = hit.collider.GetComponent<IDamage>();
                     if (dmg != null)
@@ -158,15 +166,28 @@ public class WeaponController : MonoBehaviour
 
     public void getWeaponStats(weaponStats gun)
     {
-        currGun = gun;
+        if(currentWeaponInstance != null)
+        {
+            Destroy(currentWeaponInstance);
+            currentWeaponInstance = null;
+        }
+        currentWeaponInstance = Instantiate(gun.gunModel);
+        gunModel = currentWeaponInstance.transform;
+
+        gunModel.SetParent(gunTransform);
+        gunModel.localPosition = Vector3.zero;
+        gunModel.localRotation = Quaternion.identity;
+        muzzleFlashTransform = gunModel.Find("MuzzleTransform");
+        muzzleFlash = gun.muzzleFlash;
         gunList.Add(gun);
+
         selectedGun = gunList.Count - 1;
         shootDamage = gun.shootDamage;
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     void selectGun()
@@ -188,10 +209,23 @@ public class WeaponController : MonoBehaviour
     void changeGun()
     {
         currGun = gunList[selectedGun];
-        shootDamage = gunList[selectedGun].shootDamage;
-        shootRate = gunList[selectedGun].shootRate;
-        shootDistance = gunList[selectedGun].shootingDistance;
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        shootDamage = currGun.shootDamage;
+        shootDistance = currGun.shootingDistance;
+        shootRate = currGun.shootRate;
+
+        if (currentWeaponInstance != null)
+        {
+            Destroy(currentWeaponInstance);
+            currentWeaponInstance = null;
+        }
+        currentWeaponInstance = Instantiate(currGun.gunModel);
+        gunModel = currentWeaponInstance.transform;
+        muzzleFlashTransform = gunModel.Find("MuzzleTransform");
+        muzzleFlash = currGun.muzzleFlash;
+        gunModel.SetParent(gunTransform);
+        gunModel.localPosition = Vector3.zero;
+        gunModel.localRotation = Quaternion.identity;
+
     }
 }

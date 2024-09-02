@@ -10,24 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
-  m_Name: SingleShot - Rifle
+  m_Name: Silenced-Light
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 6965690405334661032, guid: 9c00b786db3cea24490991ca6dda04c4, type: 3}
-  shootDamage: 20
-  shootingDistance: 600
-  shootRate: 2
-  reloadTime: 5
+  gunModel: {fileID: 5097176560606572326, guid: 280c9b40dde6d4b4b9ffd559694fd5b9, type: 3}
+  shootDamage: 2
+  shootingDistance: 300
+  shootRate: 0.1
+  reloadTime: 1
   magazines:
-  - magazineCapacity: 5
-    currentAmmoCount: 5
-  - magazineCapacity: 5
-    currentAmmoCount: 5
-  - magazineCapacity: 5
-    currentAmmoCount: 5
+  - magazineCapacity: 20
+    currentAmmoCount: 20
   currentMagazineIndex: 0
-  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
-  zombieHitEffect: {fileID: 198000013597187216, guid: 83e55d3418297934fab882559d009285, type: 3}
+  zombieHitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
-  shootVol: 0.1
+  shootVol: 0.5
