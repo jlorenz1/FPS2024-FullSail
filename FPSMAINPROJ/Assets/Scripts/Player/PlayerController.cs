@@ -173,12 +173,14 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+       
         if (!onSprintCoolDown && !isCrouching)
             sprint();
         sprintTimerUpdate();
 
         wallCheck();
         stateMachine();
+
         if(!gameManager.gameInstance.gameIsPaused)
         {
             movement();

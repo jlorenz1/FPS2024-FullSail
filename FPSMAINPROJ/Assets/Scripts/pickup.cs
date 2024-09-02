@@ -7,6 +7,7 @@ using UnityEngine;
 public class pickup : MonoBehaviour, IPickup
 {
     public pickupObject item;
+    
     internal itemType type;
 
     public void useItem()

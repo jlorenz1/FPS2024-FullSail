@@ -86,6 +86,31 @@ public class Interact : MonoBehaviour
                     }
                 }
             }
+            else if(hit.collider.gameObject.CompareTag("Weapon"))
+            {
+                gameManager.gameInstance.playerInteract.SetActive(true);
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    if(hit.collider != null)
+                    {
+                        var weapon = hit.collider.GetComponent<weaponPickup>();
+                        if(weapon != null)
+                        {
+                            gameManager.gameInstance.playerScript.getWeaponStats(weapon.gun);
+                            Destroy(hit.collider.gameObject);
+                        }
+                        else
+                        {
+                            Debug.Log("weapon not being handled correctly");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("No pickup found.");
+                    }
+                }
+                isInteractable = true;
+            }
             else
             {
                 gameManager.gameInstance.playerInteract.SetActive(false);
