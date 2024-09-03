@@ -10,20 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
-  m_Name: Glock - Starting Pistol
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 4654503382558056918, guid: 2d532142659c45d43ac8b61db4d698ab, type: 3}
-  shootDamage: 5
-  shootingDistance: 200
-  shootRate: 0.2
-  reloadTime: 3
+  gunModel: {fileID: 6530764079120195087, guid: e5de3ed633d7e394c9688504cdabb32e, type: 3}
+  shootDamage: 15
+  shootingDistance: 600
+  shootRate: 0.15
+  reloadTime: 4
   magazines:
   - magazineCapacity: 15
-    currentAmmoCount: 7
-  - magazineCapacity: 15
-    currentAmmoCount: 15
-  - magazineCapacity: 15
-    currentAmmoCount: 15
+    currentAmmoCount: 11
   - magazineCapacity: 15
     currentAmmoCount: 15
   - magazineCapacity: 15
@@ -34,4 +30,4 @@ MonoBehaviour:
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
-  shootVol: 0.5
+  shootVol: 0.1

@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
-  m_Name: Assualt-Rifle
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 2785887150441299024, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
-  shootDamage: 25
-  shootingDistance: 600
-  shootRate: 0.3
+  gunModel: {fileID: 185015911520072586, guid: d6a41bed739a2a44f87afe0bd3ec16b3, type: 3}
+  shootDamage: 40
+  shootingDistance: 100
+  shootRate: 2
   reloadTime: 4
   magazines:
-  - magazineCapacity: 30
-    currentAmmoCount: 5
-  - magazineCapacity: 30
-    currentAmmoCount: 30
-  - magazineCapacity: 30
-    currentAmmoCount: 30
+  - magazineCapacity: 8
+    currentAmmoCount: 8
+  - magazineCapacity: 8
+    currentAmmoCount: 8
+  - magazineCapacity: 8
+    currentAmmoCount: 8
   currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
   shootSound:
-  - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
+  - {fileID: 8300000, guid: 4fe83c146b09ad34cb28155b6dbb1222, type: 3}
   shootVol: 0.1
