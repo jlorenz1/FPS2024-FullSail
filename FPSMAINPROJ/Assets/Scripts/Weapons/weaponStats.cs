@@ -25,6 +25,8 @@ public class weaponStats : ScriptableObject
     public ParticleSystem zombieHitEffect;
     public AudioClip[] shootSound;
     public float shootVol;
+    public AudioClip reloadSound;
+    public float reloadVol;
 
 }
 
@@ -38,19 +40,6 @@ public class Magazines
     {
         magazineCapacity = _magazineCapacity;
         currentAmmoCount = _currentAmmoCount;
-    }
-
-    public bool weaponFull()
-    {
-        if(currentAmmoCount == magazineCapacity)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-            
     }
 
 }

@@ -16,18 +16,20 @@ MonoBehaviour:
   shootDamage: 15
   shootingDistance: 600
   shootRate: 0.15
-  reloadTime: 4
+  reloadTime: 0.9
   magazines:
   - magazineCapacity: 15
-    currentAmmoCount: 11
+    currentAmmoCount: 15
   - magazineCapacity: 15
     currentAmmoCount: 15
   - magazineCapacity: 15
     currentAmmoCount: 15
   currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
-  hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
+  hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
   shootSound:
-  - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
+  - {fileID: 8300000, guid: 2203773368e4340d98c114f55c2dd7fd, type: 3}
   shootVol: 0.1
+  reloadSound: {fileID: 8300000, guid: eb5685b26a6494994af389a3293064e8, type: 3}
+  reloadVol: 0.09

@@ -119,7 +119,7 @@ public class WeaponController : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("need to reload");
-
+                
             }
         }
         else
@@ -132,10 +132,11 @@ public class WeaponController : MonoBehaviour
     IEnumerator reload()
     {
 
-        //StartCoroutine(fillWhileReloading());
+        AudioManager.audioInstance.playAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
         yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
+        //StartCoroutine(fillWhileReloading());
         //checks if there are mags to reload with
-       
+
         if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length)
         {
             gunList[selectedGun].currentMagazineIndex++;

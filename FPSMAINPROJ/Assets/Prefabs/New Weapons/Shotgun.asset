@@ -19,15 +19,17 @@ MonoBehaviour:
   reloadTime: 4
   magazines:
   - magazineCapacity: 8
-    currentAmmoCount: 8
+    currentAmmoCount: 6
   - magazineCapacity: 8
     currentAmmoCount: 8
   - magazineCapacity: 8
     currentAmmoCount: 8
   currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
-  hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
+  hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
   shootSound:
-  - {fileID: 8300000, guid: 4fe83c146b09ad34cb28155b6dbb1222, type: 3}
+  - {fileID: 8300000, guid: e21e61fed1cb6e94db0ff6c4f09801c7, type: 3}
   shootVol: 0.1
+  reloadSound: {fileID: 8300000, guid: bce5ae97694eb6a478b977b26ca43114, type: 3}
+  reloadVol: 0.1
