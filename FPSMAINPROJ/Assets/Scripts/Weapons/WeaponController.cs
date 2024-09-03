@@ -76,7 +76,8 @@ public class WeaponController : MonoBehaviour
                 isShooting = true;
                 //StartCoroutine(flashMuzzel());
                 AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
-                Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+                var muzzleFlashObj = Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+                muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
                 Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
 
                 RaycastHit hit;
