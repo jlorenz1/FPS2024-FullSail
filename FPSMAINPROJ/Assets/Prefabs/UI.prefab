@@ -4188,7 +4188,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7959dabd99701e7458b7ba3ff84b211b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allWeaponsInScene: []
+  allWeaponsInScene:
+  - {fileID: 11400000, guid: cb4908ffbd17f0e4798aeb86a93b383d, type: 2}
+  - {fileID: 11400000, guid: fafbdd50ec0170b478327442630ad025, type: 2}
+  - {fileID: 11400000, guid: d66ee92d4af3e6b47836ab296ed409d7, type: 2}
+  - {fileID: 11400000, guid: 9e8c5e94dd502f14288300aac42485e7, type: 2}
 --- !u!1 &4388877180368167511
 GameObject:
   m_ObjectHideFlags: 0
@@ -7683,6 +7687,7 @@ MonoBehaviour:
   playerSprintBar: {fileID: 4559074701623437196}
   SprintBarBoarder: {fileID: 2084273941344638362}
   playerScript: {fileID: 0}
+  playerWeapon: {fileID: 0}
   enemySpawner: {fileID: 0}
   isReqItemsUIDisplay: 0
   PointCount: 0
@@ -8122,11 +8127,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 841102792273930867, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 65.49099
+      value: 73.4
       objectReference: {fileID: 0}
     - target: {fileID: 841102792273930867, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -69.90002
+      value: -85.5
       objectReference: {fileID: 0}
     - target: {fileID: 1364281479243880856, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_fontSize
@@ -8206,11 +8211,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2068838441928197840, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -60.6
+      value: -54.9
       objectReference: {fileID: 0}
     - target: {fileID: 2068838441928197840, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -69.9
+      value: -71.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3018357144311948712, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674349277302687624, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6536758055302344260, guid: fc70f48bc47d6f3418709ec945dc921e, type: 3}
       propertyPath: m_SizeDelta.x

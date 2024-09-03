@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
+  m_Name: Glock - Starting Pistol
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 4654503382558056918, guid: 2d532142659c45d43ac8b61db4d698ab, type: 3}
+  shootDamage: 5
+  shootingDistance: 200
+  shootRate: 0.2
+  reloadTime: 3
+  magazines:
+  - magazineCapacity: 15
+    currentAmmoCount: 14
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  currentMagazineIndex: 0
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  hitEffect: {fileID: 198000013440722320, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
+  zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
+  shootVol: 0.5
