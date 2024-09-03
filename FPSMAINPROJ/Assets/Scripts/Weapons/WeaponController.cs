@@ -26,7 +26,7 @@ public class WeaponController : MonoBehaviour
 
 
     int selectedGun;
-    bool isReloading;
+    bool isReloading = false;
     public bool isShooting;
     private weaponStats currGun;
 
@@ -43,18 +43,16 @@ public class WeaponController : MonoBehaviour
             selectGun();
         }
 
-        if (currGun != null)
-        {
 
-            if (Input.GetKeyDown(KeyCode.R) && !currGun.magazines[currGun.currentMagazineIndex].weaponFull())
-            {
-                if (!isReloading)
-                {
-                    isReloading = true;
-                    StartCoroutine(reload());
-                }
-            }
+        if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
+        {
+           if (!isReloading)
+           {
+              isReloading = true;
+              StartCoroutine(reload());
+           }
         }
+
         if (gunList.Count >= 1)
         {
             displayAmmo();
@@ -135,13 +133,13 @@ public class WeaponController : MonoBehaviour
     {
 
         //StartCoroutine(fillWhileReloading());
-        yield return new WaitForSeconds(currGun.reloadTime);
+        yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
         //checks if there are mags to reload with
-
-        if (currGun.currentMagazineIndex + 1 < currGun.magazines.Length)
+       
+        if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length)
         {
-            currGun.currentMagazineIndex++;
-            currGun.magazines[currGun.currentMagazineIndex].currentAmmoCount = currGun.magazines[currGun.currentMagazineIndex].magazineCapacity;
+            gunList[selectedGun].currentMagazineIndex++;
+            gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
         }
         else
         {
@@ -166,7 +164,8 @@ public class WeaponController : MonoBehaviour
 
     public void getWeaponStats(weaponStats gun)
     {
-        if(currentWeaponInstance != null)
+    
+        if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);
             currentWeaponInstance = null;
