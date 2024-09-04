@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             Debug.LogError("NO Nav MESH");
         }
 
-        AssignRandomModel();
+     //   AssignRandomModel();
         colorOriginal = model.material.color;
         gameManager.gameInstance.UpdateGameGoal(1);
       
@@ -324,7 +324,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    // Model and Animations 
+ /*   // Model and Animations 
     void AssignRandomModel()
     {
         if (models != null && models.Count > 0)
@@ -356,7 +356,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             }
         }
     }
-
+*/
 
     IEnumerator flashRed()
     {
