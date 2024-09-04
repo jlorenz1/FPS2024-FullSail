@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
    [SerializeField] bool IsGround;
    [SerializeField] bool IsBossAttack;
    [SerializeField] int projectileDamage;
-
+    [SerializeField] float followtime;
     [SerializeField] AudioSource ProjectileAudio;
 
     [SerializeField] AudioClip ZombieProjectileAudio;
@@ -22,15 +22,17 @@ public class Projectile : MonoBehaviour
     Rigidbody rb;
     Transform playerTransform;
 
+    bool followPlayer;
     float OriginalSpeed;
     int OriginalJumpCount;
+    Vector3 currentDirection;
     float Nerf;
     GameObject player;
     int NerfTimer;
     int round;
     void Start()
     {
-
+        followPlayer = true;
         int projectileLayer = gameObject.layer;
         int zombieLayer = LayerMask.NameToLayer("Zombie");
         Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
@@ -62,26 +64,40 @@ public class Projectile : MonoBehaviour
         {
             playerTransform = player.transform;
         }
+
+        StartCoroutine(FollowPlayer(followtime));
+
     }
         void Update()
     {
         round = gameManager.gameInstance.GetGameRound();
         SetNerfTimer();
         SetBuffStrength();
-        if (playerTransform != null)
+        if (followPlayer && player != null)
         {
-            Vector3 direction = (playerTransform.position - transform.position).normalized;
-            if (rb != null)
-            {
-                rb.velocity = direction * speed;
-            }
-            else
-            {
-                transform.Translate(direction * speed * Time.deltaTime);
-            }
+            // During the first second, follow the player
+            currentDirection = (player.transform.position - transform.position).normalized;
+        }
+
+        // Move the projectile in the current direction
+        if (rb != null)
+        {
+            rb.velocity = currentDirection * speed;
+        }
+        else
+        {
+            transform.Translate(currentDirection * speed * Time.deltaTime);
         }
     }
 
+    IEnumerator FollowPlayer(float seconds)
+    {
+        // Follow the player for 1 second
+        yield return new WaitForSeconds(seconds);
+
+        // Stop following the player and continue in the last known direction
+        followPlayer = false;
+    }
 
     void OnDestroy()
     {
@@ -99,14 +115,9 @@ public class Projectile : MonoBehaviour
         return;
     }
 
-    if (!IsBossAttack)
-    {
         HandleNonBossAttack(other);
-    }
-    else
-    {
-        HandleBossAttack(other);
-    }
+    
+   
 }
 
 void HandleNonBossAttack(Collider other)
@@ -124,33 +135,6 @@ void HandleNonBossAttack(Collider other)
     else
     {
         StickToPlayer(other);
-    }
-}
-
-void HandleBossAttack(Collider other)
-{
-if (other.CompareTag("Ground"))
-        {
-            Destroy(gameObject);
-        }
-
-
-    if (!other.CompareTag("Player") && other.CompareTag("TerrainDestroyer"))
-    {
-        Destroy(other.gameObject);
-        Destroy(gameObject);
-    }
-    else
-    {
-        if (IsNormal)
-        {
-            gameManager.gameInstance.playerScript.takeDamage(projectileDamage);
-            Destroy(gameObject);
-        }
-        else
-        {
-            StickToPlayer(other);
-        }
     }
 }
 
@@ -182,18 +166,6 @@ void StickToPlayer(Collider other)
             gameManager.gameInstance.playerScript.SetJumpCount(0);
         }
        
-       if(IsBossAttack)
-        {
-            if (OriginalSpeed / Nerf >= 1)
-            {
-                gameManager.gameInstance.playerScript.SetSpeed(OriginalSpeed / Nerf);
-            }
-            else
-                gameManager.gameInstance.playerScript.SetSpeed(1);
-
-            gameManager.gameInstance.playerScript.SetJumpCount(0);
-
-        }
     }
 
     IEnumerator StatReset()

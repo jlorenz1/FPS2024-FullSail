@@ -1038,6 +1038,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 658039065387965180, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1481848991790947291, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1080,7 +1084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7098536464942206770, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7135984206584528781, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
       propertyPath: m_Name
@@ -1232,6 +1236,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dbc70f39a64ec6449d299951eec4476, type: 3}
+--- !u!82 &2068870458 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1744820923156066193, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
+  m_PrefabInstance: {fileID: 1810894308}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2138587116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1303,7 +1312,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3834371293188694096, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_Name
-      value: 'New Base Zombie '
+      value: 'Base Melee '
       objectReference: {fileID: 0}
     - target: {fileID: 4502962789648169706, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1344,6 +1353,14 @@ PrefabInstance:
     - target: {fileID: 4502962789648169706, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725777155471285365, guid: 078f354a5a8382a40a753f884f259859, type: 3}
+      propertyPath: m_Acceleration
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7725777155471285365, guid: 078f354a5a8382a40a753f884f259859, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1475,6 +1492,181 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9db30b1b0f3f0484c99de27d86378862, type: 3}
+--- !u!1001 &3191664257809445862
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 545.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08087158
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -125.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3667430360570356693, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156405569138669935, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+      propertyPath: m_Name
+      value: Base Ranged Zombie
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 74e76ab80b9381d4fbe531d0819783de, type: 3}
+--- !u!1001 &3843641459920582977
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1683480588852259282, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_Name
+      value: 'New Base Projectile '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 547.909
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0348637
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -138.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.4971924
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.502729
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5027906
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.49725756
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2002241201476963402, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251414997787975039, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+      propertyPath: ProjectileAudio
+      value: 
+      objectReference: {fileID: 2068870458}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+--- !u!1001 &4821981532929941233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 504901931353985701, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_Name
+      value: 'Base Special Zomboe '
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 553.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08087158
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -125.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 885543423156881439, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9b9618e526e47854ba6fc5d858301bc3, type: 3}
 --- !u!1001 &5971545323174266543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1635,3 +1827,6 @@ SceneRoots:
   - {fileID: 1313692006}
   - {fileID: 122757330}
   - {fileID: 386176765733347759}
+  - {fileID: 3191664257809445862}
+  - {fileID: 4821981532929941233}
+  - {fileID: 3843641459920582977}

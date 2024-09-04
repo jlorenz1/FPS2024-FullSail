@@ -365,9 +365,39 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = colorOriginal;
     }
 
-  //  static modifiers;
 
-    public void AddHP(int amount)
+    protected IEnumerator SmoothTransitionSpeed(float targetSpeed, float duration)
+    {
+        float startSpeed = agent.speed;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newSpeed = Mathf.Lerp(startSpeed, targetSpeed, elapsedTime / duration);
+            agent.speed = newSpeed;
+            if (animator != null)
+            {
+                animator.SetFloat("Speed", newSpeed);
+            }
+
+            yield return null; // Wait until the next frame
+        }
+
+        // Ensure final values are set correctly
+        agent.speed = targetSpeed;
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", targetSpeed);
+        }
+    }
+
+
+
+
+//  static modifiers;
+
+public void AddHP(int amount)
     {
         if (!HasHealthBuffed)
         {

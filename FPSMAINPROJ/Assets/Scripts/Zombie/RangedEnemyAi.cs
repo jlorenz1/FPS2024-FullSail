@@ -10,11 +10,12 @@ public class RangedEnemy : EnemyAI
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject CastPortal1;
     [SerializeField] GameObject CastPortal2;
-   
-    [SerializeField] float castDelay;
+
+    [SerializeField] float castSpeed = 1f;
+    float castDelay = 1;
     [SerializeField] float castRange;
     bool canAttack;
-
+    float basespeed;
 
 
     protected override void Start()
@@ -24,7 +25,19 @@ public class RangedEnemy : EnemyAI
         canAttack = true;
     }
 
+  public  void ToggleCastPortal()
+    {
 
+        if (CastPortal1 != null)
+        {
+            CastPortal1.SetActive(!CastPortal1.activeSelf);
+        }
+
+        if (CastPortal2 != null)
+        {
+            CastPortal2.SetActive(!CastPortal2.activeSelf);
+        }
+    }
 
     protected override void Update()
     {
@@ -32,17 +45,23 @@ public class RangedEnemy : EnemyAI
 
         if (PlayerinAttackRange && canAttack)
         {
-            StartCoroutine(delayCast());
+            StartCoroutine(CastAttackRoutine());
         }
     }
 
-
-    IEnumerator delayCast()
+    IEnumerator CastAttackRoutine()
     {
         canAttack = false;
+        animator.SetFloat("CastSpeed", castSpeed); // New: Set animator speed to match cast speed
         animator.SetTrigger("Shoot");
 
-        yield return new WaitForSeconds(castDelay);
+        // Wait based on the cast speed
+        yield return new WaitForSeconds(1f / castSpeed);
+
+        // Perform the ranged attack
+        CastAttack();
+
+        nextFireTime = Time.time + (1f / castSpeed); // Adjust next fire time based on cast speed
         canAttack = true;
     }
 
