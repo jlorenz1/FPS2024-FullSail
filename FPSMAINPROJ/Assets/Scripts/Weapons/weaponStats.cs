@@ -15,6 +15,12 @@ public class weaponStats : ScriptableObject
     public float shootRate;
     public string fireMode;
 
+    [Header("---- RECOIL VALUES ---")]
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
+    public float snapping;
+    public float returnSpeed;
     [Header("----- Gun Ammo/Magazines -----")]
     public float reloadTime;
     [SerializeField] public Magazines[] magazines; // Array of magazines used by the weapon

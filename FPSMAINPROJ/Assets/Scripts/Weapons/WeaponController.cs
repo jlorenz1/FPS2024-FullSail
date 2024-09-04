@@ -217,6 +217,12 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
+        //recoil
+        cameraScript.recoilX = gun.recoilX;
+        cameraScript.recoilY = gun.recoilY;
+        cameraScript.recoilZ = gun.recoilZ;
+        cameraScript.returnSpeed = gun.returnSpeed;
+        cameraScript.snapping = gun.snapping;
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -244,7 +250,14 @@ public class WeaponController : MonoBehaviour
         shootDamage = currGun.shootDamage;
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
-        fireMode = currGun.fireMode;    
+        fireMode = currGun.fireMode;
+
+        cameraScript.recoilX = currGun.recoilX;
+        cameraScript.recoilY = currGun.recoilY;
+        cameraScript.recoilZ = currGun.recoilZ;
+        cameraScript.returnSpeed = currGun.returnSpeed;
+        cameraScript.snapping = currGun.snapping;
+
         if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);
