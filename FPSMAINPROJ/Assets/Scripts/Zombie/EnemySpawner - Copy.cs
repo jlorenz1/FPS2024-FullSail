@@ -23,29 +23,31 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<GameObject> SpecialZombies;
     [SerializeField] GameObject BossZombie;
 
-    int TypeSplit; 
+    int TypeSplit;
 
 
-
-    void Start()
+    private void Start()
     {
-
-        
-
+        PopulateSpawnPoints();
+    }
+    public void RefeshSpawnPoints()
+    {
+        PopulateSpawnPoints();
     }
 
-   public void PopulateSpawnPoints()
+    public void PopulateSpawnPoints()
     {
-        spawnPoints.Clear(); // Clear any existing points in the list
+        spawnPoints.Clear(); // Clear any existing points 
 
         // Find all GameObjects with the "SpawnPoint" tag and add them to the list
         GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
         foreach (GameObject obj in spawnPointObjects)
         {
-            if (obj.transform != null)
+            if (obj.activeSelf == true)
             {
                 spawnPoints.Add(obj.transform);
             }
+        
         }
     }
 
@@ -98,6 +100,7 @@ public class EnemySpawner : MonoBehaviour
 
         // Select a random spawn point
         Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+       
 
         // Get a random point on the NavMesh near the selected spawn point
         Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
