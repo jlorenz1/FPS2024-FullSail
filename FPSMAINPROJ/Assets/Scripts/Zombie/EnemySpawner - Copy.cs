@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<GameObject> RangedZombies;
     [SerializeField] List<GameObject> SpecialZombies;
     [SerializeField] GameObject BossZombie;
+
     int TypeSplit; 
 
 
