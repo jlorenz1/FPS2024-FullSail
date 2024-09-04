@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] int sens;
+    [SerializeField] public int sens;
     [SerializeField] int vertMax, vertMin; //Max up and down camera can rotate
     [SerializeField] bool invert;
+
+    private Vector3 currentRot;
+    private Vector3 targetRot; //where you want the recoil to end at 
+
+    [Header("RECOIL VARIABLES")]
+    [SerializeFeild] public float recoilX; //offset for x
+    [SerializeFeild] public float recoilY; //offset for y
+    [SerializeFeild] public float recoilZ; //offset for z
+    [SerializeFeild] public float snapping; //fast it goes up
+    [SerializeFeild] public float returnSpeed; //takes for the gun to go back down
+    private bool isFiring;
 
     float rotX;
     // Start is called before the first frame update
@@ -39,6 +50,31 @@ public class cameraController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        transform.parent.Rotate(Vector3.up * mouseX);   
+      
+        //checks if the recoil is happening or not.
+        if (isFiring)
+        {
+            //using lerp to go up to the target location, then back down at a disered speed, going back to the original pos
+            targetRot = Vector3.Lerp(targetRot, Vector3.zero, returnSpeed * Time.deltaTime);
+            //random between the target and current rotation, going back at the disered speed, Slerp allows for smooth motion
+            currentRot = Vector3.Slerp(currentRot, targetRot, snapping * Time.deltaTime);
+            //apply the current rotation of recoil to the camera rotation 
+            transform.localRotation = Quaternion.Euler(currentRot);
+        }
+        //this allows if the recoil effected the x rotation of the player moving and the recoil moving it at the same time. 
+        //I was stuck for a while with the camera being locked up and this is what I found to be the solution. 
+        transform.localRotation = Quaternion.Euler(rotX + currentRot.x, 0, 0);
+
+        transform.parent.Rotate(Vector3.up * mouseX);
+
+    }
+
+    public void RecoilFire()
+    {
+        if (!isFiring)
+        {
+            isFiring = true;
+        }
+        targetRot += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 }

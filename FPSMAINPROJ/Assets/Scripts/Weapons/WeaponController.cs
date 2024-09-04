@@ -24,16 +24,16 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public GameObject muzzleFlash;
     [SerializeField] public GameObject casingEffect;
 
-
+    private cameraController cameraScript;
     int selectedGun;
-    bool isReloading = false;
+    public bool isReloading = false;
     public bool isShooting;
     private weaponStats currGun;
 
 
     void Start()
     {
-
+        cameraScript = FindObjectOfType<cameraController>();
     }
 
     void Update()
@@ -79,7 +79,7 @@ public class WeaponController : MonoBehaviour
                 var muzzleFlashObj = Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
                 muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
                 Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
-
+                cameraScript.RecoilFire();
                 RaycastHit hit;
 
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
@@ -159,7 +159,7 @@ public class WeaponController : MonoBehaviour
         {
             amountToDisplay += gunList[selectedGun].magazines[i].currentAmmoCount;
         }
-        UnityEngine.Debug.Log(amountToDisplay);
+        //UnityEngine.Debug.Log(amountToDisplay);
         gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
 
     }

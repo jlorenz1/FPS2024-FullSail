@@ -1215,6 +1215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4764079534928337755, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: snapping
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2512,8 +2516,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 8669393035749267375, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
+      propertyPath: recoilX
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669393035749267375, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
+      propertyPath: recoilY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669393035749267375, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
+      propertyPath: recoilZ
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669393035749267375, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
+      propertyPath: snapping
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669393035749267375, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
+      propertyPath: returnSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2574923097279786688, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
