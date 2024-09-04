@@ -19,6 +19,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public float shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
+    [SerializeFeild] string fireMode;
 
     [Header("WEAPON VFX")]
     [SerializeField] public GameObject muzzleFlash;
@@ -58,11 +59,40 @@ public class WeaponController : MonoBehaviour
             displayAmmo();
         }
 
+        if (gunList.Count > 0)
+        {
+            if (gunList[selectedGun].fireMode == "Full-Auto")
+            {
+                handleFullAuto();
+            }
+            else if (gunList[selectedGun].fireMode == "Semi-Auto")
+            {
+                handleSemiAuto();
+            }
+        }
+        else
+        {
+            Debug.Log("no gun");
+        }
+        
+    }
+
+    void handleFullAuto()
+    {
         if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
         {
             StartCoroutine(shoot());
         }
     }
+
+    void handleSemiAuto()
+    {
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting)
+        {
+            StartCoroutine(shoot());
+        }
+    }
+
 
     IEnumerator shoot()
     {
@@ -186,7 +216,7 @@ public class WeaponController : MonoBehaviour
         shootDamage = gun.shootDamage;
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
-
+        fireMode = gun.fireMode;
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -214,7 +244,7 @@ public class WeaponController : MonoBehaviour
         shootDamage = currGun.shootDamage;
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
-
+        fireMode = currGun.fireMode;    
         if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);

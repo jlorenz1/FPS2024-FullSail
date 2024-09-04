@@ -13,6 +13,7 @@ public class weaponStats : ScriptableObject
     public int shootDamage;
     public int shootingDistance;
     public float shootRate;
+    public string fireMode;
 
     [Header("----- Gun Ammo/Magazines -----")]
     public float reloadTime;
