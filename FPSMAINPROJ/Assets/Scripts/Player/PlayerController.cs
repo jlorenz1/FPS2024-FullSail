@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
+    [SerializeField] Animator animator;
 
     [Header("Doging")]
     [SerializeField] Collider playerCollider;
@@ -153,7 +154,14 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-       
+        if(!isSliding)
+            animator.SetFloat("Movement", Mathf.Lerp(animator.GetFloat("Movement"), move.normalized.magnitude, Time.deltaTime * 5));
+        else
+        {
+            animator.SetFloat("Movement", 0);
+            animator.SetBool("Slide", true);
+        }
+
         if (!onSprintCoolDown && !isCrouching)
             sprint();
         sprintTimerUpdate();
@@ -281,8 +289,8 @@ public class PlayerController : MonoBehaviour, IDamage
             climbTimer = maxClimbTimer;
 
         }
-        //if (isSliding)
-        //    slideMovement();
+        if (isSliding)
+            slideMovement();
 
         if (isClimbing)
             climbingMovement();
@@ -470,18 +478,18 @@ public class PlayerController : MonoBehaviour, IDamage
             if (isClimbing) endClimbing();
         }
 
-        //if (isSprinting)
-        //{
-        //    if (Input.GetKeyDown(slideKey))
-        //    {
-        //        startingYPOS = transform.position.y;
-        //        startSlide();
-        //    }
-        //    if (Input.GetKeyUp(slideKey) && isSliding)
-        //    {
-        //        stopSlide();
-        //    }
-        //}
+        if (isSprinting)
+        {
+            if (Input.GetKeyDown(slideKey))
+            {
+                startingYPOS = transform.position.y;
+                startSlide();
+            }
+            if (Input.GetKeyUp(slideKey) && isSliding)
+            {
+                stopSlide();
+            }
+        }
 
     }
     void wallCheck()
@@ -507,43 +515,44 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isClimbing = false;
     }
-    //void startSlide()
-    //{
-    //    controller.height = slideYScale;
-    //    model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
-    //    isSliding = true;
-    //    slideTimer = maxSlideTime;
-    //}
+    void startSlide()
+    {
+        controller.height = slideYScale;
+        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        isSliding = true;
+        slideTimer = maxSlideTime;
+    }
 
-    //void slideMovement()
-    //{
-    //    Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
-    //    if (!isPlayingSound)
-    //        StartCoroutine(slideAud());
-    //    speed += slideForce;
+    void slideMovement()
+    {
+        Vector3 inputDir = transform.forward * verticalInput + transform.right * horizontalInput;
+        if (!isPlayingSound)
+            StartCoroutine(slideAud());
+        speed += slideForce;
 
-    //    slideTimer -= Time.deltaTime;
+        slideTimer -= Time.deltaTime;
 
-    //    if (slideTimer <= 0)
-    //        stopSlide();
+        if (slideTimer <= 0)
+            stopSlide();
 
-    //}
+    }
 
-    //IEnumerator slideAud()
-    //{
-    //    isPlayingSound = true;
-    //    AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
-    //    yield return new WaitForSeconds(.05f);
-    //    isPlayingSound = false;
-    //}
+    IEnumerator slideAud()
+    {
+        isPlayingSound = true;
+        AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
+        yield return new WaitForSeconds(.05f);
+        isPlayingSound = false;
+    }
 
-    //void stopSlide()
-    //{
-    //    controller.height = controllerHeightOrgi;
-    //    model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
-    //    speed = originalSpeed;
-    //    isSliding = false;
-    //}
+    void stopSlide()
+    {
+        animator.SetBool("Slide", false);
+        controller.height = controllerHeightOrgi;
+        model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
+        speed = originalSpeed;
+        isSliding = false;
+    }
 
     void startCrouch()
     {
