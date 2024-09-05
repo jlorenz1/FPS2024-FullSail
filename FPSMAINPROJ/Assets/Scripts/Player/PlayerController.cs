@@ -682,4 +682,17 @@ public class PlayerController : MonoBehaviour, IDamage
         flashLight.gameObject.SetActive(isLit);
         AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, flashlightSounds.Length)], flashlightVol);
     }
+
+
+    public void cutspeed(float amount, float damagetaken)
+    {
+       speed /= amount;
+    }
+
+
+    public void cutdamage(float amount)
+    {
+        damage /= amount;
+    }
 }
+

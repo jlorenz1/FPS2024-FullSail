@@ -131,10 +131,16 @@ public class WeaponController : MonoBehaviour
                             actualDamage *= 1.0f; // Normal damage for body shots
                             Debug.Log("body shot");
                         }
-                        else if (hit.collider.CompareTag("Zombie Legs") || hit.collider.CompareTag("Zombie Arms"))
+                        else if (hit.collider.CompareTag("Zombie Legs") )
                         {
-                            actualDamage *= 0.5f; // Reduced damage for leg shots
+                            actualDamage *= 0.25f; // Reduced damage for leg shots
                             Debug.Log("leg shot");
+                            dmg.cutspeed(2, actualDamage);
+                        }
+                        else if (hit.collider.CompareTag("Zombie Arms"))
+                        {
+                            actualDamage *= 0.25f;
+                            dmg.cutdamage(2);
                         }
 
                         // Apply the modified damage

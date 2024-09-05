@@ -40,10 +40,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     bool HasHealthBuffed;
     bool HasStrengthBuffed;
     bool HasSpeedBuffed;
-
+    bool speednerfed;
+    bool damagenerfed;
   [ SerializeField] protected float damage;
     float HitPoints;
-
+    float legdamage;
     [SerializeField] private List<GameObject> models;
     private GameObject currentModel;
 
@@ -51,7 +52,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     protected virtual void Start()
     {
-
+        speednerfed = false;
+        damagenerfed = false;
         Body.gameObject.tag = "Zombie Body";
         Head.gameObject.tag = "Zombie Head";
         for(int i = 0; i < Legs.Length; i++)
@@ -98,6 +100,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             StartCoroutine(Groan());
         }
+
+
+        if(legdamage >= health / 2)
+        {
+            Cripple();
+        }
+
+
     }
 
     // Death and Damage mechanics 
@@ -459,5 +469,47 @@ public void AddHP(int amount)
     {
         health += amount * 1.334f;
     }
-       
+
+    public void cutspeed(float amount, float damagetaken)
+    {
+
+        legdamage += damagetaken;
+        if (!speednerfed)
+        {
+
+            agent.speed /= amount;
+
+            speednerfed = true;
+        }
+        else
+            return;
+    }
+
+   public void cutdamage(float amount)
+    {
+
+        if (!damagenerfed)
+        {
+            damage /= amount;
+
+            damagenerfed = true;
+        }
+        else
+            return;
+    }
+
+
+   protected virtual void Cripple()
+    {
+        animator.SetBool("Cripple", true);
+
+        if (agent.speed / 2 > 1)
+        {
+            agent.speed /= 2;
+        }
+        else
+            agent.speed = 1;
+    }
+
+
 }
