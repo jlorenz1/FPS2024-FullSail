@@ -104,7 +104,8 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     public virtual void takeDamage(float amount)
     {
-       // StartCoroutine(flashRed());
+        Debug.Log("take damage called");
+        StartCoroutine(flashRed());
       //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         health -= amount;
         if (health <= 0)

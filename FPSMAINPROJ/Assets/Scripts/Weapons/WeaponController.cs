@@ -114,7 +114,8 @@ public class WeaponController : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
                 {
-                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+                    IDamage dmg = hit.collider.GetComponentInParent<IDamage>();
                     if (dmg != null)
                     {
                         float actualDamage = shootDamage; // Start with the base damage
@@ -123,14 +124,17 @@ public class WeaponController : MonoBehaviour
                         if (hit.collider.CompareTag("Zombie Head"))
                         {
                             actualDamage *= 2.0f; // Double damage for headshots
+                            Debug.Log("crit shot");
                         }
                         else if (hit.collider.CompareTag("Zombie Body"))
                         {
                             actualDamage *= 1.0f; // Normal damage for body shots
+                            Debug.Log("body shot");
                         }
-                        else if (hit.collider.CompareTag("Zombie Legs"))
+                        else if (hit.collider.CompareTag("Zombie Legs") || hit.collider.CompareTag("Zombie Arms"))
                         {
                             actualDamage *= 0.5f; // Reduced damage for leg shots
+                            Debug.Log("leg shot");
                         }
 
                         // Apply the modified damage
@@ -139,6 +143,7 @@ public class WeaponController : MonoBehaviour
                     }
                     else
                     {
+                        Debug.Log("Hit Tag: " + hit.collider.tag);
                         Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
                     }
 
