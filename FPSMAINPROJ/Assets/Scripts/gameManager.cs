@@ -51,6 +51,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject quickTime;
     [SerializeField] public GameObject requiredItemsContainer;
     [SerializeField] TMP_Text requiredItemsDis;
+    [SerializeFeild] bool endless;
     public TMP_Text ammoCount;
     public TMP_Text maxAmmoCount;
     public Image ammoCircle;
@@ -145,11 +146,6 @@ public class gameManager : MonoBehaviour
    
         MainCam = Camera.main;
 
-        if(EnemyCount == 0)
-        {
-            StartNewRound();
-        }
-       
     }
 
     void Start()
@@ -244,7 +240,7 @@ public class gameManager : MonoBehaviour
 
 
 
-        if (EnemyCount == 0) {
+        if (EnemyCount == 0 && endless) {
 
             StartNewRound();
         }

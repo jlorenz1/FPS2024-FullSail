@@ -132,6 +132,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         Destroy(gameObject);
     }
 
+    public void DieWithoutDrops()
+    {
+        gameManager.gameInstance.UpdateGameGoal(-1);
+        Destroy(gameObject);
+    }
+
     void LootRoll(int DropChance)
     {
 

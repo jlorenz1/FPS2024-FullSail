@@ -705,5 +705,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         damage /= amount;
     }
+    
+    
+    public void DieWithoutDrops()
+    {
+       
+    }
+
 }
 

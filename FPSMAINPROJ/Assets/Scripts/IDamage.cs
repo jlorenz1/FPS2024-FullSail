@@ -14,4 +14,5 @@ public interface IDamage
     void cutdamage(float amount);
 
 
+    void DieWithoutDrops();  
 }
