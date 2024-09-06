@@ -37,6 +37,13 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeFeild] public float Armor;
     [SerializeField] float Range;
     [SerializeField] protected float damage;
+
+    [Header("-----Armor-----")]
+    [SerializeField] GameObject Helmate;
+    [SerializeFeild] GameObject ChestPlate;
+    [SerializeFeild] GameObject Leggings;
+    [SerializeFeild] GameObject boots;
+
     [Header("-----Other-----")]
     [SerializeField] protected List<GameObject> Drops;
     [SerializeField] private List<GameObject> models;
