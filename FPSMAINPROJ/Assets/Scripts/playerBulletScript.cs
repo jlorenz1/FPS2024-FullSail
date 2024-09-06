@@ -44,17 +44,13 @@ public class playerBulletScript : MonoBehaviour
             return;
         }
         // determines if the object has the takeDamage function
-        IDamage dmgDetect = other.GetComponent<IDamage>();
+        IEnemyDamage dmgDetect = other.GetComponent<IEnemyDamage>();
         if (dmgDetect != null)
         {
             dmgDetect.takeDamage(DamageAmount);
         }
 
-        IHitPoints hitPointsComponent = other.GetComponent<IHitPoints>();
-        if (hitPointsComponent != null)
-        {
-            hitPointsComponent.DisplayHitPoints();
-        }
+  
 
         else
         {

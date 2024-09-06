@@ -7,17 +7,22 @@ public class SpawnTrigger : MonoBehaviour
 {
     [SerializeField] GameObject[] SpawnLocation;
     [SerializeFeild] int Difficulty;
+    [SerializeField] bool isEndless;
     bool isActivated;
     bool wiped;
-    int ZombieCount;
-
+    int ZombieSpawnCount;
+    int Count;
     private void Start()
     {
         wiped = false;
     }
     private void Update()
     {
-       
+        Count = gameManager.gameInstance.GetEnemyCount(); 
+        if(Count == 0 && isActivated && isEndless)
+        {
+            SpawnEnemies(ZombieSpawnCount);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +34,7 @@ public class SpawnTrigger : MonoBehaviour
             GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
             foreach (GameObject zombie in zombies)
             {
-                IDamage Zombies = zombie.GetComponent<IDamage>();
+                    IEnemyDamage Zombies = zombie.GetComponent<IEnemyDamage>();
 
                 if (Zombies != null)
                 {
@@ -47,6 +52,9 @@ public class SpawnTrigger : MonoBehaviour
                 SpawnLocation[i].SetActive(true);
             }
             gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
+
+
+            SpawnEnemies(ZombieSpawnCount);
         }
         else
             return;
@@ -67,5 +75,14 @@ public class SpawnTrigger : MonoBehaviour
         }
         else
             return;
+    }
+
+   void SpawnEnemies(int Amount)
+    {
+
+        gameManager.gameInstance.enemySpawner.ZombieSpawner(Amount);
+
+
+
     }
 }

@@ -8,11 +8,5 @@ public interface IDamage
     void takeDamage(float amountOfDamageTaken);
 
 
-    void cutspeed(float amount, float damagetaken);
-
-
-    void cutdamage(float amount);
-
-
-    void DieWithoutDrops();  
+ 
 }

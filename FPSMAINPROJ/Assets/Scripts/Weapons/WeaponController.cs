@@ -115,7 +115,7 @@ public class WeaponController : MonoBehaviour
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
                 {
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-                    IDamage dmg = hit.collider.GetComponentInParent<IDamage>();
+                    IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
                     if (dmg != null)
                     {
                         float actualDamage = shootDamage; // Start with the base damage

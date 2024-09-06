@@ -49,7 +49,7 @@ public class SpecialEnemy : EnemyAI
             if (distance < BuffRange)
             {
 
-                IHitPoints FellowZombie = zombie.GetComponent<IHitPoints>();
+                IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
                 if (FellowZombie != null)
                 {
 

@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHitPoints
+public interface IEnemyDamage
 {
     // Interface to assign damage to an object
-    void DisplayHitPoints();
 
-
-    int CurrentHitPoints { get; }
-
+    void takeDamage(float amountOfDamageTaken);
 
     void AddHP(int amount);
 
@@ -17,7 +14,13 @@ public interface IHitPoints
 
     void AddSpeed(int amount);
 
+    void cutspeed(float amount, float damagetaken);
 
+
+    void cutdamage(float amount);
+
+
+    void DieWithoutDrops();
 
 
 

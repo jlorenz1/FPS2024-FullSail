@@ -66,6 +66,18 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void ZombieSpawner(int Amount)
+    {
+
+
+        for(int i = 0; i < Amount; i++)
+        {
+            SpawnAtRandomPoint();
+        }
+
+
+    }
+
     public void SpecialZombieSpawner(int Interval)
     {
         if (Interval > 0)

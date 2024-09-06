@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class EnemyAI : MonoBehaviour, IEnemyDamage
 {
     protected int round;
     [SerializeField] protected AudioSource Zombie;
@@ -518,4 +518,6 @@ public void AddHP(int amount)
     }
 
 
+
+  
 }
