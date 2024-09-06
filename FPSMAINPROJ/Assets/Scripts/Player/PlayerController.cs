@@ -519,6 +519,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         controller.height = slideYScale;
         model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        invincible = true;
         isSliding = true;
         slideTimer = maxSlideTime;
     }
@@ -551,6 +552,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.height = controllerHeightOrgi;
         model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
         speed = originalSpeed;
+        invincible = false;
         isSliding = false;
     }
 
