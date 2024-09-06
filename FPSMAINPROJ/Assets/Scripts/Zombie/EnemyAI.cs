@@ -5,27 +5,44 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IEnemyDamage
 {
+
     protected int round;
+    [Header("-----Audio-----")]
     [SerializeField] protected AudioSource Zombie;
-[SerializeField] protected AudioClip[] ZombieFootSteps;
-[SerializeField] protected float ZombieFootStepsVol;
-[SerializeField] protected AudioClip[] ZombieGrowl;
-[SerializeField] protected float ZombieGrowlVol;
-[SerializeField] protected AudioClip[] ZombieHit;
-[SerializeField] protected float ZombieHitVol;
-[SerializeField] protected AudioClip[] ZombieDeath;
-[SerializeField] protected float ZombieDeathVol;
-[SerializeField] protected NavMeshAgent agent;
-[SerializeField] public float health = 100f;
-[SerializeField] protected Renderer model;
-[SerializeField] protected int BaseHitPoints;
-[SerializeField] protected Animator animator;
-[SerializeField] protected int animatorspeedtrans;
-[SerializeField] protected int FacePlayerSpeed;
-[SerializeField] protected int ViewAngle;
-[SerializeField] protected Transform HeadPos;
-[SerializeField] protected List<GameObject> Drops;
-  protected  bool PlayerinAttackRange;
+    [SerializeField] protected AudioClip[] ZombieFootSteps;
+    [SerializeField] protected float ZombieFootStepsVol;
+    [SerializeField] protected AudioClip[] ZombieGrowl;
+    [SerializeField] protected float ZombieGrowlVol;
+    [SerializeField] protected AudioClip[] ZombieHit;
+    [SerializeField] protected float ZombieHitVol;
+    [SerializeField] protected AudioClip[] ZombieDeath;
+    [SerializeField] protected float ZombieDeathVol;
+
+    [Header("-----Model/Animations-----")]
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Renderer model;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected int animatorspeedtrans;
+    [SerializeField] protected int FacePlayerSpeed;
+    [SerializeField] protected int ViewAngle;
+    [SerializeField] protected Transform HeadPos;
+    [Header("-----HitBoxes-----")]
+    [SerializeField] Collider Body;
+    [SerializeField] Collider Head;
+    [SerializeField] Collider[] Legs;
+    [SerializeField] Collider[] Arms;
+
+    [Header("-----Stats-----")]
+    [SerializeField] public float health = 100f;
+    [SerializeFeild] public float Armor;
+    [SerializeField] float Range;
+    [SerializeField] protected float damage;
+    [Header("-----Other-----")]
+    [SerializeField] protected List<GameObject> Drops;
+    [SerializeField] private List<GameObject> models;
+
+
+    protected bool PlayerinAttackRange;
     int BoostRange = 30;
     bool RangeBoosted;
     float startSpeed;
@@ -33,22 +50,19 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     float AngleToPlayer;
     bool canGroan;
     Color colorOriginal;
- [SerializeField] Collider Body;
-[SerializeField] Collider Head;
-[SerializeField] Collider[] Legs;
-[SerializeField] Collider[] Arms;
+   
     bool HasHealthBuffed;
     bool HasStrengthBuffed;
     bool HasSpeedBuffed;
     bool speednerfed;
     bool damagenerfed;
-  [ SerializeField] protected float damage;
+   
     float HitPoints;
     float legdamage;
-    [SerializeField] private List<GameObject> models;
+   
     private GameObject currentModel;
 
-    [SerializeField] float Range;
+  
 
     protected virtual void Start()
     {
@@ -56,7 +70,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         damagenerfed = false;
         Body.gameObject.tag = "Zombie Body";
         Head.gameObject.tag = "Zombie Head";
-        for(int i = 0; i < Legs.Length; i++)
+        for (int i = 0; i < Legs.Length; i++)
         {
             Legs[i].gameObject.tag = "Zombie Legs";
         }
@@ -68,16 +82,16 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
         agent = GetComponent<NavMeshAgent>();
-        if(agent == null)
+        if (agent == null)
         {
             Debug.LogError("NO Nav MESH");
         }
 
-     //   AssignRandomModel();
+        //   AssignRandomModel();
         colorOriginal = model.material.color;
         gameManager.gameInstance.UpdateGameGoal(1);
-      
-     
+
+
         startSpeed = agent.speed;
 
         HasHealthBuffed = false;
@@ -92,7 +106,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         ApplySeparationAndRandomMovement();
         OutOfRangeBoost();
-       CanSeePlayer();
+        CanSeePlayer();
         ApplyGravity();
 
         CheckRange();
@@ -102,7 +116,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
 
-        if(legdamage >= health / 2)
+        if (legdamage >= health / 2)
         {
             Cripple();
         }
@@ -116,8 +130,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         Debug.Log("take damage called");
         StartCoroutine(flashRed());
-      //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        health -= amount;
+
+        float damageReduced = amount * Armor / 500;
+        float TotalDamage = amount - damageReduced;
+        //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+        health -= TotalDamage;
         if (health <= 0)
         {
             Die();
@@ -290,8 +307,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-        //world interaction
-        private void ApplyGravity()
+    //world interaction
+    private void ApplyGravity()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 1f))
         {
@@ -309,7 +326,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     //Genral audio
 
 
-   protected void PlayAudio(AudioClip audio, float volume)
+    protected void PlayAudio(AudioClip audio, float volume)
     {
         Zombie.PlayOneShot(audio, volume);
     }
@@ -341,39 +358,39 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
     }
 
- /*   // Model and Animations 
-    void AssignRandomModel()
-    {
-        if (models != null && models.Count > 0)
-        {
-            // Select a random model from the list
-            int randomIndex = Random.Range(0, models.Count);
-            GameObject selectedModel = models[randomIndex];
+    /*   // Model and Animations 
+       void AssignRandomModel()
+       {
+           if (models != null && models.Count > 0)
+           {
+               // Select a random model from the list
+               int randomIndex = Random.Range(0, models.Count);
+               GameObject selectedModel = models[randomIndex];
 
-            // Destroy any existing model first
-            if (currentModel != null)
-            {
-                Destroy(currentModel);
-            }
+               // Destroy any existing model first
+               if (currentModel != null)
+               {
+                   Destroy(currentModel);
+               }
 
-            // Instantiate the selected model as a child of the enemy
-            currentModel = Instantiate(selectedModel, transform.position, transform.rotation, transform);
+               // Instantiate the selected model as a child of the enemy
+               currentModel = Instantiate(selectedModel, transform.position, transform.rotation, transform);
 
-            // Update references to renderer and animator
-            model = currentModel.GetComponent<Renderer>();
-            animator = gameObject.GetComponent<Animator>();
+               // Update references to renderer and animator
+               model = currentModel.GetComponent<Renderer>();
+               animator = gameObject.GetComponent<Animator>();
 
-            // Optionally, deactivate other models if they exist on the list object
-            foreach (var model in models)
-            {
-                if (model != selectedModel)
-                {
-                    model.SetActive(false);
-                }
-            }
-        }
-    }
-*/
+               // Optionally, deactivate other models if they exist on the list object
+               foreach (var model in models)
+               {
+                   if (model != selectedModel)
+                   {
+                       model.SetActive(false);
+                   }
+               }
+           }
+       }
+   */
 
     IEnumerator flashRed()
     {
@@ -412,9 +429,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-//  static modifiers;
+    //  static modifiers;
 
-public void AddHP(int amount)
+    public void AddHP(int amount)
     {
         if (!HasHealthBuffed)
         {
@@ -463,15 +480,15 @@ public void AddHP(int amount)
     }
     public float GetDamage()
     {
-        return damage; 
+        return damage;
     }
 
- public void  ScalingDamage(float amount)
+    public void ScalingDamage(float amount)
     {
-        damage += amount*1.334f;
+        damage += amount * 1.334f;
     }
 
-  public void IncreaseHitPoints(float amount)
+    public void IncreaseHitPoints(float amount)
     {
         health += amount * 1.334f;
     }
@@ -491,7 +508,7 @@ public void AddHP(int amount)
             return;
     }
 
-   public void cutdamage(float amount)
+    public void cutdamage(float amount)
     {
 
         if (!damagenerfed)
@@ -505,7 +522,7 @@ public void AddHP(int amount)
     }
 
 
-   protected virtual void Cripple()
+    protected virtual void Cripple()
     {
         animator.SetBool("Cripple", true);
 
@@ -517,7 +534,38 @@ public void AddHP(int amount)
             agent.speed = 1;
     }
 
+    public void  AddArmor(float amount)
+    {
+        if (Armor + amount < 500)
+        {
+            Armor += amount;
+        }
+        else
+            Armor = 500;
+    }
 
+    public void RemoveArmor(float amount)
+    {
+        if (Armor - amount > 0)
+        {
+            Armor += amount;
+        }
+        else
+            Armor = 0;
+    }
 
-  
+    public void TempRemoveArmor(float reduction, float Duration)
+    {
+
+        StartCoroutine(ArmorStrip(Duration, reduction));
+
+    }
+
+    IEnumerator ArmorStrip(float StripDurration, float reduction)
+    {
+
+        RemoveArmor(reduction);
+        yield return new WaitForSeconds(StripDurration);
+        AddArmor(reduction);
+    }
 }

@@ -16,12 +16,14 @@ public interface IEnemyDamage
 
     void cutspeed(float amount, float damagetaken);
 
-
     void cutdamage(float amount);
-
 
     void DieWithoutDrops();
 
+    void AddArmor(float amount);
 
+    void RemoveArmor(float amount);
+
+    void TempRemoveArmor(float reduction, float Duration);
 
 }
