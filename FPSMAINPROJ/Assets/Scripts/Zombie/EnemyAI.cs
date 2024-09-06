@@ -568,4 +568,19 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         yield return new WaitForSeconds(StripDurration);
         AddArmor(reduction);
     }
+
+  public void TakeTrueDamage(float amountOfDamageTaken)
+    {
+       
+        StartCoroutine(flashRed());
+
+       
+        //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+        health -= amountOfDamageTaken;
+        if (health <= 0)
+        {
+            Die();
+        }
+
+    }
 }

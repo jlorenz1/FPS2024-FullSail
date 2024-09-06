@@ -8,6 +8,8 @@ public interface IEnemyDamage
 
     void takeDamage(float amountOfDamageTaken);
 
+    void TakeTrueDamage(float amountOfDamageTaken);
+
     void AddHP(int amount);
 
     void AddDamage(int amount);
