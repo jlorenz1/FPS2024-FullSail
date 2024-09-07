@@ -424,7 +424,7 @@ MonoBehaviour:
   dodgeDuration: 1
   dodgeCooldown: 5
   dodgeDistance: 5
-  speed: 20
+  speed: 5.2
   sprintMod: 2
   playerWeapon: {fileID: 5772754423598556651}
   maxSprintTimer: 2
@@ -441,8 +441,10 @@ MonoBehaviour:
     m_Bits: 8
   climbSpeed: 17
   maxClimbTimer: 2
-  detectionLength: 0.7
-  sphereCastRadius: 0.25
+  aboveDetectionLength: 1.5
+  climbDetectionLength: 0.5
+  wallCastRadius: 0.1
+  aboveCastRadius: 0
   maxWallLookAngle: 30
   maxSlideTime: 0.7
   slideForce: 0.05

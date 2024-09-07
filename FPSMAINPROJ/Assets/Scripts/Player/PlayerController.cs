@@ -1,11 +1,5 @@
 
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -61,12 +55,17 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isClimbing;
 
     [Header("Dectection")]
-    [SerializeField] float detectionLength;
-    [SerializeField] float sphereCastRadius;
+
+    [SerializeField] float aboveDetectionLength;
+    bool underObject;
+
+    [SerializeField] float climbDetectionLength;
+    [SerializeField] float wallCastRadius;
+    [SerializeField] float aboveCastRadius;
     [SerializeField] float maxWallLookAngle;
     private float WallLookAngle;
 
-    private RaycastHit wallHit;
+    private RaycastHit objectHit;
     private bool wallFront;
     // End of climbiing video variables
 
@@ -79,7 +78,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public float slideYScale;
     float startingYScale;
-    float startingYPOS;
     int controllerHeightOrgi;
     float meeleDuration;
     bool isSliding;
@@ -135,7 +133,7 @@ public class PlayerController : MonoBehaviour, IDamage
         damage = playerWeapon.shootDamage;
         sprintTimer = maxSprintTimer;
         originalSpeed = speed;
-        crouchSpeed = speed / 3;
+        crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
         updatePlayerUI();
@@ -167,6 +165,7 @@ public class PlayerController : MonoBehaviour, IDamage
         sprintTimerUpdate();
 
         wallCheck();
+        crouchCheck();
         stateMachine();
 
         if(!gameManager.gameInstance.gameIsPaused)
@@ -312,16 +311,15 @@ public class PlayerController : MonoBehaviour, IDamage
         playerVel.y -= gravity * Time.deltaTime;
 
 
-        if (Input.GetKeyDown(slideKey) && !isSprinting)
-        {
-            startCrouch();
-        }
-        else if (Input.GetKeyUp(slideKey))
-        {
-            stopCrouch();
+        if (!isSprinting) {
+            if (Input.GetKey(slideKey) || underObject)
+                startCrouch();
+            else if (!Input.GetKey(slideKey) && !underObject)
+                stopCrouch();
         }
 
-        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound)// && !isSliding)
+
+        if (controller.isGrounded && move.magnitude > 0.2f && !isPlayingSound && !isSliding)
             StartCoroutine(playStep());
 
         if (Input.GetButtonDown("Dodge") && canDodge)
@@ -462,6 +460,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void stateMachine()
     {
+
         if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
         {
             //if (isSliding)
@@ -482,7 +481,6 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (Input.GetKeyDown(slideKey))
             {
-                startingYPOS = transform.position.y;
                 startSlide();
             }
             if (Input.GetKeyUp(slideKey) && isSliding)
@@ -496,9 +494,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         //wallFront tell if there is a wall in front
         //                            ( starting postion,                   Radius,              Directions,    location of the infomation, sphereCast length,  the layerMask)
-        wallFront = Physics.SphereCast(Camera.main.transform.position, sphereCastRadius, Camera.main.transform.forward, out wallHit, detectionLength, whatToClimb);
-        WallLookAngle = Vector3.Angle(Camera.main.transform.forward, -wallHit.normal);
-
+        wallFront = Physics.SphereCast(Camera.main.transform.position, wallCastRadius, Camera.main.transform.forward, out objectHit, climbDetectionLength, whatToClimb);
+        WallLookAngle = Vector3.Angle(Camera.main.transform.forward, -objectHit.normal);
 
     }
     void startClimb()
@@ -518,7 +515,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void startSlide()
     {
         controller.height = slideYScale;
-        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        //model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
         invincible = true;
         isSliding = true;
         slideTimer = maxSlideTime;
@@ -559,16 +556,26 @@ public class PlayerController : MonoBehaviour, IDamage
     void startCrouch()
     {
         controller.height = slideYScale;
-        model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
+        //model.transform.localScale = new Vector3(transform.localScale.x, slideYScale, transform.localScale.z);
         isCrouching = true;
         speed = crouchSpeed;
     }
+
+    void crouchCheck()
+    {
+        underObject = Physics.SphereCast(controller.transform.position, aboveCastRadius, controller.transform.up, out objectHit, aboveDetectionLength);
+        //Debug.DrawRay(animator.transform.position, -animator.transform.up, Color.blue);
+    }
+
     void stopCrouch()
     {
-        controller.height = controllerHeightOrgi;
-        model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
-        isCrouching = false;
-        speed = originalSpeed;
+        if(!underObject)
+        {
+            controller.height = controllerHeightOrgi;
+            model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
+            isCrouching = false;
+            speed = originalSpeed;
+        }
     }
 
     // IDamage Player Damage
