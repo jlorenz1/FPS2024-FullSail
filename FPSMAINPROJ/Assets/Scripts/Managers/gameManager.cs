@@ -64,6 +64,8 @@ public class gameManager : MonoBehaviour
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
+    public SekhmetBoss Sekhmet;
+    public Userkare Userkare;
 
     //Objects
     public EnemySpawner enemySpawner;
@@ -71,8 +73,9 @@ public class gameManager : MonoBehaviour
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
-    
 
+
+   public Transform SekhmetRespawn;
     //int variables 
     int EnemyCount;
     public int PointCount;
@@ -401,6 +404,23 @@ public class gameManager : MonoBehaviour
 
         fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, endAlpha);
     }
+
+
+    public void UserkareDead()
+    {
+        Sekhmet.GoBerserk(true);
+    }
+
+    public void SekhmetDead()
+    {
+        Userkare.SetUncaped(true);
+    }
+
+    public void SekhmetDeathLocation(Transform location)
+    {
+        SekhmetRespawn = location;
+    }
+
 }
 
 

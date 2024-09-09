@@ -33,8 +33,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] Collider[] Arms;
 
     [Header("-----Stats-----")]
-    [SerializeField] public float health = 100f;
-    [SerializeFeild] public float Armor;
+    [SerializeField] protected float CurrentHealth;
+    [SerializeField] public float MaxHealth;
+    [SerializeFeild] float MaxArmor = 500;
+    [SerializeFeild] protected float Armor;
     [SerializeField] float Range;
     [SerializeField] protected float damage;
 
@@ -123,11 +125,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
 
-        if (legdamage >= health / 2)
+        if (legdamage >= MaxHealth / 2)
         {
             Cripple();
         }
 
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+
+        if(Armor  > MaxArmor)
+        {
+            Armor = MaxArmor;
+        }
 
     }
 
@@ -141,8 +152,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
         //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        health -= TotalDamage;
-        if (health <= 0)
+        MaxHealth -= TotalDamage;
+        if (MaxHealth <= 0)
         {
             Die();
         }
@@ -442,7 +453,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         if (!HasHealthBuffed)
         {
-            health += amount;
+            MaxHealth += amount;
             Debug.Log("Zombie health buffed by " + amount);
             HasHealthBuffed = true;
         }
@@ -497,7 +508,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void IncreaseHitPoints(float amount)
     {
-        health += amount * 1.334f;
+        MaxHealth += amount * 1.334f;
     }
 
     public void cutspeed(float amount, float damagetaken)
@@ -583,8 +594,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
        
         //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        health -= amountOfDamageTaken;
-        if (health <= 0)
+        MaxHealth -= amountOfDamageTaken;
+        if (MaxHealth <= 0)
         {
             Die();
         }
