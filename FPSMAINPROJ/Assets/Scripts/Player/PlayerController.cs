@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] public float playerHP;
+    float StartHP;
     [SerializeField] Light flashLight;
     private bool isLit = false;
 
@@ -140,6 +141,7 @@ public class PlayerController : MonoBehaviour, IDamage
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
+        StartHP = playerHP;
 
         //lastShotTime = -shootRate; // Allows immediate shooting
         //weaponCanShoot = true;
@@ -702,21 +704,9 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
 
-    public void cutspeed(float amount, float damagetaken)
+  public float GetHealth()
     {
-       speed /= amount;
-    }
-
-
-    public void cutdamage(float amount)
-    {
-        damage /= amount;
-    }
-    
-    
-    public void DieWithoutDrops()
-    {
-       
+        return StartHP;
     }
 
 }

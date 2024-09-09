@@ -9,6 +9,7 @@ public class SekhmetBoss : EnemyAI
     float AblityCoolDown = 30;
     float nextAbilityTime;
     GameObject mUserkare;
+    float PlayerStartHP;
     
 
     // Start is called before the first frame update
@@ -18,6 +19,7 @@ public class SekhmetBoss : EnemyAI
         Berserk = false;
         AddativeDamage = true;
         mUserkare = GameObject.FindGameObjectWithTag("Userkare");
+     
     }
 
     // Update is called once per frame

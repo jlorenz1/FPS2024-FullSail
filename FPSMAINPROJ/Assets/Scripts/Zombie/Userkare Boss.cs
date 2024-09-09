@@ -7,16 +7,22 @@ public class Userkare : EnemyAI
 
     [SerializeField] GameObject summon;
     [SerializeField] GameObject summonpartner;
+    float PushBackRadius;
     bool UnCapped;
     bool AddativeAP;
-    float AblityCoolDown = 30;
-    float nextAbilityTime;
+    float AblityCoolDown = 3;
+    float nextAbilityTime = 1 ;
     float attackSpeed;
     int SummonCount;
     GameObject[] Summons;
+    PlayerController player;
+    IDamage playerDamage;
+    Rigidbody playerRb;
 
     float BaseMaxHealth;
     float BaseAttackSpeed;
+
+    float PlayerStartHP;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -24,6 +30,10 @@ public class Userkare : EnemyAI
         UnCapped = false;
         BaseMaxHealth = MaxHealth;
         BaseAttackSpeed = attackSpeed;
+        player = gameManager.gameInstance.playerScript;
+        playerRb = player.GetComponent<Rigidbody>();  // Get the player's Rigidbody
+        PlayerStartHP = gameManager.gameInstance.playerScript.GetHealth();
+        damage = 5;
     }
 
     // Update is called once per frame
@@ -50,6 +60,7 @@ public class Userkare : EnemyAI
 
         if (UnCapped && AddativeAP)
         {
+            damage = PlayerStartHP - (PlayerStartHP * 0.1f);
             StartCoroutine(RampingAbilites());
         }
     }
@@ -80,14 +91,10 @@ public class Userkare : EnemyAI
 
     void UseSpecialAbility()
     {
-        if(UnCapped)
-        {
 
-        }
-        else
-        {
-
-        }
+        repulse();
+        
+       
 
     }
 
@@ -137,8 +144,46 @@ public class Userkare : EnemyAI
 
     public void repulse()
     {
-       //Knocks the player back if they are too close 
-    }
+        Debug.Log("repulse called");
+        //Knocks the player back if they are too close 
+        int strength;
+        
+        if (!UnCapped)
+        {
+            strength = 5;
+        }
+        else
+        {
+            strength = 7;
+            PushBackRadius *= 1.5f;
+            
+        }
+
+          
+            if (player != null)
+            {
+                float distance = Vector3.Distance(transform.position, player.transform.position);  // Calculate distance to the player
+
+                // Check if the player is within the pushback radius
+                if (distance < PushBackRadius)
+                {
+            
+                  
+                    if (playerRb != null)
+                    {
+                        Vector3 knockBackDirection = (player.transform.position - transform.position).normalized;  // Calculate direction
+                        playerRb.AddForce(knockBackDirection * strength, ForceMode.Impulse);  // Apply force to player
+                    }
+
+                player.takeDamage(damage);
+                }
+
+                }
+            }
+
+
+
+        
 
 
    void RespawnSekmet() {
