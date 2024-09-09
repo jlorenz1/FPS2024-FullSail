@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamage
     //[SerializeField] int crouchSpeed;
     [SerializeField] public WeaponController playerWeapon;
     float crouchSpeed;
+    [SerializeField] float maxMana;
     [SerializeField] float maxSprintTimer;
     [SerializeField] float maxSprintWaitTimer;
     [SerializeField] int jumpMax;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isLit = false;
 
     public float HPorig;
+    public float currentMana;
     float Sprintorig;
 
     [SerializeField] Collider meleeWeapon;
@@ -136,6 +138,7 @@ public class PlayerController : MonoBehaviour, IDamage
         crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
+        currentMana = maxMana;
         updatePlayerUI();
         meeleDuration = 2;
         canMelee = true;
@@ -172,6 +175,10 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             movement();
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+            mana(1.5f);
+
     }
 
     //public IEnumerator fillWhileReloading()
@@ -382,6 +389,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
         isPlayingSound = false;
+    }
+
+    public void mana(float manaUsageAmount)
+    {
+        if(currentMana > 0) {
+            currentMana -= manaUsageAmount;
+            updatePlayerUI();
+        }
+
     }
 
     void sprint()
@@ -614,6 +630,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         gameManager.gameInstance.playerHPBar.fillAmount = playerHP / HPorig;
         gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
+        gameManager.gameInstance.playerManaBar.fillAmount = currentMana / maxMana;
     }
     // Things Added by Jamauri 
     public void SetSpeed(float Modifier)
