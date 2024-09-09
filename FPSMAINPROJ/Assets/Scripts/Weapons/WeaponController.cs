@@ -82,8 +82,6 @@ public class WeaponController : MonoBehaviour
             currentPatternIndex = 0;
         }
 
-
-
     }
 
     void handleFullAuto()
@@ -234,9 +232,9 @@ public class WeaponController : MonoBehaviour
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        if(time < 1)
+        while(time < 1)
         {
-            trail.transform.position = Vector3.Lerp(startPosition,  muzzleFlashTransform.position, time);
+            trail.transform.position = Vector3.Lerp(startPosition,  hit.point, time);
             time += Time.deltaTime / trail.time;
             yield return null;
         }
