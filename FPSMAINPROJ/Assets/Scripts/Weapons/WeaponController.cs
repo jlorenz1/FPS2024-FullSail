@@ -10,6 +10,9 @@ public class WeaponController : MonoBehaviour
 
     [Header("WEAPON MODEL/POSTIONS")]
     [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
+
+    [SerializeFeild] public Vector3[] RecoilPattern;
+
     [SerializeFeild] GameObject currentWeaponInstance;
     [SerializeFeild] public Transform gunModel;
     [SerializeField] public Transform muzzleFlashTransform;
@@ -32,8 +35,9 @@ public class WeaponController : MonoBehaviour
     public bool isReloading = false;
     public bool isShooting;
     private weaponStats currGun;
-
-
+    int currentPatternIndex = 0;
+    public bool sprayPattern = false;
+   
     void Start()
     {
         cameraScript = FindObjectOfType<cameraController>();
@@ -49,11 +53,11 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
         {
-           if (!isReloading)
-           {
-              isReloading = true;
-              StartCoroutine(reload());
-           }
+            if (!isReloading)
+            {
+                isReloading = true;
+                StartCoroutine(reload());
+            }
         }
 
         if (gunList.Count >= 1)
@@ -76,7 +80,7 @@ public class WeaponController : MonoBehaviour
         {
             Debug.Log("no gun");
         }
-        
+
     }
 
     void handleFullAuto()
@@ -114,7 +118,10 @@ public class WeaponController : MonoBehaviour
                 cameraScript.RecoilFire();
                 RaycastHit hit;
 
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
+                Vector3 direction = getDirection();
+
+
+                if (Physics.Raycast(Camera.main.transform.position, direction, out hit, shootDistance, ~ignoreMask))
                 {
                     TrailRenderer trail = Instantiate(bulletTrail, muzzleFlashTransform.position, Quaternion.identity);
                     StartCoroutine(spawnTrail(trail, hit));
@@ -135,7 +142,7 @@ public class WeaponController : MonoBehaviour
                             actualDamage *= 1.0f; // Normal damage for body shots
                             Debug.Log("body shot");
                         }
-                        else if (hit.collider.CompareTag("Zombie Legs") )
+                        else if (hit.collider.CompareTag("Zombie Legs"))
                         {
                             actualDamage *= 0.25f; // Reduced damage for leg shots
                             Debug.Log("leg shot");
@@ -165,7 +172,7 @@ public class WeaponController : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("need to reload");
-                
+
             }
         }
         else
@@ -173,6 +180,25 @@ public class WeaponController : MonoBehaviour
             UnityEngine.Debug.LogError("selectedGun index out of range");
         }
 
+    }
+
+    Vector3 getDirection()
+    {
+
+        Vector3 direction = Camera.main.transform.forward;
+
+        if (sprayPattern)
+        {
+
+            direction += new Vector3(
+            RecoilPattern[currentPatternIndex].x,
+            RecoilPattern[currentPatternIndex].y,
+            RecoilPattern[currentPatternIndex].z
+            );
+            direction.Normalize();
+        }
+        currentPatternIndex = (currentPatternIndex + 1) % RecoilPattern.Length;
+        return direction;
     }
 
     IEnumerator reload()
