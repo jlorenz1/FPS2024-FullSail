@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
@@ -24,6 +25,7 @@ public class WeaponController : MonoBehaviour
     [Header("WEAPON VFX")]
     [SerializeField] public GameObject muzzleFlash;
     [SerializeField] public GameObject casingEffect;
+    [SerializeFeild] public TrailRenderer bulletTrail;
 
     private cameraController cameraScript;
     int selectedGun;
@@ -114,6 +116,8 @@ public class WeaponController : MonoBehaviour
 
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
                 {
+                    TrailRenderer trail = Instantiate(bulletTrail, muzzleFlashTransform.position, Quaternion.identity);
+                    StartCoroutine(spawnTrail(trail, hit));
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
                     IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
                     if (dmg != null)
@@ -190,6 +194,22 @@ public class WeaponController : MonoBehaviour
         }
         isReloading = false;
 
+    }
+
+    IEnumerator spawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        if(time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition,  muzzleFlashTransform.position, time);
+            time += Time.deltaTime / trail.time;
+            yield return null;
+        }
+        trail.transform.position = hit.point;
+
+        Destroy(trail.gameObject, trail.time);
     }
 
     public void displayAmmo()
