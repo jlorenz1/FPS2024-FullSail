@@ -94,13 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 996643513076382693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b79e0c426f72a164cb220e13468ffcbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d65ae2c11bcbce44a6e18bfad102d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupDis: 200
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 128
+  openingDoor: {fileID: 0}
+  doorVol: 0
 --- !u!65 &4856332660198264493
 BoxCollider:
   m_ObjectHideFlags: 0
