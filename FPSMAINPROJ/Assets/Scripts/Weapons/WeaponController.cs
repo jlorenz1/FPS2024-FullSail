@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
@@ -10,6 +10,9 @@ public class WeaponController : MonoBehaviour
 
     [Header("WEAPON MODEL/POSTIONS")]
     [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
+
+    [SerializeFeild] public List<Vector3> RecoilPattern;
+
     [SerializeFeild] GameObject currentWeaponInstance;
     [SerializeFeild] public Transform gunModel;
     [SerializeField] public Transform muzzleFlashTransform;
@@ -32,8 +35,9 @@ public class WeaponController : MonoBehaviour
     public bool isReloading = false;
     public bool isShooting;
     private weaponStats currGun;
-
-
+    int currentPatternIndex = 0;
+    public bool sprayPattern = false;
+   
     void Start()
     {
         cameraScript = FindObjectOfType<cameraController>();
@@ -49,11 +53,11 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
         {
-           if (!isReloading)
-           {
-              isReloading = true;
-              StartCoroutine(reload());
-           }
+            if (!isReloading)
+            {
+                isReloading = true;
+                StartCoroutine(reload());
+            }
         }
 
         if (gunList.Count >= 1)
@@ -72,11 +76,12 @@ public class WeaponController : MonoBehaviour
                 handleSemiAuto();
             }
         }
-        else
+
+        if(!isShooting)
         {
-            Debug.Log("no gun");
+            currentPatternIndex = 0;
         }
-        
+
     }
 
     void handleFullAuto()
@@ -107,14 +112,17 @@ public class WeaponController : MonoBehaviour
                 gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
                 isShooting = true;
                 //StartCoroutine(flashMuzzel());
-                AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
+                AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[UnityEngine.Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
                 var muzzleFlashObj = Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
                 muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
                 Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
                 cameraScript.RecoilFire();
                 RaycastHit hit;
 
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
+                Vector3 direction = getDirection();
+
+
+                if (Physics.Raycast(Camera.main.transform.position, direction, out hit, shootDistance, ~ignoreMask))
                 {
                     TrailRenderer trail = Instantiate(bulletTrail, muzzleFlashTransform.position, Quaternion.identity);
                     StartCoroutine(spawnTrail(trail, hit));
@@ -135,7 +143,7 @@ public class WeaponController : MonoBehaviour
                             actualDamage *= 1.0f; // Normal damage for body shots
                             Debug.Log("body shot");
                         }
-                        else if (hit.collider.CompareTag("Zombie Legs") )
+                        else if (hit.collider.CompareTag("Zombie Legs"))
                         {
                             actualDamage *= 0.25f; // Reduced damage for leg shots
                             Debug.Log("leg shot");
@@ -165,14 +173,37 @@ public class WeaponController : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("need to reload");
-                
+
             }
+            
         }
         else
         {
             UnityEngine.Debug.LogError("selectedGun index out of range");
         }
 
+    }
+
+    Vector3 getDirection()
+    {
+
+        Vector3 direction = Camera.main.transform.forward;
+
+        if (sprayPattern)
+        {
+
+            direction += new Vector3(
+            RecoilPattern[currentPatternIndex].x,
+            RecoilPattern[currentPatternIndex].y,
+            RecoilPattern[currentPatternIndex].z
+            );
+            direction.Normalize();
+        }
+        if(isShooting)
+        {
+            currentPatternIndex = (currentPatternIndex + 1) % RecoilPattern.Count;
+        }
+        return direction;
     }
 
     IEnumerator reload()
@@ -201,9 +232,9 @@ public class WeaponController : MonoBehaviour
         float time = 0;
         Vector3 startPosition = trail.transform.position;
 
-        if(time < 1)
+        while(time < 1)
         {
-            trail.transform.position = Vector3.Lerp(startPosition,  muzzleFlashTransform.position, time);
+            trail.transform.position = Vector3.Lerp(startPosition,  hit.point, time);
             time += Time.deltaTime / trail.time;
             yield return null;
         }
@@ -254,6 +285,9 @@ public class WeaponController : MonoBehaviour
         cameraScript.recoilZ = gun.recoilZ;
         cameraScript.returnSpeed = gun.returnSpeed;
         cameraScript.snapping = gun.snapping;
+
+        RecoilPattern = new List<Vector3>(gun.RecoilPattern);
+       
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -277,7 +311,6 @@ public class WeaponController : MonoBehaviour
     void changeGun()
     {
         currGun = gunList[selectedGun];
-
         shootDamage = currGun.shootDamage;
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
@@ -288,6 +321,8 @@ public class WeaponController : MonoBehaviour
         cameraScript.recoilZ = currGun.recoilZ;
         cameraScript.returnSpeed = currGun.returnSpeed;
         cameraScript.snapping = currGun.snapping;
+
+        RecoilPattern = new List<Vector3>(currGun.RecoilPattern);
 
         if (currentWeaponInstance != null)
         {

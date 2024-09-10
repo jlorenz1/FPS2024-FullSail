@@ -15,17 +15,48 @@ MonoBehaviour:
   gunModel: {fileID: 2785887150441299024, guid: 60a136367feaaa84b87ec2c9682b07ed, type: 3}
   shootDamage: 25
   shootingDistance: 600
-  shootRate: 0.1
+  shootRate: 0.15
   fireMode: Full-Auto
-  recoilX: -3
-  recoilY: 5
+  recoilX: -2
+  recoilY: 3
   recoilZ: 0.78
+  RecoilPattern:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0.01, z: 0}
+  - {x: 0, y: 0.02, z: 0}
+  - {x: 0, y: 0.02, z: 0}
+  - {x: 0, y: 0.02, z: 0}
+  - {x: 0, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0.01, y: 0.02, z: 0}
+  - {x: 0, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
+  - {x: -0.01, y: 0.02, z: 0}
   snapping: 5
   returnSpeed: 5
   reloadTime: 1.9
   magazines:
   - magazineCapacity: 30
-    currentAmmoCount: 30
+    currentAmmoCount: 0
   - magazineCapacity: 30
     currentAmmoCount: 30
   - magazineCapacity: 30
