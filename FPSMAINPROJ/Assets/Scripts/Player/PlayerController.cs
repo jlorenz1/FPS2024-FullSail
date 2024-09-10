@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamage
     //[SerializeField] int crouchSpeed;
     [SerializeField] public WeaponController playerWeapon;
     float crouchSpeed;
+    [SerializeField] float maxMana;
     [SerializeField] float maxSprintTimer;
     [SerializeField] float maxSprintWaitTimer;
     [SerializeField] int jumpMax;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isLit = false;
 
     public float HPorig;
+    public float currentMana;
     float Sprintorig;
 
     [SerializeField] Collider meleeWeapon;
@@ -69,7 +71,6 @@ public class PlayerController : MonoBehaviour, IDamage
     private RaycastHit objectHit;
     private bool wallFront;
     // End of climbiing video variables
-
 
     // Sliding video variables
     [Header("Sliding")]
@@ -137,16 +138,14 @@ public class PlayerController : MonoBehaviour, IDamage
         crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
+        currentMana = maxMana;
         updatePlayerUI();
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
         StartHP = playerHP;
 
-        //lastShotTime = -shootRate; // Allows immediate shooting
-        //weaponCanShoot = true;
-        //activeWeapon = primaryWeapon;
-        //EquipWeapon(activeWeapon);
+     
     }
 
 
@@ -174,112 +173,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             movement();
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+            mana(1.5f);
+
     }
-
-    //public IEnumerator fillWhileReloading()
-    //{
-    //    float elapsedTime = 0f;
-    //    float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
-    //    //if (qteSuccess == false)
-    //    //{
-    //    //    reloadTime = gunStats.reloadAnimation.length;
-    //    //}
-    //    while (elapsedTime < gunList[selectedGun].reloadTime)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //        float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / gunList[selectedGun].reloadTime);
-    //        gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
-    //        yield return null;
-    //    }
-    //    gameManager.gameInstance.ammoCircle.fillAmount = 1f;
-    //}
-
-
-    //IEnumerator flashMuzzel()
-    //{
-    //    muzzleFlash.SetActive(true);
-    //    yield return new WaitForSeconds(0.5f);
-    //    muzzleFlash.SetActive(false);
-    //}
-
-    //void FireWeapon()
-    //{
-    //    // Check if enough time has passed before last shot
-    //    if (Time.time - lastShotTime < shootRate) return;
-
-    //    // Update the last fire time
-    //    lastShotTime = Time.time;
-
-    //    ShootRaycastBullet();
-
-    //    StartCoroutine(ResetShootingState(shootRate));
-    //}
-
-    //void ShootRaycastBullet()
-    //{
-    //    Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(reticleRay, out hit, shootDistance, canBeShotMask))
-    //    {
-    //        // Apply damage
-    //        IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
-    //        if (target != null)
-    //        {
-    //            target.takeDamage(shootDamage);
-    //        }
-
-    //        // VFX effects
-
-
-    //        UnityEngine.Debug.Log("Hit " + hit.collider.name + " for " + shootDamage + " damage.");
-    //    }
-
-    //    // Trigger shooting system (muzzle flash, sounds, etc)
-
-    //}
-
-
-    //IEnumerator ResetShootingState(float weaponFireRate)
-    //{
-    //    yield return new WaitForSeconds(weaponFireRate);
-    //    isShooting = false;
-    //    weaponCanShoot = true;
-    //}
-
-    //void EquipWeapon(Weapon activeWeapon)
-    //{
-
-    //    if (activeWeapon == null)
-    //    {
-    //        UnityEngine.Debug.LogWarning("Weapon to equip is null");
-    //        return;
-    //    }
-
-
-
-    //    if (primaryWeapon != null)
-    //        primaryWeapon.gameObject.SetActive(false);
-
-    //    if (secondaryWeapon != null)
-    //        secondaryWeapon.gameObject.SetActive(false);
-
-    //    activeWeapon.gameObject.SetActive(true);
-    //}
-
-    //void HandleWeaponSwitching()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon != primaryWeapon)
-    //    {
-    //        activeWeapon = primaryWeapon;
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon != secondaryWeapon)
-    //    {
-    //        activeWeapon = secondaryWeapon;
-    //    }
-
-    //    EquipWeapon(activeWeapon);
-    //}
 
     void movement()
     {
@@ -384,6 +282,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
         isPlayingSound = false;
+    }
+
+    public void mana(float manaUsageAmount)
+    {
+        if(currentMana > 0) {
+            currentMana -= manaUsageAmount;
+            updatePlayerUI();
+        }
+
     }
 
     void sprint()
@@ -616,6 +523,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         gameManager.gameInstance.playerHPBar.fillAmount = playerHP / HPorig;
         gameManager.gameInstance.playerSprintBar.fillAmount = sprintTimer / maxSprintTimer;
+        gameManager.gameInstance.playerManaBar.fillAmount = currentMana / maxMana;
     }
     // Things Added by Jamauri 
     public void SetSpeed(float Modifier)

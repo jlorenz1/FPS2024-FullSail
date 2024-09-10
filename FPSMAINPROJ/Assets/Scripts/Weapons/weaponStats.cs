@@ -19,6 +19,7 @@ public class weaponStats : ScriptableObject
     public float recoilX;
     public float recoilY;
     public float recoilZ;
+    public List<Vector3> RecoilPattern;
     public float snapping;
     public float returnSpeed;
     [Header("----- Gun Ammo/Magazines -----")]

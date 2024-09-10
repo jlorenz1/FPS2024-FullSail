@@ -58,6 +58,7 @@ public class gameManager : MonoBehaviour
     public GameObject flashDamage;
     public GameObject playerInteract;
     public Image playerHPBar;
+    public Image playerManaBar;
     public Image playerSprintBar;
     public Image SprintBarBoarder;
 
