@@ -74,7 +74,8 @@ public class gameManager : MonoBehaviour
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
-
+    public bool isUserKareDead;
+    public bool isSekhmetDead;
 
    public Transform SekhmetRespawn;
     //int variables 
@@ -409,12 +410,16 @@ public class gameManager : MonoBehaviour
 
     public void UserkareDead()
     {
+
         Sekhmet.GoBerserk(true);
+        isUserKareDead = true;
     }
 
     public void SekhmetDead()
     {
         Userkare.SetUncaped(true);
+        isSekhmetDead = true;
+
     }
 
     public void SekhmetDeathLocation(Transform location)

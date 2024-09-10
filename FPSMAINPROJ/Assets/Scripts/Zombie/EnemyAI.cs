@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] public float MaxHealth;
     [SerializeFeild] float MaxArmor = 500;
     [SerializeFeild] protected float Armor;
-    [SerializeField] float Range;
+    [SerializeField] protected float Range;
     [SerializeField] protected float damage;
 
     [Header("-----Armor-----")]

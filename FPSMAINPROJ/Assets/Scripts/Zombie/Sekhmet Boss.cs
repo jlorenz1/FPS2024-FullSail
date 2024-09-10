@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,23 @@ public class SekhmetBoss : EnemyAI
     float nextAbilityTime;
     GameObject mUserkare;
     float PlayerStartHP;
-    
+    float AttackSpeed;
+    bool canattack;
+    float AttackRange;
+    bool inAbilityRange;
+    [SerializeField] Transform launchPoint;
+    [SerializeField] GameObject ProjectilePrefab;
+
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        canattack = true;
         Berserk = false;
         AddativeDamage = true;
         mUserkare = GameObject.FindGameObjectWithTag("Userkare");
-     
+        AttackRange = 30;
     }
 
     // Update is called once per frame
@@ -27,7 +35,7 @@ public class SekhmetBoss : EnemyAI
     {
         base .Update();
 
-
+        animator.SetFloat("AttackSpeed", AttackSpeed);
 
         if (Time.time >= nextAbilityTime)
         {
@@ -41,6 +49,12 @@ public class SekhmetBoss : EnemyAI
         {
             StartCoroutine(RampingDamage());
         }
+
+        if (PlayerinAttackRange)
+        {
+            StartCoroutine(BaseAAttack());
+        }
+
     }
 
     IEnumerator RampingDamage()
@@ -70,25 +84,83 @@ public class SekhmetBoss : EnemyAI
     void BleedingJab()
     {
         // mid ranged melee special attack does base damage then 2% damage over time to player
+        animator.SetTrigger("Quick jab");
+        // Define the range and sphere radius
+        float jabRange = 5f;         // Adjust the range of the jab
+        float sphereRadius = 1f;     // Adjust the radius of your sphere
 
+        // Calculate the position of the sphere's tip
+        Vector3 sphereTipPosition = transform.position + transform.forward * sphereRadius;
 
+        RaycastHit hit;
+
+        // Cast a ray from the tip of the sphere forward
+        if (Physics.Raycast(sphereTipPosition, transform.forward, out hit, jabRange))
+        {
+            // Check if the ray hit the player
+            if (hit.collider.CompareTag("Player"))
+            {
+                // Apply damage to the player
+                IDamage player = hit.collider.GetComponent<IDamage>();
+                if (player != null)
+                {
+                    player.takeDamage(5);
+                    StartCoroutine(ApplyBleed(player, 5)); // Apply bleeding effect for 5 seconds
+                }
+            }
+        }
+    }
+    IEnumerator ApplyBleed(IDamage player, float duration)
+    {
+        float bleedTick = 0.5f; // How often to apply bleed damage (every 0.5 seconds)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            player.takeDamage(player.GetHealth() * 0.02f); // Apply 2% damage
+            elapsed += bleedTick;
+            yield return new WaitForSeconds(bleedTick);
+        }
     }
 
-   public void BlinkingJab()
+    public void BlinkingJab()
     {
         // teleports infront of the player and attacks them for 20% of their hp;
 
+        Vector3 PlayerPosition = gameManager.gameInstance.player.transform.position;
+        Vector3 forwardDirection = gameManager.gameInstance.player.transform.forward;
 
+        Vector3 teleportPosition = PlayerPosition + forwardDirection * AttackRange;
+
+        transform.position = teleportPosition;
+
+        animator.SetTrigger("Quick jab");
+
+        
 
     }
 
-    void liquidPrison()
+    
+
+    IEnumerator CastAttackRoutine()
     {
-        // Ranged Special attack slows the player 
+   
+        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
+        animator.SetTrigger("Shoot");
 
+        yield return new WaitForSeconds(1f / AttackSpeed);
 
-
+      
     }
+
+    public void CastAttack()
+    {
+        // Ranged attack logic
+        Debug.Log("Ranged attack");
+        Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+    }
+
+
 
     void reinforce()
     {
@@ -116,24 +188,59 @@ public class SekhmetBoss : EnemyAI
         }
     }
 
+
     void vacume()
     {
         //pulls the player closer in 
 
+        if (inAbilityRange)
+        {
+            Vector3 newPosition = agent.transform.position + (agent.transform.forward * (AttackRange / 2));
 
+            // Update player's position
+            gameManager.gameInstance.playerScript.transform.position = newPosition;
+        }
 
 
 
     }
 
-    void UseSpecialAbility() {
+    void UseSpecialAbility()
+    {
+        canattack = false;  // Disable normal attacks while using special ability
 
-     
+        int chance = UnityEngine.Random.Range(1, 5);  // Randomly select an ability (1-4)
 
+        switch (chance)
+        {
+            case 1:
+                vacume();
+                break;
+            case 2:
+                reinforce();
+                break;
+            case 3:
+                StartCoroutine(CastAttackRoutine());
+                break;
+            case 4:
+                BleedingJab();
+                break;
+        }
 
+        canattack = true;
     }
 
-        
+    IEnumerator BaseAAttack()
+    {
+        canattack = false;
+       
+        animator.SetTrigger("Slow jab");
+
+        yield return new WaitForSeconds(1/AttackSpeed);
+
+        canattack = true;
+
+    }
 
 
 

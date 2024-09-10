@@ -18,7 +18,10 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] AudioClip ZombieProjectileAudio;
     [SerializeField, Range(0f, 1f)] float ZombieProjectileAudioVol;
-
+    [SerializeField] bool SekhmetAttack;
+    [SerializeField] bool UserKareBaseAttack;
+    [SerializeField] bool UserKareSpecialAttack1;
+    [SerializeField] bool UserKareSpecialAttack2;
     Rigidbody rb;
     Transform playerTransform;
 
@@ -30,6 +33,14 @@ public class Projectile : MonoBehaviour
     GameObject player;
     int NerfTimer;
     int round;
+
+
+    public GameObject aoePrefab;    // Assign your AoE slow effect prefab here
+    public float aoeRadius = 5f;    // Radius of the AoE slow effect
+    public float slowDuration = 5f; // How long the slow effect lasts on the player
+    public float slowEffectDuration = 3f; // How long the player stays slowed
+
+
     void Start()
     {
         followPlayer = true;
@@ -116,11 +127,41 @@ public class Projectile : MonoBehaviour
     }
 
         HandleNonBossAttack(other);
-    
-   
+        HandelSekhmetAttack(other);
+
+
 }
 
-void HandleNonBossAttack(Collider other)
+    void HandelSekhmetAttack(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            CreateAoESlow(other.transform.position);
+        }
+        else
+        {
+            gameManager.gameInstance.playerScript.takeDamage(5);
+            gameManager.gameInstance.Userkare.LightGautling();
+            ApplyDebufs();
+            StartCoroutine(StatReset());
+            Destroy(gameObject);
+        }
+
+    }
+
+
+    void CreateAoESlow(Vector3 position)
+    {
+        // Instantiate the AoE prefab at the position passed (the player's position or other)
+        GameObject aoe = Instantiate(aoePrefab, position, Quaternion.identity);
+
+        // Set the AoE effect to destroy itself after the slow duration ends
+        Destroy(aoe, slowDuration);
+    }
+
+
+
+    void HandleNonBossAttack(Collider other)
 {
     if (!other.CompareTag("Player"))
     {
