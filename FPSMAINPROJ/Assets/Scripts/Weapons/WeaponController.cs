@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -57,12 +56,8 @@ public class WeaponController : MonoBehaviour
 
         if (gunList.Count >= 1)
         {
-            gameManager.gameInstance.playerAmmoHUD.GameObject().SetActive(true);
             displayAmmo();
         }
-        else if (gunList.Count == 0)
-            gameManager.gameInstance.playerAmmoHUD.GameObject().SetActive(false);
-
 
         if (gunList.Count > 0)
         {

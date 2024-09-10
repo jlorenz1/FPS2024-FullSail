@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isLit = false;
 
     public float HPorig;
-    float currentMana;
+    public float currentMana;
     float Sprintorig;
 
     [SerializeField] Collider meleeWeapon;
