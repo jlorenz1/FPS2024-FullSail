@@ -49,6 +49,7 @@ public class Userkare : EnemyAI
         {
             RespawnSekmet();
         }
+      
 
         if (Time.time >= nextAbilityTime)
         {
