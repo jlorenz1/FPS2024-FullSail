@@ -97,6 +97,10 @@ public class Interact : MonoBehaviour
                         if(weapon != null)
                         {
                             gameManager.gameInstance.playerWeapon.getWeaponStats(weapon.gun);
+                            if(weapon.gun.hekaSchool != null)
+                            {
+                                gameManager.gameInstance.playerWeapon.hasHeka = true;
+                            }
                             Destroy(hit.collider.gameObject);
                         }
                         else
