@@ -17,10 +17,17 @@ MonoBehaviour:
   shootingDistance: 100
   shootRate: 2
   fireMode: Semi-Auto
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0
+  RecoilPattern:
+  - {x: 0, y: 0, z: 0}
+  snapping: 0
+  returnSpeed: 0
   reloadTime: 4
   magazines:
   - magazineCapacity: 8
-    currentAmmoCount: 6
+    currentAmmoCount: 7
   - magazineCapacity: 8
     currentAmmoCount: 8
   - magazineCapacity: 8
