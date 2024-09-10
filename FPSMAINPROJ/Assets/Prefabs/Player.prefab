@@ -809,6 +809,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   gunList: []
+  RecoilPattern: []
   gunModel: {fileID: 1244221119058567285}
   muzzleFlashTransform: {fileID: 2500066329293394852}
   casingSpawnTransform: {fileID: 598867705372442235}
@@ -818,8 +819,10 @@ MonoBehaviour:
   shootDistance: 0
   muzzleFlash: {fileID: 3379390861019551599}
   casingEffect: {fileID: 63506611206121104, guid: 463178d045f0b0349ad00e459e079878, type: 3}
+  bulletTrail: {fileID: 328621789431213768, guid: 18ba5ae854c778e478570e7a1ae5bea8, type: 3}
   isReloading: 0
   isShooting: 0
+  sprayPattern: 1
 --- !u!1 &7968692417210946864
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,11 +971,11 @@ MonoBehaviour:
   vertMax: 90
   vertMin: -90
   invert: 0
-  recoilX: -2
-  recoilY: 2
-  recoilZ: 0.35
-  snapping: 10
-  returnSpeed: 3
+  recoilX: -0.9
+  recoilY: 1
+  recoilZ: 0.15
+  snapping: 3
+  returnSpeed: 6
 --- !u!20 &8365533079530394693
 Camera:
   m_ObjectHideFlags: 0
