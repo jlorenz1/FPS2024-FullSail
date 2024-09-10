@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
+  m_Name: Heka-Floods
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 185015911520072586, guid: d6a41bed739a2a44f87afe0bd3ec16b3, type: 3}
+  shootDamage: 65
+  shootingDistance: 100
+  shootRate: 2
+  fireMode: Semi-Auto
+  recoilX: -1
+  recoilY: 1
+  recoilZ: 0.1
+  RecoilPattern:
+  - {x: 0, y: 0, z: 0}
+  snapping: 4
+  returnSpeed: 6
+  reloadTime: 4
+  magazines:
+  - magazineCapacity: 8
+    currentAmmoCount: 8
+  - magazineCapacity: 8
+    currentAmmoCount: 8
+  - magazineCapacity: 8
+    currentAmmoCount: 8
+  currentMagazineIndex: 0
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
+  zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: e21e61fed1cb6e94db0ff6c4f09801c7, type: 3}
+  shootVol: 0.1
+  reloadSound: {fileID: 8300000, guid: bce5ae97694eb6a478b977b26ca43114, type: 3}
+  reloadVol: 0.1
