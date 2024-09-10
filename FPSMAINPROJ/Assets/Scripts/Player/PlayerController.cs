@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool wallFront;
     // End of climbiing video variables
 
-
     // Sliding video variables
     [Header("Sliding")]
     [SerializeField] float maxSlideTime;
@@ -143,11 +142,6 @@ public class PlayerController : MonoBehaviour, IDamage
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
-
-        //lastShotTime = -shootRate; // Allows immediate shooting
-        //weaponCanShoot = true;
-        //activeWeapon = primaryWeapon;
-        //EquipWeapon(activeWeapon);
     }
 
 
@@ -180,111 +174,6 @@ public class PlayerController : MonoBehaviour, IDamage
             mana(1.5f);
 
     }
-
-    //public IEnumerator fillWhileReloading()
-    //{
-    //    float elapsedTime = 0f;
-    //    float startingFill = gameManager.gameInstance.ammoCircle.fillAmount;
-    //    //if (qteSuccess == false)
-    //    //{
-    //    //    reloadTime = gunStats.reloadAnimation.length;
-    //    //}
-    //    while (elapsedTime < gunList[selectedGun].reloadTime)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //        float fillAmount = Mathf.Lerp(startingFill, 1f, elapsedTime / gunList[selectedGun].reloadTime);
-    //        gameManager.gameInstance.ammoCircle.fillAmount = fillAmount;
-    //        yield return null;
-    //    }
-    //    gameManager.gameInstance.ammoCircle.fillAmount = 1f;
-    //}
-
-
-    //IEnumerator flashMuzzel()
-    //{
-    //    muzzleFlash.SetActive(true);
-    //    yield return new WaitForSeconds(0.5f);
-    //    muzzleFlash.SetActive(false);
-    //}
-
-    //void FireWeapon()
-    //{
-    //    // Check if enough time has passed before last shot
-    //    if (Time.time - lastShotTime < shootRate) return;
-
-    //    // Update the last fire time
-    //    lastShotTime = Time.time;
-
-    //    ShootRaycastBullet();
-
-    //    StartCoroutine(ResetShootingState(shootRate));
-    //}
-
-    //void ShootRaycastBullet()
-    //{
-    //    Ray reticleRay = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-    //    RaycastHit hit;
-
-    //    if (Physics.Raycast(reticleRay, out hit, shootDistance, canBeShotMask))
-    //    {
-    //        // Apply damage
-    //        IDamage target = hit.collider.gameObject.GetComponent<IDamage>();
-    //        if (target != null)
-    //        {
-    //            target.takeDamage(shootDamage);
-    //        }
-
-    //        // VFX effects
-
-
-    //        UnityEngine.Debug.Log("Hit " + hit.collider.name + " for " + shootDamage + " damage.");
-    //    }
-
-    //    // Trigger shooting system (muzzle flash, sounds, etc)
-
-    //}
-
-
-    //IEnumerator ResetShootingState(float weaponFireRate)
-    //{
-    //    yield return new WaitForSeconds(weaponFireRate);
-    //    isShooting = false;
-    //    weaponCanShoot = true;
-    //}
-
-    //void EquipWeapon(Weapon activeWeapon)
-    //{
-
-    //    if (activeWeapon == null)
-    //    {
-    //        UnityEngine.Debug.LogWarning("Weapon to equip is null");
-    //        return;
-    //    }
-
-
-
-    //    if (primaryWeapon != null)
-    //        primaryWeapon.gameObject.SetActive(false);
-
-    //    if (secondaryWeapon != null)
-    //        secondaryWeapon.gameObject.SetActive(false);
-
-    //    activeWeapon.gameObject.SetActive(true);
-    //}
-
-    //void HandleWeaponSwitching()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Alpha1) && activeWeapon != primaryWeapon)
-    //    {
-    //        activeWeapon = primaryWeapon;
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.Alpha2) && activeWeapon != secondaryWeapon)
-    //    {
-    //        activeWeapon = secondaryWeapon;
-    //    }
-
-    //    EquipWeapon(activeWeapon);
-    //}
 
     void movement()
     {
