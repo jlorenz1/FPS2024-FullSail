@@ -61,6 +61,7 @@ public class gameManager : MonoBehaviour
     public Image playerManaBar;
     public Image playerSprintBar;
     public Image SprintBarBoarder;
+    public Image playerAmmoHUD;
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
