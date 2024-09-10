@@ -17,10 +17,12 @@ MonoBehaviour:
   shootingDistance: 400
   shootRate: 0.3
   fireMode: Semi-Auto
-  recoilX: -1
+  recoilX: -5
   recoilY: 3
   recoilZ: 0.1
-  RecoilPattern: []
+  RecoilPattern:
+  - {x: 0.01, y: 0.03, z: 0}
+  - {x: 0.01, y: 0.03, z: 0}
   snapping: 8
   returnSpeed: 4
   reloadTime: 0.9
@@ -28,7 +30,7 @@ MonoBehaviour:
   - magazineCapacity: 10
     currentAmmoCount: 0
   - magazineCapacity: 10
-    currentAmmoCount: 0
+    currentAmmoCount: 3
   - magazineCapacity: 10
     currentAmmoCount: 10
   - magazineCapacity: 10
