@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a0af083068a2e449bceab885a6ff69, type: 3}
+  m_Name: Heka-Darkness
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 5609505454920245689, guid: bb16d370d40a5e3428fd9756ef08bf7b, type: 3}
+  shootDamage: 50
+  shootingDistance: 400
+  shootRate: 0.3
+  fireMode: Semi-Auto
+  hekaSchool: Darkness
+  hekaAbility: {fileID: 2833855917196169623, guid: 4cc6bd461aa51544999f18efaebaade0, type: 3}
+  hekaShootRate: 1
+  hekaManaAmount: 50
+  recoilX: -1
+  recoilY: 3
+  recoilZ: 0.1
+  RecoilPattern:
+  - {x: 0, y: 0, z: 0}
+  snapping: 8
+  returnSpeed: 4
+  reloadTime: 0.9
+  magazines:
+  - magazineCapacity: 10
+    currentAmmoCount: 9
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  currentMagazineIndex: 0
+  muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
+  zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+  hitEffect:
+  - {fileID: 100000, guid: b1e375631a4a3fb42a8d2842d82a5dd3, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
+  - {fileID: 100000, guid: 2dc2d86236479b4428b2023663b4d411, type: 3}
+  - {fileID: 100000, guid: 3cddb9cce01bd5e4b909603b22269ee5, type: 3}
+  - {fileID: 100000, guid: 348ca72c2e3eec544994fb80cf116d1f, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 4d6281aa604094f04839cffa502096c0, type: 3}
+  shootVol: 0.1
+  reloadSound: {fileID: 8300000, guid: e5198250a6a57408bb36e14bc4a322c4, type: 3}
+  reloadVol: 0.1

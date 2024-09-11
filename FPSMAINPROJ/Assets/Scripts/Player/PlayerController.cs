@@ -12,6 +12,8 @@ public enum InventoryPos //for inventory
 }
 public class PlayerController : MonoBehaviour, IDamage
 {
+    private static PlayerController _playerInstance;
+
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
     [SerializeField] Animator animator;
@@ -129,18 +131,35 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool hasItems;
     bool isPlayingSound;
     private Coroutine waitTime;
+
+    public static PlayerController playerInstance
+    {
+        get
+        {
+            if (_playerInstance == null)
+            {
+                Debug.LogError("PlayerController is null");
+            }
+            return _playerInstance;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // If instance already exists and it is not the PlayerController, destroy this instance
+        if (_playerInstance != null && _playerInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _playerInstance = this;
+        }
+
         HPorig = playerHP;
         damage = playerWeapon.shootDamage;
-        sprintTimer = maxSprintTimer;
-        originalSpeed = speed;
-        crouchSpeed = speed / 2;
-        startingYScale = transform.localScale.y;
-        controllerHeightOrgi = ((int)controller.height);
-        currentMana = maxMana;
-        updatePlayerUI();
+        spawnPlayer();
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
@@ -631,6 +650,22 @@ public class PlayerController : MonoBehaviour, IDamage
   public float GetHealth()
     {
         return StartHP;
+    }
+
+    public void spawnPlayer()
+    {
+        playerHP = HPorig;
+        sprintTimer = maxSprintTimer;
+        originalSpeed = speed;
+        crouchSpeed = speed / 2;
+        startingYScale = transform.localScale.y;
+        controllerHeightOrgi = ((int)controller.height);
+        currentMana = maxMana;
+        updatePlayerUI();
+
+        controller.enabled = false;
+        transform.position = gameManager.gameInstance.playerSpawnPoint.transform.position;
+        controller.enabled = true;
     }
 
 }

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class WeaponController : MonoBehaviour
 {
@@ -25,6 +27,12 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int shootDistance;
     [SerializeFeild] string fireMode;
 
+    [Header("HEKA SPECIALTIES")]
+    [SerializeField] GameObject hekaAbility;
+    int hekaShootRate = 0;
+    float hekaManaAmount = 0;
+    public bool hasHeka = false;
+
     [Header("WEAPON VFX")]
     [SerializeField] public GameObject muzzleFlash;
     [SerializeField] public GameObject casingEffect;
@@ -41,6 +49,11 @@ public class WeaponController : MonoBehaviour
     void Start()
     {
         cameraScript = FindObjectOfType<cameraController>();
+
+        if(hekaAbility != null)
+        {
+            hasHeka = true;
+        }
     }
 
     void Update()
@@ -62,8 +75,12 @@ public class WeaponController : MonoBehaviour
 
         if (gunList.Count >= 1)
         {
+            gameManager.gameInstance.AmmoHUD.gameObject.SetActive(true);
             displayAmmo();
         }
+        else if (gunList.Count == 0)
+            gameManager.gameInstance.AmmoHUD.gameObject.SetActive(false);
+
 
         if (gunList.Count > 0)
         {
@@ -75,6 +92,11 @@ public class WeaponController : MonoBehaviour
             {
                 handleSemiAuto();
             }
+            else if (gunList[selectedGun].hekaSchool.Length > 0 && hekaAbility != null);
+            {
+                handleHeka();
+            }
+            
         }
 
         if(!isShooting)
@@ -100,6 +122,53 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    void handleHeka()
+    {
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        {
+            if (gunList[selectedGun].hekaSchool == "Electricity")
+            {
+                StartCoroutine(shootElectricity());
+            }
+            else if (gunList[selectedGun].hekaSchool == "Darkness")
+            {
+                StartCoroutine(shootDarkness());
+            }
+            else if (gunList[selectedGun].hekaSchool == "Floods")
+            {
+                StartCoroutine(shootFloods());
+            }
+        }
+    }    
+
+    IEnumerator shootElectricity()
+    {
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        {
+
+            yield return null;
+
+        }
+    }
+    IEnumerator shootDarkness()
+    {
+        if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        {
+            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
+
+            yield return null;
+        }
+    }
+
+    IEnumerator shootFloods()
+    {
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        {
+            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
+
+            yield return null;
+        }
+    }
 
     IEnumerator shoot()
     {
@@ -157,12 +226,15 @@ public class WeaponController : MonoBehaviour
 
                         // Apply the modified damage
                         dmg.takeDamage(actualDamage);
-                        Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.identity);
+                        ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     }
                     else
                     {
                         Debug.Log("Hit Tag: " + hit.collider.tag);
-                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                       
+
+                        GameObject newBulletHole = Instantiate(gunList[selectedGun].hitEffect[UnityEngine.Random.Range(0, gunList[selectedGun].hitEffect.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                        newBulletHole.transform.up = hit.normal;
                     }
 
                 }
@@ -184,22 +256,23 @@ public class WeaponController : MonoBehaviour
 
     }
 
+
+
     Vector3 getDirection()
     {
 
         Vector3 direction = Camera.main.transform.forward;
-
+        
         if (sprayPattern)
         {
-
-            direction += new Vector3(
+            Vector3 Recoildirection = new Vector3(
             RecoilPattern[currentPatternIndex].x,
             RecoilPattern[currentPatternIndex].y,
             RecoilPattern[currentPatternIndex].z
             );
-            direction.Normalize();
+           direction += Camera.main.transform.TransformDirection(Recoildirection);
         }
-        if(isShooting)
+        if (isShooting)
         {
             currentPatternIndex = (currentPatternIndex + 1) % RecoilPattern.Count;
         }
@@ -279,14 +352,23 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
+        
         //recoil
         cameraScript.recoilX = gun.recoilX;
         cameraScript.recoilY = gun.recoilY;
         cameraScript.recoilZ = gun.recoilZ;
         cameraScript.returnSpeed = gun.returnSpeed;
         cameraScript.snapping = gun.snapping;
-
         RecoilPattern = new List<Vector3>(gun.RecoilPattern);
+
+        //heka
+        if(gun.hekaAbility != null)
+        {
+            hekaAbility = gun.hekaAbility;
+        }
+        hekaManaAmount = gun.hekaManaAmount;
+        hekaShootRate = gun.hekaShootRate;
+
        
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -315,6 +397,13 @@ public class WeaponController : MonoBehaviour
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
         fireMode = currGun.fireMode;
+
+        if (currGun.hekaAbility != null)
+        {
+            hekaAbility = currGun.hekaAbility;
+        }
+        hekaManaAmount = currGun.hekaManaAmount;
+        hekaShootRate = currGun.hekaShootRate;
 
         cameraScript.recoilX = currGun.recoilX;
         cameraScript.recoilY = currGun.recoilY;

@@ -15,6 +15,12 @@ public class weaponStats : ScriptableObject
     public float shootRate;
     public string fireMode;
 
+    [Header("-----Heka Attributes-----")]
+    public string hekaSchool;
+    [SerializeField] public GameObject hekaAbility;
+    public int hekaShootRate = 0;
+    public float hekaManaAmount = 0;
+
     [Header("---- RECOIL VALUES ---")]
     public float recoilX;
     public float recoilY;
@@ -29,8 +35,8 @@ public class weaponStats : ScriptableObject
 
     [Header("----- Gun SFX/FX -----")]
     public GameObject muzzleFlash;
-    public ParticleSystem hitEffect;
     public ParticleSystem zombieHitEffect;
+    [SerializeField] public GameObject[] hitEffect;
     public AudioClip[] shootSound;
     public float shootVol;
     public AudioClip reloadSound;
