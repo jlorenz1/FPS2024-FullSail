@@ -9,14 +9,7 @@ public class Pit : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.gameInstance.loseScreen(); //kills player
-            
+            PlayerController.playerInstance.takeDamage(PlayerController.playerInstance.playerHP); //kills player by removing all HP
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

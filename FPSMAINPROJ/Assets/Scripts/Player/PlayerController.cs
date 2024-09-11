@@ -11,6 +11,8 @@ public enum InventoryPos //for inventory
 }
 public class PlayerController : MonoBehaviour, IDamage
 {
+    private static PlayerController _playerInstance;
+
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
     [SerializeField] Animator animator;
@@ -127,9 +129,32 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool hasItems;
     bool isPlayingSound;
     private Coroutine waitTime;
+
+    public static PlayerController playerInstance
+    {
+        get
+        {
+            if (_playerInstance == null)
+            {
+                Debug.LogError("PlayerController is null");
+            }
+            return _playerInstance;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // If instance already exists and it is not the PlayerController, destroy this instance
+        if (_playerInstance != null && _playerInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _playerInstance = this;
+        }
+
         HPorig = playerHP;
         damage = playerWeapon.shootDamage;
         sprintTimer = maxSprintTimer;
