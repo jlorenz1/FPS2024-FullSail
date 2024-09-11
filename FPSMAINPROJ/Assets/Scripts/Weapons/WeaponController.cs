@@ -75,8 +75,11 @@ public class WeaponController : MonoBehaviour
 
         if (gunList.Count >= 1)
         {
+            gameManager.gameInstance.AmmoHUD.GameObject().SetActive(true);
             displayAmmo();
         }
+        else if (gunList.Count == 0)
+            gameManager.gameInstance.AmmoHUD.GameObject().SetActive(false);
 
         if (gunList.Count > 0)
         {
