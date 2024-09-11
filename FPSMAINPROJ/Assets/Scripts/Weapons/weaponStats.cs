@@ -35,7 +35,7 @@ public class weaponStats : ScriptableObject
 
     [Header("----- Gun SFX/FX -----")]
     public GameObject muzzleFlash;
-    public ParticleSystem hitEffect;
+    public GameObject hitEffect;
     public ParticleSystem zombieHitEffect;
     public AudioClip[] shootSound;
     public float shootVol;

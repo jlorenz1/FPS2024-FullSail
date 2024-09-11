@@ -231,7 +231,11 @@ public class WeaponController : MonoBehaviour
                     else
                     {
                         Debug.Log("Hit Tag: " + hit.collider.tag);
-                        Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+                        ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                       
+
+                        GameObject newBulletHole = Instantiate(gunList[selectedGun].hitEffect, hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                        newBulletHole.transform.up = hit.normal;
                     }
 
                 }
