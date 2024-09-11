@@ -75,11 +75,12 @@ public class WeaponController : MonoBehaviour
 
         if (gunList.Count >= 1)
         {
-            gameManager.gameInstance.AmmoHUD.GameObject().SetActive(true);
+            gameManager.gameInstance.AmmoHUD.gameObject.SetActive(true);
             displayAmmo();
         }
         else if (gunList.Count == 0)
-            gameManager.gameInstance.AmmoHUD.GameObject().SetActive(false);
+            gameManager.gameInstance.AmmoHUD.gameObject.SetActive(false);
+
 
         if (gunList.Count > 0)
         {
@@ -258,18 +259,17 @@ public class WeaponController : MonoBehaviour
     {
 
         Vector3 direction = Camera.main.transform.forward;
-
+        
         if (sprayPattern)
         {
-
-            direction += new Vector3(
+            Vector3 Recoildirection = new Vector3(
             RecoilPattern[currentPatternIndex].x,
             RecoilPattern[currentPatternIndex].y,
             RecoilPattern[currentPatternIndex].z
             );
-            direction.Normalize();
+           direction += Camera.main.transform.TransformDirection(Recoildirection);
         }
-        if(isShooting)
+        if (isShooting)
         {
             currentPatternIndex = (currentPatternIndex + 1) % RecoilPattern.Count;
         }
