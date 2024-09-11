@@ -17,27 +17,30 @@ MonoBehaviour:
   shootingDistance: 400
   shootRate: 0.3
   fireMode: Semi-Auto
-  recoilX: -5
+  hekaSchool: Darkness
+  hekaAbility: {fileID: 2833855917196169623, guid: 4cc6bd461aa51544999f18efaebaade0, type: 3}
+  hekaShootRate: 1
+  hekaManaAmount: 50
+  recoilX: -1
   recoilY: 3
   recoilZ: 0.1
   RecoilPattern:
-  - {x: 0.01, y: 0.03, z: 0}
-  - {x: 0.01, y: 0.03, z: 0}
+  - {x: 0, y: 0, z: 0}
   snapping: 8
   returnSpeed: 4
   reloadTime: 0.9
   magazines:
   - magazineCapacity: 10
-    currentAmmoCount: 0
-  - magazineCapacity: 10
-    currentAmmoCount: 3
+    currentAmmoCount: 9
   - magazineCapacity: 10
     currentAmmoCount: 10
   - magazineCapacity: 10
     currentAmmoCount: 10
   - magazineCapacity: 10
     currentAmmoCount: 10
-  currentMagazineIndex: 1
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}

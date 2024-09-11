@@ -17,6 +17,11 @@ MonoBehaviour:
   shootingDistance: 600
   shootRate: 0.1
   fireMode: Full-Auto
+  hekaSchool: Electricity
+  hekaAbility: {fileID: 2833855917196169623, guid: 4cc6bd461aa51544999f18efaebaade0, type: 3}
+  hekaShootRate: 2
+  hekaShootDistance: 600
+  hekaManaAmount: 35
   recoilX: -2
   recoilY: 2
   recoilZ: 0.35
@@ -61,7 +66,9 @@ MonoBehaviour:
   reloadTime: 1.27
   magazines:
   - magazineCapacity: 35
-    currentAmmoCount: 0
+    currentAmmoCount: 17
+  - magazineCapacity: 35
+    currentAmmoCount: 30
   - magazineCapacity: 35
     currentAmmoCount: 35
   - magazineCapacity: 35
@@ -78,14 +85,12 @@ MonoBehaviour:
     currentAmmoCount: 35
   - magazineCapacity: 35
     currentAmmoCount: 35
-  - magazineCapacity: 35
-    currentAmmoCount: 35
-  currentMagazineIndex: 0
+  currentMagazineIndex: 1
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
   zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 82e4eb6dc833f974791e1450320d0b70, type: 3}
   shootVol: 0.1
-  reloadSound: {fileID: 8300000, guid: b2d159f7e00d44d9bbc2d50a0c4fef59, type: 3}
+  reloadSound: {fileID: 8300000, guid: e5198250a6a57408bb36e14bc4a322c4, type: 3}
   reloadVol: 0.1
