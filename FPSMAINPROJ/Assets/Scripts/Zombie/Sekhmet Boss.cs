@@ -43,7 +43,7 @@ public class SekhmetBoss : EnemyAI
         if (PlayerinAttackRange && canattack)
         {
             Debug.Log("Did Base Attack");
-            StartCoroutine(CastAttackRoutine());
+            StartCoroutine(BaseAAttack());
         }
 
 
