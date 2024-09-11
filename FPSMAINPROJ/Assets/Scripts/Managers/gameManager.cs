@@ -65,8 +65,7 @@ public class gameManager : MonoBehaviour
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
-    public SekhmetBoss Sekhmet;
-    public Userkare Userkare;
+  
 
     //Objects
     public EnemySpawner enemySpawner;
@@ -76,8 +75,12 @@ public class gameManager : MonoBehaviour
     private bool isNewRoundStarting = false;
     public bool isUserKareDead;
     public bool isSekhmetDead;
+    public GameObject UserKare;
+    public GameObject SekhMet;
+    public SekhmetBoss Sekhmet;
+    public Userkare Userkare;
 
-   public Transform SekhmetRespawn;
+    public Transform SekhmetRespawn;
     //int variables 
     int EnemyCount;
     public int PointCount;
@@ -122,6 +125,28 @@ public class gameManager : MonoBehaviour
     // Using Awake, for Manager
     void Awake()
     {
+       
+        isSekhmetDead = true;
+        UserKare = GameObject.FindGameObjectWithTag("Userkare");
+        SekhMet = GameObject.FindGameObjectWithTag("Sekhmet");
+
+        if (Userkare == null)
+        {
+            isUserKareDead = true;
+        }
+        else
+            isUserKareDead = false;
+
+        if (SekhMet == null)
+        {
+            isSekhmetDead = true;
+        }
+        else
+            isSekhmetDead = false;
+
+
+
+
         fadeOverlay.gameObject.SetActive(true);
         // If instance already exists and it is not the game Manager, destroy this instance
         if (_gameInstance != null && _gameInstance != this)

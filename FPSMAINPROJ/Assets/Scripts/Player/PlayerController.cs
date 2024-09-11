@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum InventoryPos //for inventory
 {
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool invincible = false;
 
     [Header("PLAYER VARIABLES")]
-    [SerializeField] float speed;
+    public float speed;
     [SerializeField] int sprintMod;
     //[SerializeField] int crouchSpeed;
     [SerializeField] public WeaponController playerWeapon;
@@ -162,7 +163,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         if (!onSprintCoolDown && !isCrouching)
-            sprint();
+        {
+           sprint();
+        }
         sprintTimerUpdate();
 
         wallCheck();
@@ -189,7 +192,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         }
         if (isSliding)
-            slideMovement();
+          //  slideMovement();
 
         if (isClimbing)
             climbingMovement();
@@ -546,6 +549,19 @@ public class PlayerController : MonoBehaviour, IDamage
         return jumpMax;
     }
 
+    public void CutSpeed(float duration, float strength)
+    {
+        CutSpeedrunner(duration, strength);
+    }
+
+    IEnumerator CutSpeedrunner(float duration, float strength)
+    {
+        speed /= strength;
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
+    }
 
     private IEnumerator PerformDodge()
     {

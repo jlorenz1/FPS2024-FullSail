@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Userkare : EnemyAI
 {
-
+    bool canattack;
+    float AttackRange;
+    bool inAbilityRange;
+    [SerializeField] Transform launchPoint;
+    [SerializeField] GameObject ProjectilePrefab;
+    [SerializeField] GameObject rootProjectilePrefab;
+    [SerializeField] GameObject buffedProjectilePrefab;
+    [SerializeField] Zombiemeeleattacks MeleeWeapon;
+    [SerializeField] GameObject Melee;
+    IEnemyDamage FellowZombie;
+    IEnemyDamage Partner;
     [SerializeField] GameObject summon;
     [SerializeField] GameObject summonpartner;
     float PushBackRadius;
@@ -18,7 +28,7 @@ public class Userkare : EnemyAI
     PlayerController player;
     IDamage playerDamage;
     Rigidbody playerRb;
-
+    GameObject mSekhmet;
     float BaseMaxHealth;
     float BaseAttackSpeed;
 
@@ -27,6 +37,8 @@ public class Userkare : EnemyAI
     protected override void Start()
     {
         base.Start();
+       
+        mSekhmet = gameManager.gameInstance.SekhMet;
         UnCapped = false;
         BaseMaxHealth = MaxHealth;
         BaseAttackSpeed = attackSpeed;
@@ -34,12 +46,19 @@ public class Userkare : EnemyAI
         playerRb = player.GetComponent<Rigidbody>();  // Get the player's Rigidbody
         PlayerStartHP = gameManager.gameInstance.playerScript.GetHealth();
         damage = 5;
+        canattack = true;
+        gameManager.gameInstance.isUserKareDead = false;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+
+        if(PlayerinAttackRange && canattack)
+        {
+            StartCoroutine(CastAttackRoutine());
+        }
 
         Summons = GameObject.FindGameObjectsWithTag("Summon");
 
@@ -93,18 +112,80 @@ public class Userkare : EnemyAI
     void UseSpecialAbility()
     {
 
-        repulse();
-        
-       
+        canattack = false;  // Disable normal attacks while using special ability
+
+        int chance = UnityEngine.Random.Range(1, 4);  // Randomly select an ability (1-4)
+
+        switch (chance)
+        {
+            case 1:
+                repulse();
+                break;
+            case 2:
+                Heal();
+                break;
+            case 3:
+                StartCoroutine(CastStunRoutine());
+                break;
+            case 4:
+                if (UnCapped)
+                {
+                    Summon();
+                }
+                else
+                    Heal();
+                break;
+        }
+
+        canattack = true;
+
 
     }
 
-    void TrappingLight()
-    { 
+   public void TrappingLight()
+    {
         //roots the player in place 
+        Debug.Log("casted stun");
+        StartCoroutine(CastStunRoutine());
 
     }
 
+    IEnumerator CastAttackRoutine()
+    {
+        canattack = false;
+        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
+        animator.SetTrigger("Base");
+        yield return new WaitForSeconds(1f / AttackSpeed);
+        canattack = true;
+
+    }
+
+    public void CastAttack()
+    {
+        // Ranged attack logic
+        Debug.Log("Ranged attack");
+        Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+
+    }
+
+
+    IEnumerator CastStunRoutine()
+    {
+
+        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
+        animator.SetTrigger("Stun");
+        yield return new WaitForSeconds(1f / AttackSpeed);
+
+
+    }
+
+
+    public void CastStun()
+    {
+
+        Instantiate(rootProjectilePrefab, launchPoint.position, Quaternion.identity);
+
+    }
 
     void PerfectDefence()
     {
@@ -116,11 +197,30 @@ public class Userkare : EnemyAI
     public void LightGautling()
     {
         // fires buffed base attacks at the player at 5 times the base speed 
-
-
-
+        canattack = false;
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(LightG());
+        }
+        canattack = true;
     }
 
+    IEnumerator LightG()
+    {
+        canattack = false;
+        Debug.Log("Buffed Attack");
+        animator.SetFloat("AttackSpeed", (5)); // New: Set animator speed to match cast speed
+        animator.SetBool("Buff 0", true);
+        animator.SetTrigger("Buffed");
+        yield return new WaitForSeconds(1f / 5);
+        animator.SetBool("Buff 0", false);
+        canattack = true;
+    }
+
+  public  void CastBuffSpell()
+    {
+        Instantiate(buffedProjectilePrefab, launchPoint.position, Quaternion.identity);
+    }
     public void Summon()
     {
         // summons weaker version of the base mummy that will increase his health and try to revevie Sekhemt

@@ -11,14 +11,15 @@ public class SekhmetBoss : EnemyAI
     float nextAbilityTime;
     GameObject mUserkare;
     float PlayerStartHP;
-    float AttackSpeed;
     bool canattack;
     float AttackRange;
     bool inAbilityRange;
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject ProjectilePrefab;
-
-
+    [SerializeField] Zombiemeeleattacks MeleeWeapon;
+    [SerializeField] GameObject Melee;
+    IEnemyDamage FellowZombie;
+    IEnemyDamage Partner;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -26,16 +27,25 @@ public class SekhmetBoss : EnemyAI
         canattack = true;
         Berserk = false;
         AddativeDamage = true;
-        mUserkare = GameObject.FindGameObjectWithTag("Userkare");
+        mUserkare = gameManager.gameInstance.UserKare;
         AttackRange = 30;
+        animator.SetFloat("AttackSpeed", AttackSpeed);
+        gameManager.gameInstance.isSekhmetDead = false;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        base .Update();
+        base.Update();
 
-        animator.SetFloat("AttackSpeed", AttackSpeed);
+        
+
+        if (PlayerinAttackRange && canattack)
+        {
+            Debug.Log("Did Base Attack");
+            StartCoroutine(CastAttackRoutine());
+        }
+
 
         if (Time.time >= nextAbilityTime)
         {
@@ -50,10 +60,7 @@ public class SekhmetBoss : EnemyAI
             StartCoroutine(RampingDamage());
         }
 
-        if (PlayerinAttackRange)
-        {
-            StartCoroutine(BaseAAttack());
-        }
+      
 
     }
 
@@ -83,45 +90,22 @@ public class SekhmetBoss : EnemyAI
 
     void BleedingJab()
     {
-        // mid ranged melee special attack does base damage then 2% damage over time to player
-        animator.SetTrigger("Quick jab");
-        // Define the range and sphere radius
-        float jabRange = 5f;         // Adjust the range of the jab
-        float sphereRadius = 1f;     // Adjust the radius of your sphere
-
-        // Calculate the position of the sphere's tip
-        Vector3 sphereTipPosition = transform.position + transform.forward * sphereRadius;
-
-        RaycastHit hit;
-
-        // Cast a ray from the tip of the sphere forward
-        if (Physics.Raycast(sphereTipPosition, transform.forward, out hit, jabRange))
-        {
-            // Check if the ray hit the player
-            if (hit.collider.CompareTag("Player"))
-            {
-                // Apply damage to the player
-                IDamage player = hit.collider.GetComponent<IDamage>();
-                if (player != null)
-                {
-                    player.takeDamage(5);
-                    StartCoroutine(ApplyBleed(player, 5)); // Apply bleeding effect for 5 seconds
-                }
-            }
-        }
+        // Start the Bleeding Jab coroutine to handle the delay properly
+        StartCoroutine(BleedingJabRoutine());
     }
-    IEnumerator ApplyBleed(IDamage player, float duration)
+
+    IEnumerator BleedingJabRoutine()
     {
-        float bleedTick = 0.5f; // How often to apply bleed damage (every 0.5 seconds)
-        float elapsed = 0f;
+        
+        MeleeWeapon.SetBleed(); // Start bleeding effect
+        animator.SetTrigger("Quick jab");
 
-        while (elapsed < duration)
-        {
-            player.takeDamage(player.GetHealth() * 0.02f); // Apply 2% damage
-            elapsed += bleedTick;
-            yield return new WaitForSeconds(bleedTick);
-        }
+        // Wait for 3 seconds before stopping the bleeding effect
+        yield return new WaitForSeconds(3f);
+
+        MeleeWeapon.SetBleed(); 
     }
+
 
     public void BlinkingJab()
     {
@@ -130,7 +114,7 @@ public class SekhmetBoss : EnemyAI
         Vector3 PlayerPosition = gameManager.gameInstance.player.transform.position;
         Vector3 forwardDirection = gameManager.gameInstance.player.transform.forward;
 
-        Vector3 teleportPosition = PlayerPosition + forwardDirection * AttackRange;
+        Vector3 teleportPosition = PlayerPosition + forwardDirection * 3;
 
         transform.position = teleportPosition;
 
@@ -147,7 +131,7 @@ public class SekhmetBoss : EnemyAI
    
         animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
         animator.SetTrigger("Shoot");
-
+        StartCoroutine(DisableWeapon());
         yield return new WaitForSeconds(1f / AttackSpeed);
 
       
@@ -158,24 +142,38 @@ public class SekhmetBoss : EnemyAI
         // Ranged attack logic
         Debug.Log("Ranged attack");
         Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+        
     }
 
-
+    IEnumerator DisableWeapon()
+    {
+        canattack = false;
+        Melee.SetActive(false);
+        yield return new WaitForSeconds(5);
+        Melee.SetActive(true);
+        canattack = true;
+    }
 
     void reinforce()
     {
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-
+       
         foreach (GameObject zombie in zombies) {
-
-            IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
-            IEnemyDamage Partner = mUserkare.GetComponent<IEnemyDamage>();
+            if (zombie != null)
+            {
+                 FellowZombie = zombie.GetComponent<IEnemyDamage>();
+            }
+            if (mUserkare != null)
+            {
+                 Partner = mUserkare.GetComponent<IEnemyDamage>();
+            }
 
             if (!Berserk)
             {
                 // increases Her armor and Uskares armor by other enemies by 2
-
+               
                 FellowZombie.AddArmor(2);
+                
                 Partner.AddArmor(5);
                 Armor += 5;
             }
@@ -207,7 +205,7 @@ public class SekhmetBoss : EnemyAI
 
     void UseSpecialAbility()
     {
-        canattack = false;  // Disable normal attacks while using special ability
+       canattack = false;  // Disable normal attacks while using special ability
 
         int chance = UnityEngine.Random.Range(1, 5);  // Randomly select an ability (1-4)
 
@@ -227,12 +225,16 @@ public class SekhmetBoss : EnemyAI
                 break;
         }
 
-        canattack = true;
+      canattack = true;
     }
 
     IEnumerator BaseAAttack()
     {
         canattack = false;
+
+        Debug.Log("slow jab");
+
+        //animator.SetFloat("Speed", 0);
        
         animator.SetTrigger("Slow jab");
 

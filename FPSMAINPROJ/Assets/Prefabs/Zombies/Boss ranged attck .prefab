@@ -28,14 +28,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5558037750598473244}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.48068023, y: -0.5218535, z: 0.5325714, w: -0.46150106}
+  m_LocalRotation: {x: 0.48067948, y: 0.5218537, z: -0.53256947, w: 0.4615039}
   m_LocalPosition: {x: 310.66086, y: 204.4238, z: 66.95454}
   m_LocalScale: {x: 3.390255, y: 0.13856004, z: 0.025750015}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4004715062088381711}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 91.78, y: 77.415, z: -19.02002}
 --- !u!33 &8294701905447377382
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -122,15 +122,15 @@ MonoBehaviour:
   speed: 30
   lifetime: 8
   IsNormal: 0
-  IsSlow: 1
+  IsSlow: 0
   IsGround: 0
   IsBossAttack: 0
   projectileDamage: 0
-  followtime: 4
+  followtime: 3
   ProjectileAudio: {fileID: 0}
   ZombieProjectileAudio: {fileID: 0}
   ZombieProjectileAudioVol: 0
-  SekhmetAttack: 0
+  SekhmetAttack: 1
   UserKareBaseAttack: 0
   UserKareSpecialAttack1: 0
   UserKareSpecialAttack2: 0

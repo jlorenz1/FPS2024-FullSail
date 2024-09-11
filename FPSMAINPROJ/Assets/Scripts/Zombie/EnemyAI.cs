@@ -39,7 +39,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeFeild] protected float Armor;
     [SerializeField] protected float Range;
     [SerializeField] protected float damage;
-
+    [SerializeField] protected float AttackSpeed;
     [Header("-----Armor-----")]
     [SerializeField] GameObject Helmate;
     [SerializeFeild] GameObject ChestPlate;
