@@ -67,8 +67,14 @@ MonoBehaviour:
     currentAmmoCount: 30
   currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
-  hitEffect: {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+  hitEffect:
+  - {fileID: 100000, guid: b1e375631a4a3fb42a8d2842d82a5dd3, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
+  - {fileID: 100000, guid: 2dc2d86236479b4428b2023663b4d411, type: 3}
+  - {fileID: 100000, guid: 3cddb9cce01bd5e4b909603b22269ee5, type: 3}
+  - {fileID: 100000, guid: 348ca72c2e3eec544994fb80cf116d1f, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
   shootSound:
   - {fileID: 8300000, guid: b2d159f7e00d44d9bbc2d50a0c4fef59, type: 3}
   shootVol: 0.1
