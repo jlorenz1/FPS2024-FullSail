@@ -145,8 +145,21 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
         {
+            RaycastHit hit;
 
-            yield return null;
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
+            {
+
+                IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
+                if (dmg != null)
+                {
+                    Debug.Log("dmg");
+                    //take damamge
+
+                    dmg.bounceHeka(hit);
+                }
+            }
+            yield return new WaitForSeconds(shootRate);
 
         }
     }
@@ -366,6 +379,7 @@ public class WeaponController : MonoBehaviour
         {
             hekaAbility = gun.hekaAbility;
         }
+        
         hekaManaAmount = gun.hekaManaAmount;
         hekaShootRate = gun.hekaShootRate;
 

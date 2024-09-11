@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SpecialEnemy : EnemyAI
 {
-
     public float specialAbilityCooldown = 5f;
     private float nextAbilityTime = 5f;
     [SerializeField] float BuffRange = 30;
