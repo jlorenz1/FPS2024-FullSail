@@ -157,13 +157,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         HPorig = playerHP;
         damage = playerWeapon.shootDamage;
-        sprintTimer = maxSprintTimer;
-        originalSpeed = speed;
-        crouchSpeed = speed / 2;
-        startingYScale = transform.localScale.y;
-        controllerHeightOrgi = ((int)controller.height);
-        currentMana = maxMana;
-        updatePlayerUI();
+        spawnPlayer();
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
@@ -648,6 +642,22 @@ public class PlayerController : MonoBehaviour, IDamage
     public void DieWithoutDrops()
     {
        
+    }
+
+    public void spawnPlayer()
+    {
+        playerHP = HPorig;
+        sprintTimer = maxSprintTimer;
+        originalSpeed = speed;
+        crouchSpeed = speed / 2;
+        startingYScale = transform.localScale.y;
+        controllerHeightOrgi = ((int)controller.height);
+        currentMana = maxMana;
+        updatePlayerUI();
+
+        controller.enabled = false;
+        transform.position = gameManager.gameInstance.playerSpawnPoint.transform.position;
+        controller.enabled = true;
     }
 
 }

@@ -62,12 +62,14 @@ public class gameManager : MonoBehaviour
     public Image playerSprintBar;
     public Image SprintBarBoarder;
     public Image AmmoHUD;
+    public Image checkpoint;
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
 
     //Objects
+    public GameObject playerSpawnPoint;
     public EnemySpawner enemySpawner;
     public bool isReqItemsUIDisplay = false;
     private GameObject enemy;
@@ -135,6 +137,7 @@ public class gameManager : MonoBehaviour
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
         //weaponScript = FindObjectOfType<Weapon>();
+        playerSpawnPoint = GameObject.FindWithTag("Player Spawner");
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();
