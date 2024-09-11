@@ -62,19 +62,28 @@ public class gameManager : MonoBehaviour
     public Image playerSprintBar;
     public Image SprintBarBoarder;
     public Image AmmoHUD;
+    public Image checkpoint;
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
+  
 
     //Objects
+    public GameObject playerSpawnPoint;
     public EnemySpawner enemySpawner;
     public bool isReqItemsUIDisplay = false;
     private GameObject enemy;
     private bool isCheckingEnemyCount = false;
     private bool isNewRoundStarting = false;
-    
+    public bool isUserKareDead;
+    public bool isSekhmetDead;
+    public GameObject UserKare;
+    public GameObject SekhMet;
+    public SekhmetBoss Sekhmet;
+    public Userkare Userkare;
 
+    public Transform SekhmetRespawn;
     //int variables 
     int EnemyCount;
     public int PointCount;
@@ -119,6 +128,28 @@ public class gameManager : MonoBehaviour
     // Using Awake, for Manager
     void Awake()
     {
+       
+        isSekhmetDead = true;
+        UserKare = GameObject.FindGameObjectWithTag("Userkare");
+        SekhMet = GameObject.FindGameObjectWithTag("Sekhmet");
+
+        if (Userkare == null)
+        {
+            isUserKareDead = true;
+        }
+        else
+            isUserKareDead = false;
+
+        if (SekhMet == null)
+        {
+            isSekhmetDead = true;
+        }
+        else
+            isSekhmetDead = false;
+
+
+
+
         fadeOverlay.gameObject.SetActive(true);
         // If instance already exists and it is not the game Manager, destroy this instance
         if (_gameInstance != null && _gameInstance != this)
@@ -135,6 +166,7 @@ public class gameManager : MonoBehaviour
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
         //weaponScript = FindObjectOfType<Weapon>();
+        playerSpawnPoint = GameObject.FindWithTag("Player Spawner");
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();
@@ -403,6 +435,27 @@ public class gameManager : MonoBehaviour
 
         fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, endAlpha);
     }
+
+
+    public void UserkareDead()
+    {
+
+        Sekhmet.GoBerserk(true);
+        isUserKareDead = true;
+    }
+
+    public void SekhmetDead()
+    {
+        Userkare.SetUncaped(true);
+        isSekhmetDead = true;
+
+    }
+
+    public void SekhmetDeathLocation(Transform location)
+    {
+        SekhmetRespawn = location;
+    }
+
 }
 
 
