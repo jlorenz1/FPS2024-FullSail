@@ -15,6 +15,12 @@ public class weaponStats : ScriptableObject
     public float shootRate;
     public string fireMode;
 
+    [Header("-----Heka Attributes-----")]
+    public string hekaSchool;
+    [SerializeField] public GameObject hekaAbility;
+    public int hekaShootRate = 0;
+    public float hekaManaAmount = 0;
+
     [Header("---- RECOIL VALUES ---")]
     public float recoilX;
     public float recoilY;
