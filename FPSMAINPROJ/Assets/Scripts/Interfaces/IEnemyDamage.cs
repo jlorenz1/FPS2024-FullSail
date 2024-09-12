@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using UnityEngine;
 
-public interface IEnemyDamage
+public interface IEnemyDamage 
 {
     // Interface to assign damage to an object
 
