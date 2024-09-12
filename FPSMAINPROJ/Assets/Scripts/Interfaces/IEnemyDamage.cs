@@ -28,4 +28,7 @@ public interface IEnemyDamage
 
     void TempRemoveArmor(float reduction, float Duration);
 
+    void Blind(float duration);
+
+    void Stun(float duration);
 }
