@@ -13,7 +13,8 @@ public class bandagePickup : pickupObject, IPickup
     
     private void onTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+
+        if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("HP pickup");
             useItem();
@@ -21,16 +22,17 @@ public class bandagePickup : pickupObject, IPickup
     }
     public void useItem()
     {
+        float healthAmount = 25;
+
         float currentHP = gameManager.gameInstance.playerScript.playerHP;
         float maxHp = gameManager.gameInstance.playerScript.HPorig;
 
-        float hpNeeded = maxHp - currentHP;
+        if (maxHp - currentHP < healthAmount) {
 
-
-        if(hpNeeded > 0)
-        {
-            gameManager.gameInstance.playerScript.recieveHP(hpNeeded);
-            Destroy(prefab);
+            healthAmount = maxHp - currentHP;
         }
+
+        gameManager.gameInstance.playerScript.recieveHP(healthAmount);
+        Destroy(prefab);
     }
 }

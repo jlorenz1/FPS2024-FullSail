@@ -24,7 +24,7 @@ public class pickup : MonoBehaviour, IPickup
         {
             if(type == itemType.Bandage)
             {
-                if(other.gameObject.CompareTag("Player"))
+                if(other.gameObject.CompareTag("Player") && (gameManager.gameInstance.playerScript.playerHP < gameManager.gameInstance.playerScript.HPorig))
                 {
                     useItem();
                     Destroy(gameObject);
