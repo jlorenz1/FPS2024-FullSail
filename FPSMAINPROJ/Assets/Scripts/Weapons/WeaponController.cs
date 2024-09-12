@@ -28,7 +28,7 @@ public class WeaponController : MonoBehaviour
     [SerializeFeild] string fireMode;
 
     [Header("HEKA SPECIALTIES")]
-    [SerializeField] GameObject hekaAbility;
+    [SerializeField] public GameObject hekaAbility;
     int hekaShootRate = 0;
     float hekaManaAmount = 0;
     public bool hasHeka = false;
@@ -145,22 +145,9 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
         {
-            RaycastHit hit;
+            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
 
-            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreMask))
-            {
-
-                IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
-                if (dmg != null)
-                {
-                    Debug.Log("dmg");
-                    //take damamge
-
-                    dmg.bounceHeka(hit);
-                }
-            }
-            yield return new WaitForSeconds(shootRate);
-
+            yield return null;
         }
     }
     IEnumerator shootDarkness()
@@ -439,6 +426,52 @@ public class WeaponController : MonoBehaviour
         gunModel.SetParent(gunTransform);
         gunModel.localPosition = Vector3.zero;
         gunModel.localRotation = Quaternion.identity;
+
+    }
+
+    //helper functions for chain effect
+    GameObject getTopLevelParent(Collider collider)
+    {
+        if(collider == null)
+        {
+            return null;
+        }
+        Transform currentTrans = collider.transform;
+
+        while (currentTrans.parent != null)
+        {
+            currentTrans = currentTrans.parent;
+        }
+
+        return currentTrans.gameObject;
+    }
+
+    GameObject getClosestZombie(GameObject hitZombie, RaycastHit hit)
+    {
+        float distance = 0;
+        float MaxDistance = float.MaxValue;
+        GameObject closestZombie = null;
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+
+
+        foreach (GameObject zombie in zombies)
+        {
+            if (zombie == hitZombie)
+            {
+                continue; //skip hit zombie
+            }
+
+            distance = Vector3.Distance(hit.point, zombie.transform.position);
+
+            if (distance < MaxDistance)
+            {
+                MaxDistance = distance;
+                closestZombie = zombie;
+            }
+
+        }
+
+        return closestZombie;
 
     }
 }
