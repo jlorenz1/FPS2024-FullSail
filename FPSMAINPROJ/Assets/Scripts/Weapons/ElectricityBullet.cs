@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.WebSockets;
 using UnityEngine;
 
 public class ElectricityBullet : MonoBehaviour
@@ -8,6 +9,7 @@ public class ElectricityBullet : MonoBehaviour
     [SerializeField] private float speed = 10f; // Speed of the bullet
     [SerializeField] private float destroyTime = 5f; // Time before the bullet is destroyed
     [SerializeField] private int damage = 10; // Damage dealt by the bullet
+    [SerializeField] private float maxDist;
     [SerializeField] private LayerMask damageableLayer;
 
     private Rigidbody rb;
@@ -25,7 +27,7 @@ public class ElectricityBullet : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger || other.CompareTag("Player"))
+        if (other.isTrigger || other.CompareTag("Weapon") || other.CompareTag("Player"))
         {
             return;
         }
@@ -37,12 +39,15 @@ public class ElectricityBullet : MonoBehaviour
         {
 
             damageable.takeDamage(damage);
-            Transform spawnBounce = zombieHit.transform.Find("HekaOutting");
-            if (spawnBounce != null)
+            if(closestZombie != null)
             {
-                Debug.Log("no spawn");
+                Transform spawnBounce = zombieHit.transform.Find("HekaOutting");
+                if (spawnBounce != null)
+                {
+                    Debug.Log("no spawn");
+                }
+                shootSecond(spawnBounce, closestZombie);
             }
-            shootSecond(spawnBounce, closestZombie);
         }
         else
         {
@@ -79,7 +84,7 @@ public class ElectricityBullet : MonoBehaviour
     GameObject getClosestZombie(GameObject hitZombie)
     {
         float distance = 0;
-        float MaxDistance = float.MaxValue;
+        float MaxDistance = maxDist;
         GameObject closestZombie = null;
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
 
