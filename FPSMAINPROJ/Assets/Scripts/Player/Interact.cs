@@ -118,6 +118,21 @@ public class Interact : MonoBehaviour
                 }
                 isInteractable = true;
             }
+            else if(hit.collider.gameObject.CompareTag("AlterShop"))
+            {
+                gameManager.gameInstance.playerInteract.SetActive(true);
+                if(Input.GetKeyDown(KeyCode.E))
+                {
+                    if(hit.collider != null)
+                    {
+                       gameManager.gameInstance.gameAlterMenu.SetActive(true);
+
+                        gameManager.gameInstance.pausePlayerControls();
+
+                    }
+                }
+                isInteractable = true;
+            }
             else
             {
                 gameManager.gameInstance.playerInteract.SetActive(false);

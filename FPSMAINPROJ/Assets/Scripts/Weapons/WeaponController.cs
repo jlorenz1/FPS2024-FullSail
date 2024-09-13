@@ -46,6 +46,9 @@ public class WeaponController : MonoBehaviour
     int currentPatternIndex = 0;
     public bool sprayPattern = false;
     private PlayerController playerController;
+    public bool hasTempest = false;
+    public bool hasEclipse = false;
+    public bool hasFloods = false;
    
     void Start()
     {
@@ -350,7 +353,7 @@ public class WeaponController : MonoBehaviour
 
     public void getWeaponStats(weaponStats gun)
     {
-        
+
         if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);
@@ -372,7 +375,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
-        
+
         //recoil
         cameraScript.recoilX = gun.recoilX;
         cameraScript.recoilY = gun.recoilY;
@@ -382,13 +385,26 @@ public class WeaponController : MonoBehaviour
         RecoilPattern = new List<Vector3>(gun.RecoilPattern);
 
         //heka
-        if(gun.hekaAbility != null)
+        if (gun.hekaAbility != null)
         {
             hekaAbility = gun.hekaAbility;
         }
-        
+
         hekaManaAmount = gun.hekaManaAmount;
         hekaShootRate = gun.hekaShootRate;
+
+        if (gun.hekaSchool == "Electricity")
+        {
+            hasTempest = true;
+        }
+        else if (gun.hekaSchool == "Darkness")
+        {
+            hasEclipse = true;
+        }
+        else if (gun.hekaSchool == "Floods")
+        {
+            hasFloods = true;
+        }
 
         displayMaxAmmo();
         displayCurrentAmmo();
