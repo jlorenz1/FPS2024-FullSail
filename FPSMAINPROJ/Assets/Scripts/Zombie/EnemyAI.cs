@@ -90,6 +90,19 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         damagenerfed = false;
         Body.gameObject.tag = "Zombie Body";
         Head.gameObject.tag = "Zombie Head";
+
+
+
+        if (GetComponent<Collider>() == null)
+        {
+            // Add a default collider (e.g., BoxCollider) if none exists
+            CapsuleCollider cap = gameObject.AddComponent<CapsuleCollider>();
+            cap.isTrigger = false; // Set to true if you want a trigger collider
+           
+        }
+        
+
+
         for (int i = 0; i < Legs.Length; i++)
         {
             Legs[i].gameObject.tag = "Zombie Legs";
@@ -723,5 +736,37 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         TargetPlayer();
     }
+
+
+   public void knockback(Vector3 hitPoint, float distance)
+    {
+
+        Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
+
+        // Apply force in the knockback direction (you can use either a Rigidbody or modify the position directly)
+        Vector3 knockbackPosition = transform.position + knockbackDirection * distance;
+
+     
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(knockbackDirection * distance, ForceMode.Impulse);
+        }
+        else
+        {
+            
+            transform.position = knockbackPosition;
+        }
+
+
+
+
+    }
+    
+  public  float GetMaxHP()
+    {
+        return MaxHealth;
+    }
+
 
 }

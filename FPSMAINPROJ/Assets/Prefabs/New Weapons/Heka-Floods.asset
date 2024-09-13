@@ -19,7 +19,7 @@ MonoBehaviour:
   shootRate: 2
   fireMode: Semi-Auto
   hekaSchool: Floods
-  hekaAbility: {fileID: 2833855917196169623, guid: 4cc6bd461aa51544999f18efaebaade0, type: 3}
+  hekaAbility: {fileID: 8159070668617599943, guid: a481924bd829dc745bfcb91b84a8130e, type: 3}
   hekaShootRate: 2
   hekaManaAmount: 65
   recoilX: -1
@@ -32,12 +32,12 @@ MonoBehaviour:
   reloadTime: 4
   magazines:
   - magazineCapacity: 8
-    currentAmmoCount: 7
+    currentAmmoCount: 0
+  - magazineCapacity: 8
+    currentAmmoCount: 0
   - magazineCapacity: 8
     currentAmmoCount: 8
-  - magazineCapacity: 8
-    currentAmmoCount: 8
-  currentMagazineIndex: 0
+  currentMagazineIndex: 1
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
   hitEffect:

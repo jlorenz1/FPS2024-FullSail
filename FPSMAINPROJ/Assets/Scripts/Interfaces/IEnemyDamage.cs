@@ -32,4 +32,8 @@ public interface IEnemyDamage
     void Blind(float duration);
 
     void Stun(float duration);
+
+    void knockback(Vector3 hitPoint, float distance);
+
+    float GetMaxHP();
 }
