@@ -30,11 +30,35 @@ public class TilePuzzleController : MonoBehaviour
     Vector3 pos8; //bottom middle
     Vector3 pos9; //bottom right
 
-    int[,] posTiles = new int[3,3];
+    public int[,] posTiles = new int[3,3];
+    public Vector3[,] positions = new Vector3[3,3];
+
+    private static TilePuzzleController _tilePuzzleInstance;
+
+    public static TilePuzzleController tilePuzzleInstance
+    {
+        get
+        {
+            if (_tilePuzzleInstance == null)
+            {
+                Debug.LogError("PlayerController is null");
+            }
+            return _tilePuzzleInstance;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        if (_tilePuzzleInstance != null && _tilePuzzleInstance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _tilePuzzleInstance = this;
+        }
+
         //setting positions
         pos5 = emptyTile.transform.position;
 
@@ -48,7 +72,15 @@ public class TilePuzzleController : MonoBehaviour
         pos9 = pos5 + new Vector3(0.25f, 0.25f, 0);
 
         //array of positions
-        Vector3[,] positions = { { pos1, pos2, pos3}, { pos4, pos5, pos6}, { pos7, pos8, pos9 } };
+        positions[0, 0] = pos1;
+        positions[0, 1] = pos2;
+        positions[0, 2] = pos3;
+        positions[1, 0] = pos4;
+        positions[1, 1] = pos5;
+        positions[1, 2] = pos6;
+        positions[2, 0] = pos7;
+        positions[2, 1] = pos8;
+        positions[2, 2] = pos9;
 
         //used to make sure the same tile isnt placed multiple times
         ArrayList tileArr = new ArrayList();
@@ -78,8 +110,6 @@ public class TilePuzzleController : MonoBehaviour
 
                     //removing tile from arr
                     tileArr.RemoveAt(randVal);
-
-                    Debug.Log(posTiles[i,j]);
                 }
             }
         }
@@ -127,12 +157,41 @@ public class TilePuzzleController : MonoBehaviour
         }
     }
     
-    void moveTile(Transform transform, Vector3 startPos, Vector3 endPos)
+    //moves tile from point startPos to endPos
+    public IEnumerator moveTile(GameObject tile, Vector3 startPos, Vector3 endPos, int[] posIndices)
     {
         //speed to slide
         float slidespeed = 1f;
         //time to slide
         float timeToSlide = 0f;
+
+        //move tile smoothly
+        while (timeToSlide < slidespeed)
+        {
+            tile.transform.position = Vector3.Lerp(startPos, endPos, (timeToSlide/slidespeed));
+            timeToSlide += Time.deltaTime;
+            yield return null;
+        }
+
+        tile.transform.position = endPos;
+        emptyTile.transform.position = startPos;
+
+        //updating posTiles
+        int tileID = posTiles[posIndices[0],posIndices[1]];
+        posTiles[posIndices[0], posIndices[1]] = 0; //that spot is now empty
+        posTiles[posIndices[2], posIndices[3]] = tileID; //this tile is now where empty spot was
+
+        Debug.Log("(" + posIndices[0] + ", " + posIndices[1] + ") (" + posIndices[2] + ", " + posIndices[3] + ")");
+
+        checkPattern();
     }
     
+    //checks if the new pattern is the winning pattern or not
+    void checkPattern()
+    {
+        if (posTiles[0,1] == 1 && posTiles[1,0] == 2 && posTiles[2,1] == 3 && posTiles[1,2] == 4)
+        {
+            door.GetComponent<doorScript>().slide(); //opening door
+        }
+    }
 }

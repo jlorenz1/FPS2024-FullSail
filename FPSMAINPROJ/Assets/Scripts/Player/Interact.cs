@@ -83,6 +83,12 @@ public class Interact : MonoBehaviour
                                 UnityEngine.Debug.Log("not spawning");
                             }
                         }
+
+                        var tileInteraction = hit.collider.GetComponent<TutorialTileScript>();
+                        if (tileInteraction != null)
+                        {
+                            tileInteraction.CheckArea();
+                        }
                     }
                 }
             }
