@@ -8,6 +8,7 @@ public class weaponStats : ScriptableObject
 {
     [Header("----- Gun Model -----")]
     public GameObject gunModel;
+    public string gunName;
 
     [Header("----- Gun Attributes -----")]
     public int shootDamage;
@@ -35,8 +36,8 @@ public class weaponStats : ScriptableObject
 
     [Header("----- Gun SFX/FX -----")]
     public GameObject muzzleFlash;
-    public ParticleSystem hitEffect;
     public ParticleSystem zombieHitEffect;
+    [SerializeField] public GameObject[] hitEffect;
     public AudioClip[] shootSound;
     public float shootVol;
     public AudioClip reloadSound;

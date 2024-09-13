@@ -18,7 +18,10 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] AudioClip ZombieProjectileAudio;
     [SerializeField, Range(0f, 1f)] float ZombieProjectileAudioVol;
-
+    [SerializeField] bool SekhmetAttack;
+    [SerializeField] bool UserKareBaseAttack;
+    [SerializeField] bool UserKareSpecialAttack1;
+    [SerializeField] bool UserKareSpecialAttack2;
     Rigidbody rb;
     Transform playerTransform;
 
@@ -28,15 +31,25 @@ public class Projectile : MonoBehaviour
     Vector3 currentDirection;
     float Nerf;
     GameObject player;
-    int NerfTimer;
+    float NerfTimer;
     int round;
+    float StartSpeed;
+
+    public GameObject aoePrefab;    // Assign your AoE slow effect prefab here
+    public float aoeRadius = 5f;    // Radius of the AoE slow effect
+    public float slowDuration = 5f; // How long the slow effect lasts on the player
+    public float slowEffectDuration = 3f; // How long the player stays slowed
+
+
     void Start()
     {
         followPlayer = true;
         int projectileLayer = gameObject.layer;
         int zombieLayer = LayerMask.NameToLayer("Zombie");
+        StartSpeed = gameManager.gameInstance.playerScript.GetSpeed();
         Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
-
+        Nerf = 3.00f;
+        NerfTimer = 5.00f;
         if (ProjectileAudio != null)
         {
             ProjectileAudio.clip = ZombieProjectileAudio;
@@ -71,8 +84,8 @@ public class Projectile : MonoBehaviour
         void Update()
     {
         round = gameManager.gameInstance.GetGameRound();
-        SetNerfTimer();
-        SetBuffStrength();
+       // SetNerfTimer();
+       // SetBuffStrength();
         if (followPlayer && player != null)
         {
             // During the first second, follow the player
@@ -115,12 +128,74 @@ public class Projectile : MonoBehaviour
         return;
     }
 
-        HandleNonBossAttack(other);
-    
-   
-}
+        if (other.isTrigger || other.CompareTag("Zombie"))
+        {
+            return;
+        }
 
-void HandleNonBossAttack(Collider other)
+        if (SekhmetAttack)
+        {
+            HandelSekhmetAttack(other);
+        }
+       
+        else if (UserKareSpecialAttack1)
+        {
+            HandelUskareSpecialAttack(other);
+        }
+
+        else
+        {
+            HandleNonBossAttack(other);
+        }
+
+    }
+    void HandelUskareSpecialAttack(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            gameManager.gameInstance.playerScript.CutSpeed(5, 100f);
+            if(gameManager.gameInstance.isSekhmetDead == false)
+            {
+                gameManager.gameInstance.Sekhmet.BlinkingJab();
+            }
+            Destroy(gameObject);
+        }
+
+    }
+    void HandelSekhmetAttack(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            CreateAoESlow(other.transform.position);
+        }
+        else if(other.CompareTag("Player"))
+        {
+            gameManager.gameInstance.playerScript.takeDamage(5);
+            gameManager.gameInstance.playerScript.CutSpeed(5, 1.5f);
+            if (gameManager.gameInstance.isUserKareDead == false)
+            {
+                gameManager.gameInstance.Userkare.LightGautling();
+
+            }
+
+            Destroy(gameObject);
+        }
+
+    }
+
+
+    void CreateAoESlow(Vector3 position)
+    {
+        // Instantiate the AoE prefab at the position passed (the player's position or other)
+        GameObject aoe = Instantiate(aoePrefab, position, Quaternion.identity);
+
+        // Set the AoE effect to destroy itself after the slow duration ends
+        Destroy(aoe, slowDuration);
+    }
+
+  
+
+    void HandleNonBossAttack(Collider other)
 {
     if (!other.CompareTag("Player"))
     {
@@ -142,9 +217,12 @@ void StickToPlayer(Collider other)
 {
     player = other.gameObject;
     transform.parent = player.transform;
-        ProjectileAudio.Stop();
+        if (ProjectileAudio != null)
+        {
+            ProjectileAudio.Stop();
+        }
         ApplyDebufs();
-    StartCoroutine(StatReset());
+    
 }
 
 
@@ -153,30 +231,18 @@ void StickToPlayer(Collider other)
     {
         if(IsSlow)
         {
-            if (OriginalSpeed / Nerf >= 1)
-            {
-                gameManager.gameInstance.playerScript.SetSpeed(OriginalSpeed / Nerf);
-            }
-            else
-                gameManager.gameInstance.playerScript.SetSpeed(1);
+            gameManager.gameInstance.playerScript.CutSpeed(5, 1.5f);
         }
 
         if (IsGround)
         {
             gameManager.gameInstance.playerScript.SetJumpCount(0);
         }
-       
+
+      
     }
 
-    IEnumerator StatReset()
-    {
-
-        yield return new WaitForSeconds(NerfTimer);
-
-        gameManager.gameInstance.playerScript.SetSpeed(OriginalSpeed);
-        gameManager.gameInstance.playerScript.SetJumpCount(OriginalJumpCount);
-    }
-
+   
     public void SetBuffStrength()
     {
         Nerf = round * 2;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,11 +34,17 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] Collider[] Arms;
 
     [Header("-----Stats-----")]
-    [SerializeField] public float health = 100f;
-    [SerializeFeild] public float Armor;
-    [SerializeField] float Range;
+    [SerializeField] protected float CurrentHealth;
+    [SerializeField] public float MaxHealth;
+    [SerializeField] float MaxArmor = 500;
+    [SerializeField] protected float Armor;
+    [SerializeField] protected float Range;
     [SerializeField] protected float damage;
-
+    [SerializeField] protected float AttackSpeed;
+    [SerializeField] protected float AttentionSpan;
+    [SerializeField] protected float sight = 25;
+    float startsight;
+    float stoppingDistance;
     [Header("-----Armor-----")]
     [SerializeField] GameObject Helmate;
     [SerializeFeild] GameObject ChestPlate;
@@ -47,8 +54,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [Header("-----Other-----")]
     [SerializeField] protected List<GameObject> Drops;
     [SerializeField] private List<GameObject> models;
+    [SerializeField] LayerMask obstacleMask;
 
-
+    bool ChasingPLayer;
     protected bool PlayerinAttackRange;
     int BoostRange = 30;
     bool RangeBoosted;
@@ -57,22 +65,27 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     float AngleToPlayer;
     bool canGroan;
     Color colorOriginal;
-   
+
     bool HasHealthBuffed;
     bool HasStrengthBuffed;
     bool HasSpeedBuffed;
     bool speednerfed;
     bool damagenerfed;
-   
+
     float HitPoints;
     float legdamage;
-   
+
     private GameObject currentModel;
 
-  
-
+    bool PlayerInSIte;
+    bool roaming;
+   
     protected virtual void Start()
     {
+         startsight = sight;
+
+        stoppingDistance = agent.stoppingDistance;
+        ChasingPLayer = false;
         speednerfed = false;
         damagenerfed = false;
         Body.gameObject.tag = "Zombie Body";
@@ -105,17 +118,26 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         HasStrengthBuffed = false;
         HasSpeedBuffed = false;
 
+        roam();
 
     }
 
     protected virtual void Update()
     {
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        ApplySeparationAndRandomMovement();
-        OutOfRangeBoost();
+
+       // ApplySeparationAndRandomMovement();
+        // OutOfRangeBoost();
         CanSeePlayer();
         ApplyGravity();
 
+        if (ChasingPLayer)
+        {
+            TargetPlayer();
+        }
+        else if (!ChasingPLayer && !roaming)
+        {
+            roam();
+        }
         CheckRange();
         if (canGroan == true)
         {
@@ -123,11 +145,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
 
-        if (legdamage >= health / 2)
+        if (legdamage >= MaxHealth / 2)
         {
             Cripple();
         }
 
+        if (CurrentHealth > MaxHealth)
+        {
+            CurrentHealth = MaxHealth;
+        }
+
+        if (Armor > MaxArmor)
+        {
+            Armor = MaxArmor;
+        }
 
     }
 
@@ -141,16 +172,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
         //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        health -= TotalDamage;
-        if (health <= 0)
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+        MaxHealth -= TotalDamage;
+        if (MaxHealth <= 0)
         {
             Die();
         }
+
+
     }
 
     protected virtual void Die()
     {
         // Common death logic
+        StopAllCoroutines();
         LootRoll(5);
         gameManager.gameInstance.UpdateGameGoal(-1);
         Destroy(gameObject);
@@ -251,41 +286,40 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
     //Player interaction 
-    bool CanSeePlayer()
+    void CanSeePlayer()
     {
-
         PlayerDrr = gameManager.gameInstance.player.transform.position - HeadPos.position;
         AngleToPlayer = Vector3.Angle(PlayerDrr, transform.forward);
 
-        //Debug.Log(AngleToPlayer);
-        Debug.DrawRay(HeadPos.position, PlayerDrr);
-
-
+        // Draw a ray for debugging
+        Debug.DrawRay(HeadPos.position, PlayerDrr, Color.red);
 
         RaycastHit hit;
-        if (Physics.Raycast(HeadPos.position, PlayerDrr, out hit))
+        if (Physics.Raycast(HeadPos.position, PlayerDrr, out hit, sight, ~obstacleMask))
         {
             if (hit.collider.CompareTag("Player") && AngleToPlayer <= ViewAngle)
             {
-                agent.SetDestination(gameManager.gameInstance.player.transform.position);
-
-
-                return true;
+                PlayerInSIte = true;
+                // Ensure we're in chasing mode if the player is spotted
+                if (!ChasingPLayer)
+                {
+                    ChasingPLayer = true;
+                }
             }
-
-
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            else
             {
-
-                FacePlayer();
+                PlayerInSIte = false;
+                // Switch back to roaming if the player is no longer in sight
+                if (ChasingPLayer)
+                {
+                    ChasingPLayer = false;
+                }
             }
-
         }
-
-
-        return false;
+ 
 
     }
+
 
     void FacePlayer()
     {
@@ -310,6 +344,65 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
     }
 
+
+    void TargetPlayer()
+    {
+      
+        agent.stoppingDistance = stoppingDistance;
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+    }
+
+
+    void roam()
+    {
+        roaming = true;
+        float roamRange = 10f;
+        agent.stoppingDistance = 0;
+        // Get a random point within a short range around the enemy
+        Vector3 randomPosition = GetRandomPositionWithinRange(transform.position, roamRange);
+
+        // Move the enemy towards that random position
+        agent.SetDestination(randomPosition);
+
+        // If the enemy reaches the random point, pick another one after a short delay
+
+        StartCoroutine(WaitThenRoamAgain());
+
+    }
+
+    IEnumerator WaitThenRoamAgain()
+    {
+
+        while (agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null; // Wait until the next frame
+        }
+
+        if (ChasingPLayer)
+        {
+            yield break;
+        }
+
+        yield return new WaitForSeconds(2);
+
+        roam();
+
+    }
+
+
+
+
+
+    // Helper method to get a random position within a defined range
+    Vector3 GetRandomPositionWithinRange(Vector3 origin, float range)
+    {
+        // Generate random values within a circular area around the origin
+        float randomX = Random.Range(-range, range);
+        float randomZ = Random.Range(-range, range);
+
+        // Return a new position around the origin with the random offsets
+        return new Vector3(origin.x + randomX, origin.y, origin.z + randomZ);
+    }
 
 
 
@@ -442,7 +535,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         if (!HasHealthBuffed)
         {
-            health += amount;
+            MaxHealth += amount;
             Debug.Log("Zombie health buffed by " + amount);
             HasHealthBuffed = true;
         }
@@ -497,7 +590,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void IncreaseHitPoints(float amount)
     {
-        health += amount * 1.334f;
+        MaxHealth += amount * 1.334f;
     }
 
     public void cutspeed(float amount, float damagetaken)
@@ -541,7 +634,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             agent.speed = 1;
     }
 
-    public void  AddArmor(float amount)
+    public void AddArmor(float amount)
     {
         if (Armor + amount < 500)
         {
@@ -576,18 +669,59 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         AddArmor(reduction);
     }
 
-  public void TakeTrueDamage(float amountOfDamageTaken)
+    public void TakeTrueDamage(float amountOfDamageTaken)
     {
-       
+
         StartCoroutine(flashRed());
 
-       
+
         //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        health -= amountOfDamageTaken;
-        if (health <= 0)
+        CurrentHealth -= amountOfDamageTaken;
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+        if (MaxHealth <= 0)
         {
             Die();
         }
 
     }
+
+
+
+
+    public void Blind(float duration)
+    {
+
+        StartCoroutine(blind(duration));
+
+
+    }
+    IEnumerator blind(float duration)
+    {
+        sight = 0;
+
+        yield return new WaitForSeconds(duration);
+
+        sight = startsight;
+
+    }
+
+    public void Stun(float duration)
+    {
+        StartCoroutine(stun(duration));
+    }
+
+    IEnumerator stun(float duration)
+    {
+        agent.speed = 0;
+
+        yield return new WaitForSeconds(duration);
+
+        agent.speed = startSpeed;
+    }
+
+    public void FlockPlayer()
+    {
+        TargetPlayer();
+    }
+
 }

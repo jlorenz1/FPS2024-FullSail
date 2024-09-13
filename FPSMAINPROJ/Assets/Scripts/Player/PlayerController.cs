@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum InventoryPos //for inventory
 {
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool invincible = false;
 
     [Header("PLAYER VARIABLES")]
-    [SerializeField] float speed;
+    public float speed;
     [SerializeField] int sprintMod;
     //[SerializeField] int crouchSpeed;
     [SerializeField] public WeaponController playerWeapon;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] public float playerHP;
+    float StartHP;
     [SerializeField] Light flashLight;
     private bool isLit = false;
 
@@ -157,16 +159,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
         HPorig = playerHP;
         damage = playerWeapon.shootDamage;
-        sprintTimer = maxSprintTimer;
-        originalSpeed = speed;
-        crouchSpeed = speed / 2;
-        startingYScale = transform.localScale.y;
-        controllerHeightOrgi = ((int)controller.height);
-        currentMana = maxMana;
-        updatePlayerUI();
+        spawnPlayer();
         meeleDuration = 2;
         canMelee = true;
         flashLight.gameObject.SetActive(false);
+        StartHP = playerHP;
+
+     
     }
 
 
@@ -183,7 +182,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         if (!onSprintCoolDown && !isCrouching)
-            sprint();
+        {
+           sprint();
+        }
         sprintTimerUpdate();
 
         wallCheck();
@@ -210,7 +211,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         }
         if (isSliding)
-            slideMovement();
+          //  slideMovement();
 
         if (isClimbing)
             climbingMovement();
@@ -567,6 +568,19 @@ public class PlayerController : MonoBehaviour, IDamage
         return jumpMax;
     }
 
+    public void CutSpeed(float duration, float strength)
+    {
+        CutSpeedrunner(duration, strength);
+    }
+
+    IEnumerator CutSpeedrunner(float duration, float strength)
+    {
+        speed /= strength;
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
+    }
 
     private IEnumerator PerformDodge()
     {
@@ -633,21 +647,25 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
 
-    public void cutspeed(float amount, float damagetaken)
+  public float GetHealth()
     {
-       speed /= amount;
+        return StartHP;
     }
 
+    public void spawnPlayer()
+    {
+        playerHP = HPorig;
+        sprintTimer = maxSprintTimer;
+        originalSpeed = speed;
+        crouchSpeed = speed / 2;
+        startingYScale = transform.localScale.y;
+        controllerHeightOrgi = ((int)controller.height);
+        currentMana = maxMana;
+        updatePlayerUI();
 
-    public void cutdamage(float amount)
-    {
-        damage /= amount;
-    }
-    
-    
-    public void DieWithoutDrops()
-    {
-       
+        controller.enabled = false;
+        transform.position = gameManager.gameInstance.playerSpawnPoint.transform.position;
+        controller.enabled = true;
     }
 
 }

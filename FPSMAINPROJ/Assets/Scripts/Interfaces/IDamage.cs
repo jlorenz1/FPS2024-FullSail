@@ -7,6 +7,9 @@ public interface IDamage
     // Interface to assign damage to an object
     void takeDamage(float amountOfDamageTaken);
 
+    float GetHealth();
 
- 
+
+
+
 }

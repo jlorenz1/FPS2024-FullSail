@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Heka-Floods
   m_EditorClassIdentifier: 
   gunModel: {fileID: 185015911520072586, guid: d6a41bed739a2a44f87afe0bd3ec16b3, type: 3}
+  gunName: Nile's Wrath
   shootDamage: 65
   shootingDistance: 100
   shootRate: 2
@@ -31,17 +32,27 @@ MonoBehaviour:
   reloadTime: 4
   magazines:
   - magazineCapacity: 8
-    currentAmmoCount: 8
+    currentAmmoCount: 7
   - magazineCapacity: 8
     currentAmmoCount: 8
   - magazineCapacity: 8
     currentAmmoCount: 8
   currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
-  hitEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
-  zombieHitEffect: {fileID: 198000011254678926, guid: abb9f519b142e304d9c45b56afa768bc, type: 3}
+  zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
+  hitEffect:
+  - {fileID: 100000, guid: b1e375631a4a3fb42a8d2842d82a5dd3, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
+  - {fileID: 100000, guid: 2dc2d86236479b4428b2023663b4d411, type: 3}
+  - {fileID: 100000, guid: 3cddb9cce01bd5e4b909603b22269ee5, type: 3}
+  - {fileID: 100000, guid: 348ca72c2e3eec544994fb80cf116d1f, type: 3}
+  - {fileID: 100000, guid: 1c0dce8919b251d41842711db86342f0, type: 3}
   shootSound:
   - {fileID: 8300000, guid: e21e61fed1cb6e94db0ff6c4f09801c7, type: 3}
+  - {fileID: 8300000, guid: 2a63c5d512819804c8e9c736e9afeb04, type: 3}
+  - {fileID: 8300000, guid: b51e24b1f239c3d4ba50d3ffa1f6988e, type: 3}
+  - {fileID: 8300000, guid: f4421fbc89f3f2843b041e0aa04abe93, type: 3}
+  - {fileID: 8300000, guid: 55f19ac75f612dd4f9b27999bb4b62d9, type: 3}
   shootVol: 0.1
   reloadSound: {fileID: 8300000, guid: bce5ae97694eb6a478b977b26ca43114, type: 3}
   reloadVol: 0.1
