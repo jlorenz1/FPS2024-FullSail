@@ -64,26 +64,11 @@ public class ElectricityBullet : MonoBehaviour
         
     }
 
-    //void shootSecond(Transform shootPoint, GameObject closestZombie)
-    //{
-    //    shootPoint.LookAt(closestZombie.transform.position);
-    //    GameObject projectile = Instantiate(gameManager.gameInstance.playerWeapon.hekaAbility, shootPoint.position, shootPoint.rotation);
-
-    //    ElectricityBullet newBullet = projectile.GetComponent<ElectricityBullet>();
-    //    if (newBullet != null)
-    //    {
-    //        newBullet.currentBounces = currentBounces;
-    //    }
-    //}
-
     IEnumerator startNextBounce(GameObject zombieHit, Transform spawnBounce, GameObject closestZombie)
     {
         Debug.Log("starting bounce");
 
         yield return new WaitForSeconds(bounceDelay);
-
-        
-
         
         Debug.Log("Attempting to instantiate bounce projectile...");
         spawnBounce.LookAt(closestZombie.transform.position);

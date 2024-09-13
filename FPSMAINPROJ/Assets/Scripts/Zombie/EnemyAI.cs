@@ -711,7 +711,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     IEnumerator blind(float duration)
     {
         sight = 0;
-
+        Debug.Log(sight);
         yield return new WaitForSeconds(duration);
 
         sight = startsight;
