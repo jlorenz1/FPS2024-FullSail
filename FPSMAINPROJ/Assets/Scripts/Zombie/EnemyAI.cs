@@ -92,15 +92,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         Body.gameObject.tag = "Zombie Body";
         Head.gameObject.tag = "Zombie Head";
 
-
-
-        if (GetComponent<Collider>() == null)
-        {
-            // Add a default collider (e.g., BoxCollider) if none exists
-            CapsuleCollider cap = gameObject.AddComponent<CapsuleCollider>();
-            cap.isTrigger = false; // Set to true if you want a trigger collider
-           
-        }
         
 
 

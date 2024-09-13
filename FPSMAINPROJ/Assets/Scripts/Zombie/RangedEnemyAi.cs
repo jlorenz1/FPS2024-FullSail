@@ -59,7 +59,7 @@ public class RangedEnemy : EnemyAI
         yield return new WaitForSeconds(1f / castSpeed);
 
         // Perform the ranged attack
-        CastAttack();
+        
 
         nextFireTime = Time.time + (1f / castSpeed); // Adjust next fire time based on cast speed
         canAttack = true;
