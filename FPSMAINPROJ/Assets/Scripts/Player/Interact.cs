@@ -84,11 +84,8 @@ public class Interact : MonoBehaviour
                             }
                         }
 
-                        var tileInteraction = hit.collider.GetComponent<TutorialTileScript>();
-                        if (tileInteraction != null)
-                        {
-                            tileInteraction.CheckArea();
-                        }
+                        //tutorial tile puzzle, for each tile in the puzzle
+                        hit.collider.GetComponent<TutorialTileScript>().CheckArea();
                     }
                 }
             }

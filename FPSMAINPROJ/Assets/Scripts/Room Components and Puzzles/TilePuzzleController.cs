@@ -62,14 +62,14 @@ public class TilePuzzleController : MonoBehaviour
         //setting positions
         pos5 = emptyTile.transform.position;
 
-        pos1 = pos5 + new Vector3(-0.25f, -0.25f, 0);
-        pos2 = pos5 + new Vector3(0, -0.25f, 0);
-        pos3 = pos5 + new Vector3(0.25f, -0.25f, 0);
+        pos1 = pos5 + new Vector3(-0.25f, 0.25f, 0);
+        pos2 = pos5 + new Vector3(0, 0.25f, 0);
+        pos3 = pos5 + new Vector3(0.25f, 0.25f, 0);
         pos4 = pos5 + new Vector3(-0.25f, 0, 0);
         pos6 = pos5 + new Vector3(0.25f, 0, 0);
-        pos7 = pos5 + new Vector3(-0.25f, 0.25f, 0);
-        pos8 = pos5 + new Vector3(0, 0.25f, 0);
-        pos9 = pos5 + new Vector3(0.25f, 0.25f, 0);
+        pos7 = pos5 + new Vector3(-0.25f, -0.25f, 0);
+        pos8 = pos5 + new Vector3(0, -0.25f, 0);
+        pos9 = pos5 + new Vector3(0.25f, -0.25f, 0);
 
         //array of positions
         positions[0, 0] = pos1;
@@ -121,40 +121,46 @@ public class TilePuzzleController : MonoBehaviour
         {
             for (int j = 0;j < 3; j++)
             {
-                if (posTiles[i, j] == 1)
+                if (!(i == 1 && j == 1))
                 {
-                    topTile1.transform.position = positions[i, j];
+                    if (posTiles[i, j] == 1)
+                    {
+                        topTile1.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == 2)
+                    {
+                        leftTile2.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == 3)
+                    {
+                        bottomTile3.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == 4)
+                    {
+                        rightTile4.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == -1)
+                    {
+                        blankTile1.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == -2)
+                    {
+                        blankTile2.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == -3)
+                    {
+                        blankTile3.transform.position = positions[i, j];
+                    }
+                    else if (posTiles[i, j] == -4)
+                    {
+                        blankTile4.transform.position = positions[i, j];
+                    }
                 }
-                else if (posTiles[i, j] == 2)
-                {
-                    leftTile2.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == 3)
-                {
-                    bottomTile3.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == 4)
-                {
-                    rightTile4.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == -1)
-                {
-                    blankTile1.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == -2)
-                {
-                    blankTile2.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == -3)
-                {
-                    blankTile3.transform.position = positions[i, j];
-                }
-                else if (posTiles[i, j] == -4)
-                {
-                    blankTile4.transform.position = positions[i, j];
-                }
+               
             }
         }
+
+        
     }
     
     //moves tile from point startPos to endPos
@@ -164,6 +170,20 @@ public class TilePuzzleController : MonoBehaviour
         float slidespeed = 1f;
         //time to slide
         float timeToSlide = 0f;
+
+        {
+            string debugStr = "";
+            for (int i = 0; i < 3; i++)
+            {
+                debugStr += "Row " + i + ": ";
+                for (int j = 0; j < 3; j++)
+                {
+                    debugStr += posTiles[i, j] + " ";
+                }
+                debugStr += "\n";
+            }
+            Debug.Log(debugStr);
+        }
 
         //move tile smoothly
         while (timeToSlide < slidespeed)
@@ -180,6 +200,20 @@ public class TilePuzzleController : MonoBehaviour
         int tileID = posTiles[posIndices[0],posIndices[1]];
         posTiles[posIndices[0], posIndices[1]] = 0; //that spot is now empty
         posTiles[posIndices[2], posIndices[3]] = tileID; //this tile is now where empty spot was
+
+        {
+            string debugStr = "";
+            for (int i = 0; i < 3; i++)
+            {
+                debugStr += "Row " + i + ": ";
+                for (int j = 0; j < 3; j++)
+                {
+                    debugStr += posTiles[i, j] + " ";
+                }
+                debugStr += "\n";
+            }
+            Debug.Log(debugStr);
+        }
 
         Debug.Log("(" + posIndices[0] + ", " + posIndices[1] + ") (" + posIndices[2] + ", " + posIndices[3] + ")");
 
