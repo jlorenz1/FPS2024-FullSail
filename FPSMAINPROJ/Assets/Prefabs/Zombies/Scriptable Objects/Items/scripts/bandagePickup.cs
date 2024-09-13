@@ -7,7 +7,7 @@ public class bandagePickup : pickupObject, IPickup
 {
     public void Awake()
     {
-        type = itemType.Gem;
+        type = itemType.Bandage;
         triggerType = true;
     }
     
