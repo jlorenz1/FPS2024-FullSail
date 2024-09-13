@@ -8,6 +8,7 @@ public class weaponStats : ScriptableObject
 {
     [Header("----- Gun Model -----")]
     public GameObject gunModel;
+    public string gunName;
 
     [Header("----- Gun Attributes -----")]
     public int shootDamage;

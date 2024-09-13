@@ -76,7 +76,7 @@ public class WeaponController : MonoBehaviour
         if (gunList.Count >= 1)
         {
             gameManager.gameInstance.AmmoHUD.gameObject.SetActive(true);
-            displayAmmo();
+            
         }
         else if (gunList.Count == 0)
             gameManager.gameInstance.AmmoHUD.gameObject.SetActive(false);
@@ -143,31 +143,33 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator shootElectricity()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
         {
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-
-            yield return null;
+            gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
+        yield return new WaitForSeconds(hekaShootRate);
     }
     IEnumerator shootDarkness()
     {
-        if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
 
-            yield return null;
+            
         }
+        yield return new WaitForSeconds(hekaShootRate);
     }
 
     IEnumerator shootFloods()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
 
-            yield return null;
+            
         }
+        yield return new WaitForSeconds(hekaShootRate);
     }
 
     IEnumerator shoot()
@@ -175,6 +177,7 @@ public class WeaponController : MonoBehaviour
 
         if (selectedGun >= 0 && selectedGun < gunList.Count)
         {
+            displayCurrentAmmo();
             if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
             {
                 UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
@@ -281,14 +284,9 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reload()
     {
-
-        AudioManager.audioInstance.playAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
-        yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
-        //StartCoroutine(fillWhileReloading());
-        //checks if there are mags to reload with
-
         if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length)
         {
+
             gunList[selectedGun].currentMagazineIndex++;
             gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
         }
@@ -296,8 +294,16 @@ public class WeaponController : MonoBehaviour
         {
             UnityEngine.Debug.Log("No more mags!");
         }
+
+        AudioManager.audioInstance.playAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
+        yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
+        //StartCoroutine(fillWhileReloading());
+        //checks if there are mags to reload with
+
         isReloading = false;
 
+        displayCurrentAmmo();
+        displayMaxAmmo();
     }
 
     IEnumerator spawnTrail(TrailRenderer trail, RaycastHit hit)
@@ -316,22 +322,34 @@ public class WeaponController : MonoBehaviour
         Destroy(trail.gameObject, trail.time);
     }
 
-    public void displayAmmo()
+    public void displayCurrentAmmo()
+    {
+        gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
+    }
+
+    public void displayMaxAmmo()
     {
         int amountToDisplay = 0;
-        gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
         for (int i = 0; i < gunList[selectedGun].magazines.Length; i++)
         {
+            if(i < gunList[selectedGun].currentMagazineIndex)
+            {
+                continue;
+            }
             amountToDisplay += gunList[selectedGun].magazines[i].currentAmmoCount;
+        }
+
+        if (gunList[selectedGun].currentMagazineIndex == gunList[selectedGun].magazines.Length - 1)
+        {
+            amountToDisplay = 0;
         }
         //UnityEngine.Debug.Log(amountToDisplay);
         gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
-
     }
 
     public void getWeaponStats(weaponStats gun)
     {
-    
+        
         if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);
@@ -346,6 +364,7 @@ public class WeaponController : MonoBehaviour
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = gun.muzzleFlash;
         gunList.Add(gun);
+        gameManager.gameInstance.gunName.text = gun.gunName;
 
         selectedGun = gunList.Count - 1;
         shootDamage = gun.shootDamage;
@@ -370,7 +389,8 @@ public class WeaponController : MonoBehaviour
         hekaManaAmount = gun.hekaManaAmount;
         hekaShootRate = gun.hekaShootRate;
 
-       
+        displayMaxAmmo();
+        displayCurrentAmmo();
         //gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -394,6 +414,7 @@ public class WeaponController : MonoBehaviour
     void changeGun()
     {
         currGun = gunList[selectedGun];
+        gameManager.gameInstance.gunName.text = currGun.gunName;
         shootDamage = currGun.shootDamage;
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
@@ -426,6 +447,8 @@ public class WeaponController : MonoBehaviour
         gunModel.SetParent(gunTransform);
         gunModel.localPosition = Vector3.zero;
         gunModel.localRotation = Quaternion.identity;
+        displayCurrentAmmo();
+        displayMaxAmmo();
 
     }
 
