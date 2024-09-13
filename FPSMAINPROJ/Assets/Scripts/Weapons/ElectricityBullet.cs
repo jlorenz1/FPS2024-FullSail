@@ -41,7 +41,7 @@ public class ElectricityBullet : MonoBehaviour
         if (damageable != null)
         {
 
-            //damageable.takeDamage(damage);
+            damageable.takeDamage(damage);
             if(currentBounces < bounceMax)
             {
                 
@@ -71,7 +71,7 @@ public class ElectricityBullet : MonoBehaviour
         yield return new WaitForSeconds(bounceDelay);
         
         Debug.Log("Attempting to instantiate bounce projectile...");
-        spawnBounce.LookAt(closestZombie.transform.position);
+        spawnBounce.LookAt(closestZombie.transform.Find("mixamorig5:Hips"));
         GameObject projectile = Instantiate(gameManager.gameInstance.playerWeapon.hekaAbility, spawnBounce.position, spawnBounce.rotation);
 
         if(projectile == null)
