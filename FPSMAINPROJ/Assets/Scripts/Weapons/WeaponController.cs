@@ -45,11 +45,12 @@ public class WeaponController : MonoBehaviour
     private weaponStats currGun;
     int currentPatternIndex = 0;
     public bool sprayPattern = false;
+    private PlayerController playerController;
    
     void Start()
     {
         cameraScript = FindObjectOfType<cameraController>();
-
+        playerController = gameManager.gameInstance.playerScript;
         if(hekaAbility != null)
         {
             hasHeka = true;
@@ -108,7 +109,7 @@ public class WeaponController : MonoBehaviour
 
     void handleFullAuto()
     {
-        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting && !playerController.isSprinting)
         {
             StartCoroutine(shoot());
         }
@@ -116,7 +117,7 @@ public class WeaponController : MonoBehaviour
 
     void handleSemiAuto()
     {
-        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting)
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting && !playerController.isSprinting)
         {
             StartCoroutine(shoot());
         }
@@ -124,7 +125,7 @@ public class WeaponController : MonoBehaviour
 
     void handleHeka()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && !playerController.isSprinting)
         {
             if (gunList[selectedGun].hekaSchool == "Electricity")
             {
