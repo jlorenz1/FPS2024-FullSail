@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 854298039395076040}
   - component: {fileID: 2607200692656597261}
   - component: {fileID: 3811981777873414889}
-  - component: {fileID: 2381868501561522021}
+  - component: {fileID: -8970750192453803465}
   m_Layer: 0
-  m_Name: ElectricityBullet
+  m_Name: DarknessBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2381868501561522021
+--- !u!114 &-8970750192453803465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,15 +143,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8159070668617599943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70daea769ebe15a4d88f03b1229716ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 26078c96382e68c4aa88fe03c56dc807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  destroyTime: 10
-  damage: 10
-  maxDist: 20
-  bounceMax: 4
-  bounceDelay: 0.1
+  speed: 10
+  destroyTime: 5
+  damage: 1
+  maxDist: 300
+  blindDuration: 3
   damageableLayer:
     serializedVersion: 2
     m_Bits: 16384
