@@ -158,9 +158,10 @@ public class WeaponController : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
+
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
 
-            
+            gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
     }
@@ -171,7 +172,7 @@ public class WeaponController : MonoBehaviour
         {
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
 
-            
+            gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
     }
