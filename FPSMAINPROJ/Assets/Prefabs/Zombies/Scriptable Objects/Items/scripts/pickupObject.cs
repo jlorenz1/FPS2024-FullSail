@@ -7,6 +7,7 @@ public enum itemType
     Bandage,
     Key,
     Rune,
+    Gem,
     flashlight,
     Default
 }
