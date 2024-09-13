@@ -83,6 +83,9 @@ public class Interact : MonoBehaviour
                                 UnityEngine.Debug.Log("not spawning");
                             }
                         }
+
+                        //tutorial tile puzzle, for each tile in the puzzle
+                        hit.collider.GetComponent<TutorialTileScript>().CheckArea();
                     }
                 }
             }
