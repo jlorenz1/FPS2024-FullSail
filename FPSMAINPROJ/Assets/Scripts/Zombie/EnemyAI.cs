@@ -74,6 +74,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     float HitPoints;
     float legdamage;
+    Vector3 currentVelocity;
 
     private GameObject currentModel;
 
@@ -138,8 +139,15 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Update()
     {
 
-       // ApplySeparationAndRandomMovement();
+        // ApplySeparationAndRandomMovement();
         // OutOfRangeBoost();
+        currentVelocity = agent.velocity;
+        float maxSpeed = agent.speed;
+        float currentSpeed = currentVelocity.magnitude;
+
+        float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
+        animator.SetFloat("Speed", normalizedSpeed);
+
         CanSeePlayer();
         ApplyGravity();
 
@@ -711,6 +719,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     IEnumerator blind(float duration)
     {
         sight = 0;
+        ChasingPLayer = false;
         Debug.Log(sight);
         yield return new WaitForSeconds(duration);
 
