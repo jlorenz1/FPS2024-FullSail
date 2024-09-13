@@ -53,6 +53,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] TMP_Text requiredItemsDis;
     [SerializeFeild] bool endless;
     public TMP_Text ammoCount;
+    [SerializeField] public TMP_Text gunName;
     public TMP_Text maxAmmoCount;
     public Image ammoCircle;
     public GameObject flashDamage;
