@@ -5,22 +5,19 @@ public class SpecialEnemy : EnemyAI
     public float specialAbilityCooldown = 5f;
     private float nextAbilityTime = 5f;
     [SerializeField] float BuffRange = 30;
-    [SerializeField] bool HealthBuffer;
-    [SerializeField] bool SpeedBuffer;
+    [SerializeField] bool maxHealthBuffer;
+    [SerializeField] bool AttackSpeedBuffer;
     [SerializeField] bool damageBUffer;
-    [SerializeField] bool SpecailCaster;
+    [SerializeField] bool ArmorBUffer;
+    [SerializeField] bool Healer;
+
 
     [Header("-----Ability Stats-----")]
-    [SerializeField] int DamageBuff;
-    [SerializeField] int SpeedBuff;
-    [SerializeField] int HealthBuff;
-   
-
-
-    [Header("-----Projectile Type-----")]
-    [SerializeField] GameObject NoramalProjectilePrefab;
-    [SerializeField] GameObject SpecialProjectile;
-    [SerializeField] GameObject BossProjectilePrefab;
+    [SerializeField] float AttackSpeedBuff;
+    [SerializeField] float AttackDamageBuff;
+    [SerializeField] float HealthBuff;
+    [SerializeField] float ArmorBuff;
+    [SerializeField] float Healing;
 
 
     [SerializeField] AudioClip ZombieBuff;
@@ -33,7 +30,11 @@ public class SpecialEnemy : EnemyAI
         if (Time.time >= nextAbilityTime)
         {
             UseSpecialAbility();
-            PlayAudio(ZombieBuff, ZombieBuffVol);
+            if (ZombieBuff != null)
+            {
+              //  PlayAudio(ZombieBuff, ZombieBuffVol);
+            }
+
             nextAbilityTime = Time.time + specialAbilityCooldown;
         }
     }
@@ -54,23 +55,33 @@ public class SpecialEnemy : EnemyAI
 
                     Debug.Log("A zombie has entered the trigger zone.");
 
-                    if (HealthBuffer)
+                    if (maxHealthBuffer)
                     {
-                        int totalHealthBuff = HealthBuff + round;
-                        FellowZombie.AddHP(totalHealthBuff);
+                        FellowZombie.AddMaxHp(HealthBuff);
                     }
 
                     if (damageBUffer)
                     {
-                        int totalDamageBuff = DamageBuff * gameManager.gameInstance.GetGameRound();
-                        FellowZombie.AddDamage(totalDamageBuff);
+                      
+                        FellowZombie.AddDamage(AttackDamageBuff);
                     }
 
-                    if (SpeedBuffer)
+                    if (AttackSpeedBuffer)
                     {
-                        int totalSpeedBuff = SpeedBuff * gameManager.gameInstance.GetGameRound();
-                        FellowZombie.AddSpeed(totalSpeedBuff);
+                        FellowZombie.AddAttackSpeed(AttackSpeedBuff);
                     }
+
+                    if (ArmorBUffer)
+                    {
+                        FellowZombie.AddArmor(ArmorBuff);
+                    }
+
+
+                    if (Healer)
+                    {
+                        FellowZombie.AddHP(Healing);
+                    }
+
                    
                 }
             }

@@ -11,7 +11,7 @@ public class RangedEnemy : EnemyAI
     [SerializeField] GameObject CastPortal1;
     [SerializeField] GameObject CastPortal2;
 
-    [SerializeField] float castSpeed = 1f;
+   
     float castDelay = 1;
     [SerializeField] float castRange;
     bool canAttack;
@@ -58,9 +58,6 @@ public class RangedEnemy : EnemyAI
         // Wait based on the cast speed
         yield return new WaitForSeconds(1f / castSpeed);
 
-        // Perform the ranged attack
-        
-
         nextFireTime = Time.time + (1f / castSpeed); // Adjust next fire time based on cast speed
         canAttack = true;
     }
@@ -77,4 +74,9 @@ public class RangedEnemy : EnemyAI
         // Additional ranged-specific death logic (if any)
         base.Die();
     }
+
+
+ 
+
+
 }
