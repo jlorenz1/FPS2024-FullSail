@@ -33,7 +33,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void play()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(1);
     }
 
     //altershop

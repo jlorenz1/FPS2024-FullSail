@@ -22,7 +22,7 @@ public class doorScript : MonoBehaviour
             //time it takes
         float timeToOpen = 0f;
 
-        AudioManager.audioInstance.playAudio(openingDoor, doorVol);
+        AudioManager.audioInstance.playSFXAudio(openingDoor, doorVol);
 
         while (timeToOpen < slidespeed)
         {

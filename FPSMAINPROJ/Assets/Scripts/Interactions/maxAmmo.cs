@@ -15,7 +15,7 @@ public class maxAmmo : MonoBehaviour
        if (other.CompareTag("Player"))
         {
             WeaponManager.WeaponsInstance.resetAllPlayerWeapons();
-            AudioManager.audioInstance.playAudio(pickupSound, pickupVol);
+            AudioManager.audioInstance.playSFXAudio(pickupSound, pickupVol);
             Destroy(gameObject);
         }
     }
