@@ -22,7 +22,7 @@ public class gemPickup : pickupObject, IPickup
     }
     public void useItem()
     {
-        gameManager.gameInstance.GemCountUpdate(1);
+        gameManager.gameInstance.playerScript.inventory.AddItem(this, amount);
         Destroy(prefab);
     }
 }

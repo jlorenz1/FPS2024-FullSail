@@ -4,12 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum InventoryPos //for inventory
-{
-    Slot1 = 0,
-    Slot2 = 1,
-    Slot3 = 2,
-}
 public class PlayerController : MonoBehaviour, IDamage
 {
     private static PlayerController _playerInstance;

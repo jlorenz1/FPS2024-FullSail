@@ -72,7 +72,6 @@ public class gameManager : MonoBehaviour
     public WeaponController playerWeapon;
     public cameraController cameraController;
     public WeaponManager weaponManager;
-    public int gemCount;
 
 
     //Objects
@@ -465,19 +464,6 @@ public class gameManager : MonoBehaviour
         }
 
         fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, endAlpha);
-    }
-
-    public void GemCountUpdate(int numberOfGems)
-    {
-        StartCoroutine(flashAdd());
-        gemCount += numberOfGems;
-    }
-
-    IEnumerator flashAdd()
-    {
-        gameManager.gameInstance.gem.GameObject().SetActive(true);
-        yield return new WaitForSeconds(3);
-        gameManager.gameInstance.gem.GameObject().SetActive(false);
     }
 
     public void UserkareDead()
