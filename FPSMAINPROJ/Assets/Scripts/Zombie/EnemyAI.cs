@@ -95,6 +95,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         Head.gameObject.tag = "Zombie Head";
 
 
+
+        Transform bodyAttatch = transform.Find("mixamorig5:Hips");
+        Transform hekaOutting = new GameObject("HekaOutting").transform;
+        hekaOutting.SetParent(bodyAttatch);
+        hekaOutting.localPosition = new Vector3(0, .79f, 0);
+
       
 
         for (int i = 0; i < Legs.Length; i++)
