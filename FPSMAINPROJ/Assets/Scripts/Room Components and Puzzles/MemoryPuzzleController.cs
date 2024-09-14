@@ -84,7 +84,7 @@ public class MemoryPuzzleController : MonoBehaviour
         for (int i = 0; i < pattern.Length; i++) //moving chosen tiles so the player can see them
         {
             displayTiles[pattern[i]-1].transform.position = location;
-            location += new Vector3(1, 0, 0);
+            location += new Vector3(-1.25f, 0, 0);
         }
     }
 

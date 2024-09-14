@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 703070587518599611}
   - component: {fileID: 3218503351654666515}
   m_Layer: 0
-  m_Name: floor (3)
+  m_Name: roof 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,11 +1150,11 @@ Transform:
   m_GameObject: {fileID: 3004995581711515910}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.5, y: 7.2000003, z: 0}
+  m_LocalPosition: {x: -12.500006, y: 7.2000003, z: 0}
   m_LocalScale: {x: 5, y: 1.5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7793599973411388691}
+  m_Father: {fileID: 456884494454118471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1621803636838559415
 MonoBehaviour:
@@ -3330,6 +3330,39 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &7003470244900543038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456884494454118471}
+  m_Layer: 0
+  m_Name: roof
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &456884494454118471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7003470244900543038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5629391194489117612}
+  - {fileID: 7174687830648090055}
+  m_Father: {fileID: 7793599973411388691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7530743488687295014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4757,7 +4790,7 @@ GameObject:
   - component: {fileID: 1602481445819185709}
   - component: {fileID: 7133383468225048339}
   m_Layer: 0
-  m_Name: floor (2)
+  m_Name: roof 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4776,7 +4809,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1.5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7793599973411388691}
+  m_Father: {fileID: 456884494454118471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &191595547749211059
 MonoBehaviour:
@@ -5129,8 +5162,7 @@ Transform:
   - {fileID: 2748552304823762294}
   - {fileID: 2606661570632760053}
   - {fileID: 2163208696645207327}
-  - {fileID: 5629391194489117612}
-  - {fileID: 7174687830648090055}
+  - {fileID: 456884494454118471}
   - {fileID: 8079047543764845238}
   - {fileID: 230510882363956797}
   - {fileID: 9000887268704979342}
