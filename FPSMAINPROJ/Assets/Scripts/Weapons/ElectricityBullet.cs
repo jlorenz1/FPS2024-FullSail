@@ -22,16 +22,16 @@ public class ElectricityBullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Camera camera = Camera.main;
+            //Camera camera = Camera.main;
 
-            //get middle of the screen
-            Ray rayMiddle = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));
-            Vector3 targetPoint = rayMiddle.GetPoint(maxDist);
+            ////get middle of the screen
+            //Ray rayMiddle = camera.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0));
+            //Vector3 targetPoint = rayMiddle.GetPoint(maxDist);
 
-            Vector3 direction = (targetPoint - transform.position).normalized;
+            //Vector3 direction = (targetPoint - transform.position).normalized;
 
-            //face the bullet towards direction
-            transform.forward = direction;
+            ////face the bullet towards direction
+            //transform.forward = direction;
 
             rb.velocity = transform.forward * speed;
         }
