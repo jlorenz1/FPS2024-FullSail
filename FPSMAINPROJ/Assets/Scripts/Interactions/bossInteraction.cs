@@ -17,7 +17,7 @@ public class bossInteraction : MonoBehaviour
             Instantiate(bossRitualPrefab, spawnLoaction.position, spawnLoaction.rotation);
             gameManager.gameInstance.hasStartedRitual = true;
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Boss is spawning, defeat to survive!", 6f));
-            AudioManager.audioInstance.playAudio(placingSound, placingVol);
+            AudioManager.audioInstance.playSFXAudio(placingSound, placingVol);
             //SPAWN BOSS FUNTION FOR ENEMIES
             gameManager.gameInstance.enemySpawner.SpawnBoss();
         }

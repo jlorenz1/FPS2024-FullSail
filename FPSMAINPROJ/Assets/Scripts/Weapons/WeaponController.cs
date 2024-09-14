@@ -38,6 +38,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public GameObject casingEffect;
     [SerializeFeild] public TrailRenderer bulletTrail;
 
+    [SerializeField] public AudioSource weaponSource;
+
     private cameraController cameraScript;
     int selectedGun;
     public bool isReloading = false;
@@ -189,7 +191,7 @@ public class WeaponController : MonoBehaviour
                 gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
                 isShooting = true;
                 //StartCoroutine(flashMuzzel());
-                AudioManager.audioInstance.playAudio(gunList[selectedGun].shootSound[UnityEngine.Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
+                AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].shootSound[UnityEngine.Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
                 var muzzleFlashObj = Instantiate(muzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
                 muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
                 Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
@@ -300,7 +302,7 @@ public class WeaponController : MonoBehaviour
             UnityEngine.Debug.Log("No more mags!");
         }
 
-        AudioManager.audioInstance.playAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
+        AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
         yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
         //StartCoroutine(fillWhileReloading());
         //checks if there are mags to reload with

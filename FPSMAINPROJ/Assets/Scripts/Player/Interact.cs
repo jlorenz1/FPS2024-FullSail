@@ -148,7 +148,7 @@ public class Interact : MonoBehaviour
     public IEnumerator startInteract()
     {
         RaycastHit hit;
-        AudioManager.audioInstance.playAudio(playerScript.interactSounds[Random.Range(0, playerScript.interactSounds.Length)], playerScript.interactVol);
+        AudioManager.audioInstance.playSFXAudio(playerScript.interactSounds[Random.Range(0, playerScript.interactSounds.Length)], playerScript.interactVol);
 
         if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -40,6 +41,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] public GameObject gameAlterMenu;
+    [SerializeField] public GameObject gameOptionsMenu;
+    [SerializeField] public Slider sensSlider;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
@@ -73,7 +76,13 @@ public class gameManager : MonoBehaviour
     public cameraController cameraController;
     public WeaponManager weaponManager;
 
+    [Header("----AUDIO-----")]
+    [SerializeField] public AudioMixer audioMixer;
+    [SerializeField] public Slider masterVolSlider;
+    [SerializeField] public Slider SFXVolSlider;
+    [SerializeField] public Slider musicVolSlider;
 
+    [Header("----Misc---")]
     //Objects
     public GameObject playerSpawnPoint;
     public EnemySpawner enemySpawner;
@@ -187,11 +196,30 @@ public class gameManager : MonoBehaviour
 
         MainCam = Camera.main;
 
+        //audio
+
+        
+
+        masterVolSlider.value = PlayerPrefs.GetFloat("MasterVol");
+        SFXVolSlider.value = PlayerPrefs.GetFloat("SFXVol");
+        musicVolSlider.value = PlayerPrefs.GetFloat("MusicVol");
+        sensSlider.value = PlayerPrefs.GetInt("sens");
+
+        cameraController.sens = PlayerPrefs.GetInt("sens");
+
+        masterVolSlider.onValueChanged.AddListener(onMasterSliderChange);
+        SFXVolSlider.onValueChanged.AddListener(onSFXSliderChange);
+        musicVolSlider.onValueChanged.AddListener(onMusicSliderChange);
+
     }
 
     void Start()
     {
         StartCoroutine(fadeOut());
+
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolSlider.value) * 20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(SFXVolSlider.value) * 20);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolSlider.value) * 20);
     }
 
 
@@ -206,11 +234,18 @@ public class gameManager : MonoBehaviour
                 gameAlterMenu.SetActive(false);
                 resumePlayerControls();
             }
-            else if (gameActiveMenu == null && !gameAlterMenu.activeSelf)
+            else if (gameActiveMenu == null && !gameAlterMenu.activeSelf && !gameOptionsMenu.activeSelf)
             {
                 PauseGame();
                 gameActiveMenu = gamePauseMenu;
                 gameActiveMenu.SetActive(gameIsPaused);
+            }
+            else if(gameOptionsMenu.activeSelf)
+            {
+                saveSettings();
+                gameOptionsMenu.SetActive(false);
+                gameActiveMenu = gamePauseMenu;
+                gamePauseMenu.SetActive(true);
             }
             else
             {
@@ -224,6 +259,8 @@ public class gameManager : MonoBehaviour
         enemyCount.text = EnemyCount.ToString("F0");
         pointCount.text = PointCount.ToString("F0");
 
+        PlayerPrefs.SetInt("sens", (int)sensSlider.value);
+        
     }
 
     // Pause the Game
@@ -483,6 +520,44 @@ public class gameManager : MonoBehaviour
     public void SekhmetDeathLocation(Transform location)
     {
         SekhmetRespawn = location;
+    }
+
+    public void onSliderChange(float value)
+    {
+        PlayerPrefs.SetInt("sens", (int)value);
+
+        saveSettings();
+    } 
+
+    public void onMasterSliderChange(float value)
+    {
+        Debug.Log("Master Volume Slider Value: " + value);
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20); //log10 for decibles 
+        saveSettings();
+
+    }
+
+    public void onSFXSliderChange(float value)
+    {
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20); //log10 for decibles 
+        saveSettings();
+    }
+
+    public void onMusicSliderChange(float value)
+    {
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20); //log10 for decibles 
+        saveSettings();
+    }
+
+    public void saveSettings()
+    {
+        PlayerPrefs.SetInt("sens", (int)sensSlider.value);
+
+        PlayerPrefs.SetFloat("MasterVol", (float)masterVolSlider.value);
+        PlayerPrefs.SetFloat("SFXVol", (float)SFXVolSlider.value);
+        PlayerPrefs.SetFloat("MusicVol", (float)musicVolSlider.value);
+
+        PlayerPrefs.Save();
     }
 
 }

@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             jumpCount++;
             playerVel.y = jumpSpeed;
-            AudioManager.audioInstance.playAudio(jumpSounds[Random.Range(0, jumpSounds.Length)], jumpVol);
+            AudioManager.audioInstance.playSFXAudio(jumpSounds[Random.Range(0, jumpSounds.Length)], jumpVol);
         }
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isPlayingSound = true;
 
-        AudioManager.audioInstance.playAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
+        AudioManager.audioInstance.playSFXAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
 
         if (!isSprinting && !isCrouching)
             yield return new WaitForSeconds(0.45f);
@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator slideAud()
     {
         isPlayingSound = true;
-        AudioManager.audioInstance.playAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
+        AudioManager.audioInstance.playSFXAudio(slideSounds[Random.Range(0, slideSounds.Length)], slideVol);
         yield return new WaitForSeconds(.05f);
         isPlayingSound = false;
     }
@@ -510,7 +510,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             // Subtract the amount of current damage from player HP
             playerHP -= amountOfDamageTaken;
-            AudioManager.audioInstance.playAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
+            AudioManager.audioInstance.playSFXAudio(hurtSounds[Random.Range(0, hurtSounds.Length)], hurtVol);
             StartCoroutine(damageFeedback());
             updatePlayerUI();
             if (playerHP <= 0)
@@ -637,7 +637,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isLit = !isLit;
         flashLight.gameObject.SetActive(isLit);
-        AudioManager.audioInstance.playAudio(flashlightSounds[Random.Range(0, flashlightSounds.Length)], flashlightVol);
+        AudioManager.audioInstance.playSFXAudio(flashlightSounds[Random.Range(0, flashlightSounds.Length)], flashlightVol);
     }
 
 

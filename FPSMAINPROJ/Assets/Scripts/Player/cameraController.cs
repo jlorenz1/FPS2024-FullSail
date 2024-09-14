@@ -25,6 +25,8 @@ public class cameraController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+       
     }
 
     // Update is called once per frame
@@ -67,6 +69,8 @@ public class cameraController : MonoBehaviour
         //this allows if the recoil effected the x rotation of the player moving and the recoil moving it at the same time. 
         //I was stuck for a while with the camera being locked up and this is what I found to be the solution. 
         transform.localRotation = Quaternion.Euler(rotX + currentRot.x, 0, 0);
+
+        sens = sens = PlayerPrefs.GetInt("sens");
     }
 
     public void RecoilFire()

@@ -5,8 +5,9 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager _audioInstance;
-    [SerializeField] public AudioSource _audioSource;
-    [SerializeFeild] AudioClip background;
+
+    public AudioSource _SFXAudio;
+  
     public static AudioManager audioInstance
     {
         get
@@ -29,12 +30,13 @@ public class AudioManager : MonoBehaviour
         {
             _audioInstance = this;
         }
-       
 
+        
     }
 
-    public void playAudio(AudioClip audClip, float vol)
+
+    public void playSFXAudio(AudioClip audClip, float vol)
     {
-        _audioSource.PlayOneShot(audClip, vol);
+        _SFXAudio.PlayOneShot(audClip, vol);
     }
 }
