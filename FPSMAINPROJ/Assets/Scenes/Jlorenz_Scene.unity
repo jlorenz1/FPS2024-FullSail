@@ -585,6 +585,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 6555975794189516848, guid: 078f354a5a8382a40a753f884f259859, type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6635754898595415872, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -1532,6 +1536,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 6555975794189516848, guid: 078f354a5a8382a40a753f884f259859, type: 3}
+      propertyPath: MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6635754898595415872, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -1787,10 +1795,9 @@ GameObject:
   - component: {fileID: 786595578}
   - component: {fileID: 786595577}
   - component: {fileID: 786595576}
-  - component: {fileID: 786595580}
   m_Layer: 0
   m_Name: Cube (4)
-  m_TagString: pickup
+  m_TagString: AlterShop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1881,19 +1888,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &786595580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786595575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76682bfe9ef54b948a0b42e9d7c809f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 52a7edab8f685e641847a0cfe18322cd, type: 2}
 --- !u!1 &831838015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2064,6 +2058,10 @@ PrefabInstance:
     - target: {fileID: 4502962789648169706, guid: 078f354a5a8382a40a753f884f259859, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555975794189516848, guid: 078f354a5a8382a40a753f884f259859, type: 3}
+      propertyPath: MaxHealth
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
