@@ -41,7 +41,7 @@ public class TilePuzzleController : MonoBehaviour
         {
             if (_tilePuzzleInstance == null)
             {
-                Debug.LogError("PlayerController is null");
+                Debug.LogError("TilePuzzleController is null");
             }
             return _tilePuzzleInstance;
         }

@@ -7,9 +7,7 @@ public class MeleeEnemy : EnemyAI
     [SerializeField] Zombiemeeleattacks weapon;
 
     [Header("-----Melee Attack Stats -----")]
-
-    [SerializeField] float attackDelay;
-   
+  
     bool canAttack = true;
     [SerializeField] Collider MeeleColider;
 
@@ -35,15 +33,18 @@ public class MeleeEnemy : EnemyAI
     IEnumerator DelayAttack()
     {
         canAttack = false;
+       
         AttackPlayer();
-        yield return new WaitForSeconds(attackDelay);
+        yield return new WaitForSeconds(1/AttackSpeed);
         canAttack = true;
     }
 
 
     private void AttackPlayer()
     {
-      
+
+        animator.SetFloat("AttackSpeed", AttackSpeed);
+
         animator.SetTrigger("Hit");
 
         Debug.Log("Melee attack");
@@ -66,7 +67,9 @@ public class MeleeEnemy : EnemyAI
         base.Die();
     }
 
-    
+
+
+ 
 
 
 

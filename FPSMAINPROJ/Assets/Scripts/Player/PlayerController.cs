@@ -4,13 +4,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum InventoryPos //for inventory
+{
+    Slot1 = 0,
+    Slot2 = 1,
+    Slot3 = 2,
+}
 public class PlayerController : MonoBehaviour, IDamage
 {
     private static PlayerController _playerInstance;
 
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
-    [SerializeField] Animator animator;
+    //[SerializeField] Animator animator;
 
     [Header("Doging")]
     [SerializeField] Collider playerCollider;
@@ -80,6 +86,9 @@ public class PlayerController : MonoBehaviour, IDamage
     int controllerHeightOrgi;
     float meeleDuration;
     bool isSliding;
+
+    [Header("Edge Hang")]
+    bool isHanging;
 
     [Header("Input")]
     private KeyCode slideKey = KeyCode.LeftControl;
@@ -167,13 +176,13 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if(!isSliding)
-            animator.SetFloat("Movement", Mathf.Lerp(animator.GetFloat("Movement"), move.normalized.magnitude, Time.deltaTime * 5));
-        else
-        {
-            animator.SetFloat("Movement", 0);
-            animator.SetBool("Slide", true);
-        }
+        //if(!isSliding)
+        //    animator.SetFloat("Movement", Mathf.Lerp(animator.GetFloat("Movement"), move.normalized.magnitude, Time.deltaTime * 5));
+        //else
+        //{
+        //    animator.SetFloat("Movement", 0);
+        //    animator.SetBool("Slide", true);
+        //}
 
         if (!onSprintCoolDown && !isCrouching)
         {
@@ -182,6 +191,7 @@ public class PlayerController : MonoBehaviour, IDamage
         sprintTimerUpdate();
 
         wallCheck();
+        edgeHang();
         crouchCheck();
         stateMachine();
 
@@ -204,14 +214,23 @@ public class PlayerController : MonoBehaviour, IDamage
             climbTimer = maxClimbTimer;
 
         }
+        if (isHanging)
+            jumpCount = 0;
+
         if (isSliding)
-          //  slideMovement();
+            slideMovement();
 
         if (isClimbing)
             climbingMovement();
 
-        move = Input.GetAxis("Vertical") * transform.forward +
+        if (isHanging)
+        {
+            move = Vector3.zero;
+        }
+        else {
+            move = Input.GetAxis("Vertical") * transform.forward +
             Input.GetAxis("Horizontal") * transform.right;
+        }
         controller.Move(move * speed * Time.deltaTime);
 
         horizontalInput = Input.GetAxis("Vertical");
@@ -219,12 +238,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            if (isHanging)
+            {
+                isHanging = false;
+            }
+
             jumpCount++;
             playerVel.y = jumpSpeed;
             AudioManager.audioInstance.playSFXAudio(jumpSounds[Random.Range(0, jumpSounds.Length)], jumpVol);
         }
-        controller.Move(playerVel * Time.deltaTime);
-        playerVel.y -= gravity * Time.deltaTime;
+
+        if (!isHanging)
+        {
+            controller.Move(playerVel * Time.deltaTime);
+            playerVel.y -= gravity * Time.deltaTime;
+        }
+        
 
 
         if (!isSprinting) {
@@ -388,8 +417,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (wallFront && Input.GetKey(KeyCode.W) && WallLookAngle < maxWallLookAngle)
         {
-            //if (isSliding)
-            //    stopSlide();
+            if (isSliding)
+                stopSlide();
 
             if (!isClimbing && climbTimer > 0) startClimb();
 
@@ -419,7 +448,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         //wallFront tell if there is a wall in front
         //                            ( starting postion,                   Radius,              Directions,    location of the infomation, sphereCast length,  the layerMask)
-        wallFront = Physics.SphereCast(Camera.main.transform.position, wallCastRadius, Camera.main.transform.forward, out objectHit, climbDetectionLength, whatToClimb);
+        wallFront = Physics.SphereCast(Camera.main.transform.position, wallCastRadius, transform.forward, out objectHit, climbDetectionLength, whatToClimb);
         WallLookAngle = Vector3.Angle(Camera.main.transform.forward, -objectHit.normal);
 
     }
@@ -470,7 +499,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void stopSlide()
     {
-        animator.SetBool("Slide", false);
+        //animator.SetBool("Slide", false);
         controller.height = controllerHeightOrgi;
         model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
         speed = originalSpeed;
@@ -501,6 +530,39 @@ public class PlayerController : MonoBehaviour, IDamage
             isCrouching = false;
             speed = originalSpeed;
         }
+    }
+
+    void edgeHang()
+    {
+        if(playerVel.y < -2 && !isHanging)
+        {
+
+            Physics.Linecast(Camera.main.transform.position + transform.forward, transform.position + transform.forward, out objectHit);
+
+            if (objectHit.collider != null)
+            {
+                RaycastHit forwardHit;
+                Vector3 fowardStart = new Vector3(Camera.main.transform.position.x, objectHit.point.y, transform.position.z);
+                Vector3 fowardEnd = new Vector3(Camera.main.transform.position.x, objectHit.point.y, transform.position.z) + transform.forward;
+                Physics.Linecast(fowardStart, fowardEnd, out forwardHit);
+
+                if(forwardHit.collider != null)
+                {
+
+                    isHanging = true;
+
+                    Vector3 handPOS = new Vector3(forwardHit.point.x, objectHit.point.y, forwardHit.point.z);
+                    Vector3 offSet = transform.forward * 0.1f + transform.up * -1f;
+                    handPOS += offSet;
+
+                    transform.position = handPOS;
+                    transform.forward = -forwardHit.normal;
+
+                }
+
+            }
+        }
+
     }
 
     // IDamage Player Damage
