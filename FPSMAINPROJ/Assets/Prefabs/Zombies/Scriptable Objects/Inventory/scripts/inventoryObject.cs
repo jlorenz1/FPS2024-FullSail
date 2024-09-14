@@ -76,6 +76,32 @@ public class inventoryObject : ScriptableObject
         return false;
     }
 
+    public int gemCount()
+    {
+        int amount = 0;
+        for (int i = 0; i < containerForInv.Count; i++)
+        {
+            if (containerForInv[i].pickup.type == itemType.Gem)
+            {
+               amount = containerForInv[i].amount;
+            }
+
+        }
+
+        return amount;
+    }
+
+    public void takeGems(int amount)
+    {
+        for (int i = 0; i < containerForInv.Count; i++)
+        {
+            if (containerForInv[i].pickup.type == itemType.Gem)
+            {
+                containerForInv[i].amount -= amount;
+            }
+        }
+    }
+
     public pickupObject getItem(itemType type)
     {
         for (int i = 0; i < containerForInv.Count; i++)

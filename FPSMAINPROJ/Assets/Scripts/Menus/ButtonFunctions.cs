@@ -36,4 +36,68 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
+    //altershop
+    public void hekaTempest()
+    {
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        {
+            //if player has gems amount
+            if (!gameManager.gameInstance.playerWeapon.hasTempest)
+            {
+                gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Electricity"));
+            }
+        }
+        
+    }
+
+    public void pharoahsEclipse()
+    {
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        {
+            //if player has gems amount
+            if (!gameManager.gameInstance.playerWeapon.hasEclipse)
+            {
+                gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Darkness"));
+            }
+        }
+            
+    }
+
+    public void nilesWrath()
+    {
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        {
+            //if player has gems amount
+            if (!gameManager.gameInstance.playerWeapon.hasFloods)
+            {
+                gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Floods"));
+                gameManager.gameInstance.playerScript.inventory.takeGems(2);
+            }
+        }
+    }
+
+    public void healPlayer()
+    {
+        if(gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        {
+            float healthAmount = 25;
+
+            float currentHP = gameManager.gameInstance.playerScript.playerHP;
+            float maxHp = gameManager.gameInstance.playerScript.HPorig;
+
+            if (maxHp - currentHP < healthAmount)
+            {
+
+                healthAmount = maxHp - currentHP;
+            }
+
+            gameManager.gameInstance.playerScript.recieveHP(healthAmount);
+            gameManager.gameInstance.playerScript.inventory.takeGems(2);
+        }
+    }
+
+    public void increaseArmor()
+    {
+        //if we implement
+    }
 }

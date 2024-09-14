@@ -11,11 +11,18 @@ public interface IEnemyDamage
 
     void TakeTrueDamage(float amountOfDamageTaken);
 
-    void AddHP(int amount);
+    void AddHP(float amount);
 
-    void AddDamage(int amount);
+    void AddMaxHp(float amount);
 
-    void AddSpeed(int amount);
+    void AddDamage(float amount);
+
+    void AddSpeed(float amount);
+
+
+    void AddAttackSpeed(float amount);
+
+
 
     void cutspeed(float amount, float damagetaken);
 

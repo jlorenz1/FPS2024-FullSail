@@ -22,13 +22,23 @@ public class pickup : MonoBehaviour, IPickup
     {
         if(item.triggerType == true)
         {
+            //type = getType();
+
             if(type == itemType.Bandage)
             {
-                if(other.gameObject.CompareTag("Player") && (gameManager.gameInstance.playerScript.playerHP < gameManager.gameInstance.playerScript.HPorig))
+                if(other.gameObject.CompareTag("Player"))// && (gameManager.gameInstance.playerScript.playerHP < gameManager.gameInstance.playerScript.HPorig))
                 {
                     useItem();
                     Destroy(gameObject);
-                }    
+                }
+            }
+            if (type == itemType.Gem)
+            {
+                if (other.gameObject.CompareTag("Player"))
+                {
+                    useItem();
+                    Destroy(gameObject);
+                }
             }
         }
     }

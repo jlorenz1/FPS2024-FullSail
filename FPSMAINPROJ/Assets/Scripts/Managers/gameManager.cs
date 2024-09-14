@@ -39,6 +39,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
+    [SerializeField] public GameObject gameAlterMenu;
     [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
@@ -64,11 +65,14 @@ public class gameManager : MonoBehaviour
     public Image SprintBarBoarder;
     public Image AmmoHUD;
     public Image checkpoint;
+    public Image gem;
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
-  
+    public cameraController cameraController;
+    public WeaponManager weaponManager;
+
 
     //Objects
     public GameObject playerSpawnPoint;
@@ -129,7 +133,7 @@ public class gameManager : MonoBehaviour
     // Using Awake, for Manager
     void Awake()
     {
-       
+
         isSekhmetDead = true;
         UserKare = GameObject.FindGameObjectWithTag("Userkare");
         SekhMet = GameObject.FindGameObjectWithTag("Sekhmet");
@@ -166,6 +170,8 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
+        cameraController = FindAnyObjectByType<cameraController>();
+        weaponManager = FindAnyObjectByType<WeaponManager>();
         //weaponScript = FindObjectOfType<Weapon>();
         playerSpawnPoint = GameObject.FindWithTag("Player Spawner");
 
@@ -178,7 +184,7 @@ public class gameManager : MonoBehaviour
         else
             Debug.Log("Enemy Spawner Valid");
 
-   
+
         MainCam = Camera.main;
 
     }
@@ -195,7 +201,12 @@ public class gameManager : MonoBehaviour
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-            if(gameActiveMenu == null)
+            if(gameAlterMenu.activeSelf)
+            {
+                gameAlterMenu.SetActive(false);
+                resumePlayerControls();
+            }
+            else if (gameActiveMenu == null && !gameAlterMenu.activeSelf)
             {
                 PauseGame();
                 gameActiveMenu = gamePauseMenu;
@@ -225,6 +236,24 @@ public class gameManager : MonoBehaviour
         // Adjust the cursor visibility and restrictions
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void pausePlayerControls()
+    {
+        playerScript.enabled = false;
+        cameraController.enabled = false;
+        playerWeapon.enabled = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void resumePlayerControls()
+    {
+        playerScript.enabled = true;
+        cameraController.enabled = true;
+        playerWeapon.enabled = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Unpause the Game
@@ -436,7 +465,6 @@ public class gameManager : MonoBehaviour
 
         fadeOverlay.color = new Color(fadeOutColor.r, fadeOutColor.g, fadeOutColor.b, endAlpha);
     }
-
 
     public void UserkareDead()
     {

@@ -57,4 +57,19 @@ public class WeaponManager : MonoBehaviour
             }
         }
     }
+
+    public weaponStats getHekaBasedWeapon(string hekaSchool)
+    {
+        weaponStats chosenWeapon = null; 
+
+        for(int i = 0; i < allWeaponsInScene.Length; i++)
+        {
+            if (allWeaponsInScene[i].hekaSchool ==  hekaSchool)
+            {
+                chosenWeapon =  allWeaponsInScene[i];
+            }
+        }
+
+        return chosenWeapon;
+    }
 }

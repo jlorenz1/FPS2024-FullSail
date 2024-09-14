@@ -40,7 +40,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float Armor;
     [SerializeField] protected float Range;
     [SerializeField] protected float damage;
-    [SerializeField] protected float AttackSpeed;
+    [SerializeField] protected float AttackSpeed = 0.75f;
+    [SerializeField] protected float castSpeed = 0.85f;
     [SerializeField] protected float AttentionSpan;
     [SerializeField] protected float sight = 25;
     float startsight;
@@ -71,9 +72,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     bool HasSpeedBuffed;
     bool speednerfed;
     bool damagenerfed;
+   protected bool AttackSpeedBuffed;
 
     float HitPoints;
     float legdamage;
+    Vector3 currentVelocity;
 
     private GameObject currentModel;
 
@@ -92,16 +95,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         Head.gameObject.tag = "Zombie Head";
 
 
-
-        if (GetComponent<Collider>() == null)
-        {
-            // Add a default collider (e.g., BoxCollider) if none exists
-            CapsuleCollider cap = gameObject.AddComponent<CapsuleCollider>();
-            cap.isTrigger = false; // Set to true if you want a trigger collider
-           
-        }
-        
-
+      
 
         for (int i = 0; i < Legs.Length; i++)
         {
@@ -130,6 +124,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         HasHealthBuffed = false;
         HasStrengthBuffed = false;
         HasSpeedBuffed = false;
+        AttackSpeedBuffed = false;
+
 
         roam();
 
@@ -138,8 +134,15 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Update()
     {
 
-       // ApplySeparationAndRandomMovement();
+        // ApplySeparationAndRandomMovement();
         // OutOfRangeBoost();
+        currentVelocity = agent.velocity;
+        float maxSpeed = agent.speed;
+        float currentSpeed = currentVelocity.magnitude;
+
+        float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
+        animator.SetFloat("Speed", normalizedSpeed);
+
         CanSeePlayer();
         ApplyGravity();
 
@@ -544,7 +547,13 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     //  static modifiers;
 
-    public void AddHP(int amount)
+    public void AddHP(float amount)
+    {
+        CurrentHealth += amount;
+    }
+
+
+    public void AddMaxHp(float amount)
     {
         if (!HasHealthBuffed)
         {
@@ -555,10 +564,19 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         else
         {
             Debug.Log("Health already buffed");
+
+
+            AddHP((int)amount);
+
+
+           
         }
     }
 
-    public void AddDamage(int amount)
+
+
+
+    public void AddDamage(float amount)
     {
         if (!HasStrengthBuffed)
         {
@@ -572,7 +590,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
     }
 
-    public void AddSpeed(int amount)
+    public void AddSpeed(float amount)
     {
         if (!HasSpeedBuffed)
         {
@@ -632,6 +650,21 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
         else
             return;
+    }
+
+
+    public  void AddAttackSpeed(float amount)
+    {
+
+        if (!AttackSpeedBuffed)
+        {
+            AttackSpeed *= amount;
+            castSpeed *= amount;
+            AttackSpeedBuffed = true;
+        }
+
+        else
+            Debug.Log("Attack SpeedBuffed");
     }
 
 
@@ -711,7 +744,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     IEnumerator blind(float duration)
     {
         sight = 0;
-
+        ChasingPLayer = false;
+        Debug.Log(sight);
         yield return new WaitForSeconds(duration);
 
         sight = startsight;
