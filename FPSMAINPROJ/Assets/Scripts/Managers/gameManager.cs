@@ -107,7 +107,15 @@ public class gameManager : MonoBehaviour
     // Private reference for the Player
     private GameObject _Player;
     private bool isNewEnemies;
+
+
+
+    public bool BlinkingJab;
+    public bool LightGautlening;
+
+
     // Public property to access the Player
+
     public GameObject player
     {
         get { return _Player; }
@@ -143,9 +151,10 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
 
-        isSekhmetDead = true;
-        UserKare = GameObject.FindGameObjectWithTag("Userkare");
-        SekhMet = GameObject.FindGameObjectWithTag("Sekhmet");
+
+        BlinkingJab = false;
+        LightGautlening = false;
+
 
         if (Userkare == null)
         {
@@ -329,12 +338,13 @@ public class gameManager : MonoBehaviour
     {
 
 
-        if (EnemyCount < 0)
+        if (EnemyCount < 4 )
         {
-            EnemyCount = 0;
+            enemySpawner.ZombieSpawner(3);
+
         }
 
-        SetEnemyCount(amount);
+     /*   SetEnemyCount(amount);
 
         Debug.Log("enemies " + EnemyCount.ToString());
 
@@ -343,7 +353,7 @@ public class gameManager : MonoBehaviour
         if (EnemyCount == 0 && endless) {
 
             StartNewRound();
-        }
+        }*/
 
     }
 
@@ -388,7 +398,7 @@ public class gameManager : MonoBehaviour
 
         SetGameRound(1);
         Debug.Log("SpanwFunctionCalled");
-        enemySpawner.ZombieSpawner();
+        enemySpawner.ZombieSpawner(3);
 
         if (SpecialZombieIncrament > 0)
         {
@@ -399,6 +409,18 @@ public class gameManager : MonoBehaviour
             }
         }
         
+    }
+
+    public void SpawnSekhmet()
+    {
+        SekhMet = GameObject.FindGameObjectWithTag("Sekhmet");
+        isSekhmetDead = false;
+    }
+
+    public void SpawnUserkare()
+    {
+        UserKare = GameObject.FindGameObjectWithTag("Userkare");
+        isUserKareDead = false;
     }
 
 

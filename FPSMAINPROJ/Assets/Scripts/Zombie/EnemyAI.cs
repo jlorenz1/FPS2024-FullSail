@@ -45,6 +45,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float castSpeed = 0.85f;
     [SerializeField] protected float AttentionSpan;
     [SerializeField] protected float sight = 25;
+    public float flockRange = 8;
     float startsight;
     float stoppingDistance;
     [Header("-----Armor-----")]
@@ -791,9 +792,22 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void FlockPlayer()
     {
-        TargetPlayer();
-    }
 
+
+        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+
+        foreach (GameObject zombie in zombies)
+        {
+            float distance = Vector3.Distance(transform.position, zombie.transform.position);
+            if (distance < flockRange)
+            {
+
+                TargetPlayer();
+
+
+            }
+        }
+    }
 
    public void knockback(Vector3 hitPoint, float distance)
     {

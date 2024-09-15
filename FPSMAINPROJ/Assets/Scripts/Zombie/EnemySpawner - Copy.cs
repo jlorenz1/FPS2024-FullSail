@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] GameObject prefab;
     [SerializeField] int ZombiesPerRound;
     [SerializeField] List<Transform> spawnPoints = new List<Transform>();
+    [SerializeField] List<Transform> BossspawnPoints = new List<Transform>();
     [SerializeField] Vector3 spawnAreaCenter;
     [SerializeField] Vector3 spawnAreaSize;
     [SerializeField] float spawnRadius = 1f;
@@ -21,14 +22,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] List<GameObject> MeeleZombies;
     [SerializeField] List<GameObject> RangedZombies;
     [SerializeField] List<GameObject> SpecialZombies;
-    [SerializeField] GameObject BossZombie;
+    [SerializeField] List<GameObject> BossZombie;
 
     int TypeSplit;
-
+    int targetCount;
 
     private void Start()
     {
         PopulateSpawnPoints();
+        targetCount = 0;
     }
     public void RefeshSpawnPoints()
     {
@@ -54,8 +56,8 @@ public class EnemySpawner : MonoBehaviour
     public void ZombieSpawner()
     {
 
-        int Round = gameManager.gameInstance.GetGameRound();
-        int targetCount = Round * ZombiesPerRound;
+    
+     
         
 
       for(int i =0;i < targetCount; i++)
@@ -68,9 +70,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void ZombieSpawner(int Amount)
     {
+        targetCount += Amount;
 
-
-        for(int i = 0; i < Amount; i++)
+        for (int i = 0; i < Amount; i++)
         {
             SpawnAtRandomPoint();
         }
@@ -97,11 +99,23 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnBoss()
     {
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-        Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
-        GameObject newZombie = Instantiate(BossZombie, randomPoint, Quaternion.identity);
-    }
+        // Get a random spawn point from the list of boss spawn points
+        Transform randomSpawnPoint = BossspawnPoints[Random.Range(0, BossspawnPoints.Count)];
 
+        // Loop through the list of BossZombie prefabs
+        for (int i = 0; i < BossZombie.Count; i++)
+        {
+            // Get a new random point on the NavMesh for each boss spawn
+            Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
+
+            // Instantiate each boss zombie at a random point
+            GameObject randomZombiePrefab = BossZombie[i];
+            GameObject newZombie = Instantiate(randomZombiePrefab, randomPoint, Quaternion.identity);
+
+            // Setup the zombie (possibly scaling with the game round)
+            SetupZombie(newZombie, gameManager.gameInstance.GetGameRound());
+        }
+    }
     void SpawnAtRandomPoint()
     {
         if (spawnPoints.Count == 0)

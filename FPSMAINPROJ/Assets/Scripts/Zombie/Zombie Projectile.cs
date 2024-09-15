@@ -156,7 +156,7 @@ public class Projectile : MonoBehaviour
             gameManager.gameInstance.playerScript.CutSpeed(5, 100f);
             if(gameManager.gameInstance.isSekhmetDead == false)
             {
-                gameManager.gameInstance.Sekhmet.BlinkingJab();
+                gameManager.gameInstance.BlinkingJab = true;
             }
             Destroy(gameObject);
         }
@@ -174,8 +174,8 @@ public class Projectile : MonoBehaviour
             gameManager.gameInstance.playerScript.CutSpeed(5, 1.5f);
             if (gameManager.gameInstance.isUserKareDead == false)
             {
-                gameManager.gameInstance.Userkare.LightGautling();
-
+              
+               gameManager.gameInstance.LightGautlening = true;
             }
 
             Destroy(gameObject);

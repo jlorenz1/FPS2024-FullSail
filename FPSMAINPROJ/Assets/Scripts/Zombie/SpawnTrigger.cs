@@ -12,9 +12,11 @@ public class SpawnTrigger : MonoBehaviour
     bool wiped;
     int ZombieSpawnCount;
     int Count;
+    bool BossIsSpawned;
     private void Start()
     {
         wiped = false;
+        BossIsSpawned = false;
     }
     private void Update()
     {
@@ -55,27 +57,20 @@ public class SpawnTrigger : MonoBehaviour
 
 
             SpawnEnemies(ZombieSpawnCount);
-        }
-        else
-            return;
-
-    }
 
 
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            for (int i = 0; i < SpawnLocation.Length; i++)
+            if (!BossIsSpawned)
             {
-                SpawnLocation[i].SetActive(false);
+                gameManager.gameInstance.enemySpawner.SpawnBoss();
+
+                BossIsSpawned = true;
             }
-            gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
         }
         else
             return;
+
     }
+
 
    void SpawnEnemies(int Amount)
     {

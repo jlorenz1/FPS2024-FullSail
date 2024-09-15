@@ -35,6 +35,8 @@ public class Userkare : EnemyAI
     float PlayerStartHP;
 
 
+
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -49,7 +51,9 @@ public class Userkare : EnemyAI
         PlayerStartHP = gameManager.gameInstance.playerScript.GetHealth();
         damage = 5;
         canattack = true;
-        gameManager.gameInstance.isUserKareDead = false;
+        gameManager.gameInstance.SpawnUserkare();
+
+
     }
 
     // Update is called once per frame
@@ -85,6 +89,15 @@ public class Userkare : EnemyAI
             damage = PlayerStartHP - (PlayerStartHP * 0.1f);
             StartCoroutine(RampingAbilites());
         }
+
+
+        if(gameManager.gameInstance.LightGautlening == true)
+        {
+            LightGautling();
+            gameManager.gameInstance.LightGautlening = false;
+        }
+
+
     }
   IEnumerator  RampingAbilites()
     {

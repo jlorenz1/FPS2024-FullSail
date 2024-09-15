@@ -30,7 +30,7 @@ public class SekhmetBoss : EnemyAI
         mUserkare = gameManager.gameInstance.UserKare;
         AttackRange = 30;
         animator.SetFloat("AttackSpeed", AttackSpeed);
-        gameManager.gameInstance.isSekhmetDead = false;
+        gameManager.gameInstance.SpawnSekhmet();
     }
 
     // Update is called once per frame
@@ -60,6 +60,11 @@ public class SekhmetBoss : EnemyAI
             StartCoroutine(RampingDamage());
         }
 
+        if (gameManager.gameInstance.BlinkingJab == true)
+        {
+            BlinkingJab();
+            gameManager.gameInstance.BlinkingJab = false;
+        }
       
 
     }
