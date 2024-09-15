@@ -207,6 +207,7 @@ public class WeaponController : MonoBehaviour
                     StartCoroutine(spawnTrail(trail, hit));
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
                     IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
+                    IDamage armDmg = hit.collider.gameObject.GetComponent<IDamage>();
                     if (dmg != null)
                     {
                         float actualDamage = shootDamage; // Start with the base damage
@@ -238,12 +239,16 @@ public class WeaponController : MonoBehaviour
                         dmg.takeDamage(actualDamage);
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                     }
+                    else if(armDmg != null)
+                    {
+                        armDmg.takeDamage(shootDamage);
+                    }
                     else
                     {
                         Debug.Log("Hit Tag: " + hit.collider.tag);
-                       
 
-                        GameObject newBulletHole = Instantiate(gunList[selectedGun].hitEffect[UnityEngine.Random.Range(0, gunList[selectedGun].hitEffect.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+                        ParticleSystem enviormentEffect = Instantiate(gunList[selectedGun].enviormentEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                        GameObject newBulletHole = Instantiate(gunList[selectedGun].bulletDecals[UnityEngine.Random.Range(0, gunList[selectedGun].bulletDecals.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
                         newBulletHole.transform.up = hit.normal;
                     }
 
