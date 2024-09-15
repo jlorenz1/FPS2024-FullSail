@@ -336,9 +336,9 @@ public class gameManager : MonoBehaviour
     }
     public void UpdateGameGoal(int amount)
     {
+        
 
-
-        if (EnemyCount < 4 )
+        if (EnemyCount < 4 && amount < 1 )
         {
             enemySpawner.ZombieSpawner(3);
 
