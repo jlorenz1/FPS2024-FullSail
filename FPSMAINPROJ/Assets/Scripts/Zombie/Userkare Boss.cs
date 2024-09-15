@@ -107,8 +107,9 @@ public class Userkare : EnemyAI
 
     protected override void Die()
     {
-        gameManager.gameInstance.UserkareDead();
         base.Die();
+        gameManager.gameInstance.UserkareDead();
+       
     }
 
 
