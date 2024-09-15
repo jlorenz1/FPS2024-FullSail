@@ -103,11 +103,9 @@ public class MemoryPuzzleController : MonoBehaviour
             Debug.Log("ID added to sequence. Sequence.Count: " + sequence.Count);
         } else //player stepped on incorrect tile
         {
+            StartCoroutine(gameManager.gameInstance.requiredItemsUI("Wrong tile. Restart.", 3f));
             sequence.Clear(); //player must restart
         }
-
-        
-
 
 
         if (sequence.Count == 5) //sequence is completed, and already checked for accuracy
