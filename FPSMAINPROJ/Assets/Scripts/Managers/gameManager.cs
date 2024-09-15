@@ -256,7 +256,6 @@ public class gameManager : MonoBehaviour
         displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");
-        enemyCount.text = EnemyCount.ToString("F0");
         pointCount.text = PointCount.ToString("F0");
 
         PlayerPrefs.SetInt("sens", (int)sensSlider.value);
