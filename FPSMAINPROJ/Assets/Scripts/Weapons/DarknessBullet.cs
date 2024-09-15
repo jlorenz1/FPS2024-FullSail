@@ -46,7 +46,7 @@ public class DarknessBullet : MonoBehaviour
         IEnemyDamage damageable = other.GetComponentInParent<IEnemyDamage>();
         if(damageable != null)
         {
-            //damageable.takeDamage(damage);
+            damageable.takeDamage(damage);
             damageable.Blind(blindDuration);
             
         }

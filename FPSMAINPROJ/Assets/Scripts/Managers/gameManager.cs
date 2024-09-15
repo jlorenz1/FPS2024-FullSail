@@ -88,7 +88,7 @@ public class gameManager : MonoBehaviour
     public EnemySpawner enemySpawner;
     public bool isReqItemsUIDisplay = false;
     private GameObject enemy;
-    private bool isCheckingEnemyCount = false;
+  
     private bool isNewRoundStarting = false;
     public bool isUserKareDead;
     public bool isSekhmetDead;
@@ -122,11 +122,11 @@ public class gameManager : MonoBehaviour
         private set { _Player = value; }
     }
 
-    private Camera camera;
+    Camera gameCamera;
     public Camera MainCam
     {
-        get { return camera; }
-        private set { camera = value; }
+        get { return gameCamera; }
+        private set { gameCamera = value; }
     }
     // Private access to player script
     // private playerController _PlayerScript;

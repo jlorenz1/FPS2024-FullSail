@@ -14,7 +14,6 @@ public class Interact : MonoBehaviour
     private RaycastHit interactHit;
     bool isPickedUp;
     bool inProcess;
-    bool doorOpen = false;
     public bool hasItems;
 
     private void Start()
