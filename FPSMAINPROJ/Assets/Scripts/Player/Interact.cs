@@ -59,7 +59,7 @@ public class Interact : MonoBehaviour
                             }
                             else
                             {
-                                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have a key!", 3f));
+                                StartCoroutine(gameManager.gameInstance.requiredItemsUI("You need an effigy to open the door!", 3f));
                             }
 
                         }
@@ -85,7 +85,11 @@ public class Interact : MonoBehaviour
                         }
 
                         //tutorial tile puzzle, for each tile in the puzzle
-                        hit.collider.GetComponent<TutorialTileScript>().CheckArea();
+                        var tilePuzzle = hit.collider.GetComponent<TutorialTileScript>();
+                        if (tilePuzzle != null)
+                        {
+                            hit.collider.GetComponent<TutorialTileScript>().CheckArea();
+                        }
                     }
                 }
             }
@@ -166,7 +170,7 @@ public class Interact : MonoBehaviour
             }
             else if (pickup.item.type == itemType.Key)
             {
-                gameManager.gameInstance.displayRequiredIemsUI("Collected back cabin key!", 3f);
+                gameManager.gameInstance.displayRequiredIemsUI("Collected effigy!", 3f);
             }
             else if (pickup.item.type == itemType.flashlight)
             {

@@ -16,7 +16,7 @@ public class doorScript : MonoBehaviour
             //get door pos
         Vector3 doorPos = transform.position;
             //get desired endPos
-        Vector3 endPos = doorPos - new Vector3(0, 4, 0);
+        Vector3 endPos = doorPos - new Vector3(0, 6, 0);
             //speed to slide
         float slidespeed = 1f;
             //time it takes
