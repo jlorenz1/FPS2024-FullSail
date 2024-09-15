@@ -45,6 +45,7 @@ public class ButtonFunctions : MonoBehaviour
             if (!gameManager.gameInstance.playerWeapon.hasTempest)
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Electricity"));
+                gameManager.gameInstance.playerScript.inventory.takeGems(35);
             }
         }
         
@@ -58,6 +59,7 @@ public class ButtonFunctions : MonoBehaviour
             if (!gameManager.gameInstance.playerWeapon.hasEclipse)
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Darkness"));
+                gameManager.gameInstance.playerScript.inventory.takeGems(20);
             }
         }
             
@@ -71,7 +73,7 @@ public class ButtonFunctions : MonoBehaviour
             if (!gameManager.gameInstance.playerWeapon.hasFloods)
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Floods"));
-                gameManager.gameInstance.playerScript.inventory.takeGems(2);
+                gameManager.gameInstance.playerScript.inventory.takeGems(25);
             }
         }
     }
@@ -92,7 +94,7 @@ public class ButtonFunctions : MonoBehaviour
             }
 
             gameManager.gameInstance.playerScript.recieveHP(healthAmount);
-            gameManager.gameInstance.playerScript.inventory.takeGems(2);
+            gameManager.gameInstance.playerScript.inventory.takeGems(5);
         }
     }
 
