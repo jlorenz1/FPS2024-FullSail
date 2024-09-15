@@ -39,7 +39,7 @@ public class ButtonFunctions : MonoBehaviour
     //altershop
     public void hekaTempest()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 35) //2 for testing
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasTempest)
@@ -52,7 +52,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void pharoahsEclipse()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 20) //2 for testing
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasEclipse)
@@ -65,7 +65,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void nilesWrath()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() > 25) //2 for testing
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasFloods)
@@ -78,7 +78,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void healPlayer()
     {
-        if(gameManager.gameInstance.playerScript.inventory.gemCount() > 2) //2 for testing
+        if(gameManager.gameInstance.playerScript.inventory.gemCount() > 5) //2 for testing
         {
             float healthAmount = 25;
 

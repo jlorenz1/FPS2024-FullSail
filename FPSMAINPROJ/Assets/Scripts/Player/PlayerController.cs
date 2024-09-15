@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have flashlight! Check your campsite for it!", 3.0f));
+                StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have flashlight!", 3.0f));
             }
         }
 
