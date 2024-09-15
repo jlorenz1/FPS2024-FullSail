@@ -206,12 +206,13 @@ public class WeaponController : MonoBehaviour
                     TrailRenderer trail = Instantiate(bulletTrail, muzzleFlashTransform.position, Quaternion.identity);
                     StartCoroutine(spawnTrail(trail, hit));
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-                    IEnemyDamage dmg = hit.collider.GetComponentInParent<IEnemyDamage>();
+                    IEnemyDamage dmg = hit.collider.GetComponent<IEnemyDamage>();
+
                     IDamage armDmg = hit.collider.gameObject.GetComponent<IDamage>();
                     if (dmg != null)
                     {
                         float actualDamage = shootDamage; // Start with the base damage
-
+/*
                         // Example condition to modify the damage
                         if (hit.collider.CompareTag("Zombie Head"))
                         {
@@ -233,7 +234,7 @@ public class WeaponController : MonoBehaviour
                         {
                             actualDamage *= 0.25f;
                             dmg.cutdamage(2);
-                        }
+                        }*/
 
                         // Apply the modified damage
                         dmg.takeDamage(actualDamage);

@@ -100,7 +100,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -125,7 +125,7 @@ MonoBehaviour:
   IsGround: 0
   IsBossAttack: 0
   projectileDamage: 5
-  followtime: 0
+  followtime: 3
   ProjectileAudio: {fileID: 0}
   ZombieProjectileAudio: {fileID: 0}
   ZombieProjectileAudioVol: 0

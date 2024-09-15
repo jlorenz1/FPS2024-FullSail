@@ -18,7 +18,7 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
-    IEnemyDamage FellowZombie;
+   
     IEnemyDamage Partner;
     // Start is called before the first frame update
     protected override void Start()
@@ -38,7 +38,7 @@ public class SekhmetBoss : EnemyAI
     {
         base.Update();
 
-        
+       
 
         if (PlayerinAttackRange && canattack)
         {
@@ -83,9 +83,10 @@ public class SekhmetBoss : EnemyAI
 
     protected override void Die()
     {
+        base.Die();
         gameManager.gameInstance.SekhmetDead();
         gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
-        base.Die();
+       
     }
 
     void BleedingJab()
@@ -156,33 +157,36 @@ public class SekhmetBoss : EnemyAI
 
     void reinforce()
     {
+        Debug.Log("Reinforce Called");
+
+        // Find all objects with the "Zombie" tag
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-       
-        foreach (GameObject zombie in zombies) {
+
+        foreach (GameObject zombie in zombies)
+        {
             if (zombie != null)
             {
-                 FellowZombie = zombie.GetComponent<IEnemyDamage>();
-            }
-            if (mUserkare != null)
-            {
-                 Partner = mUserkare.GetComponent<IEnemyDamage>();
-            }
+                // Get the IEnemyDamage component
+                IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
 
-            if (!Berserk)
-            {
-                // increases Her armor and Uskares armor by other enemies by 2
-               
-                FellowZombie.AddArmor(2);
-                
-                Partner.AddArmor(5);
-                Armor += 5;
+                if (FellowZombie != null) // Ensure the component exists
+                {
+                    if (!Berserk)
+                    {
+                        // Increases Her armor and Uskares armor by other enemies by 2
+                        FellowZombie.AddArmor(2f);  // Add armor to other zombies
+                        Armor += 5;                 // Increase self armor
+                    }
+                    else if (Berserk)
+                    {
+                        Armor += 10f;  // Increase more armor if Berserk
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Zombie does not have IEnemyDamage component.");
+                }
             }
-
-            else if (Berserk)
-            {
-                Armor += 10;
-            }
-
         }
     }
 

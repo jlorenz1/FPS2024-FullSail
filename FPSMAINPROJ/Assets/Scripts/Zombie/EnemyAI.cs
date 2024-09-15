@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class EnemyAI : MonoBehaviour, IEnemyDamage
 {
@@ -36,7 +37,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [Header("-----Stats-----")]
     [SerializeField] protected float CurrentHealth;
     [SerializeField] public float MaxHealth;
-    [SerializeField] float MaxArmor = 500;
+     float MaxArmor = 500;
     [SerializeField] protected float Armor;
     [SerializeField] protected float Range;
     [SerializeField] protected float damage;
@@ -195,8 +196,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         float TotalDamage = amount - damageReduced;
         //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        MaxHealth -= TotalDamage;
-        if (MaxHealth <= 0)
+        CurrentHealth -= TotalDamage;
+        if (CurrentHealth <= 0)
         {
             Die();
         }
@@ -207,9 +208,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
+      
+        LootRoll(60);
+       gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
-        LootRoll(5);
-        gameManager.gameInstance.UpdateGameGoal(-1);
         Destroy(gameObject);
     }
 
@@ -221,20 +223,35 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     void LootRoll(int DropChance)
     {
-
-        if (Drops.Count > 0)
+        int GemsDropped = 0;
+        for(int i  = 0; i < 8; i++)
+        {
+            Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + 1f, agent.transform.position.z), agent.transform.rotation);
+            GemsDropped++;
+        }
+        
+        while (GemsDropped < 12)
         {
 
             int chance = UnityEngine.Random.Range(0, 100);
             float yOffset = 1.0f;
 
-            if (chance < DropChance)
+            if (chance < DropChance) 
             {
 
-                int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
+              //  int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
 
-                Instantiate(Drops[randomIndex], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+                Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+
+                GemsDropped++;
+
+
+
+           
             }
+            else
+                break;
+                break;
         }
 
     }

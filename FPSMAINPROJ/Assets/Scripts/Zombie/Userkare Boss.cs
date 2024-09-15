@@ -33,6 +33,8 @@ public class Userkare : EnemyAI
     float BaseAttackSpeed;
 
     float PlayerStartHP;
+
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -105,9 +107,11 @@ public class Userkare : EnemyAI
 
     protected override void Die()
     {
-        gameManager.gameInstance.UserkareDead();
         base.Die();
+        gameManager.gameInstance.UserkareDead();
+       
     }
+
 
     void UseSpecialAbility()
     {
