@@ -346,7 +346,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isSprinting = true;
 
         }
-        else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0)
+        else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0 || Input.GetButtonDown("Dodge"))
         {
             if (sprintTimer <= 0)
                 onSprintCoolDown = true;
@@ -537,14 +537,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if(playerVel.y < -2 && !isHanging)
         {
 
-            Physics.Linecast(Camera.main.transform.position + transform.forward, transform.position + transform.forward, out objectHit);
+            Physics.Linecast(Camera.main.transform.position + transform.forward, transform.position + transform.forward * .15f, out objectHit, LayerMask.GetMask("Hangable"));
 
             if (objectHit.collider != null)
             {
                 RaycastHit forwardHit;
-                Vector3 fowardStart = new Vector3(Camera.main.transform.position.x, objectHit.point.y, transform.position.z);
-                Vector3 fowardEnd = new Vector3(Camera.main.transform.position.x, objectHit.point.y, transform.position.z) + transform.forward;
-                Physics.Linecast(fowardStart, fowardEnd, out forwardHit);
+                Vector3 fowardStart = new Vector3(Camera.main.transform.position.x, objectHit.point.y, Camera.main.transform.position.z);
+                Vector3 fowardEnd = new Vector3(Camera.main.transform.position.x, objectHit.point.y, Camera.main.transform.position.z) + transform.forward;
+                Physics.Linecast(fowardStart, fowardEnd, out forwardHit, LayerMask.GetMask("Hangable"));
 
                 if(forwardHit.collider != null)
                 {
