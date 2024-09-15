@@ -174,7 +174,7 @@ public class SekhmetBoss : EnemyAI
                
                 FellowZombie.AddArmor(2);
                 
-                Partner.AddArmor(5);
+               // Partner.AddArmor(5);
                 Armor += 5;
             }
 

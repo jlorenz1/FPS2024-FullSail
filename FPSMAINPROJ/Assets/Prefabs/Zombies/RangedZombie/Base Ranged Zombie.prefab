@@ -247,15 +247,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 545.44
+      value: 339.18472
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08087158
+      value: 200.03217
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -125.76
+      value: 67.23328
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalRotation.w
@@ -285,6 +285,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7269728169905626603, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Head
+      objectReference: {fileID: 0}
+    - target: {fileID: -3962647829050528788, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Body
+      objectReference: {fileID: 0}
+    - target: {fileID: -3122781417413711294, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928631036446536291, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -1881965479880549823, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -706658983441424561, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Name
       value: Base Ranged Zombie
@@ -292,6 +316,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945040816612613005, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515130166721925627, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -312,6 +348,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3874231158247759119}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5227367015657412385}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7226320795868593370}
     - targetCorrespondingSourceObject: {fileID: 7311561063055367063, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1840558748609800417}
@@ -433,7 +475,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.09404062
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0.09404062, z: 0}
 --- !u!54 &4619989815257085902
 Rigidbody:
@@ -674,7 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a362ed843161e14ab175c07b9209c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 0}
+  Zombie: {fileID: 5227367015657412385}
   ZombieFootSteps: []
   ZombieFootStepsVol: 0
   ZombieGrowl: []
@@ -684,15 +726,12 @@ MonoBehaviour:
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 7725206337704615647}
-  health: 100
   model: {fileID: 5719298349618802148}
-  BaseHitPoints: 50
   animator: {fileID: 1142125064988228821}
   animatorspeedtrans: 90
   FacePlayerSpeed: 90
   ViewAngle: 90
   HeadPos: {fileID: 3415837438730086533}
-  Drops: []
   Body: {fileID: 3785738518173224897}
   Head: {fileID: 6794581704142163289}
   Legs:
@@ -701,16 +740,148 @@ MonoBehaviour:
   Arms:
   - {fileID: 1792521296593870821}
   - {fileID: 3682366178282432115}
-  damage: 25
-  models: []
+  CurrentHealth: 15
+  MaxHealth: 200
+  MaxArmor: 500
+  Armor: 3
   Range: 20
+  damage: 25
+  AttackSpeed: 0.75
+  castSpeed: 2
+  AttentionSpan: 0
+  sight: 25
+  Helmate: {fileID: 0}
+  Drops:
+  - {fileID: 7567231089132668557, guid: 0e033f566ba83164fb3fcf00d5f9a141, type: 3}
+  models: []
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
   projectilePrefab: {fileID: 1683480588852259282, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
   fireRate: 1
   launchPoint: {fileID: 3945889761237242084}
   CastPortal1: {fileID: 7274814169676317492}
   CastPortal2: {fileID: 0}
-  castSpeed: 2
   castRange: 20
+--- !u!82 &5227367015657412385
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156405569138669935}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!136 &7226320795868593370
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4156405569138669935}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4270765571054879163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1020948974440007045, guid: e8a34632d041691439e8a140000ff417, type: 3}

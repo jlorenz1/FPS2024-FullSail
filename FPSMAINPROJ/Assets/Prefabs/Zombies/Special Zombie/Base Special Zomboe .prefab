@@ -142,15 +142,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 553.96
+      value: 313.09406
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08087158
+      value: 200.03217
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -125.76
+      value: -25.96342
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalRotation.w
@@ -180,6 +180,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7269728169905626603, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Head
+      objectReference: {fileID: 0}
+    - target: {fileID: -3962647829050528788, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Body
+      objectReference: {fileID: 0}
+    - target: {fileID: -3122781417413711294, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -2928631036446536291, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -1881965479880549823, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: -706658983441424561, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Name
       value: 'Base Special Zomboe '
@@ -187,6 +211,26 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020948974440007045, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
+      objectReference: {fileID: 0}
+    - target: {fileID: 1945040816612613005, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Legs
+      objectReference: {fileID: 0}
+    - target: {fileID: 8515130166721925627, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587201446677717949, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie Arms
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -204,6 +248,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9011631805883632856}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5513036727809118154}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1437854423885591211}
     - targetCorrespondingSourceObject: {fileID: 7311561063055367063, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5304159606722548399}
@@ -417,7 +467,7 @@ Animator:
   m_GameObject: {fileID: 504901931353985701}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e8a34632d041691439e8a140000ff417, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7b8574cb2315b234f8a142dd460f153b, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5a9f60a7f26e624fa0fc5fdbbb7a39e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -462,7 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4c4a12dd4bd1a45835291fd1baca22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 0}
+  Zombie: {fileID: 5513036727809118154}
   ZombieFootSteps: []
   ZombieFootStepsVol: 0
   ZombieGrowl: []
@@ -472,40 +522,172 @@ MonoBehaviour:
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 8562664022798744466}
-  health: 100
   model: {fileID: 8210140175950792238}
-  BaseHitPoints: 90
   animator: {fileID: 5574385536688671988}
   animatorspeedtrans: 5
   FacePlayerSpeed: 90
   ViewAngle: 90
   HeadPos: {fileID: 1281343892100793167}
-  Drops: []
   Body: {fileID: 8974546878114210644}
   Head: {fileID: 2703206559925714563}
   Legs:
   - {fileID: 478656636104529122}
   - {fileID: 8415121048041765056}
+  - {fileID: 8415121048041765056}
+  - {fileID: 8415121048041765056}
   Arms:
   - {fileID: 6330165857799044923}
   - {fileID: 3138072273951470587}
-  damage: 5
-  models: []
+  CurrentHealth: 30
+  MaxHealth: 200
+  MaxArmor: 500
+  Armor: 10
   Range: 30
+  damage: 5
+  AttackSpeed: 3
+  castSpeed: 0.85
+  AttentionSpan: 3
+  sight: 25
+  Helmate: {fileID: 0}
+  Drops:
+  - {fileID: 7567231089132668557, guid: 0e033f566ba83164fb3fcf00d5f9a141, type: 3}
+  models: []
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
   specialAbilityCooldown: 5
   BuffRange: 30
-  HealthBuffer: 1
-  SpeedBuffer: 1
+  maxHealthBuffer: 1
+  AttackSpeedBuffer: 1
   damageBUffer: 1
-  SpecailCaster: 0
-  DamageBuff: 0
-  SpeedBuff: 0
-  HealthBuff: 0
-  NoramalProjectilePrefab: {fileID: 0}
-  SpecialProjectile: {fileID: 0}
-  BossProjectilePrefab: {fileID: 0}
-  ZombieBuff: {fileID: 0}
-  ZombieBuffVol: 0
+  ArmorBUffer: 1
+  Healer: 1
+  AttackSpeedBuff: 2
+  AttackDamageBuff: 20
+  HealthBuff: 20
+  ArmorBuff: 20
+  Healing: 30
+  ZombieBuff: {fileID: 8300000, guid: dad51a6509285da4fa5e41b1a345a9f9, type: 3}
+  ZombieBuffVol: 0.215
+--- !u!82 &5513036727809118154
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504901931353985701}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!136 &1437854423885591211
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504901931353985701}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1214864482066599393 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7269728169905626603, guid: e8a34632d041691439e8a140000ff417, type: 3}
@@ -530,7 +712,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.09404062
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0.09404062, z: 0}
 --- !u!54 &5493466606744510162
 Rigidbody:
