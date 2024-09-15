@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.Burst.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
@@ -246,11 +247,8 @@ public class WeaponController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("Hit Tag: " + hit.collider.tag);
-
                         ParticleSystem enviormentEffect = Instantiate(gunList[selectedGun].enviormentEffect, hit.point, Quaternion.LookRotation(hit.normal));
-                        GameObject newBulletHole = Instantiate(gunList[selectedGun].bulletDecals[UnityEngine.Random.Range(0, gunList[selectedGun].bulletDecals.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
-                        newBulletHole.transform.up = hit.normal;
+                        StartCoroutine(spawnBulletHole(hit));
                     }
 
                 }
@@ -335,6 +333,13 @@ public class WeaponController : MonoBehaviour
         Destroy(trail.gameObject, trail.time);
     }
 
+    IEnumerator spawnBulletHole(RaycastHit hit)
+    {
+        GameObject newBulletHole = Instantiate(gunList[selectedGun].bulletDecals[UnityEngine.Random.Range(0, gunList[selectedGun].bulletDecals.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+        newBulletHole.transform.up = hit.normal;
+        yield return new WaitForSeconds(2);
+        Destroy(newBulletHole);
+    }
     public void displayCurrentAmmo()
     {
         gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
