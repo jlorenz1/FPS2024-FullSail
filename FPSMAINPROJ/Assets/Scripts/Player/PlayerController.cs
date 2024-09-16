@@ -134,6 +134,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public bool hasItems;
     bool isPlayingSound;
     private Coroutine waitTime;
+    private Coroutine manaTime;
 
     public static PlayerController playerInstance
     {
@@ -201,7 +202,19 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (manaTime != null)
+            {
+                StopCoroutine(manaTime);
+                manaTime = null;
+            }
             mana(1.5f);
+        }
+        if (Input.GetKeyUp(KeyCode.U))
+        {
+            manaTime = StartCoroutine(ManaTimer());
+        }
+
 
     }
 
@@ -382,6 +395,22 @@ public class PlayerController : MonoBehaviour, IDamage
             }
 
         }
+
+    }
+
+    IEnumerator ManaTimer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        float startingFill = gameManager.gameInstance.playerManaBar.fillAmount;
+        while (currentMana < maxMana)
+        {
+            
+            currentMana += Time.deltaTime * 50;
+            float fillAmount = Mathf.Lerp(startingFill, 1f, currentMana / maxMana);
+            gameManager.gameInstance.playerManaBar.fillAmount = fillAmount;
+            yield return null;
+        }
+        //gameManager.gameInstance.playerManaBar.fillAmount = 1f;
 
     }
 
