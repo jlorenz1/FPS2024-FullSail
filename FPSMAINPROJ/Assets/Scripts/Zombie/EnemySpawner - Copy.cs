@@ -74,7 +74,10 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < Amount; i++)
         {
-            SpawnAtRandomPoint();
+            if (spawnPoints != null)
+            {
+                SpawnAtRandomPoint();
+            }
         }
 
 

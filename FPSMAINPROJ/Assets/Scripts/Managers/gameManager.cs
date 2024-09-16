@@ -109,7 +109,7 @@ public class gameManager : MonoBehaviour
     private bool isNewEnemies;
 
 
-
+    int cycle = 0;
     public bool BlinkingJab;
     public bool LightGautlening;
 
@@ -260,6 +260,15 @@ public class gameManager : MonoBehaviour
             {
                 UnpauseGame();
             }
+
+          
+
+            if (EnemyCount < 4 || cycle == 10000)
+            {
+                enemySpawner.ZombieSpawner(3);
+                cycle = 0;
+            }
+
         }
 
         displayInventoryMenu();
@@ -336,13 +345,9 @@ public class gameManager : MonoBehaviour
     }
     public void UpdateGameGoal(int amount)
     {
+
+        EnemyCount += amount;
         
-
-        if (EnemyCount < 4 && amount < 1 )
-        {
-            enemySpawner.ZombieSpawner(3);
-
-        }
 
      /*   SetEnemyCount(amount);
 
