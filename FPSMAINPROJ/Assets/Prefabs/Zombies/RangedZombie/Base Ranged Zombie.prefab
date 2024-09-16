@@ -330,6 +330,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Zombie Arms
       objectReference: {fileID: 0}
+    - target: {fileID: 8804795166771358170, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d8678d3763b4ad4e9c6fca2bffc16b1, type: 2}
+    - target: {fileID: 8804795166771358170, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ddb080ce93e45a4f80a16a82eaea11f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -773,6 +781,7 @@ MonoBehaviour:
   launchPoint: {fileID: 3945889761237242084}
   CastPortal1: {fileID: 7274814169676317492}
   CastPortal2: {fileID: 0}
+  castAmount: 5
   castRange: 20
 --- !u!82 &5227367015657412385
 AudioSource:

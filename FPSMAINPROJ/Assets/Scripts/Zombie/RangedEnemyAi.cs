@@ -11,21 +11,25 @@ public class RangedEnemy : EnemyAI
     [SerializeField] GameObject CastPortal1;
     [SerializeField] GameObject CastPortal2;
 
-   
+    [SerializeField] int castAmount;
+
     float castDelay = 1;
     [SerializeField] float castRange;
     bool canAttack;
     float basespeed;
-
-
+    bool waitdone;
+    bool AttackDone;
+    bool inPosition;
     protected override void Start()
     {
         base.Start();
         agent.stoppingDistance = castRange / 2;
         canAttack = true;
+        AttackDone = true;
+        inPosition = false;
     }
 
-  public  void ToggleCastPortal()
+    public void ToggleCastPortal()
     {
 
         if (CastPortal1 != null)
@@ -43,31 +47,49 @@ public class RangedEnemy : EnemyAI
     {
         base.Update();
 
-        if (PlayerinAttackRange && canAttack)
+        if (PlayerinAttackRange && canAttack && ChasingPLayer)
         {
             StartCoroutine(CastAttackRoutine());
         }
     }
+
 
     IEnumerator CastAttackRoutine()
     {
         canAttack = false;
         animator.SetFloat("CastSpeed", castSpeed); // New: Set animator speed to match cast speed
         animator.SetTrigger("Shoot");
+        agent.speed = 0;
 
-        // Wait based on the cast speed
-        yield return new WaitForSeconds(1f / castSpeed);
+        yield return new WaitUntil(() => AttackDone == true);
 
-        nextFireTime = Time.time + (1f / castSpeed); // Adjust next fire time based on cast speed
+        agent.speed = startSpeed;
         canAttack = true;
+    }
+
+
+    IEnumerator Cast()
+    {
+        for (int i = 0; i < castAmount; i++)
+        {
+            Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+            yield return new WaitForSeconds(1 / castSpeed);
+        }
+        yield return new WaitForSeconds(1);
+        AttackDone = false;
+        animator.SetTrigger("Shoot");
     }
 
     public void CastAttack()
     {
         // Ranged attack logic
         Debug.Log("Ranged attack");
-        Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+        AttackDone = false;
+        StartCoroutine(Cast());
     }
+
+
+  
 
     protected override void Die()
     {
@@ -75,7 +97,12 @@ public class RangedEnemy : EnemyAI
         base.Die();
     }
 
-
+    IEnumerator wait(float time)
+    {
+        waitdone = false;
+        yield return new WaitForSeconds(time);
+        waitdone = true;
+    }
  
 
 

@@ -9803,10 +9803,19 @@ MonoBehaviour:
   IsSlow: 0
   IsGround: 0
   IsBossAttack: 1
-  projectileDamage: 50
+  projectileDamage: 4
+  followtime: 0
   ProjectileAudio: {fileID: -5568339962705930923}
   ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
   ZombieProjectileAudioVol: 0.045
+  SekhmetAttack: 0
+  UserKareBaseAttack: 0
+  UserKareSpecialAttack1: 0
+  UserKareSpecialAttack2: 0
+  aoePrefab: {fileID: 0}
+  aoeRadius: 5
+  slowDuration: 5
+  slowEffectDuration: 3
 --- !u!135 &5105917485678787543
 SphereCollider:
   m_ObjectHideFlags: 0
