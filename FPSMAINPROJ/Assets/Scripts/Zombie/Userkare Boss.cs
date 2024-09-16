@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Userkare : EnemyAI
@@ -34,7 +35,7 @@ public class Userkare : EnemyAI
 
     float PlayerStartHP;
 
-
+    bool nextbuff;
 
 
     // Start is called before the first frame update
@@ -52,7 +53,7 @@ public class Userkare : EnemyAI
         damage = 5;
         canattack = true;
         gameManager.gameInstance.SpawnUserkare();
-
+        nextbuff = true;
 
     }
 
@@ -97,6 +98,10 @@ public class Userkare : EnemyAI
             gameManager.gameInstance.LightGautlening = false;
         }
 
+        if (gameManager.gameInstance.UserkareIsUncaped && nextbuff)
+        {
+            StartCoroutine(SetUncaped());
+        }
 
     }
   IEnumerator  RampingAbilites()
@@ -108,21 +113,27 @@ public class Userkare : EnemyAI
         AddativeAP = true;
     }
 
-    public  bool SetUncaped(bool capped)
+      IEnumerator SetUncaped()
     {
+        nextbuff = false;
+
         Armor = 0;
-        MaxHealth *= 4;
-        CurrentHealth *= 4;
-        return capped;
+        MaxHealth *= 2;
+        CurrentHealth *= 1;
+
+        yield return new WaitForSeconds(4);
+
+        nextbuff = true;
 
     }
 
 
     protected override void Die()
     {
-        base.Die();
+        gameManager.gameInstance.BossKilled();
         gameManager.gameInstance.UserkareDead();
-       
+        DieWithoutDrops();
+
     }
 
 

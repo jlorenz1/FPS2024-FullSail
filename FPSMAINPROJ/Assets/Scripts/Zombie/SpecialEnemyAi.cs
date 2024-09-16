@@ -32,7 +32,7 @@ public class SpecialEnemy : EnemyAI
             UseSpecialAbility();
             if (ZombieBuff != null)
             {
-              //  PlayAudio(ZombieBuff, ZombieBuffVol);
+               PlayAudio(ZombieBuff, ZombieBuffVol);
             }
 
             nextAbilityTime = Time.time + specialAbilityCooldown;

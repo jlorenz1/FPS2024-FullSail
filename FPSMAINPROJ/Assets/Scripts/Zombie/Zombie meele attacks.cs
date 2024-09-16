@@ -6,7 +6,7 @@ public class Zombiemeeleattacks : MonoBehaviour
 {
 
 
-    float damage;
+   public float damage;
     bool causesBleed;
     float duration;
     
@@ -48,7 +48,7 @@ public class Zombiemeeleattacks : MonoBehaviour
 
         while (elapsed < duration)
         {
-            gameManager.gameInstance.playerScript.takeDamage(gameManager.gameInstance.playerScript.GetHealth() * 0.02f); // Apply 2% damage
+            gameManager.gameInstance.playerScript.takeDamage(3f); // Apply 2% damage
             elapsed += bleedTick;
             yield return new WaitForSeconds(bleedTick);
         }

@@ -7,13 +7,14 @@ public class SekhmetBoss : EnemyAI
 {
     bool Berserk;
     bool AddativeDamage;
-    float AblityCoolDown = 30;
+    float AblityCoolDown = 10;
     float nextAbilityTime;
     GameObject mUserkare;
     float PlayerStartHP;
     bool canattack;
     float AttackRange;
     bool inAbilityRange;
+    bool nextbuff;
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
@@ -31,6 +32,8 @@ public class SekhmetBoss : EnemyAI
         AttackRange = 30;
         animator.SetFloat("AttackSpeed", AttackSpeed);
         gameManager.gameInstance.SpawnSekhmet();
+        nextbuff = true;
+        MeleeWeapon.SetDamage(damage);
     }
 
     // Update is called once per frame
@@ -38,7 +41,10 @@ public class SekhmetBoss : EnemyAI
     {
         base.Update();
 
-       
+       if(gameManager.gameInstance.SekhmetisBerserk && nextbuff)
+        {
+           StartCoroutine( GoBerserk());
+        }
 
         if (PlayerinAttackRange && canattack)
         {
@@ -77,21 +83,25 @@ public class SekhmetBoss : EnemyAI
         AddativeDamage = true;
     }
 
-    public bool GoBerserk(bool beserk)
+    IEnumerator GoBerserk( )
     {
+        nextbuff = false;
         Armor = 450;
-        MaxHealth *= 2;
-        CurrentHealth *= 2;
+        MaxHealth *= 1;
+        CurrentHealth *= 1;
+        yield return new WaitForSeconds(4);
 
-        return beserk;
+
+            nextbuff = true;
     }
 
     protected override void Die()
     {
-        base.Die();
+        gameManager.gameInstance.BossKilled();
         gameManager.gameInstance.SekhmetDead();
-        gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
-       
+       gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
+        DieWithoutDrops();
+
     }
 
     void BleedingJab()
@@ -105,9 +115,10 @@ public class SekhmetBoss : EnemyAI
         
         MeleeWeapon.SetBleed(); // Start bleeding effect
         animator.SetTrigger("Quick jab");
+        Debug.Log("bleeding jab  Called");
 
         // Wait for 3 seconds before stopping the bleeding effect
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
 
         MeleeWeapon.SetBleed(); 
     }
@@ -130,7 +141,7 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-    
+
 
     IEnumerator CastAttackRoutine()
     {

@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3189ecdfd21a074290a24e833a4d44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &7274814169676317492
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +672,7 @@ Animator:
   m_GameObject: {fileID: 4156405569138669935}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e8a34632d041691439e8a140000ff417, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7b8574cb2315b234f8a142dd460f153b, type: 2}
+  m_Controller: {fileID: 9100000, guid: c5a9f60a7f26e624fa0fc5fdbbb7a39e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -716,13 +717,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a362ed843161e14ab175c07b9209c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 5227367015657412385}
-  ZombieFootSteps: []
-  ZombieFootStepsVol: 0
-  ZombieGrowl: []
-  ZombieGrowlVol: 0
-  ZombieHit: []
-  ZombieHitVol: 0
+  Zombie: {fileID: 8430177449127441804, guid: d256a29b678d2304681ccea46d0febe3, type: 3}
+  ZombieFootSteps:
+  - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
+  - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
+  - {fileID: 8300000, guid: e5dbc8e26ddcc3b41a6d6ed433ad34df, type: 3}
+  - {fileID: 8300000, guid: d0854d7d9b448b94bac5500c4f8d539b, type: 3}
+  - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
+  - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
+  - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
+  ZombieFootStepsVol: 0.5
+  ZombieGrowl:
+  - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+  ZombieGrowlVol: 0.5
+  ZombieHit:
+  - {fileID: 8300000, guid: dc3ec943517fbfe4ab30b2b8f0304ab9, type: 3}
+  ZombieHitVol: 0.2
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 7725206337704615647}
@@ -773,7 +783,7 @@ AudioSource:
   m_GameObject: {fileID: 4156405569138669935}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

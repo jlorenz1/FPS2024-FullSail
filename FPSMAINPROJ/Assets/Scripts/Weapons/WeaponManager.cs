@@ -56,6 +56,8 @@ public class WeaponManager : MonoBehaviour
                 playerWeapons[i].magazines[magIndex].currentAmmoCount = playerWeapons[i].magazines[magIndex].magazineCapacity;
             }
         }
+        gameManager.gameInstance.playerWeapon.displayCurrentAmmo();
+        gameManager.gameInstance.playerWeapon.displayMaxAmmo();
     }
 
     public weaponStats getHekaBasedWeapon(string hekaSchool)

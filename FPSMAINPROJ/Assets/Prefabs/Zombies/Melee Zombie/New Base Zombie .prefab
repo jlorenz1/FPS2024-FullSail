@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3189ecdfd21a074290a24e833a4d44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &4176813440791911681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -801,13 +802,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6df52a867546be448c8004e5a714318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 5541360856626677942}
-  ZombieFootSteps: []
-  ZombieFootStepsVol: 0
-  ZombieGrowl: []
+  Zombie: {fileID: 8430177449127441804, guid: d256a29b678d2304681ccea46d0febe3, type: 3}
+  ZombieFootSteps:
+  - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
+  - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
+  - {fileID: 8300000, guid: e5dbc8e26ddcc3b41a6d6ed433ad34df, type: 3}
+  - {fileID: 8300000, guid: d0854d7d9b448b94bac5500c4f8d539b, type: 3}
+  - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
+  - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
+  - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
+  ZombieFootStepsVol: 0.5
+  ZombieGrowl:
+  - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
   ZombieGrowlVol: 0
-  ZombieHit: []
-  ZombieHitVol: 0
+  ZombieHit:
+  - {fileID: 8300000, guid: dc3ec943517fbfe4ab30b2b8f0304ab9, type: 3}
+  ZombieHitVol: 0.5
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 7725777155471285365}
