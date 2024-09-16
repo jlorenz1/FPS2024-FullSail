@@ -241,9 +241,10 @@ public class gameManager : MonoBehaviour
         // Pause Menu Logic
         if (Input.GetButtonDown("Cancel"))
         {
-            if(gameAlterMenu.activeSelf)
+            if (gameAlterMenu.activeSelf)
             {
                 gameAlterMenu.SetActive(false);
+                gameActiveMenu = gameAlterMenu;
                 resumePlayerControls();
             }
             else if (gameActiveMenu == null && !gameAlterMenu.activeSelf && !gameOptionsMenu.activeSelf)
@@ -252,7 +253,7 @@ public class gameManager : MonoBehaviour
                 gameActiveMenu = gamePauseMenu;
                 gameActiveMenu.SetActive(gameIsPaused);
             }
-            else if(gameOptionsMenu.activeSelf)
+            else if (gameOptionsMenu.activeSelf)
             {
                 saveSettings();
                 gameOptionsMenu.SetActive(false);
@@ -264,19 +265,18 @@ public class gameManager : MonoBehaviour
                 UnpauseGame();
             }
 
-          if(BossesKilled == 2)
-            {
-                winScreen();
-            }
-
-            if (EnemyCount < 4 || cycle == 10000)
-            {
-                enemySpawner.ZombieSpawner(3);
-                cycle = 0;
-            }
-
+        }
+        if (BossesKilled == 2)
+        {
+            Debug.Log("entering boss killed");
+            winScreen();
         }
 
+        if (EnemyCount < 4 || cycle == 10000)
+        {
+            enemySpawner.ZombieSpawner(3);
+            cycle = 0;
+        }
         displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");
@@ -461,13 +461,9 @@ public class gameManager : MonoBehaviour
 
     public void winScreen()
     {
-        PauseGame();  
-
-        gameActiveMenu = gameWinMenu; 
-
+        PauseGame();
+        gameActiveMenu = gameWinMenu;
         gameWinMenu.SetActive(true);
-
-        gameActiveMenu.SetActive(gameIsPaused);
     }
 
     public void interactScreen()
