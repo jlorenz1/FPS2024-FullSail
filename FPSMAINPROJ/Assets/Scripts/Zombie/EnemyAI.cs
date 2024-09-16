@@ -224,6 +224,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     void LootRoll(int DropChance)
     {
+
+        int chance = UnityEngine.Random.Range(0, 100);
+        float yOffset = 1.0f;
         int GemsDropped = 0;
         for(int i  = 0; i < 8; i++)
         {
@@ -231,11 +234,16 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             GemsDropped++;
         }
         
+        if(chance < 40 && Drops[1] != null) {
+
+            Instantiate(Drops[1], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+
+        }
+
         while (GemsDropped < 12)
         {
 
-            int chance = UnityEngine.Random.Range(0, 100);
-            float yOffset = 1.0f;
+
 
             if (chance < DropChance) 
             {
