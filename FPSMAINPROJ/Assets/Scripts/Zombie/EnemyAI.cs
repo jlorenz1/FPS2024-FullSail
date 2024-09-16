@@ -395,12 +395,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
 
-    void TargetPlayer()
+   protected void TargetPlayer()
     {
       
         agent.stoppingDistance = stoppingDistance;
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        FlockPlayer();
+       // FlockPlayer();
     }
 
 
@@ -590,22 +590,13 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void AddMaxHp(float amount)
     {
-        if (!HasHealthBuffed)
+      
         {
             MaxHealth += amount;
             Debug.Log("Zombie health buffed by " + amount);
             HasHealthBuffed = true;
         }
-        else
-        {
-            Debug.Log("Health already buffed");
-
-
-            AddHP((int)amount);
-
-
-           
-        }
+    
     }
 
 
@@ -613,30 +604,24 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void AddDamage(float amount)
     {
-        if (!HasStrengthBuffed)
+       
         {
             damage += amount;
             Debug.Log("Zombie damage buffed by " + amount);
             HasStrengthBuffed = true;
         }
-        else
-        {
-            Debug.Log("Damage already buffed");
-        }
+       
     }
 
     public void AddSpeed(float amount)
     {
-        if (!HasSpeedBuffed)
+      
         {
             agent.speed += amount;
             Debug.Log("Zombie speed buffed by " + amount);
             HasSpeedBuffed = true;
         }
-        else
-        {
-            Debug.Log("Speed already buffed");
-        }
+       
     }
 
 
@@ -690,16 +675,18 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public  void AddAttackSpeed(float amount)
     {
-
-        if (!AttackSpeedBuffed)
-        {
             AttackSpeed *= amount;
             castSpeed *= amount;
-            AttackSpeedBuffed = true;
+            
+        if(AttackSpeed > 3)
+        {
+            AttackSpeed = 3;
+        }
+        if(castSpeed > 3)
+        {
+            castSpeed = 3;
         }
 
-        else
-            Debug.Log("Attack SpeedBuffed");
     }
 
 
@@ -844,6 +831,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
     }
+
+
+
+
+   protected IEnumerator Stop(float duration)
+    {
+       
+        agent.acceleration = 300;
+        agent.speed = 0;
+        yield return new WaitForSeconds(duration);
+        agent.speed = startSpeed;
+        agent.acceleration = 8;
+    }
+
     
   public  float GetMaxHP()
     {
