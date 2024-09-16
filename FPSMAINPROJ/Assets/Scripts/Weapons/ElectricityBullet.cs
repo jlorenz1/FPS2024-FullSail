@@ -34,7 +34,7 @@ public class ElectricityBullet : MonoBehaviour
             return;
         }
 
-        IEnemyDamage damageable = other.GetComponentInParent<IEnemyDamage>();
+        IEnemyDamage damageable = other.GetComponent<IEnemyDamage>();
         GameObject zombieHit = getTopLevelParent(other);
         Transform spawnBounce = zombieHit.transform.Find("mixamorig5:Hips/HekaOutting");
         GameObject closestZombie = getClosestZombie(zombieHit);

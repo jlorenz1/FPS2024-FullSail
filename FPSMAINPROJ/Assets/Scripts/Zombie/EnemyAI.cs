@@ -59,11 +59,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
-    bool ChasingPLayer;
+    protected bool ChasingPLayer;
     protected bool PlayerinAttackRange;
     int BoostRange = 30;
     bool RangeBoosted;
-    float startSpeed;
+    protected float startSpeed;
     Vector3 PlayerDrr;
     float AngleToPlayer;
     bool canGroan;

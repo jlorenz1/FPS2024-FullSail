@@ -43,7 +43,7 @@ public class DarknessBullet : MonoBehaviour
             return;
         }
 
-        IEnemyDamage damageable = other.GetComponentInParent<IEnemyDamage>();
+        IEnemyDamage damageable = other.GetComponent<IEnemyDamage>();
         if(damageable != null)
         {
             damageable.takeDamage(damage);
