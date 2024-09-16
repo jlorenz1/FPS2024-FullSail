@@ -344,10 +344,18 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void mana(float manaUsageAmount)
     {
-        if(currentMana > 0) {
+        if (manaTime != null)
+        {
+            StopCoroutine(manaTime);
+            manaTime = null;
+        }
+
+        if (currentMana > 0) {
             currentMana -= manaUsageAmount;
             updatePlayerUI();
         }
+
+        manaTime = StartCoroutine(ManaTimer());
 
     }
 
