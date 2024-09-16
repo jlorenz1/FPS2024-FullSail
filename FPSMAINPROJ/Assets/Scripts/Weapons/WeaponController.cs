@@ -99,7 +99,12 @@ public class WeaponController : MonoBehaviour
             {
                 handleSemiAuto();
             }
-            handleHeka();
+            if (gunList[selectedGun].hekaSchool.Length > 0 && hekaAbility != null)
+            {
+                handleHeka();
+
+            }
+           
 
         }
 
