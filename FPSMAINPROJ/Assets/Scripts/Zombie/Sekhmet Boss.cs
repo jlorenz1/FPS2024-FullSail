@@ -7,7 +7,7 @@ public class SekhmetBoss : EnemyAI
 {
     bool Berserk;
     bool AddativeDamage;
-    float AblityCoolDown = 30;
+    float AblityCoolDown = 10;
     float nextAbilityTime;
     GameObject mUserkare;
     float PlayerStartHP;
@@ -33,6 +33,7 @@ public class SekhmetBoss : EnemyAI
         animator.SetFloat("AttackSpeed", AttackSpeed);
         gameManager.gameInstance.SpawnSekhmet();
         nextbuff = true;
+        MeleeWeapon.SetDamage(damage);
     }
 
     // Update is called once per frame
@@ -114,9 +115,10 @@ public class SekhmetBoss : EnemyAI
         
         MeleeWeapon.SetBleed(); // Start bleeding effect
         animator.SetTrigger("Quick jab");
+        Debug.Log("bleeding jab  Called");
 
         // Wait for 3 seconds before stopping the bleeding effect
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
 
         MeleeWeapon.SetBleed(); 
     }
@@ -139,7 +141,7 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-    
+
 
     IEnumerator CastAttackRoutine()
     {
