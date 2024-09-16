@@ -36,6 +36,11 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void quitToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     //altershop
     public void hekaTempest()
     {
