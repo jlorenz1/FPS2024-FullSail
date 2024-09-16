@@ -98,10 +98,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-        Transform bodyAttatch = transform.Find("mixamorig5:Hips");
+     /*   Transform bodyAttatch = transform.Find("mixamorig5:Hips");
         Transform hekaOutting = new GameObject("HekaOutting").transform;
         hekaOutting.SetParent(bodyAttatch);
-        hekaOutting.localPosition = new Vector3(0, .79f, 0);
+        hekaOutting.localPosition = new Vector3(0, .79f, 0);*/
 
       
 
