@@ -209,8 +209,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
-      
-        LootRoll(60);
+        if (Drops.Count > 0)
+        {
+            LootRoll(60);
+        }
        gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
         Destroy(gameObject);

@@ -14,6 +14,7 @@ public class SekhmetBoss : EnemyAI
     bool canattack;
     float AttackRange;
     bool inAbilityRange;
+    bool nextbuff;
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
@@ -31,6 +32,7 @@ public class SekhmetBoss : EnemyAI
         AttackRange = 30;
         animator.SetFloat("AttackSpeed", AttackSpeed);
         gameManager.gameInstance.SpawnSekhmet();
+        nextbuff = true;
     }
 
     // Update is called once per frame
@@ -38,7 +40,10 @@ public class SekhmetBoss : EnemyAI
     {
         base.Update();
 
-       
+       if(gameManager.gameInstance.SekhmetisBerserk && nextbuff)
+        {
+           StartCoroutine( GoBerserk());
+        }
 
         if (PlayerinAttackRange && canattack)
         {
@@ -77,21 +82,25 @@ public class SekhmetBoss : EnemyAI
         AddativeDamage = true;
     }
 
-    public bool GoBerserk(bool beserk)
+    IEnumerator GoBerserk( )
     {
+        nextbuff = false;
         Armor = 450;
-        MaxHealth *= 2;
-        CurrentHealth *= 2;
+        MaxHealth *= 1;
+        CurrentHealth *= 1;
+        yield return new WaitForSeconds(4);
 
-        return beserk;
+
+            nextbuff = true;
     }
 
     protected override void Die()
     {
-        base.Die();
+        gameManager.gameInstance.BossKilled();
         gameManager.gameInstance.SekhmetDead();
-        gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
-       
+       gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
+        DieWithoutDrops();
+
     }
 
     void BleedingJab()

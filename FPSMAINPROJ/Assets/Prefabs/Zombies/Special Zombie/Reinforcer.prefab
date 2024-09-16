@@ -513,12 +513,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Zombie: {fileID: 5513036727809118154}
-  ZombieFootSteps: []
+  ZombieFootSteps:
+  - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
+  - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
+  - {fileID: 8300000, guid: e5dbc8e26ddcc3b41a6d6ed433ad34df, type: 3}
+  - {fileID: 8300000, guid: d0854d7d9b448b94bac5500c4f8d539b, type: 3}
+  - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
+  - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
+  - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
   ZombieFootStepsVol: 0
-  ZombieGrowl: []
-  ZombieGrowlVol: 0
-  ZombieHit: []
-  ZombieHitVol: 0
+  ZombieGrowl:
+  - {fileID: 8300000, guid: c17a4e037708d734abc7212f3f563fbb, type: 3}
+  - {fileID: 8300000, guid: 7cd898929a4ea4443ad44c0345438f18, type: 3}
+  ZombieGrowlVol: 0.5
+  ZombieHit:
+  - {fileID: 8300000, guid: dc3ec943517fbfe4ab30b2b8f0304ab9, type: 3}
+  - {fileID: 8300000, guid: b1fd01cbde3db4d4cb8a87ae701032f5, type: 3}
+  ZombieHitVol: 0.2
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 8562664022798744466}
@@ -579,7 +590,7 @@ AudioSource:
   m_GameObject: {fileID: 504901931353985701}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

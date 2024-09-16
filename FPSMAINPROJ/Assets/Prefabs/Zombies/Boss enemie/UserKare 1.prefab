@@ -1194,13 +1194,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a2e262d05ef36479526149c9db911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 0}
-  ZombieFootSteps: []
-  ZombieFootStepsVol: 0
+  Zombie: {fileID: 6383694679730552691}
+  ZombieFootSteps:
+  - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
+  - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
+  - {fileID: 8300000, guid: e5dbc8e26ddcc3b41a6d6ed433ad34df, type: 3}
+  - {fileID: 8300000, guid: d0854d7d9b448b94bac5500c4f8d539b, type: 3}
+  - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
+  - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
+  - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
+  - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
+  - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
+  - {fileID: 8300000, guid: e5dbc8e26ddcc3b41a6d6ed433ad34df, type: 3}
+  - {fileID: 8300000, guid: d0854d7d9b448b94bac5500c4f8d539b, type: 3}
+  - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
+  - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
+  - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
+  ZombieFootStepsVol: 0.5
   ZombieGrowl: []
   ZombieGrowlVol: 0
-  ZombieHit: []
-  ZombieHitVol: 0
+  ZombieHit:
+  - {fileID: 8300000, guid: b1fd01cbde3db4d4cb8a87ae701032f5, type: 3}
+  ZombieHitVol: 0.3
   ZombieDeath: []
   ZombieDeathVol: 0
   agent: {fileID: 5944349722677308175}
@@ -1224,7 +1239,6 @@ MonoBehaviour:
   - {fileID: 5535426773435283}
   CurrentHealth: 500
   MaxHealth: 500
-  MaxArmor: 500
   Armor: 50
   Range: 50
   damage: 50
@@ -1232,6 +1246,7 @@ MonoBehaviour:
   castSpeed: 0.85
   AttentionSpan: 0
   sight: 25
+  flockRange: 8
   Helmate: {fileID: 0}
   Drops: []
   models: []

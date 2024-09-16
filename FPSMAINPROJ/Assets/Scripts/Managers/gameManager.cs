@@ -97,6 +97,8 @@ public class gameManager : MonoBehaviour
     public SekhmetBoss Sekhmet;
     public Userkare Userkare;
 
+  public  bool SekhmetisBerserk;
+  public  bool UserkareIsUncaped;
     public Transform SekhmetRespawn;
     //int variables 
     int EnemyCount;
@@ -112,7 +114,7 @@ public class gameManager : MonoBehaviour
     int cycle = 0;
     public bool BlinkingJab;
     public bool LightGautlening;
-
+    int BossesKilled;
 
     // Public property to access the Player
 
@@ -151,7 +153,7 @@ public class gameManager : MonoBehaviour
     void Awake()
     {
 
-
+        BossesKilled = 0;
         BlinkingJab = false;
         LightGautlening = false;
 
@@ -171,7 +173,8 @@ public class gameManager : MonoBehaviour
             isSekhmetDead = false;
 
 
-
+        SekhmetisBerserk = false;
+        UserkareIsUncaped = false;
 
         fadeOverlay.gameObject.SetActive(true);
         // If instance already exists and it is not the game Manager, destroy this instance
@@ -261,7 +264,10 @@ public class gameManager : MonoBehaviour
                 UnpauseGame();
             }
 
-          
+          if(BossesKilled == 2)
+            {
+                winScreen();
+            }
 
             if (EnemyCount < 4 || cycle == 10000)
             {
@@ -376,7 +382,11 @@ public class gameManager : MonoBehaviour
         enemyCount.text = EnemyCount.ToString("F0");
     }
 
+    public void BossKilled()
+    {
+        BossesKilled ++;
 
+    }
     public int GetEnemyCount()
     {
 
@@ -450,9 +460,13 @@ public class gameManager : MonoBehaviour
     }
 
     public void winScreen()
-    { 
-        PauseGame();
-        gameActiveMenu = gameWinMenu;
+    {
+        PauseGame();  
+
+        gameActiveMenu = gameWinMenu; 
+
+        gameWinMenu.SetActive(true);
+
         gameActiveMenu.SetActive(gameIsPaused);
     }
 
@@ -532,13 +546,14 @@ public class gameManager : MonoBehaviour
     public void UserkareDead()
     {
 
-        Sekhmet.GoBerserk(true);
+        SekhmetisBerserk = true;
+      
         isUserKareDead = true;
     }
 
     public void SekhmetDead()
     {
-        Userkare.SetUncaped(true);
+        UserkareIsUncaped = true;
         isSekhmetDead = true;
 
     }
