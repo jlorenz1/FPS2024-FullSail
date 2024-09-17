@@ -33,6 +33,10 @@ public class TilePuzzleController : MonoBehaviour
     public int[,] posTiles = new int[3,3];
     public Vector3[,] positions = new Vector3[3,3];
 
+    [Header("AUDIO")]
+    public AudioClip[] blockSounds;
+    [Range(0, 1)][SerializeField] public float blockVol;
+
     private static TilePuzzleController _tilePuzzleInstance;
     bool isTileMoving = false;
     public static TilePuzzleController tilePuzzleInstance
@@ -173,6 +177,7 @@ public class TilePuzzleController : MonoBehaviour
         }
 
         isTileMoving = true;
+        AudioManager.audioInstance.playSFXAudio(blockSounds[Random.Range(0, blockSounds.Length)], blockVol);
         //speed to slide
         float slidespeed = 1f;
         //time to slide

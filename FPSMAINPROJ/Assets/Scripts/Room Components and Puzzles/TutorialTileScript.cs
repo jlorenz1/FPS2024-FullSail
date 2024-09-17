@@ -6,6 +6,7 @@ public class TutorialTileScript : MonoBehaviour {
     public int id; //id of the tile
     public GameObject tile;
 
+
     //checks around tile to see if an empty spot is in range
     public void CheckArea()
     {
