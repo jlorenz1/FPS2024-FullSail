@@ -26,7 +26,7 @@ public class playerBulletScript : MonoBehaviour
             if (dmgDetect != null )
             {
                 dmgDetect.takeDamage(DamageAmount);
-                gameManager.gameInstance.PointCount += 1;
+                gameManager.gameInstance.GemCount += 1;
             }
             // Destroy the game object that was hit
             Destroy(gameObject);

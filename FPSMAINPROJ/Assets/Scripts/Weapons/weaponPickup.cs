@@ -5,4 +5,6 @@ using UnityEngine;
 public class weaponPickup : MonoBehaviour
 {
     [SerializeField] public weaponStats gun;
+
+
 }

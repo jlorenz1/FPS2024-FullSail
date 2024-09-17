@@ -6,6 +6,7 @@ using Unity.Burst.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.XR;
 
 public class WeaponController : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public Transform muzzleFlashTransform;
     [SerializeField] public Transform casingSpawnTransform;
     [SerializeField] Transform gunTransform;
+    Hands playerHands;
 
     [Header("WEAPON SPECIALTIES")]
     [SerializeField] public float shootDamage;
@@ -55,6 +57,8 @@ public class WeaponController : MonoBehaviour
    
     void Start()
     {
+        playerHands = new Hands();
+        //RightHandTransform = 
         cameraScript = FindObjectOfType<cameraController>();
         playerController = gameManager.gameInstance.playerScript;
         if(hekaAbility != null)
@@ -383,6 +387,8 @@ public class WeaponController : MonoBehaviour
         gunModel.localRotation = Quaternion.identity;
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = gun.muzzleFlash;
+        playerHands.ChangeHandLocation(gunModel);
+
         gunList.Add(gun);
         gameManager.gameInstance.gunName.text = gun.gunName;
 
