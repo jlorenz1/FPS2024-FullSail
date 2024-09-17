@@ -34,7 +34,7 @@ public class TilePuzzleController : MonoBehaviour
     public Vector3[,] positions = new Vector3[3,3];
 
     private static TilePuzzleController _tilePuzzleInstance;
-
+    bool isTileMoving = false;
     public static TilePuzzleController tilePuzzleInstance
     {
         get
@@ -166,6 +166,13 @@ public class TilePuzzleController : MonoBehaviour
     //moves tile from point startPos to endPos
     public IEnumerator moveTile(GameObject tile, Vector3 startPos, Vector3 endPos, int[] posIndices)
     {
+
+        if(isTileMoving)
+        {
+            yield break;
+        }
+
+        isTileMoving = true;
         //speed to slide
         float slidespeed = 1f;
         //time to slide
@@ -216,7 +223,7 @@ public class TilePuzzleController : MonoBehaviour
         }
 
         Debug.Log("(" + posIndices[0] + ", " + posIndices[1] + ") (" + posIndices[2] + ", " + posIndices[3] + ")");
-
+        isTileMoving = false;
         checkPattern();
     }
     
