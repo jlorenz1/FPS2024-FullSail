@@ -33,8 +33,12 @@ public class TilePuzzleController : MonoBehaviour
     public int[,] posTiles = new int[3,3];
     public Vector3[,] positions = new Vector3[3,3];
 
-    private static TilePuzzleController _tilePuzzleInstance;
+    [Header("AUDIO")]
+    public AudioClip[] blockSounds;
+    [Range(0, 1)][SerializeField] public float blockVol;
 
+    private static TilePuzzleController _tilePuzzleInstance;
+    bool isTileMoving = false;
     public static TilePuzzleController tilePuzzleInstance
     {
         get
@@ -166,6 +170,14 @@ public class TilePuzzleController : MonoBehaviour
     //moves tile from point startPos to endPos
     public IEnumerator moveTile(GameObject tile, Vector3 startPos, Vector3 endPos, int[] posIndices)
     {
+
+        if(isTileMoving)
+        {
+            yield break;
+        }
+
+        isTileMoving = true;
+        AudioManager.audioInstance.playSFXAudio(blockSounds[Random.Range(0, blockSounds.Length)], blockVol);
         //speed to slide
         float slidespeed = 1f;
         //time to slide
@@ -216,7 +228,7 @@ public class TilePuzzleController : MonoBehaviour
         }
 
         Debug.Log("(" + posIndices[0] + ", " + posIndices[1] + ") (" + posIndices[2] + ", " + posIndices[3] + ")");
-
+        isTileMoving = false;
         checkPattern();
     }
     

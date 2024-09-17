@@ -56,6 +56,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     [Header("-----Other-----")]
     [SerializeField] protected List<GameObject> Drops;
+    [SerializeField] float DropChance;
+    [SerializeField] GameObject Gems;
+    [SerializeField] int GemDropCount;
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
@@ -98,10 +101,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-        Transform bodyAttatch = transform.Find("mixamorig5:Hips");
+     /*   Transform bodyAttatch = transform.Find("mixamorig5:Hips");
         Transform hekaOutting = new GameObject("HekaOutting").transform;
         hekaOutting.SetParent(bodyAttatch);
-        hekaOutting.localPosition = new Vector3(0, .79f, 0);
+        hekaOutting.localPosition = new Vector3(0, .79f, 0);*/
 
       
 
@@ -211,7 +214,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         // Common death logic
         if (Drops.Count > 0)
         {
-            LootRoll(60);
+            LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
@@ -224,35 +227,40 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         Destroy(gameObject);
     }
 
-    void LootRoll(int DropChance)
+    void LootRoll(float DropChance)
     {
 
         int chance = UnityEngine.Random.Range(0, 100);
+        int DropItem = UnityEngine.Random.Range(0, Drops.Count);
         float yOffset = 1.0f;
         int GemsDropped = 0;
-        for(int i  = 0; i < 8; i++)
-        {
-            Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + 1f, agent.transform.position.z), agent.transform.rotation);
-            GemsDropped++;
-        }
+      
         
-        if(chance < 40 && Drops[1] != null) {
+        if(chance < DropChance && Drops != null) {
 
-            Instantiate(Drops[1], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+            Instantiate(Drops[DropItem], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
 
         }
 
-        while (GemsDropped < 12)
+// Handeling Gem Drops 
+        if (Gems != null)
         {
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(Gems, new Vector3(agent.transform.position.x, agent.transform.position.y + 1f, agent.transform.position.z), agent.transform.rotation);
+                GemsDropped++;
+            }
+        }
 
-
+        while (GemsDropped < GemDropCount && Gems != null)
+        {
 
             if (chance < DropChance) 
             {
 
               //  int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
 
-                Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+                Instantiate(Gems, new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
 
                 GemsDropped++;
 
@@ -395,7 +403,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
 
-    void TargetPlayer()
+   protected void TargetPlayer()
     {
       
         agent.stoppingDistance = stoppingDistance;
@@ -590,22 +598,13 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void AddMaxHp(float amount)
     {
-        if (!HasHealthBuffed)
+      
         {
             MaxHealth += amount;
             Debug.Log("Zombie health buffed by " + amount);
             HasHealthBuffed = true;
         }
-        else
-        {
-            Debug.Log("Health already buffed");
-
-
-            AddHP((int)amount);
-
-
-           
-        }
+    
     }
 
 
@@ -613,30 +612,24 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public void AddDamage(float amount)
     {
-        if (!HasStrengthBuffed)
+       
         {
             damage += amount;
             Debug.Log("Zombie damage buffed by " + amount);
             HasStrengthBuffed = true;
         }
-        else
-        {
-            Debug.Log("Damage already buffed");
-        }
+       
     }
 
     public void AddSpeed(float amount)
     {
-        if (!HasSpeedBuffed)
+      
         {
             agent.speed += amount;
             Debug.Log("Zombie speed buffed by " + amount);
             HasSpeedBuffed = true;
         }
-        else
-        {
-            Debug.Log("Speed already buffed");
-        }
+       
     }
 
 
@@ -690,16 +683,18 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public  void AddAttackSpeed(float amount)
     {
-
-        if (!AttackSpeedBuffed)
-        {
             AttackSpeed *= amount;
             castSpeed *= amount;
-            AttackSpeedBuffed = true;
+            
+        if(AttackSpeed > 3)
+        {
+            AttackSpeed = 3;
+        }
+        if(castSpeed > 3)
+        {
+            castSpeed = 3;
         }
 
-        else
-            Debug.Log("Attack SpeedBuffed");
     }
 
 
@@ -844,6 +839,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
     }
+
+
+
+
+   protected IEnumerator Stop(float duration)
+    {
+       
+        agent.acceleration = 300;
+        agent.speed = 0;
+        yield return new WaitForSeconds(duration);
+        agent.speed = startSpeed;
+        agent.acceleration = 8;
+    }
+
     
   public  float GetMaxHP()
     {

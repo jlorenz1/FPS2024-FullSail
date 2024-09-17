@@ -36,7 +36,7 @@ public class ElectricityBullet : MonoBehaviour
 
         IEnemyDamage damageable = other.GetComponent<IEnemyDamage>();
         GameObject zombieHit = getTopLevelParent(other);
-        Transform spawnBounce = zombieHit.transform.Find("mixamorig5:Hips/HekaOutting");
+        Transform spawnBounce = zombieHit.transform.Find("HekaOutting");
         GameObject closestZombie = getClosestZombie(zombieHit);
         if (damageable != null)
         {
@@ -71,7 +71,10 @@ public class ElectricityBullet : MonoBehaviour
         yield return new WaitForSeconds(bounceDelay);
         
         Debug.Log("Attempting to instantiate bounce projectile...");
-        spawnBounce.LookAt(closestZombie.transform.Find("mixamorig5:Hips"));
+        if (closestZombie != null)
+        {
+            spawnBounce.LookAt(closestZombie.transform.Find("mixamorig5:Hips"));
+        }
         GameObject projectile = Instantiate(gameManager.gameInstance.playerWeapon.hekaAbility, spawnBounce.position, spawnBounce.rotation);
 
         if(projectile == null)

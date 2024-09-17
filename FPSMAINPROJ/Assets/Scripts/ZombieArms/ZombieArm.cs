@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieArm : MonoBehaviour, IDamage
+public class ZombieArm : MonoBehaviour, IEnemyDamage
 {
     public float HP = 0;
     public float HPMax = 0;
@@ -36,9 +36,54 @@ public class ZombieArm : MonoBehaviour, IDamage
         }
     }
 
-    public float GetHealth()
+   public void TakeTrueDamage(float amountOfDamageTaken)
     {
-        return 0f;
+
+    }
+
+    public void AddHP(float amount)
+    {
+
+    }
+
+    public void AddMaxHp(float amount)
+    {
+
+    }
+
+    public void AddDamage(float amount) 
+    {
+
+    }
+
+    public void AddSpeed(float amount) { }
+
+
+    public void AddAttackSpeed(float amount) { }
+
+
+
+    public void cutspeed(float amount, float damagetaken) { }
+
+    public void cutdamage(float amount) { }
+
+    public void DieWithoutDrops() { }
+
+    public void AddArmor(float amount) { }
+
+    public void RemoveArmor(float amount) { }
+
+    public void TempRemoveArmor(float reduction, float Duration) { }
+
+    public void Blind(float duration) { }
+
+    public void Stun(float duration) { }
+
+    public void knockback(Vector3 hitPoint, float distance) { }
+
+    public float GetMaxHP()
+    {
+        return 0;
     }
 
 }
