@@ -354,18 +354,6 @@ public class gameManager : MonoBehaviour
 
         EnemyCount += amount;
         
-
-     /*   SetEnemyCount(amount);
-
-        Debug.Log("enemies " + EnemyCount.ToString());
-
-
-
-        if (EnemyCount == 0 && endless) {
-
-            StartNewRound();
-        }*/
-
     }
 
 
