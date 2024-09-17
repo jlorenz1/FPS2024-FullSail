@@ -56,6 +56,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     [Header("-----Other-----")]
     [SerializeField] protected List<GameObject> Drops;
+    [SerializeField] float DropChance;
+    [SerializeField] GameObject Gems;
+    [SerializeField] int GemDropCount;
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
@@ -211,7 +214,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         // Common death logic
         if (Drops.Count > 0)
         {
-            LootRoll(60);
+            LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
@@ -224,35 +227,40 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         Destroy(gameObject);
     }
 
-    void LootRoll(int DropChance)
+    void LootRoll(float DropChance)
     {
 
         int chance = UnityEngine.Random.Range(0, 100);
+        int DropItem = UnityEngine.Random.Range(0, Drops.Count);
         float yOffset = 1.0f;
         int GemsDropped = 0;
-        for(int i  = 0; i < 8; i++)
-        {
-            Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + 1f, agent.transform.position.z), agent.transform.rotation);
-            GemsDropped++;
-        }
+      
         
-        if(chance < 40 && Drops[1] != null) {
+        if(chance < DropChance && Drops != null) {
 
-            Instantiate(Drops[1], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+            Instantiate(Drops[DropItem], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
 
         }
 
-        while (GemsDropped < 12)
+// Handeling Gem Drops 
+        if (Gems != null)
         {
+            for (int i = 0; i < 2; i++)
+            {
+                Instantiate(Gems, new Vector3(agent.transform.position.x, agent.transform.position.y + 1f, agent.transform.position.z), agent.transform.rotation);
+                GemsDropped++;
+            }
+        }
 
-
+        while (GemsDropped < GemDropCount && Gems != null)
+        {
 
             if (chance < DropChance) 
             {
 
               //  int randomIndex = UnityEngine.Random.Range(0, Drops.Count);
 
-                Instantiate(Drops[0], new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
+                Instantiate(Gems, new Vector3(agent.transform.position.x, agent.transform.position.y + yOffset, agent.transform.position.z), agent.transform.rotation);
 
                 GemsDropped++;
 
@@ -400,7 +408,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
       
         agent.stoppingDistance = stoppingDistance;
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
-       // FlockPlayer();
+        FlockPlayer();
     }
 
 

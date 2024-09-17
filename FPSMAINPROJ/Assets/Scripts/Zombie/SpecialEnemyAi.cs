@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SpecialEnemy : EnemyAI
 {
-    public float specialAbilityCooldown = 10f;
-    private float nextAbilityTime = 5f;
+ 
+
+    [Header("----- Type-----")]
     [SerializeField] float BuffRange = 30;
     [SerializeField] bool maxHealthBuffer;
     [SerializeField] bool AttackSpeedBuffer;
     [SerializeField] bool damageBUffer;
     [SerializeField] bool ArmorBUffer;
     [SerializeField] bool Healer;
-    [SerializeField] private GameObject auraSphere;
+    [SerializeField] bool Summoner;
+
 
     [Header("-----Ability Stats-----")]
     [SerializeField] float AttackSpeedBuff;
@@ -20,6 +22,11 @@ public class SpecialEnemy : EnemyAI
     [SerializeField] float HealthBuff;
     [SerializeField] float ArmorBuff;
     [SerializeField] float Healing;
+    [SerializeField] private GameObject auraSphere;
+    [SerializeField] GameObject SummoningMob;
+    [SerializeField] int SummonAmount;
+    [SerializeField] public float specialAbilityCooldown = 10f;
+    private float nextAbilityTime = 5f;
 
     bool willharm = true;
     [SerializeField] AudioClip ZombieBuff;
@@ -33,6 +40,7 @@ public class SpecialEnemy : EnemyAI
 
     bool Buff1, Buff2, Buff3 = false;
 
+    
 
     protected override void Start()
     {
@@ -62,7 +70,7 @@ public class SpecialEnemy : EnemyAI
 
         }
 
-        if (Time.time >= nextAbilityTime)
+        if (Time.time >= nextAbilityTime && ChasingPLayer)
         {
 
             animator.SetTrigger("Support");
@@ -147,6 +155,10 @@ public class SpecialEnemy : EnemyAI
             PlayAudio(ZombieBuff, ZombieBuffVol);
         }
 
+        if (Summoner)
+        {
+            SummonMinions();
+        }
 
         foreach (GameObject zombie in zombies)
         {
@@ -218,8 +230,33 @@ public class SpecialEnemy : EnemyAI
 
     }
 
+    void SummonMinions()
+    {
 
+        Debug.Log("Summon Called");
 
+        float radiusStep = 2f; // Distance between sets of 4 minions
+        float radius = 1f; // Initial spawn radius
+        int minionsPerCircle = 4;
+
+        for (int i = 0; i < SummonAmount; i++)
+        {
+            // Calculate the angle in radians for more precision
+            float angle = (i % minionsPerCircle) * (360f / minionsPerCircle) * Mathf.Deg2Rad;
+
+            // Set the spawn position using cosine and sine
+            Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+
+            // Instantiate the minion
+            Instantiate(SummoningMob, spawnPosition, Quaternion.identity);
+
+            // Increase the radius after spawning every 4 minions
+            if ((i + 1) % minionsPerCircle == 0)
+            {
+                radius += radiusStep;
+            }
+        }
+    }
 
 
     protected override void Die()

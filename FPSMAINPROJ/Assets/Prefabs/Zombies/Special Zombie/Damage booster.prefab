@@ -693,25 +693,30 @@ MonoBehaviour:
   flockRange: 8
   Helmate: {fileID: 0}
   Drops:
-  - {fileID: 7567231089132668557, guid: 0e033f566ba83164fb3fcf00d5f9a141, type: 3}
   - {fileID: 5661173919019611973, guid: 43e2fa7cb8349284395bbbdd3f540ce1, type: 3}
+  DropChance: 80
+  Gems: {fileID: 7567231089132668557, guid: 0e033f566ba83164fb3fcf00d5f9a141, type: 3}
+  GemDropCount: 5
   models: []
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  specialAbilityCooldown: 3
   BuffRange: 30
   maxHealthBuffer: 0
   AttackSpeedBuffer: 0
   damageBUffer: 1
   ArmorBUffer: 0
   Healer: 0
-  auraSphere: {fileID: 7340973736167234378}
+  Summoner: 0
   AttackSpeedBuff: 1.22
   AttackDamageBuff: 2
   HealthBuff: 2
   ArmorBuff: 2
   Healing: 10
+  auraSphere: {fileID: 7340973736167234378}
+  SummoningMob: {fileID: 0}
+  SummonAmount: 0
+  specialAbilityCooldown: 7
   ZombieBuff: {fileID: 8300000, guid: dad51a6509285da4fa5e41b1a345a9f9, type: 3}
   ZombieBuffVol: 0.215
 --- !u!82 &5513036727809118154
