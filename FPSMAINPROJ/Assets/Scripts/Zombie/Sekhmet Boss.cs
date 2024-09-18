@@ -19,7 +19,26 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
-   
+
+
+
+    [SerializeField] float ProjectileSpeed;
+    [SerializeField] float ProjectileLifeTime;
+    [SerializeField] float ProjectileDamage;
+    [SerializeField] float ProjectileFollowTime;
+    [SerializeField] ProjectileType Type;
+    [SerializeField] ProjectileAblity projectileAblity;
+    [SerializeField] float AbilityStrength;
+    [SerializeField] float AbilityDuration;
+
+    [SerializeField] float effectDuration;
+    [SerializeField] float AoeStrength;
+    [SerializeField] float radius;
+    [SerializeField] AOETYPE type;
+
+    Caster caster;
+
+
     IEnemyDamage Partner;
     // Start is called before the first frame update
     protected override void Start()
@@ -34,6 +53,7 @@ public class SekhmetBoss : EnemyAI
         gameManager.gameInstance.SpawnSekhmet();
         nextbuff = true;
         MeleeWeapon.SetDamage(damage);
+        caster = Caster.Sekhmet;
     }
 
     // Update is called once per frame
@@ -141,7 +161,8 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-
+   
+      
 
     IEnumerator CastAttackRoutine()
     {
@@ -158,8 +179,22 @@ public class SekhmetBoss : EnemyAI
     {
         // Ranged attack logic
         Debug.Log("Ranged attack");
-        Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
-        
+
+        GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectileScript == null)
+        {
+            projectileScript = projectile.AddComponent<Projectile>();
+        }
+
+        projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
+
+        if (Type == ProjectileType.AOE)
+        {
+            projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+        }
+
+
     }
 
     IEnumerator DisableWeapon()

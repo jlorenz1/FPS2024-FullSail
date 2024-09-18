@@ -62,6 +62,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
+    [Header("-----Projectile Stats-----")]
+
+    
+
+
+
     protected bool ChasingPLayer;
     protected bool PlayerinAttackRange;
     int BoostRange = 30;
@@ -90,6 +96,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
    
     protected virtual void Start()
     {
+
+
+
+
+
          startsight = sight;
 
         stoppingDistance = agent.stoppingDistance;

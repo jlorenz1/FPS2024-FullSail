@@ -20,6 +20,25 @@ public class RangedEnemy : EnemyAI
     bool waitdone;
     bool AttackDone;
     bool inPosition;
+
+
+    [SerializeField] bool HasRangedAttacks;
+    
+    [SerializeField] float ProjectileSpeed;
+    [SerializeField] float ProjectileLifeTime;
+    [SerializeField] float ProjectileDamage;
+    [SerializeField] float ProjectileFollowTime;
+    [SerializeField] ProjectileType Type;
+    [SerializeField] ProjectileAblity projectileAblity;
+    [SerializeField] float AbilityStrength;
+    [SerializeField] float AbilityDuration;
+
+    [SerializeField] float effectDuration;
+    [SerializeField] float AoeStrength;
+    [SerializeField] float radius;
+    [SerializeField] AOETYPE type;
+    Caster caster;
+
     protected override void Start()
     {
         base.Start();
@@ -27,6 +46,9 @@ public class RangedEnemy : EnemyAI
         canAttack = true;
         AttackDone = true;
         inPosition = false;
+        caster = Caster.NormalCaster;
+
+
     }
 
     public void ToggleCastPortal()
@@ -72,11 +94,26 @@ public class RangedEnemy : EnemyAI
     {
         for (int i = 0; i < castAmount; i++)
         {
-            Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+            GameObject projectile =  Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            if (projectileScript == null)
+            {
+                projectileScript = projectile.AddComponent<Projectile>();
+            }
+
+            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
+
+            if (Type == ProjectileType.AOE)
+            {
+                projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+            }
+
+
+
             yield return new WaitForSeconds(1 / castSpeed);
         }
         yield return new WaitForSeconds(1);
-        AttackDone = false;
+        AttackDone = true;
         animator.SetTrigger("Shoot");
     }
 

@@ -1,48 +1,82 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
+
+public enum AOETYPE
+{
+    Slow = 0,
+    Damage = 1,
+    Sekhmet = 3,
+    UserKare = 4,
+}
 
 public class AOEDamage : MonoBehaviour
 {
-  [SerializeField]  bool isSlow;
-    float Duration;
-    float StartSpeed;
+    AOETYPE type;
+    float Duration = 5;
+    float Strength = 5;
+    float Radius;
+    [SerializeFeild] GameObject Area;
+    IDamage Playerdamage;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        StartSpeed = gameManager.gameInstance.playerScript.GetSpeed();
+        
     }
 
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        if (isSlow && other.CompareTag("Player"))
+        Debug.Log("Trigger Entered");
+        if ( other.CompareTag("Player"))
         {
-            StartCoroutine(slow());
-            if (gameManager.gameInstance.isUserKareDead == false)
+             Playerdamage = other.GetComponent<IDamage>();
+            if (Playerdamage != null)
             {
-                gameManager.gameInstance.Userkare.LightGautling();
+                Debug.Log("Trigger Entered By Player");
+                if (type == AOETYPE.Slow)
+                {
+                  
+                    Playerdamage.CutSpeed(Duration, Strength);
+         
+                }
+
+                if(type == AOETYPE.Damage)
+                {
+
+
+                    Playerdamage.takeDamage(Strength);
+
+                }
+
+                if (type == AOETYPE.Sekhmet)
+                {
+                    Playerdamage.CutSpeed(Duration, Strength);
+
+                    if (gameManager.gameInstance.isUserKareDead == false)
+                    {
+                        gameManager.gameInstance.Userkare.LightGautling();
+                    }
+                }
+
             }
+            else
+                Debug.Log("PlayerDamage is null");
         }
         else
             return;
     }
 
 
-    IEnumerator slow()
-    {
-
-        gameManager.gameInstance.playerScript.SetSpeed(StartSpeed / 2);
-       yield return new WaitForSeconds(5);
-
-        gameManager.gameInstance.playerScript.SetSpeed(StartSpeed);
-
-
-    }
-
-    public void SetDuration(float duration)
+   
+    public void SetStats(float duration, float strength, float radius, AOETYPE Type)
     {
         Duration = duration;
+        type = Type;
+        Strength = strength;
+        Radius = radius;
     }
 }

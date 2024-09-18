@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool invincible = false;
 
     [Header("PLAYER VARIABLES")]
-    public float speed;
+    [SerializeField] float speed;
     [SerializeField] int sprintMod;
     //[SerializeField] int crouchSpeed;
     [SerializeField] public WeaponController playerWeapon;
@@ -122,6 +122,8 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 move;
     Vector3 playerVel;
 
+    float currentSpeed;
+    bool SpeedStateSlow;
     int jumpCount;
     int selectedGun;
     public bool isSprinting;
@@ -130,6 +132,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isCrouching;
     bool canMelee;
     float originalSpeed;
+    float slowStrength;
     public float damage;
     public bool hasItems;
     bool isPlayingSound;
@@ -168,8 +171,10 @@ public class PlayerController : MonoBehaviour, IDamage
         canMelee = true;
         flashLight.gameObject.SetActive(false);
         StartHP = playerHP;
-
-     
+        isSprinting = false;
+        isShooting = false;
+        isCrouching = false;
+        currentSpeed = originalSpeed;
     }
 
 
@@ -185,10 +190,15 @@ public class PlayerController : MonoBehaviour, IDamage
         //    animator.SetBool("Slide", true);
         //}
 
+
         if (!onSprintCoolDown && !isCrouching)
         {
            sprint();
         }
+
+
+        Slow();
+
         sprintTimerUpdate();
 
         wallCheck();
@@ -227,6 +237,9 @@ public class PlayerController : MonoBehaviour, IDamage
             climbTimer = maxClimbTimer;
 
         }
+
+     
+
         if (isHanging)
             jumpCount = 0;
 
@@ -244,7 +257,13 @@ public class PlayerController : MonoBehaviour, IDamage
             move = Input.GetAxis("Vertical") * transform.forward +
             Input.GetAxis("Horizontal") * transform.right;
         }
-        controller.Move(move * speed * Time.deltaTime);
+
+
+      
+        
+            controller.Move(move * speed * Time.deltaTime);
+        
+ 
 
         horizontalInput = Input.GetAxis("Vertical");
         verticalInput = Input.GetAxis("Horizontal");
@@ -378,6 +397,22 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
     }
+
+    void Slow()
+    {
+        if (SpeedStateSlow)
+        {
+            speed *= slowStrength;
+        }
+        else
+            speed = originalSpeed;
+
+
+    }
+
+
+
+
     void sprintTimerUpdate()
     {
         if (isSprinting)
@@ -641,38 +676,51 @@ public class PlayerController : MonoBehaviour, IDamage
         gameManager.gameInstance.playerManaBar.fillAmount = currentMana / maxMana;
     }
     // Things Added by Jamauri 
-    public void SetSpeed(float Modifier)
-    {
-        speed = Modifier;
-    }
 
-    public float GetSpeed()
-    {
-        return speed;
-    }
+   
 
-    public void SetJumpCount(int Modifier)
-    {
-        jumpMax = Modifier;
-    }
-
-    public int GetJumpCount()
-    {
-        return jumpMax;
-    }
+   
 
     public void CutSpeed(float duration, float strength)
     {
-        CutSpeedrunner(duration, strength);
+        Debug.Log("CutSpeed called");
+       StartCoroutine( CutSpeedrunner(duration, strength));
     }
 
     IEnumerator CutSpeedrunner(float duration, float strength)
     {
-        speed /= strength;
+
+
+        slowStrength = 1 - (strength / 100f);
+
+
+
+        SpeedStateSlow = true;
+
+        Debug.Log("Speed State Slow");
 
         yield return new WaitForSeconds(duration);
 
-        speed = originalSpeed;
+      
+        SpeedStateSlow = false;
+    }
+
+   public void TickDamage(float duration, float amountpertick, float tickrate)
+    {
+        StartCoroutine(TakeTickDamage(duration, amountpertick, tickrate));
+    }
+
+
+    IEnumerator TakeTickDamage(float duration,  float amountpertick, float tickrate)
+    {
+        int numberOfTicks = Mathf.CeilToInt(duration / tickrate);
+        for (int i = 0; i < numberOfTicks; i++)
+        {
+            takeDamage(amountpertick);
+            yield return new WaitForSeconds(tickrate);
+        }
+
+        yield return new WaitForSeconds(duration);
     }
 
     private IEnumerator PerformDodge()
@@ -695,7 +743,7 @@ public class PlayerController : MonoBehaviour, IDamage
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        speed = originalSpeed;
+    //    speed = originalSpeed;
 
         // Re-enable the collider
             //if (playerCollider != null)

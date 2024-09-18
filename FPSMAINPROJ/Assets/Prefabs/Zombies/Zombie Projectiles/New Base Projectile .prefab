@@ -118,14 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  lifetime: 50
   IsNormal: 1
   IsSlow: 0
   IsGround: 0
   IsBossAttack: 0
-  projectileDamage: 4
-  followtime: 0.25
   ProjectileAudio: {fileID: 0}
   ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
   ZombieProjectileAudioVol: 0.426
@@ -133,7 +129,7 @@ MonoBehaviour:
   UserKareBaseAttack: 0
   UserKareSpecialAttack1: 0
   UserKareSpecialAttack2: 0
-  aoePrefab: {fileID: 0}
-  aoeRadius: 5
-  slowDuration: 5
-  slowEffectDuration: 3
+  aoePrefab: {fileID: 7449492061352380429, guid: 162391672b4a0b247a8c643345343923, type: 3}
+  AOEOBJECT: {fileID: 2182524708497135350, guid: 162391672b4a0b247a8c643345343923, type: 3}
+  ProjectileBody: {fileID: 1683480588852259282}
+  bulletColor: {r: 1, g: 0.9756658, b: 0, a: 0}

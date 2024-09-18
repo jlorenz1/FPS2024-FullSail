@@ -9,7 +9,7 @@ public interface IDamage
 
     float GetHealth();
 
+    void CutSpeed(float duration, float strength);
 
-
-
+    void TickDamage(float duration, float amountpertick, float tickrate);
 }
