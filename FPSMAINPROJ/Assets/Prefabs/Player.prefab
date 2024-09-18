@@ -360,7 +360,7 @@ Transform:
   m_GameObject: {fileID: 3415980183372379373}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.69779044, z: -0, w: 0.7163019}
-  m_LocalPosition: {x: 0.16600037, y: -0.08200007, z: 0.2519989}
+  m_LocalPosition: {x: 0.012, y: 0.085, z: 0.045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -419,7 +419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5719176374025190790}
   model: {fileID: 5783144160728014893}
-  animator: {fileID: 9123958696096369976}
   playerCollider: {fileID: 8203031564338902554}
   dodgeDuration: 1
   dodgeCooldown: 5
@@ -819,12 +818,18 @@ MonoBehaviour:
   shootDamage: 0
   shootRate: 0
   shootDistance: 0
+  hekaAbility: {fileID: 0}
+  hasHeka: 0
   muzzleFlash: {fileID: 3379390861019551599}
   casingEffect: {fileID: 63506611206121104, guid: 463178d045f0b0349ad00e459e079878, type: 3}
   bulletTrail: {fileID: 328621789431213768, guid: 18ba5ae854c778e478570e7a1ae5bea8, type: 3}
+  weaponSource: {fileID: 0}
   isReloading: 0
   isShooting: 0
   sprayPattern: 1
+  hasTempest: 0
+  hasEclipse: 0
+  hasFloods: 0
 --- !u!1 &7968692417210946864
 GameObject:
   m_ObjectHideFlags: 0

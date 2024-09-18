@@ -154,8 +154,24 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
         {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+
+            Vector3 targetPoint;
+
+            if(Physics.Raycast(ray, out hit))
+            {
+                targetPoint = hit.point;
+            }
+            else
+            {
+                targetPoint = ray.GetPoint(65);
+            }
+
+            muzzleFlashTransform.LookAt(targetPoint);
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
+
         }
         yield return new WaitForSeconds(hekaShootRate);
     }
@@ -242,6 +258,7 @@ public class WeaponController : MonoBehaviour
                         // Apply the modified damage
                         dmg.takeDamage(actualDamage);
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                        bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
                     else if(armDmg != null)
                     {
