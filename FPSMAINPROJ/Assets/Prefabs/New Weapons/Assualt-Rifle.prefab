@@ -882,8 +882,6 @@ Transform:
   m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5189317996898891398}
-  - {fileID: 2824171849095081011}
   - {fileID: 3420158448095471433}
   - {fileID: 2137266554348504584}
   - {fileID: 2483341077568860045}
@@ -894,6 +892,7 @@ Transform:
   - {fileID: 7793728320604054755}
   - {fileID: 6295892136490270782}
   - {fileID: 2390257706514001619}
+  - {fileID: 2824171849095081011}
   - {fileID: 2111073451679428973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1505,7 +1504,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2111073451679428973
 Transform:
   m_ObjectHideFlags: 0
@@ -2071,7 +2070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5189317996898891398}
   m_Layer: 6
-  m_Name: Right Hand Grip
+  m_Name: Right Hand Grip (Assult Rifle)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2086,11 +2085,11 @@ Transform:
   m_GameObject: {fileID: 5871858062978180584}
   serializedVersion: 2
   m_LocalRotation: {x: 0.56426907, y: -0.6756132, z: -0.41670498, w: 0.22694537}
-  m_LocalPosition: {x: 0.048375, y: -0.0277504, z: -0.047335893}
-  m_LocalScale: {x: 0.6435009, y: 0.917732, z: 0.8137669}
+  m_LocalPosition: {x: 0.04837501, y: -0.045549788, z: -0.047599997}
+  m_LocalScale: {x: 0.6435009, y: 0.917732, z: 0.813767}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7001645094824325729}
+  m_Father: {fileID: 6295892136490270782}
   m_LocalEulerAnglesHint: {x: -17.875, y: -125.281, z: -89.042}
 --- !u!1 &6092940818489634624
 GameObject:
@@ -2709,7 +2708,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2824171849095081011}
   m_Layer: 6
-  m_Name: Left Hand Grip
+  m_Name: Left Hand Grip (Assult Rifle)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2758,7 +2757,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0.017799415, z: 0.00026413344}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5189317996898891398}
   m_Father: {fileID: 7001645094824325729}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8061758903679490795

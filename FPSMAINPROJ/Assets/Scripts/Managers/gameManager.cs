@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
@@ -42,7 +41,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] public GameObject gameAlterMenu;
-    [SerializeField] public GameObject AlterNoGems;
     [SerializeField] public GameObject gameOptionsMenu;
     [SerializeField] public Slider sensSlider;
     [SerializeField] TMP_Text roundCount;
@@ -70,15 +68,13 @@ public class gameManager : MonoBehaviour
     public Image SprintBarBoarder;
     public Image AmmoHUD;
     public Image checkpoint;
-    public Image gemUICounter;
+    public Image gem;
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
     public WeaponController playerWeapon;
     public cameraController cameraController;
     public WeaponManager weaponManager;
-    public TwoBoneIKConstraint rightHandTarget;
-    public TwoBoneIKConstraint leftHandTarget;
 
     [Header("----AUDIO-----")]
     [SerializeField] public AudioMixer audioMixer;
@@ -106,7 +102,7 @@ public class gameManager : MonoBehaviour
     public Transform SekhmetRespawn;
     //int variables 
     int EnemyCount;
-    public int GemCount;
+    public int PointCount;
     int GameRound;
     public bool canUnlock;
     public bool hasStartedRitual = false;
@@ -284,7 +280,7 @@ public class gameManager : MonoBehaviour
         displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");
-        pointCount.text = GemCount.ToString("F0");
+        pointCount.text = PointCount.ToString("F0");
 
         PlayerPrefs.SetInt("sens", (int)sensSlider.value);
         

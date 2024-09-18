@@ -176,7 +176,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1646608480691044848}
   m_Father: {fileID: 4520785491937025748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8657673213491508106
@@ -736,7 +737,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3194309887607836752}
   m_Father: {fileID: 4520785491937025748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1864597530402118371
@@ -1291,7 +1293,6 @@ GameObject:
   - component: {fileID: 4520785491937025748}
   - component: {fileID: 2508044427795202987}
   - component: {fileID: 4159591827271871655}
-  - component: {fileID: 6774631566693672314}
   m_Layer: 6
   m_Name: Heka-Electricity
   m_TagString: Weapon
@@ -1312,8 +1313,6 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3194309887607836752}
-  - {fileID: 1646608480691044848}
   - {fileID: 4610148652190504906}
   - {fileID: 3514537450914664077}
   - {fileID: 8099625803387131983}
@@ -1397,18 +1396,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 11400000, guid: 10c53161948ccf942b78185eac887838, type: 2}
---- !u!114 &6774631566693672314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2241305393418622996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55fa079f9282e394a9c176c7afd24749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2278449127850380858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,7 +2801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1081809175808981654
 Transform:
   m_ObjectHideFlags: 0
@@ -3551,7 +3538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646608480691044848}
   m_Layer: 6
-  m_Name: Left Hand Grip
+  m_Name: Left Hand Grip (Electricity)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3565,12 +3552,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5584206101083921777}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.37051192, y: 0.8582844, z: 0.296618, w: 0.19515766}
-  m_LocalPosition: {x: -0.78999996, y: -0.51400065, z: -0.31000137}
-  m_LocalScale: {x: 100.00003, y: 100.00003, z: 100.00003}
+  m_LocalRotation: {x: 0.3999888, y: 0.39715815, z: 0.8166394, w: -0.12399424}
+  m_LocalPosition: {x: -0.0079, y: 0.0031, z: -0.00514}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4520785491937025748}
+  m_Father: {fileID: 8099625803387131983}
   m_LocalEulerAnglesHint: {x: 228.406, y: -123.308, z: -9.992981}
 --- !u!1 &5590638430274904866
 GameObject:
@@ -3722,7 +3709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3194309887607836752}
   m_Layer: 6
-  m_Name: Right Hand Grip
+  m_Name: Right Hand Grip (Electricity)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3736,12 +3723,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5933608159472627841}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0.000000057601163, z: -0.000000057601163, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4520785491937025748}
+  m_Father: {fileID: 1541331719480481513}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5944629790867384776
 GameObject:

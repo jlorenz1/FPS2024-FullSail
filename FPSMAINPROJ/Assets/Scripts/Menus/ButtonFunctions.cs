@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,12 +51,7 @@ public class ButtonFunctions : MonoBehaviour
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Electricity"));
                 gameManager.gameInstance.playerScript.inventory.takeGems(35);
-                gameManager.gameInstance.GemCount -= 35;
             }
-        }
-        else
-        {
-            StartCoroutine(NoGems());
         }
         
     }
@@ -71,14 +65,9 @@ public class ButtonFunctions : MonoBehaviour
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Darkness"));
                 gameManager.gameInstance.playerScript.inventory.takeGems(20);
-                gameManager.gameInstance.GemCount -= 20;
             }
         }
-        else
-        {
-            StartCoroutine(NoGems());
-        }
-
+            
     }
 
     public void nilesWrath()
@@ -90,14 +79,8 @@ public class ButtonFunctions : MonoBehaviour
             {
                 gameManager.gameInstance.playerWeapon.getWeaponStats(gameManager.gameInstance.weaponManager.getHekaBasedWeapon("Floods"));
                 gameManager.gameInstance.playerScript.inventory.takeGems(25);
-                gameManager.gameInstance.GemCount -= 25;
             }
         }
-        else
-        {
-            StartCoroutine(NoGems());
-        }
-
     }
 
     public void healPlayer()
@@ -117,20 +100,7 @@ public class ButtonFunctions : MonoBehaviour
 
             gameManager.gameInstance.playerScript.recieveHP(healthAmount);
             gameManager.gameInstance.playerScript.inventory.takeGems(5);
-            gameManager.gameInstance.GemCount -= 5;
         }
-        else
-        {
-            StartCoroutine(NoGems());
-        }
-
-    }
-
-    IEnumerator NoGems()
-    {
-        gameManager.gameInstance.AlterNoGems.GameObject().SetActive(true);
-        yield return new WaitForSeconds(0.7f);
-        gameManager.gameInstance.AlterNoGems.GameObject().SetActive(false);
     }
 
     public void increaseArmor()
