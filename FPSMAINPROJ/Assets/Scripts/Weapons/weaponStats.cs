@@ -19,6 +19,7 @@ public class weaponStats : ScriptableObject
     [Header("-----Heka Attributes-----")]
     public string hekaSchool;
     [SerializeField] public GameObject hekaAbility;
+    [SerializeFeild] public GameObject hekaMuzzleFlash;
     public int hekaShootRate = 0;
     public float hekaManaAmount = 0;
 

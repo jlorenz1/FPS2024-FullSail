@@ -30,6 +30,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("HEKA SPECIALTIES")]
     [SerializeField] public GameObject hekaAbility;
+    GameObject hekaMuzzleFlash;
     int hekaShootRate = 0;
     float hekaManaAmount = 0;
     public bool hasHeka = false;
@@ -154,7 +155,12 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
         {
+
+            Vector3 targetPoint = getMiddleOfScreen();
+            muzzleFlashTransform.LookAt(targetPoint);
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
+            var muzzleFlashObj = Instantiate(hekaMuzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+            muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
@@ -163,9 +169,11 @@ public class WeaponController : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
-
+            Vector3 targetPoint = getMiddleOfScreen();
+            muzzleFlashTransform.LookAt(targetPoint);
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-
+            var muzzleFlashObj = Instantiate(hekaMuzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+            muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
@@ -175,8 +183,8 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
+            Vector3 targetPoint = getMiddleOfScreen();
             GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
@@ -242,6 +250,7 @@ public class WeaponController : MonoBehaviour
                         // Apply the modified damage
                         dmg.takeDamage(actualDamage);
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                        bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
                     else if(armDmg != null)
                     {
@@ -273,7 +282,24 @@ public class WeaponController : MonoBehaviour
     }
 
 
+    Vector3 getMiddleOfScreen()
+    {
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
 
+        Vector3 targetPoint;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            targetPoint = hit.point;
+        }
+        else
+        {
+            targetPoint = ray.GetPoint(65);
+        }
+
+        return targetPoint;
+    }
     Vector3 getDirection()
     {
 
@@ -408,7 +434,7 @@ public class WeaponController : MonoBehaviour
 
         hekaManaAmount = gun.hekaManaAmount;
         hekaShootRate = gun.hekaShootRate;
-
+        hekaMuzzleFlash = gun.hekaMuzzleFlash;
         if (gun.hekaSchool == "Electricity")
         {
             hasTempest = true;
@@ -459,6 +485,7 @@ public class WeaponController : MonoBehaviour
         }
         hekaManaAmount = currGun.hekaManaAmount;
         hekaShootRate = currGun.hekaShootRate;
+        hekaMuzzleFlash = currGun.hekaMuzzleFlash;
 
         cameraScript.recoilX = currGun.recoilX;
         cameraScript.recoilY = currGun.recoilY;
