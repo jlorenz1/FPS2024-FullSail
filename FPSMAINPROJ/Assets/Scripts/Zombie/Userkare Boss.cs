@@ -10,19 +10,26 @@ public class Userkare : EnemyAI
     bool inAbilityRange;
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject ProjectilePrefab;
-    [SerializeField] GameObject rootProjectilePrefab;
-    [SerializeField] GameObject buffedProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
+
+    [SerializeField] EnemySheilds sheilds;
+    [SerializeField] GameObject Sheild;
+    [SerializeField] Transform SheildPosition;
+    [SerializeField] float sheildHealth; 
+
     IEnemyDamage FellowZombie;
     IEnemyDamage Partner;
-    [SerializeField] GameObject summon;
+    [SerializeField] GameObject SummoningMob;
     [SerializeField] GameObject summonpartner;
+    [SerializeField] int SummonAmount;
+    GameObject[] zombies;
+    [SerializeField] float BuffRange;
     float PushBackRadius;
     bool UnCapped;
     bool AddativeAP;
-    float AblityCoolDown = 3;
-    float nextAbilityTime = 1 ;
+    float AblityCoolDown = 5;
+    float nextAbilityTime = 1;
     float attackSpeed;
     int SummonCount;
     GameObject[] Summons;
@@ -35,14 +42,42 @@ public class Userkare : EnemyAI
 
     float PlayerStartHP;
 
+
+
     bool nextbuff;
+    bool AttackDone;
+    [SerializeField] int castAmount;
+    int DefCastAmount;
+    [SerializeField] float ProjectileSpeed;
+    float DefProjectSpeed;
+    [SerializeField] float ProjectileLifeTime;
+    float DefLifeTime;
+    [SerializeField] float ProjectileDamage;
+    float DefDamage;
+    [SerializeField] float ProjectileFollowTime;
+    float DefFollowTime;
+    [SerializeField] ProjectileType Type;
+    ProjectileType DefType;
+    [SerializeField] ProjectileAblity projectileAblity;
+    ProjectileAblity DefAblility;
+    [SerializeField] float AbilityStrength;
+    float DefStrength;
+    [SerializeField] float AbilityDuration;
+    float DefDuration;
+    [SerializeField] float effectDuration;
+    [SerializeField] float AoeStrength;
+    [SerializeField] float radius;
+    [SerializeField] AOETYPE type;
+    bool isStun;
+
+    Caster caster;
 
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-       
+
         mSekhmet = gameManager.gameInstance.SekhMet;
         UnCapped = false;
         BaseMaxHealth = MaxHealth;
@@ -55,6 +90,18 @@ public class Userkare : EnemyAI
         gameManager.gameInstance.SpawnUserkare();
         nextbuff = true;
 
+        caster = Caster.Userkare;
+        DefCastAmount = castAmount;
+        DefAblility = projectileAblity;
+        DefDamage = ProjectileDamage;
+        DefDuration = AbilityDuration;
+        DefStrength = AbilityStrength;
+        DefType = Type;
+        DefProjectSpeed = ProjectileSpeed;
+        DefFollowTime = ProjectileFollowTime;
+        DefLifeTime = ProjectileLifeTime;
+
+        isStun = false;
     }
 
     // Update is called once per frame
@@ -62,12 +109,15 @@ public class Userkare : EnemyAI
     {
         base.Update();
 
-        if(PlayerinAttackRange && canattack)
+        if (PlayerinAttackRange && canattack)
         {
+            projectileAblity = ProjectileAblity.Normal;
             StartCoroutine(CastAttackRoutine());
         }
 
         Summons = GameObject.FindGameObjectsWithTag("Summon");
+
+        zombies = GameObject.FindGameObjectsWithTag("Zombie");
 
         SummonCount = Summons.Length;
 
@@ -75,7 +125,7 @@ public class Userkare : EnemyAI
         {
             RespawnSekmet();
         }
-      
+
 
         if (Time.time >= nextAbilityTime)
         {
@@ -92,7 +142,7 @@ public class Userkare : EnemyAI
         }
 
 
-        if(gameManager.gameInstance.LightGautlening == true)
+        if (gameManager.gameInstance.LightGautlening == true)
         {
             LightGautling();
             gameManager.gameInstance.LightGautlening = false;
@@ -104,16 +154,16 @@ public class Userkare : EnemyAI
         }
 
     }
-  IEnumerator  RampingAbilites()
+    IEnumerator RampingAbilites()
     {
         AddativeAP = false;
-                damage++;
+        damage++;
         attackSpeed += 0.01f;
         yield return new WaitForSeconds(4);
         AddativeAP = true;
     }
 
-      IEnumerator SetUncaped()
+    IEnumerator SetUncaped()
     {
         nextbuff = false;
 
@@ -147,7 +197,8 @@ public class Userkare : EnemyAI
         switch (chance)
         {
             case 1:
-                repulse();
+                PerfectDefence();
+
                 break;
             case 2:
                 Heal();
@@ -170,29 +221,56 @@ public class Userkare : EnemyAI
 
     }
 
-   public void TrappingLight()
+    public void TrappingLight()
     {
         //roots the player in place 
         Debug.Log("casted stun");
-        StartCoroutine(CastStunRoutine());
+        projectileAblity = ProjectileAblity.Special;
+        isStun = true;
+        StartCoroutine(CastAttackRoutine());
 
     }
 
     IEnumerator CastAttackRoutine()
     {
         canattack = false;
-        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
-        animator.SetTrigger("Base");
-        yield return new WaitForSeconds(1f / AttackSpeed);
-        canattack = true;
+        for (int i = 0; i < castAmount; i++)
+        {
+            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            if (projectileScript == null)
+            {
+                projectileScript = projectile.AddComponent<Projectile>();
+            }
 
+            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
+
+            if (Type == ProjectileType.AOE)
+            {
+                projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+            }
+
+
+
+            yield return new WaitForSeconds(1 / castSpeed);
+        }
+        yield return new WaitForSeconds(1);
+        AttackDone = true;
+
+        if (!isStun)
+            animator.SetTrigger("Shoot");
+        else
+            isStun = false;
+        canattack = true;
+        ResetToDefault();
     }
 
     public void CastAttack()
     {
         // Ranged attack logic
         Debug.Log("Ranged attack");
-        Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+        AttackDone = false;
+        StartCoroutine(CastAttackRoutine());
 
     }
 
@@ -201,121 +279,132 @@ public class Userkare : EnemyAI
     {
 
         animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
+
+        projectileAblity = ProjectileAblity.Special;
         animator.SetTrigger("Stun");
+      
         yield return new WaitForSeconds(1f / AttackSpeed);
 
 
     }
 
-
-    public void CastStun()
+    private void ResetToDefault()
     {
+        castAmount = DefCastAmount;
+        projectileAblity = DefAblility;
+        ProjectileDamage = DefDamage;
+        AbilityDuration = DefDuration;
+        AbilityStrength = DefStrength;
+        Type = DefType;
+        ProjectileSpeed = DefProjectSpeed;
+        ProjectileFollowTime = DefFollowTime;
+        ProjectileLifeTime = DefLifeTime;
 
-        Instantiate(rootProjectilePrefab, launchPoint.position, Quaternion.identity);
+
+
+
 
     }
 
     void PerfectDefence()
     {
-       // refelcts all ranged damage
+        // refelcts all ranged damage
+        if (!sheilds.IsActive)
+        {
+            GameObject sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
+            EnemySheilds sheildScript = sheild.GetComponent<EnemySheilds>();
 
 
+            sheild.transform.SetParent(transform);
+
+            if (sheildScript == null)
+            {
+                sheildScript = sheild.AddComponent<EnemySheilds>();
+            }
+            sheildScript.SetHitPoints(sheildHealth);
+        }
     }
+
+    
 
     public void LightGautling()
     {
         // fires buffed base attacks at the player at 5 times the base speed 
-        canattack = false;
-        for (int i = 0; i < 5; i++)
-        {
-            StartCoroutine(LightG());
-        }
-        canattack = true;
+        castAmount = 5;
+        ProjectileSpeed *= 5;
+        ProjectileDamage *= 1.5f;
+        Type = ProjectileType.Lazer;
+
     }
 
-    IEnumerator LightG()
-    {
-        canattack = false;
-        Debug.Log("Buffed Attack");
-        animator.SetFloat("AttackSpeed", (5)); // New: Set animator speed to match cast speed
-        animator.SetBool("Buff 0", true);
-        animator.SetTrigger("Buffed");
-        yield return new WaitForSeconds(1f / 5);
-        animator.SetBool("Buff 0", false);
-        canattack = true;
-    }
 
-  public  void CastBuffSpell()
-    {
-        Instantiate(buffedProjectilePrefab, launchPoint.position, Quaternion.identity);
-    }
+
+
     public void Summon()
     {
         // summons weaker version of the base mummy that will increase his health and try to revevie Sekhemt
 
+        Debug.Log("Summon Called");
 
+        float radiusStep = 2f; // Distance between sets of 4 minions
+        float radius = 1f; // Initial spawn radius
+        int minionsPerCircle = 4;
+
+        for (int i = 0; i < SummonAmount; i++)
+        {
+            // Calculate the angle in radians for more precision
+            float angle = (i % minionsPerCircle) * (360f / minionsPerCircle) * Mathf.Deg2Rad;
+
+            // Set the spawn position using cosine and sine
+            Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+
+            // Instantiate the minion
+            Instantiate(SummoningMob, spawnPosition, Quaternion.identity);
+
+            // Increase the radius after spawning every 4 minions
+            if ((i + 1) % minionsPerCircle == 0)
+            {
+                radius += radiusStep;
+            }
+        }
 
     }
 
     public void Heal()
     {
-       // heals all allies up to 70% of thier Hp
+        // heals all allies up to 70% of thier Hp
 
 
+        foreach (GameObject zombie in zombies)
+        {
+            float distance = Vector3.Distance(transform.position, zombie.transform.position);
+            if (distance < BuffRange)
+            {
 
+                IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
+                if (FellowZombie != null)
+                { 
+                   float Healing = FellowZombie.GetMaxHP() * 0.2f;
 
-
-
-
-
+                        FellowZombie.AddHP(Healing);
+                    
+                }
+            }
+        }
 
     }
 
-    public void repulse()
+
+
+
+
+
+
+
+
+
+    void RespawnSekmet()
     {
-        Debug.Log("repulse called");
-        //Knocks the player back if they are too close 
-        int strength;
-        
-        if (!UnCapped)
-        {
-            strength = 5;
-        }
-        else
-        {
-            strength = 7;
-            PushBackRadius *= 1.5f;
-            
-        }
-
-          
-            if (player != null)
-            {
-                float distance = Vector3.Distance(transform.position, player.transform.position);  // Calculate distance to the player
-
-                // Check if the player is within the pushback radius
-                if (distance < PushBackRadius)
-                {
-            
-                  
-                    if (playerRb != null)
-                    {
-                        Vector3 knockBackDirection = (player.transform.position - transform.position).normalized;  // Calculate direction
-                        playerRb.AddForce(knockBackDirection * strength, ForceMode.Impulse);  // Apply force to player
-                    }
-
-                player.takeDamage(damage);
-                }
-
-                }
-            }
-
-
-
-        
-
-
-   void RespawnSekmet() {
 
         Instantiate(summonpartner, gameManager.gameInstance.SekhmetRespawn);
         UnCapped = false;
@@ -327,6 +416,6 @@ public class Userkare : EnemyAI
     {
         MaxHealth = BaseMaxHealth;
         attackSpeed = BaseAttackSpeed;
-        
+
     }
 }

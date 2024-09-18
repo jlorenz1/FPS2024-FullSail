@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1683480588852259282
+--- !u!1 &2870815860860241611
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2002241201476963402}
-  - component: {fileID: 4640439854811764177}
-  - component: {fileID: 7753366884293571327}
-  - component: {fileID: 6247826311768300471}
-  - component: {fileID: 4251414997787975039}
+  - component: {fileID: 4931185634437423645}
+  - component: {fileID: 2310878386403835633}
+  - component: {fileID: 2328384011890535665}
+  - component: {fileID: 454008871553224039}
+  - component: {fileID: 7609350291791640224}
   m_Layer: 0
-  m_Name: 'New Base Projectile '
+  m_Name: Sheild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2002241201476963402
+--- !u!4 &4931185634437423645
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683480588852259282}
+  m_GameObject: {fileID: 2870815860860241611}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.502729, y: -0.5027906, z: 0.49725756, w: -0.4971924}
-  m_LocalPosition: {x: 547.909, y: 2.0348637, z: -138.5}
-  m_LocalScale: {x: 0.225, y: 0.225, z: 0.225}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 299.25, y: 202.25, z: 53.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4640439854811764177
+--- !u!33 &2310878386403835633
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683480588852259282}
+  m_GameObject: {fileID: 2870815860860241611}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7753366884293571327
+--- !u!23 &2328384011890535665
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683480588852259282}
+  m_GameObject: {fileID: 2870815860860241611}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b72f54e9445c2c4c9758f68df5ef9d3, type: 2}
+  - {fileID: 2100000, guid: 2aa71b623f2544044b95179092b75217, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,13 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6247826311768300471
+--- !u!135 &454008871553224039
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683480588852259282}
+  m_GameObject: {fileID: 2870815860860241611}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -100,36 +100,21 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4251414997787975039
+--- !u!114 &7609350291791640224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1683480588852259282}
+  m_GameObject: {fileID: 2870815860860241611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
+  m_Script: {fileID: 11500000, guid: d2751c8b5a729934592480a182a203f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsNormal: 1
-  IsSlow: 0
-  IsGround: 0
-  IsBossAttack: 0
-  ProjectileAudio: {fileID: 0}
-  ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
-  ZombieProjectileAudioVol: 0.426
-  SekhmetAttack: 0
-  UserKareBaseAttack: 0
-  UserKareSpecialAttack1: 0
-  UserKareSpecialAttack2: 0
-  aoePrefab: {fileID: 7449492061352380429, guid: 162391672b4a0b247a8c643345343923, type: 3}
-  AOEOBJECT: {fileID: 2182524708497135350, guid: 162391672b4a0b247a8c643345343923, type: 3}
-  ProjectileBody: {fileID: 1683480588852259282}
-  bulletColor: {r: 1, g: 0.9756658, b: 0, a: 0}
