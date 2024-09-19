@@ -39,6 +39,12 @@ public class SekhmetBoss : EnemyAI
     Caster caster;
 
 
+    [SerializeField] Color BulletColor;
+    [SerializeField] Material BulletMaterial;
+    float LazerSpeed;
+
+
+
     IEnemyDamage Partner;
     // Start is called before the first frame update
     protected override void Start()
@@ -188,7 +194,7 @@ public class SekhmetBoss : EnemyAI
         }
 
         projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-
+        projectileScript.SetColor(BulletColor, BulletMaterial);
         if (Type == ProjectileType.AOE)
         {
             projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);

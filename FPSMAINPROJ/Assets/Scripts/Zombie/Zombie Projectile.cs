@@ -141,20 +141,20 @@ public class Projectile : MonoBehaviour
         {
             transform.Translate(currentDirection * speed * Time.deltaTime);
         }
-        
+
 
         // Update tracer if it exists
         if (tracerLineRenderer != null)
         {
-            tracerLineRenderer.SetPosition(0, transform.position); // Start at the projectile's current position
-            Vector3 endPosition = transform.position + currentDirection * 2;
-            tracerLineRenderer.SetPosition(1, endPosition); // Smoothly adjust the end position
+ 
+            tracerLineRenderer.SetPosition(0, transform.position);
+            tracerLineRenderer.SetPosition(1, transform.position + currentDirection * 100); 
         }
     }
 
     IEnumerator FollowPlayer(float seconds)
     {
-        // Follow the player for 1 second
+       
         yield return new WaitForSeconds(seconds);
 
         // Stop following the player and continue in the last known direction
@@ -303,27 +303,36 @@ public class Projectile : MonoBehaviour
 
     private void CreateTracer()
     {
-        float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
+        // Create a new GameObject for the tracer
+        GameObject tracer = new GameObject("LaserTracer");
 
-        if (ProjectileBody != null)
+        // Add and configure the LineRenderer
+        tracerLineRenderer = tracer.AddComponent<LineRenderer>();
+
+        if (tracerLineRenderer != null)
         {
-          if(ProjectileBody.GetComponent<LineRenderer>() == null)
-            tracerLineRenderer = ProjectileBody.AddComponent<LineRenderer>();
-         
-         
-            if (tracerLineRenderer != null)
-            {
-                // Configure the LineRenderer
-                tracerLineRenderer.startColor = bulletColor;
-                tracerLineRenderer.endColor = bulletColor;
-                tracerLineRenderer.startWidth = projectileWidth;  // Set the start width of the line
-                tracerLineRenderer.endWidth = projectileWidth;   // Set the end width of the line
+          
+            tracerLineRenderer.startColor = bulletColor;
+            tracerLineRenderer.endColor = bulletColor;
 
-            }
+         
+            float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
+            tracerLineRenderer.startWidth = projectileWidth;
+            tracerLineRenderer.endWidth = projectileWidth;
 
-            // Destroy the tracer after a short time if needed
-            //Destroy(tracer, 0.1f);
+            
+            tracerLineRenderer.positionCount = 2; 
+            tracerLineRenderer.SetPosition(0, transform.position); 
+            tracerLineRenderer.SetPosition(1, transform.position + transform.forward * 100); 
+
+           
+            tracerLineRenderer.material = new Material(Shader.Find("Unlit/Color")); 
+            tracerLineRenderer.material.color = bulletColor;
+            tracerLineRenderer.widthMultiplier = 1;
         }
+
+        // Destroy the tracer after a short time if needed
+        Destroy(tracer, 0.7f); 
     }
 }
 

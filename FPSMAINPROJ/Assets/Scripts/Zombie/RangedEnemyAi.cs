@@ -53,7 +53,7 @@ public class RangedEnemy : EnemyAI
         AttackDone = true;
         inPosition = false;
         caster = Caster.NormalCaster;
-        LazerSpeed = ProjectileSpeed * 2;
+        LazerSpeed = ProjectileSpeed * 10;
 
     }
 
