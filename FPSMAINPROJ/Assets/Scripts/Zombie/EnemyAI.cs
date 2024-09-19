@@ -45,6 +45,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float castSpeed = 0.85f;
     [SerializeField] protected float AttentionSpan;
     [SerializeField] protected float sight = 25;
+    [SerializeField] protected float DetectionRange = 10;
+
+
     public float flockRange = 20;
     float startsight;
     float stoppingDistance;
@@ -62,9 +65,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
-    [Header("-----Projectile Stats-----")]
+    bool isBlind;
 
-    
+
 
 
 
@@ -99,7 +102,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-
+        isBlind = false;
 
          startsight = sight;
 
@@ -410,6 +413,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             else
                 PlayerinAttackRange = false;
 
+            if(Distance> DetectionRange && !isBlind)
+            {
+                ChasingPLayer = true;
+            }
         }
     }
 
@@ -784,11 +791,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
     IEnumerator blind(float duration)
     {
+        isBlind = true;
         sight = 0;
         ChasingPLayer = false;
         Debug.Log(sight);
         yield return new WaitForSeconds(duration);
-
+        isBlind = false;
         sight = startsight;
 
     }
@@ -815,13 +823,17 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         foreach (GameObject zombie in zombies)
         {
-            float distance = Vector3.Distance(transform.position, zombie.transform.position);
-            if (distance < flockRange && !ChasingPLayer)
+            EnemyAI enemyAI = zombie.GetComponent<EnemyAI>();
+            if (enemyAI != null)
             {
+                float distance = Vector3.Distance(transform.position, zombie.transform.position);
+                if (distance < flockRange && enemyAI.ChasingPLayer == false)
+                {
 
-                TargetPlayer();
+                    enemyAI.ChasingPLayer = true;
 
 
+                }
             }
         }
     }

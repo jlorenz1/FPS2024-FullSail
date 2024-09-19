@@ -1009,7 +1009,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2739583383600373709}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.05
   m_Speed: 16
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1083,6 +1083,9 @@ MonoBehaviour:
   flockRange: 8
   Helmate: {fileID: 0}
   Drops: []
+  DropChance: 0
+  Gems: {fileID: 0}
+  GemDropCount: 0
   models: []
   obstacleMask:
     serializedVersion: 2
@@ -1091,6 +1094,18 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 5558037750598473244, guid: febb84b5070545a408e0be8e583b73c7, type: 3}
   MeleeWeapon: {fileID: 173704984569286898}
   Melee: {fileID: 7302243940940497571}
+  ProjectileSpeed: 0
+  ProjectileLifeTime: 0
+  ProjectileDamage: 0
+  ProjectileFollowTime: 0
+  Type: 0
+  projectileAblity: 0
+  AbilityStrength: 0
+  AbilityDuration: 0
+  effectDuration: 0
+  AoeStrength: 0
+  radius: 0
+  type: 0
 --- !u!82 &1862854166617091760
 AudioSource:
   m_ObjectHideFlags: 0

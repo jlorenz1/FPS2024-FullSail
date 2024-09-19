@@ -271,12 +271,12 @@ public class gameManager : MonoBehaviour
             Debug.Log("entering boss killed");
             winScreen();
         }
-
+/*
         if (EnemyCount < 4 || cycle == 10000)
         {
             enemySpawner.ZombieSpawner(3);
             cycle = 0;
-        }
+        }*/
         displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");

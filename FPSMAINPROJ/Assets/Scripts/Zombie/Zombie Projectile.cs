@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -68,14 +69,14 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject aoePrefab;    // Assign your AoE slow effect prefab here
     [SerializeField] GameObject ProjectileBody;
     Transform LaunchPoint;
-    [SerializeField] private Color bulletColor;
-
+     Color bulletColor;
+    Material bulletMaterial;
     float aoeRadius = 5f;    // Radius of the AoE slow effect
     float slowDuration = 5f; // How long the slow effect lasts on the player
     float EffectDuration = 3f; // How long the player stays slowed
     float AOEEffectDuration = 3f;
     float aoeStrength;
-
+    LineRenderer tracerLineRenderer;
 
     void Start()
     {
@@ -85,7 +86,7 @@ public class Projectile : MonoBehaviour
         Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
         if (projectileType == ProjectileType.Lazer)
         {
-            speed *= 2;
+           
             CreateTracer();
         }
         if (ProjectileAudio != null)
@@ -100,9 +101,10 @@ public class Projectile : MonoBehaviour
         // Destroy the projectile after a certain amount of time
         Destroy(gameObject, lifetime);
 
-
-
-        rb = GetComponent<Rigidbody>();
+        if(rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
         if (rb != null)
         {
             rb.useGravity = false; // Ensure gravity does not affect the projectile
@@ -130,6 +132,7 @@ public class Projectile : MonoBehaviour
         }
 
         // Move the projectile in the current direction
+   
         if (rb != null)
         {
             rb.velocity = currentDirection * speed;
@@ -137,6 +140,15 @@ public class Projectile : MonoBehaviour
         else
         {
             transform.Translate(currentDirection * speed * Time.deltaTime);
+        }
+        
+
+        // Update tracer if it exists
+        if (tracerLineRenderer != null)
+        {
+            tracerLineRenderer.SetPosition(0, transform.position); // Start at the projectile's current position
+            Vector3 endPosition = transform.position + currentDirection * 2;
+            tracerLineRenderer.SetPosition(1, endPosition); // Smoothly adjust the end position
         }
     }
 
@@ -271,7 +283,12 @@ public class Projectile : MonoBehaviour
         caster = User;
     }
 
-
+    public void SetColor(Color color, Material material)
+    {
+        bulletColor = color;
+        bulletMaterial = material;
+        bulletMaterial.color = color;
+    }
 
 
     public void AoeStats(float effectDuration, float AoeStrength, float radius, AOETYPE type)
@@ -286,26 +303,26 @@ public class Projectile : MonoBehaviour
 
     private void CreateTracer()
     {
+        float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
+
         if (ProjectileBody != null)
         {
-            // Instantiate the tracer
-            GameObject tracer = Instantiate(ProjectileBody, transform.position, Quaternion.identity);
-
-            // Configure the tracer
-            LineRenderer lineRenderer = tracer.GetComponent<LineRenderer>();
-            if (lineRenderer != null)
+          if(ProjectileBody.GetComponent<LineRenderer>() == null)
+            tracerLineRenderer = ProjectileBody.AddComponent<LineRenderer>();
+         
+         
+            if (tracerLineRenderer != null)
             {
-                // Set tracer color to match the bullet
-                lineRenderer.startColor = bulletColor;
-                lineRenderer.endColor = bulletColor;
+                // Configure the LineRenderer
+                tracerLineRenderer.startColor = bulletColor;
+                tracerLineRenderer.endColor = bulletColor;
+                tracerLineRenderer.startWidth = projectileWidth;  // Set the start width of the line
+                tracerLineRenderer.endWidth = projectileWidth;   // Set the end width of the line
 
-                // Set tracer length (example)
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, transform.position + transform.forward * 100); // Adjust length as needed
             }
 
             // Destroy the tracer after a short time if needed
-            Destroy(tracer, 0.1f);
+            //Destroy(tracer, 0.1f);
         }
     }
 }

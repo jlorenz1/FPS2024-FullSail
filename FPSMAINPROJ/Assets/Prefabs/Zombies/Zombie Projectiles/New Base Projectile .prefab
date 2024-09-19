@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2b72f54e9445c2c4c9758f68df5ef9d3, type: 2}
+  - {fileID: 2100000, guid: 9dc1cd82be024e94694753ffd42e6356, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,10 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsNormal: 1
-  IsSlow: 0
-  IsGround: 0
-  IsBossAttack: 0
   ProjectileAudio: {fileID: 0}
   ZombieProjectileAudio: {fileID: 8300000, guid: 3b14b4a452d61d64d94ed22f511c2461, type: 3}
   ZombieProjectileAudioVol: 0.426
@@ -130,6 +126,4 @@ MonoBehaviour:
   UserKareSpecialAttack1: 0
   UserKareSpecialAttack2: 0
   aoePrefab: {fileID: 7449492061352380429, guid: 162391672b4a0b247a8c643345343923, type: 3}
-  AOEOBJECT: {fileID: 2182524708497135350, guid: 162391672b4a0b247a8c643345343923, type: 3}
   ProjectileBody: {fileID: 1683480588852259282}
-  bulletColor: {r: 1, g: 0.9756658, b: 0, a: 0}

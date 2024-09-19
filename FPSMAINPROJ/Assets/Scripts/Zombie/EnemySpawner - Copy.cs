@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
         foreach (GameObject obj in spawnPointObjects)
         {
-            if (obj.activeSelf == true)
+            if (obj.activeInHierarchy)
             {
                 spawnPoints.Add(obj.transform);
             }
