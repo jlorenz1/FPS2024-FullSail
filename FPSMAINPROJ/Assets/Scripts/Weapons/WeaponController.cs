@@ -417,6 +417,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
+        gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
 
         //recoil
         cameraScript.recoilX = gun.recoilX;
@@ -478,6 +479,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
         fireMode = currGun.fireMode;
+        gameManager.gameInstance.armsScript.ChangeGun(currGun.animationLayer);
 
         if (currGun.hekaAbility != null)
         {

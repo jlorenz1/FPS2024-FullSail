@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] CharacterController controller;
     [SerializeField] Renderer model;
-    //[SerializeField] Animator animator;
 
     [Header("Doging")]
     [SerializeField] Collider playerCollider;
@@ -119,7 +118,7 @@ public class PlayerController : MonoBehaviour, IDamage
     //public Weapon secondaryWeapon;
     //public Weapon activeWeapon;
 
-    Vector3 move;
+    public Vector3 move;
     Vector3 playerVel;
 
     float currentSpeed;
@@ -182,13 +181,12 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        //if(!isSliding)
-        //    animator.SetFloat("Movement", Mathf.Lerp(animator.GetFloat("Movement"), move.normalized.magnitude, Time.deltaTime * 5));
-        //else
-        //{
-        //    animator.SetFloat("Movement", 0);
-        //    animator.SetBool("Slide", true);
-        //}
+        if (!isSliding)
+            gameManager.gameInstance.armsScript.NoGunMovement();
+        else
+        {
+            gameManager.gameInstance.armsScript.StartAnimationSlide();
+        }
 
 
         if (!onSprintCoolDown && !isCrouching)
@@ -571,7 +569,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void stopSlide()
     {
-        //animator.SetBool("Slide", false);
+        gameManager.gameInstance.armsScript.StopAnimationSlide();
         controller.height = controllerHeightOrgi;
         model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
         speed = originalSpeed;

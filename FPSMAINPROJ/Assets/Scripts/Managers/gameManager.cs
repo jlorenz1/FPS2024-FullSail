@@ -72,6 +72,7 @@ public class gameManager : MonoBehaviour
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
+    public Arms armsScript;
     public WeaponController playerWeapon;
     public cameraController cameraController;
     public WeaponManager weaponManager;
@@ -189,6 +190,7 @@ public class gameManager : MonoBehaviour
 
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
+        armsScript = FindAnyObjectByType<Arms>();
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
         cameraController = FindAnyObjectByType<cameraController>();
