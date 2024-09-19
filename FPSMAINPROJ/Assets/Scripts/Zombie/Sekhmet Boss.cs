@@ -20,8 +20,7 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
 
-
-
+    [Header("Projectile Stats")]
     [SerializeField] float ProjectileSpeed;
     [SerializeField] float ProjectileLifeTime;
     [SerializeField] float ProjectileDamage;
@@ -37,13 +36,18 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] AOETYPE type;
 
     Caster caster;
-
-
     [SerializeField] Color BulletColor;
     [SerializeField] Material BulletMaterial;
     float LazerSpeed;
 
+    [Header("Audio")]
+    [SerializeField] public AudioClip[] Spawn;
+    [SerializeField] public AudioClip[] stun;
+    [SerializeField] public AudioClip[] burn;
+    [SerializeField] public AudioClip[] DuoCall;
+    [SerializeField] public AudioClip[] partnerDeath;
 
+    bool playedClip;
 
     IEnemyDamage Partner;
     // Start is called before the first frame update
@@ -60,6 +64,10 @@ public class SekhmetBoss : EnemyAI
         nextbuff = true;
         MeleeWeapon.SetDamage(damage);
         caster = Caster.Sekhmet;
+
+        playedClip = false;
+
+        PlayAudio(Spawn[0], 0.5f);
     }
 
     // Update is called once per frame
@@ -305,6 +313,9 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-
+    public void PLAYDUOCALL()
+    {
+        PlayAudio(DuoCall[0], 0.5f);
+    }
 
 }
