@@ -41,6 +41,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] public GameObject gameAlterMenu;
+    [SerializeField] public GameObject NoGems;
     [SerializeField] public GameObject gameOptionsMenu;
     [SerializeField] public Slider sensSlider;
     [SerializeField] TMP_Text roundCount;
