@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
         foreach (GameObject obj in spawnPointObjects)
         {
-            if (obj.activeInHierarchy)
+            if (obj.activeSelf == true)
             {
                 spawnPoints.Add(obj.transform);
             }
@@ -56,6 +56,9 @@ public class EnemySpawner : MonoBehaviour
     public void ZombieSpawner()
     {
 
+    
+     
+        
 
       for(int i =0;i < targetCount; i++)
         {
@@ -157,40 +160,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
 
-   public void SpawnSpecficAtRandomPoint(GameObject ZombiePrfab, int roomlevel)
-    {
-        if (spawnPoints.Count == 0)
-        {
-            Debug.LogWarning("No spawn points assigned!");
-            return;
-        }
-
-        // Select a random spawn point
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-
-
-        // Get a random point on the NavMesh near the selected spawn point
-        Vector3 randomPoint = GetRandomPointOnNavMesh(randomSpawnPoint.position, spawnRadius);
-
-        if (randomPoint != Vector3.zero)
-        {
-            GameObject randomZombiePrefab;
-            float chance = Random.Range(0f, 1f);
-
-            randomZombiePrefab = MeeleZombies[Random.Range(0, MeeleZombies.Count)];
-            
-         
-            // Instantiate the selected zombie at the random point
-            GameObject newZombie = Instantiate(ZombiePrfab, randomPoint, Quaternion.identity);
-
-            // Set up the zombie's stats
-            SetupZombie(newZombie, roomlevel);
-        }
-    }
-
-
-
-    public void SpawnSpecialAtRandomPoint()
+  public void SpawnSpecialAtRandomPoint()
     {
         if (spawnPoints.Count == 0)
         {

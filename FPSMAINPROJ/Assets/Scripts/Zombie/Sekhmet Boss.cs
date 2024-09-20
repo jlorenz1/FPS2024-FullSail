@@ -20,7 +20,8 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
 
-    [Header("Projectile Stats")]
+
+
     [SerializeField] float ProjectileSpeed;
     [SerializeField] float ProjectileLifeTime;
     [SerializeField] float ProjectileDamage;
@@ -36,18 +37,7 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] AOETYPE type;
 
     Caster caster;
-    [SerializeField] Color BulletColor;
-    [SerializeField] Material BulletMaterial;
-    float LazerSpeed;
 
-    [Header("Audio")]
-    
-    [SerializeField] public AudioClip stun;
-    [SerializeField] public AudioClip burn;
-    [SerializeField] public AudioClip[] partnerDeath;
-    
-
-    bool playedClip;
 
     IEnemyDamage Partner;
     // Start is called before the first frame update
@@ -64,10 +54,6 @@ public class SekhmetBoss : EnemyAI
         nextbuff = true;
         MeleeWeapon.SetDamage(damage);
         caster = Caster.Sekhmet;
-
-        playedClip = false;
-
-       
     }
 
     // Update is called once per frame
@@ -82,7 +68,7 @@ public class SekhmetBoss : EnemyAI
 
         if (PlayerinAttackRange && canattack)
         {
-          
+            Debug.Log("Did Base Attack");
             StartCoroutine(BaseAAttack());
         }
 
@@ -149,7 +135,7 @@ public class SekhmetBoss : EnemyAI
         
         MeleeWeapon.SetBleed(); // Start bleeding effect
         animator.SetTrigger("Quick jab");
-       
+        Debug.Log("bleeding jab  Called");
 
         // Wait for 3 seconds before stopping the bleeding effect
         yield return new WaitForSeconds(10f);
@@ -192,7 +178,7 @@ public class SekhmetBoss : EnemyAI
     public void CastAttack()
     {
         // Ranged attack logic
-      
+        Debug.Log("Ranged attack");
 
         GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
@@ -202,7 +188,7 @@ public class SekhmetBoss : EnemyAI
         }
 
         projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-        projectileScript.SetColor(BulletColor, BulletMaterial);
+
         if (Type == ProjectileType.AOE)
         {
             projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
@@ -222,7 +208,7 @@ public class SekhmetBoss : EnemyAI
 
     void reinforce()
     {
-      
+        Debug.Log("Reinforce Called");
 
         // Find all objects with the "Zombie" tag
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
@@ -249,7 +235,7 @@ public class SekhmetBoss : EnemyAI
                 }
                 else
                 {
-                  
+                    Debug.LogWarning("Zombie does not have IEnemyDamage component.");
                 }
             }
         }
@@ -301,7 +287,7 @@ public class SekhmetBoss : EnemyAI
     {
         canattack = false;
 
-       
+        Debug.Log("slow jab");
 
         //animator.SetFloat("Speed", 0);
        
@@ -313,6 +299,6 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-   
+
 
 }

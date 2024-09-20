@@ -1009,7 +1009,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2739583383600373709}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.05
+  m_Radius: 0.5
   m_Speed: 16
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1080,13 +1080,9 @@ MonoBehaviour:
   castSpeed: 0.85
   AttentionSpan: 0
   sight: 25
-  DetectionRange: 10
   flockRange: 8
   Helmate: {fileID: 0}
   Drops: []
-  DropChance: 0
-  Gems: {fileID: 0}
-  GemDropCount: 0
   models: []
   obstacleMask:
     serializedVersion: 2
@@ -1095,25 +1091,6 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 5558037750598473244, guid: febb84b5070545a408e0be8e583b73c7, type: 3}
   MeleeWeapon: {fileID: 173704984569286898}
   Melee: {fileID: 7302243940940497571}
-  ProjectileSpeed: 0
-  ProjectileLifeTime: 0
-  ProjectileDamage: 0
-  ProjectileFollowTime: 0
-  Type: 0
-  projectileAblity: 0
-  AbilityStrength: 0
-  AbilityDuration: 0
-  effectDuration: 0
-  AoeStrength: 0
-  radius: 0
-  type: 0
-  BulletColor: {r: 0.6690548, g: 0.9150943, b: 0.8073232, a: 0}
-  BulletMaterial: {fileID: 2100000, guid: 71fbb861c44b9a141968889657df970d, type: 2}
-  stun: {fileID: 8300000, guid: 6e24b164848eba645b18e72aa1ac3e44, type: 3}
-  burn: {fileID: 8300000, guid: b5ad89e242f130f4b88bf1a851742eda, type: 3}
-  partnerDeath:
-  - {fileID: 8300000, guid: 652383357fb0bb0438f1f98b2650a831, type: 3}
-  - {fileID: 8300000, guid: a08596db4914ce14ca46ea88255d940d, type: 3}
 --- !u!82 &1862854166617091760
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1123,9 +1100,9 @@ AudioSource:
   m_GameObject: {fileID: 2739583383600373709}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
+  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

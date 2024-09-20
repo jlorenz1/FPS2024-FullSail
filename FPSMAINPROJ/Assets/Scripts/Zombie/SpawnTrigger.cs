@@ -8,39 +8,14 @@ public class SpawnTrigger : MonoBehaviour
     [SerializeField] GameObject[] SpawnLocation;
     [SerializeFeild] int Difficulty;
     [SerializeField] bool isEndless;
-    [SerializeField] int roomlevel;
-    [SerializeField] bool isSpecific;
-    [SerializeField] bool isSet;
-    [SerializeField] bool BossSpawner;
-
-    [SerializeField] bool TypeMelee;
-    [SerializeField] bool TypeRanged;
-    [SerializeField] bool TypeSpecial;
-
-
-    [SerializeField] int CountMelee;
-    [SerializeField] int CountRanged;
-    [SerializeField] int CountSpecial;
-    [SerializeField] int ZombieSpawnCount;
-
-
-    GameObject[] PrimaryList;
-    [SerializeField] GameObject[] RangedEnemy;
-    [SerializeField] GameObject[] MeleeEnemy;
-    [SerializeField] GameObject[] SpecialEnemy;
-    [SerializeField] GameObject SpecifcEnemy;
-
     bool isActivated;
     bool wiped;
-    bool TriggerEntered;
+    int ZombieSpawnCount;
     int Count;
     bool BossIsSpawned;
-    int range;
-    int chance;
     private void Start()
     {
-        TriggerEntered = false;
-         wiped = false;
+        wiped = false;
         BossIsSpawned = false;
     }
     private void Update()
@@ -73,38 +48,22 @@ public class SpawnTrigger : MonoBehaviour
             }
             wiped = true;
         }
-            if (!TriggerEntered)
+
+              for (int i = 0; i < SpawnLocation.Length; i++)
             {
+                SpawnLocation[i].SetActive(true);
+            }
+            gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
 
-                for (int i = 0; i < SpawnLocation.Length; i++)
-                {
-                    SpawnLocation[i].SetActive(true);
-                }
-                gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
 
-                if (!isSpecific && !isSet)
-                    SpawnEnemies(ZombieSpawnCount);
-                else if (isSpecific)
-                {
-                    for (int i = 0; i < ZombieSpawnCount; i++)
-                    {
-                        GetWhichType();
-                        SpawnSpecifc(PrimaryList[chance], roomlevel);
-                    }
-                }
-                else if (isSet)
-                {
-                    SpawnRandomSet(CountMelee, CountSpecial, CountRanged);
-                }
+            SpawnEnemies(ZombieSpawnCount);
 
-                if (!BossIsSpawned && BossSpawner)
-                {
-                    gameManager.gameInstance.enemySpawner.SpawnBoss();
 
-                    BossIsSpawned = true;
-                }
+            if (!BossIsSpawned)
+            {
+                gameManager.gameInstance.enemySpawner.SpawnBoss();
 
-                TriggerEntered = true;
+                BossIsSpawned = true;
             }
         }
         else
@@ -118,61 +77,7 @@ public class SpawnTrigger : MonoBehaviour
 
         gameManager.gameInstance.enemySpawner.ZombieSpawner(Amount);
 
+
+
     }
-
-    void GetWhichType()
-    {
-        if (isSpecific) {
-            if (TypeMelee)
-            {
-                PrimaryList = MeleeEnemy;
-            }
-
-            else if (TypeRanged)
-            {
-                PrimaryList = RangedEnemy;
-            }
-
-            else if (TypeSpecial)
-            {
-                PrimaryList = SpecialEnemy;
-            }
-        }
-       
-         chance = (int)(Random.Range(0, PrimaryList.Count()));
-    }      
-    void SpawnSpecifc(GameObject Zombie, int round)
-    {
-        gameManager.gameInstance.enemySpawner.SpawnSpecficAtRandomPoint(Zombie, round);
-    }
-
-
-    void SpawnRandomSet(int meelecount, int specialcount, int rangedcount)
-    {
-        if (meelecount > 0)
-        {
-            for (int i = 0; i < meelecount; i++)
-            {
-                SpawnSpecifc(MeleeEnemy[(int)(Random.Range(0, MeleeEnemy.Count()))], roomlevel);
-            }
-        }
-        if (specialcount > 0)
-        {
-            for (int i = 0; i < specialcount; i++)
-            {
-                SpawnSpecifc(SpecialEnemy[(int)(Random.Range(0, SpecialEnemy.Count()))], roomlevel);
-            }
-        }
-
-        if (rangedcount > 0)
-        {
-            for (int i = 0; i < rangedcount; i++)
-            {
-
-                SpawnSpecifc(RangedEnemy[(int)(Random.Range(0, RangedEnemy.Count()))], roomlevel);
-
-            }
-        }
-    }
-
 }

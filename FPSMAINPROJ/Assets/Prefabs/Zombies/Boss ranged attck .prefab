@@ -119,6 +119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 30
+  lifetime: 8
+  IsNormal: 0
+  IsSlow: 0
+  IsGround: 0
+  IsBossAttack: 0
+  projectileDamage: 30
+  followtime: 0.2
   ProjectileAudio: {fileID: 0}
   ZombieProjectileAudio: {fileID: 0}
   ZombieProjectileAudioVol: 0
@@ -127,7 +135,9 @@ MonoBehaviour:
   UserKareSpecialAttack1: 0
   UserKareSpecialAttack2: 0
   aoePrefab: {fileID: 7449492061352380429, guid: 162391672b4a0b247a8c643345343923, type: 3}
-  ProjectileBody: {fileID: 5558037750598473244}
+  aoeRadius: 5
+  slowDuration: 5
+  slowEffectDuration: 3
 --- !u!1 &9077233697551543286
 GameObject:
   m_ObjectHideFlags: 0
