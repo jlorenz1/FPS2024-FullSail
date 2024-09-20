@@ -75,7 +75,7 @@ public class gameManager : MonoBehaviour
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
-    public Arms armsScript;
+    //public Arms armsScript;
     public WeaponController playerWeapon;
     public cameraController cameraController;
     public WeaponManager weaponManager;
@@ -206,7 +206,7 @@ public class gameManager : MonoBehaviour
 
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
-        armsScript = FindAnyObjectByType<Arms>();
+        //armsScript = FindAnyObjectByType<Arms>();
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
         cameraController = FindAnyObjectByType<cameraController>();
@@ -256,7 +256,7 @@ public class gameManager : MonoBehaviour
             if (gameAlterMenu.activeSelf)
             {
                 gameAlterMenu.SetActive(false);
-                gameActiveMenu = gameAlterMenu;
+                gameActiveMenu = null;
                 resumePlayerControls();
             }
             else if (gameActiveMenu == null && !gameAlterMenu.activeSelf && !gameOptionsMenu.activeSelf)
@@ -294,7 +294,6 @@ public class gameManager : MonoBehaviour
         pointCount.text = PointCount.ToString("F0");
 
         PlayerPrefs.SetInt("sens", (int)sensSlider.value);
-        
     }
 
     // Pause the Game

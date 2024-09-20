@@ -58,6 +58,7 @@ public class WeaponController : MonoBehaviour
     {
         cameraScript = FindObjectOfType<cameraController>();
         playerController = gameManager.gameInstance.playerScript;
+
         if(hekaAbility != null)
         {
             hasHeka = true;
@@ -417,7 +418,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
-        gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
+        //gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
 
         //recoil
         cameraScript.recoilX = gun.recoilX;
@@ -479,7 +480,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
         fireMode = currGun.fireMode;
-        gameManager.gameInstance.armsScript.ChangeGun(currGun.animationLayer);
+        //sgameManager.gameInstance.armsScript.ChangeGun(currGun.animationLayer);
 
         if (currGun.hekaAbility != null)
         {

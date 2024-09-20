@@ -181,12 +181,12 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!isSliding)
-            gameManager.gameInstance.armsScript.NoGunMovement();
-        else
-        {
-            gameManager.gameInstance.armsScript.StartAnimationSlide();
-        }
+        //if (!isSliding)
+        //    gameManager.gameInstance.armsScript.NoGunMovement();
+        //else
+        //{
+        //    gameManager.gameInstance.armsScript.StartAnimationSlide();
+        //}
 
 
         if (!onSprintCoolDown && !isCrouching)
@@ -569,7 +569,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void stopSlide()
     {
-        gameManager.gameInstance.armsScript.StopAnimationSlide();
+        //gameManager.gameInstance.armsScript.StopAnimationSlide();
         controller.height = controllerHeightOrgi;
         model.transform.localScale = new Vector3(transform.localScale.x, startingYScale, transform.localScale.z);
         speed = originalSpeed;
