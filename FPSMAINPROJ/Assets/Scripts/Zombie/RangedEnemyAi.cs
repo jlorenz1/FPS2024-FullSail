@@ -37,6 +37,12 @@ public class RangedEnemy : EnemyAI
     [SerializeField] float AoeStrength;
     [SerializeField] float radius;
     [SerializeField] AOETYPE type;
+
+
+    [SerializeField] Color BulletColor;
+    [SerializeField] Material BulletMaterial;
+    float LazerSpeed;
+
     Caster caster;
 
     protected override void Start()
@@ -47,7 +53,7 @@ public class RangedEnemy : EnemyAI
         AttackDone = true;
         inPosition = false;
         caster = Caster.NormalCaster;
-
+        LazerSpeed = ProjectileSpeed * 10;
 
     }
 
@@ -68,6 +74,14 @@ public class RangedEnemy : EnemyAI
     protected override void Update()
     {
         base.Update();
+
+
+        if (Type == ProjectileType.Lazer)
+        {
+            castAmount = 1;
+            ProjectileSpeed = LazerSpeed;
+        }
+
 
         if (PlayerinAttackRange && canAttack && ChasingPLayer)
         {
@@ -92,6 +106,7 @@ public class RangedEnemy : EnemyAI
 
     IEnumerator Cast()
     {
+    
         for (int i = 0; i < castAmount; i++)
         {
             GameObject projectile =  Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
@@ -102,7 +117,7 @@ public class RangedEnemy : EnemyAI
             }
 
             projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-
+            projectileScript.SetColor(BulletColor, BulletMaterial);
             if (Type == ProjectileType.AOE)
             {
                 projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
@@ -120,7 +135,7 @@ public class RangedEnemy : EnemyAI
     public void CastAttack()
     {
         // Ranged attack logic
-        Debug.Log("Ranged attack");
+       
         AttackDone = false;
         StartCoroutine(Cast());
     }

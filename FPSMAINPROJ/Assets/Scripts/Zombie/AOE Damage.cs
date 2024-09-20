@@ -30,13 +30,13 @@ public class AOEDamage : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Entered");
+        
         if ( other.CompareTag("Player"))
         {
              Playerdamage = other.GetComponent<IDamage>();
             if (Playerdamage != null)
             {
-                Debug.Log("Trigger Entered By Player");
+              
                 if (type == AOETYPE.Slow)
                 {
                   
@@ -63,8 +63,8 @@ public class AOEDamage : MonoBehaviour
                 }
 
             }
-            else
-                Debug.Log("PlayerDamage is null");
+           
+              
         }
         else
             return;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -68,14 +69,14 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject aoePrefab;    // Assign your AoE slow effect prefab here
     [SerializeField] GameObject ProjectileBody;
     Transform LaunchPoint;
-    [SerializeField] private Color bulletColor;
-
+     Color bulletColor;
+    Material bulletMaterial;
     float aoeRadius = 5f;    // Radius of the AoE slow effect
     float slowDuration = 5f; // How long the slow effect lasts on the player
     float EffectDuration = 3f; // How long the player stays slowed
     float AOEEffectDuration = 3f;
     float aoeStrength;
-
+    LineRenderer tracerLineRenderer;
 
     void Start()
     {
@@ -85,7 +86,7 @@ public class Projectile : MonoBehaviour
         Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
         if (projectileType == ProjectileType.Lazer)
         {
-            speed *= 2;
+           
             CreateTracer();
         }
         if (ProjectileAudio != null)
@@ -100,9 +101,10 @@ public class Projectile : MonoBehaviour
         // Destroy the projectile after a certain amount of time
         Destroy(gameObject, lifetime);
 
-
-
-        rb = GetComponent<Rigidbody>();
+        if(rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
         if (rb != null)
         {
             rb.useGravity = false; // Ensure gravity does not affect the projectile
@@ -130,6 +132,7 @@ public class Projectile : MonoBehaviour
         }
 
         // Move the projectile in the current direction
+   
         if (rb != null)
         {
             rb.velocity = currentDirection * speed;
@@ -138,11 +141,20 @@ public class Projectile : MonoBehaviour
         {
             transform.Translate(currentDirection * speed * Time.deltaTime);
         }
+
+
+        // Update tracer if it exists
+        if (tracerLineRenderer != null)
+        {
+ 
+            tracerLineRenderer.SetPosition(0, transform.position);
+            tracerLineRenderer.SetPosition(1, transform.position + currentDirection * 100); 
+        }
     }
 
     IEnumerator FollowPlayer(float seconds)
     {
-        // Follow the player for 1 second
+       
         yield return new WaitForSeconds(seconds);
 
         // Stop following the player and continue in the last known direction
@@ -174,7 +186,11 @@ public class Projectile : MonoBehaviour
                 if (caster == Caster.Sekhmet)
                 {
                     stun();
-                    gameManager.gameInstance.LightGautlening = true;
+                  
+                    if (gameManager.gameInstance.isUserKareDead == false)
+                    {
+                        gameManager.gameInstance.LightGautlening = true;
+                    }
                 }
 
                 else if (caster == Caster.Userkare)
@@ -182,7 +198,11 @@ public class Projectile : MonoBehaviour
                     if (projectileAblity == ProjectileAblity.Special)
                     {
                         stun();
-                        gameManager.gameInstance.BlinkingJab = true;
+                        if (gameManager.gameInstance.isSekhmetDead == false)
+                        {
+                            gameManager.gameInstance.Userkare.PLAYDUOCALL();
+                            gameManager.gameInstance.BlinkingJab = true;
+                        }
                     }
                     if (projectileAblity != ProjectileAblity.Special)
                     {
@@ -271,7 +291,12 @@ public class Projectile : MonoBehaviour
         caster = User;
     }
 
-
+    public void SetColor(Color color, Material material)
+    {
+        bulletColor = color;
+        bulletMaterial = material;
+        bulletMaterial.color = color;
+    }
 
 
     public void AoeStats(float effectDuration, float AoeStrength, float radius, AOETYPE type)
@@ -286,27 +311,37 @@ public class Projectile : MonoBehaviour
 
     private void CreateTracer()
     {
-        if (ProjectileBody != null)
+        // Create a new GameObject for the tracer
+        GameObject tracer = new GameObject("LaserTracer");
+
+        // Add and configure the LineRenderer
+        tracerLineRenderer = tracer.AddComponent<LineRenderer>();
+
+        if (tracerLineRenderer != null)
         {
-            // Instantiate the tracer
-            GameObject tracer = Instantiate(ProjectileBody, transform.position, Quaternion.identity);
+          
+            tracerLineRenderer.startColor = bulletColor;
+            tracerLineRenderer.endColor = bulletColor;
 
-            // Configure the tracer
-            LineRenderer lineRenderer = tracer.GetComponent<LineRenderer>();
-            if (lineRenderer != null)
-            {
-                // Set tracer color to match the bullet
-                lineRenderer.startColor = bulletColor;
-                lineRenderer.endColor = bulletColor;
+         
+            float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
+           
+            tracerLineRenderer.startWidth = projectileWidth;
+            tracerLineRenderer.endWidth = projectileWidth;
 
-                // Set tracer length (example)
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, transform.position + transform.forward * 100); // Adjust length as needed
-            }
+            
+            tracerLineRenderer.positionCount = 2; 
+            tracerLineRenderer.SetPosition(0, transform.position); 
+            tracerLineRenderer.SetPosition(1, transform.position + transform.forward * 100); 
 
-            // Destroy the tracer after a short time if needed
-            Destroy(tracer, 0.1f);
+           
+            tracerLineRenderer.material = new Material(Shader.Find("Unlit/Color")); 
+            tracerLineRenderer.material.color = bulletColor;
+            tracerLineRenderer.widthMultiplier = 1;
         }
+
+        // Destroy the tracer after a short time if needed
+        Destroy(tracer, 0.7f); 
     }
 }
 

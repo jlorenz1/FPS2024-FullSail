@@ -152,7 +152,7 @@ public class SpecialEnemy : EnemyAI
         if (ZombieBuff != null)
         {
 
-            PlayAudio(ZombieBuff, ZombieBuffVol);
+            PlaySFX(ZombieBuff);
         }
 
         if (Summoner)
@@ -170,7 +170,7 @@ public class SpecialEnemy : EnemyAI
                 if (FellowZombie != null)
                 {
 
-                    Debug.Log("A zombie has entered the trigger zone.");
+                  
 
                     if (maxHealthBuffer)
                     {
@@ -233,7 +233,7 @@ public class SpecialEnemy : EnemyAI
     void SummonMinions()
     {
 
-        Debug.Log("Summon Called");
+      
 
         float radiusStep = 2f; // Distance between sets of 4 minions
         float radius = 1f; // Initial spawn radius

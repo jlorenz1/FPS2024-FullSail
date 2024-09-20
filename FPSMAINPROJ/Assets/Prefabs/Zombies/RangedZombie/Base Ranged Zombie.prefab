@@ -801,11 +801,12 @@ MonoBehaviour:
   MaxHealth: 200
   Armor: 3
   Range: 20
-  damage: 25
+  damage: 3
   AttackSpeed: 0.75
-  castSpeed: 2
-  AttentionSpan: 0
-  sight: 25
+  castSpeed: 7
+  AttentionSpan: 10
+  sight: 30
+  DetectionRange: 10
   flockRange: 8
   Helmate: {fileID: 0}
   Drops:
@@ -825,18 +826,20 @@ MonoBehaviour:
   castAmount: 5
   castRange: 20
   HasRangedAttacks: 1
-  ProjectileSpeed: 20
-  ProjectileLifeTime: 30
-  ProjectileDamage: 30
-  ProjectileFollowTime: 30
+  ProjectileSpeed: 10
+  ProjectileLifeTime: 5
+  ProjectileDamage: 5
+  ProjectileFollowTime: 0.55
   Type: 0
-  projectileAblity: 0
+  projectileAblity: 3
   AbilityStrength: 0
   AbilityDuration: 0
   effectDuration: 0
   AoeStrength: 0
   radius: 0
   type: 0
+  BulletColor: {r: 1, g: 0.983102, b: 0, a: 0}
+  BulletMaterial: {fileID: 2100000, guid: ca27248772ccede4d841d9222cf64b33, type: 2}
 --- !u!82 &5227367015657412385
 AudioSource:
   m_ObjectHideFlags: 0
@@ -846,9 +849,9 @@ AudioSource:
   m_GameObject: {fileID: 4156405569138669935}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
