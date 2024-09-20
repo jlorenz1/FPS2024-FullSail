@@ -32,6 +32,7 @@ public class MemoryPuzzleController : MonoBehaviour
     int[] pattern; //chosen pattern
 
     ArrayList sequence = new ArrayList(); //the sequence the player steps in
+    GameObject[] correctedTitles = new GameObject[5];
 
     private static MemoryPuzzleController _memPuzzleInstance;
     public static MemoryPuzzleController memPuzzleInstance
@@ -89,21 +90,32 @@ public class MemoryPuzzleController : MonoBehaviour
     }
 
     //updates sequence array and handles when player steps on incorrect tile
-    public void UpdateSequence(int id)
+    public void UpdateSequence(int id, GameObject title)
     {
         Debug.Log(id);
 
         int index = sequence.Count;
+        float origHeight = title.transform.position.y;
 
         Debug.Log("ID: " + id + ", Pattern Num: " + pattern[index]);
 
         if (pattern[index] == id) //player stepped on correct tile
         {
+            float newPos = title.transform.position.y - .1f;
+            //lowering the titles
+            title.transform.position = new Vector3(title.transform.position.x, newPos, title.transform.position.z);
+            correctedTitles[index] = title;
             sequence.Add(id);
             Debug.Log("ID added to sequence. Sequence.Count: " + sequence.Count);
         } else //player stepped on incorrect tile
         {
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Wrong tile. Restart.", 3f));
+            transform.parent.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
+            //returning all the titles back to the origional place
+            for (int i = 0; i < 4; i++)
+            {
+                correctedTitles[i].transform.position = new Vector3(correctedTitles[i].transform.position.x, origHeight, correctedTitles[i].transform.position.z);
+            }
             sequence.Clear(); //player must restart
         }
 

@@ -11,7 +11,7 @@ public class MemoryTileScript : MonoBehaviour
     {
         if (collide.gameObject.CompareTag("Player"))
         {
-            MemoryPuzzleController.memPuzzleInstance.UpdateSequence(id);
+            MemoryPuzzleController.memPuzzleInstance.UpdateSequence(id, tile);
         }
     }
 }
