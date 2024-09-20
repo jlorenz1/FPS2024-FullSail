@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
@@ -20,7 +21,8 @@ public class gameManager : MonoBehaviour
         {
             if (_gameInstance == null)
             {
-                Debug.LogError("GameManager is null");
+              
+
             }
             return _gameInstance;
         }
@@ -41,6 +43,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] public GameObject gameAlterMenu;
+    [SerializeField] public GameObject NoGems;
     [SerializeField] public GameObject gameOptionsMenu;
     [SerializeField] public Slider sensSlider;
     [SerializeField] TMP_Text roundCount;
@@ -72,6 +75,7 @@ public class gameManager : MonoBehaviour
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
+    public Arms armsScript;
     public WeaponController playerWeapon;
     public cameraController cameraController;
     public WeaponManager weaponManager;
@@ -150,6 +154,19 @@ public class gameManager : MonoBehaviour
 
     public bool hasWinCondition;
     // Using Awake, for Manager
+
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        float masterVolume = PlayerPrefs.GetFloat("MasterVol");
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVol");
+        float musicVolume = PlayerPrefs.GetFloat("MusicVol");
+
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolume) * 20);
+        audioMixer.SetFloat("SFXVolume", Mathf.Log10(sfxVolume) * 20);
+        audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolume) * 20);
+    }
+
     void Awake()
     {
 
@@ -189,6 +206,7 @@ public class gameManager : MonoBehaviour
 
         // Set the references of the player and it's script
         player = GameObject.FindWithTag("Player");
+        armsScript = FindAnyObjectByType<Arms>();
         playerScript = FindObjectOfType<PlayerController>();
         playerWeapon = FindObjectOfType<WeaponController>();
         cameraController = FindAnyObjectByType<cameraController>();
@@ -198,14 +216,8 @@ public class gameManager : MonoBehaviour
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();
-        if (enemySpawner == null)
-        {
-            Debug.LogError("EnemySpawner not found.");
-        }
-        else
-            Debug.Log("Enemy Spawner Valid");
-
-
+       
+        
         MainCam = Camera.main;
 
         //audio
@@ -268,15 +280,14 @@ public class gameManager : MonoBehaviour
         }
         if (BossesKilled == 2)
         {
-            Debug.Log("entering boss killed");
             winScreen();
         }
-
+/*
         if (EnemyCount < 4 || cycle == 10000)
         {
             enemySpawner.ZombieSpawner(3);
             cycle = 0;
-        }
+        }*/
         displayInventoryMenu();
 
         roundCount.text = GameRound.ToString("F0");
@@ -400,14 +411,14 @@ public class gameManager : MonoBehaviour
         }
 
         SetGameRound(1);
-        Debug.Log("SpanwFunctionCalled");
+       
         enemySpawner.ZombieSpawner(3);
 
         if (SpecialZombieIncrament > 0)
         {
             if (GameRound % SpecialZombieIncrament == 0)
             {
-                Debug.Log("Special Round");
+              
                 enemySpawner.SpecialZombieSpawner(SpecialZombieIncrament);
             }
         }
@@ -556,7 +567,7 @@ public class gameManager : MonoBehaviour
 
     public void onMasterSliderChange(float value)
     {
-        Debug.Log("Master Volume Slider Value: " + value);
+     
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20); //log10 for decibles 
         saveSettings();
 

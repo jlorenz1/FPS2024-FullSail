@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 using UnityEngine.ProBuilder.MeshOperations;
 
 public class EnemyAI : MonoBehaviour, IEnemyDamage
@@ -45,6 +46,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float castSpeed = 0.85f;
     [SerializeField] protected float AttentionSpan;
     [SerializeField] protected float sight = 25;
+    [SerializeField] protected float DetectionRange = 10;
+
+
     public float flockRange = 20;
     float startsight;
     float stoppingDistance;
@@ -62,10 +66,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] private List<GameObject> models;
     [SerializeField] LayerMask obstacleMask;
 
-    [Header("-----Projectile Stats-----")]
+    bool isBlind;
 
-    
 
+    float sfxvolume;
+    float mastervolume;
 
 
     protected bool ChasingPLayer;
@@ -96,10 +101,18 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
    
     protected virtual void Start()
     {
+      
+        if(Zombie == null)
+        {
+            Debug.Log("Source not active");
+        }
 
 
+        sfxvolume = (gameManager.gameInstance.SFXVolSlider.value); 
+        mastervolume = (gameManager.gameInstance.masterVolSlider.value);
 
 
+        isBlind = false;
 
          startsight = sight;
 
@@ -133,7 +146,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent = GetComponent<NavMeshAgent>();
         if (agent == null)
         {
-            Debug.LogError("NO Nav MESH");
+          
         }
 
         //   AssignRandomModel();
@@ -204,12 +217,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     public virtual void takeDamage(float amount)
     {
-        Debug.Log("take damage called");
+      
         StartCoroutine(flashRed());
 
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
-        //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+        //  PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         CurrentHealth -= TotalDamage;
         if (CurrentHealth <= 0)
@@ -410,6 +423,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             else
                 PlayerinAttackRange = false;
 
+            if(Distance> DetectionRange && !isBlind)
+            {
+                ChasingPLayer = true;
+            }
         }
     }
 
@@ -496,10 +513,26 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     //Genral audio
 
 
-    protected void PlayAudio(AudioClip audio, float volume)
+    protected void PlaySFX(AudioClip audio)
     {
-        Zombie.PlayOneShot(audio, volume);
+        if (audio == null)
+        {
+            Zombie.PlayOneShot(audio, 0.5f);
+            Debug.Log("sfx played");
+        }
+      
     }
+
+
+    protected void PlayVoice(AudioClip audio)
+    {
+        if (audio == null)
+        {
+            Zombie.PlayOneShot(audio, 0.5f);
+            Debug.Log("voice played");
+        }
+    }
+
 
     protected IEnumerator Groan()
     {
@@ -508,7 +541,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         AudioClip Hit = ZombieGrowl[index];
 
 
-        PlayAudio(Hit, ZombieGrowlVol);
+        PlaySFX(Hit);
         float delay = Random.Range(5f, 10f);
         //use a random delay so each instance doesnt do it at the same time.
         yield return new WaitForSeconds(delay);
@@ -517,6 +550,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
     public void PlayFootstep()
     {
+        Debug.Log("FootSteps called");
         if (ZombieFootSteps.Length > 0)
         {
             // Randomly select a footstep clip from the array
@@ -524,7 +558,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             AudioClip footstep = ZombieFootSteps[index];
 
             // Play the selected clip through the AudioSource
-            Zombie.PlayOneShot(footstep, ZombieFootStepsVol);
+            PlaySFX(footstep);
         }
     }
 
@@ -612,7 +646,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
       
         {
             MaxHealth += amount;
-            Debug.Log("Zombie health buffed by " + amount);
+          
             HasHealthBuffed = true;
         }
     
@@ -626,7 +660,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
        
         {
             damage += amount;
-            Debug.Log("Zombie damage buffed by " + amount);
+          
             HasStrengthBuffed = true;
         }
        
@@ -637,7 +671,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
       
         {
             agent.speed += amount;
-            Debug.Log("Zombie speed buffed by " + amount);
+         
             HasSpeedBuffed = true;
         }
        
@@ -762,7 +796,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         StartCoroutine(flashRed());
 
 
-        //  PlayAudio(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
+         PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)]);
         CurrentHealth -= amountOfDamageTaken;
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         if (MaxHealth <= 0)
@@ -784,11 +818,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
     IEnumerator blind(float duration)
     {
+        isBlind = true;
         sight = 0;
         ChasingPLayer = false;
-        Debug.Log(sight);
+     
         yield return new WaitForSeconds(duration);
-
+        isBlind = false;
         sight = startsight;
 
     }
@@ -815,13 +850,17 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         foreach (GameObject zombie in zombies)
         {
-            float distance = Vector3.Distance(transform.position, zombie.transform.position);
-            if (distance < flockRange && !ChasingPLayer)
+            EnemyAI enemyAI = zombie.GetComponent<EnemyAI>();
+            if (enemyAI != null)
             {
+                float distance = Vector3.Distance(transform.position, zombie.transform.position);
+                if (distance < flockRange && enemyAI.ChasingPLayer == false)
+                {
 
-                TargetPlayer();
+                    enemyAI.ChasingPLayer = true;
 
 
+                }
             }
         }
     }

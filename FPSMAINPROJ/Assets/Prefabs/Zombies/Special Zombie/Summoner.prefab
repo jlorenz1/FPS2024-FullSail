@@ -1668,6 +1668,7 @@ MonoBehaviour:
   castSpeed: 0.85
   AttentionSpan: 3
   sight: 25
+  DetectionRange: 10
   flockRange: 8
   Helmate: {fileID: 0}
   Drops:
@@ -1706,9 +1707,9 @@ AudioSource:
   m_GameObject: {fileID: 6892317923741368980}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

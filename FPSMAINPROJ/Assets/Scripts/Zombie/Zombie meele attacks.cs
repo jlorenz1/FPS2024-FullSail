@@ -20,10 +20,13 @@ public class Zombiemeeleattacks : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.gameInstance.playerScript.takeDamage(damage);
+           IDamage player = other.GetComponent<IDamage>();
+
+            player.takeDamage(damage);
+
             if (causesBleed )
             {
-                StartCoroutine(Bleed());
+                player.TickDamage(duration, 0.5f, 3f);
             }
         }
         else

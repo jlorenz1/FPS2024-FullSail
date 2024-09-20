@@ -1614,6 +1614,7 @@ MonoBehaviour:
   castSpeed: 0.85
   AttentionSpan: 0
   sight: 25
+  DetectionRange: 10
   flockRange: 8
   Helmate: {fileID: 0}
   Drops: []
@@ -1628,8 +1629,8 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 7989539704885820802, guid: 8ceaa380d58dfc54fb73f04ed2b38811, type: 3}
   MeleeWeapon: {fileID: 0}
   Melee: {fileID: 1757578735830265137}
-  sheilds: {fileID: 0}
-  Sheild: {fileID: 4271990252428005580, guid: 571dd983968569141bf45dc26861dc7f, type: 3}
+  sheilds: {fileID: 8432938172824395943, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
+  Sheild: {fileID: 4271990252428005580, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
   SheildPosition: {fileID: 4705778859344429057}
   sheildHealth: 100
   SummoningMob: {fileID: 3834371293188694096, guid: 078f354a5a8382a40a753f884f259859, type: 3}
@@ -1649,6 +1650,19 @@ MonoBehaviour:
   AoeStrength: 11
   radius: 11
   type: 0
+  BulletColor: {r: 0, g: 0, b: 0, a: 0}
+  BulletMaterial: {fileID: 0}
+  Spawn:
+  - {fileID: 8300000, guid: 55b9907d885f5264394d9377f860c028, type: 3}
+  stun: {fileID: 8300000, guid: 074764e30657684469de0e27ea2486bf, type: 3}
+  burn: {fileID: 8300000, guid: 60fe0ccbb5dd4df40a7eb1775e4cad27, type: 3}
+  DuoCall:
+  - {fileID: 8300000, guid: 668cc4c576c89ab479399c1cf0353f0e, type: 3}
+  partnerDeath:
+  - {fileID: 8300000, guid: 822fecd2f75fac44c8b1e68a16ed9c36, type: 3}
+  - {fileID: 8300000, guid: 7895d150e54865644b8945cd426d3eb5, type: 3}
+  SpecialAbility: {fileID: 8300000, guid: 95a858f897ca8e24dbb2a3c8488819b1, type: 3}
+  SpecialAbility2: {fileID: 8300000, guid: 4cc1643243b159744ae071ab8b5ddd80, type: 3}
 --- !u!82 &6383694679730552691
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1658,9 +1672,9 @@ AudioSource:
   m_GameObject: {fileID: 1336715895340559562}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5183095319474141203, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
