@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     public void Awake()
     {
-        sensSlider.value = PlayerPrefs.GetInt("sens");
+        sensSlider.value = PlayerPrefs.GetInt("sens", 200);
         masterVolSlider.value = PlayerPrefs.GetFloat("MasterVol", 1f);
         SFXVolSlider.value = PlayerPrefs.GetFloat("SFXVol", 1f);
         musicVolSlider.value = PlayerPrefs.GetFloat("MusicVol", 1f);
