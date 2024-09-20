@@ -155,12 +155,7 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
         {
-
-            Vector3 targetPoint = getMiddleOfScreen();
-            muzzleFlashTransform.LookAt(targetPoint);
-            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-            var muzzleFlashObj = Instantiate(hekaMuzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
-            muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
+            playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
@@ -169,11 +164,7 @@ public class WeaponController : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
-            Vector3 targetPoint = getMiddleOfScreen();
-            muzzleFlashTransform.LookAt(targetPoint);
-            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-            var muzzleFlashObj = Instantiate(hekaMuzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
-            muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
+            playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
@@ -183,11 +174,20 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
-            Vector3 targetPoint = getMiddleOfScreen();
-            GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
+            playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
         }
         yield return new WaitForSeconds(hekaShootRate);
+    }
+
+    void playHekaEffects()
+    {
+        Vector3 targetPoint = getMiddleOfScreen();
+        muzzleFlashTransform.LookAt(targetPoint);
+        GameObject projectile = Instantiate(hekaAbility, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
+        var muzzleFlashObj = Instantiate(hekaMuzzleFlash, muzzleFlashTransform.position, Quaternion.identity);
+        AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].hekaShootingSounds[UnityEngine.Random.Range(0, gunList[selectedGun].hekaShootingSounds.Length)], gunList[selectedGun].hekaShootVol);
+        muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
     }
 
     IEnumerator shoot()

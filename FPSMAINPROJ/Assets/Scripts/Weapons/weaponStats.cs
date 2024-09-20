@@ -21,6 +21,8 @@ public class weaponStats : ScriptableObject
     public string hekaSchool;
     [SerializeField] public GameObject hekaAbility;
     [SerializeFeild] public GameObject hekaMuzzleFlash;
+    [SerializeFeild] public AudioClip[] hekaShootingSounds;
+    public float hekaShootVol;
     public int hekaShootRate = 0;
     public float hekaManaAmount = 0;
 
