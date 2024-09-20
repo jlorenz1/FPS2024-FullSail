@@ -135,7 +135,7 @@ public class RangedEnemy : EnemyAI
     public void CastAttack()
     {
         // Ranged attack logic
-        Debug.Log("Ranged attack");
+       
         AttackDone = false;
         StartCoroutine(Cast());
     }

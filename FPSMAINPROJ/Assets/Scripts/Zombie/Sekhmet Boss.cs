@@ -41,11 +41,11 @@ public class SekhmetBoss : EnemyAI
     float LazerSpeed;
 
     [Header("Audio")]
-    [SerializeField] public AudioClip[] Spawn;
-    [SerializeField] public AudioClip[] stun;
-    [SerializeField] public AudioClip[] burn;
-    [SerializeField] public AudioClip[] DuoCall;
+    
+    [SerializeField] public AudioClip stun;
+    [SerializeField] public AudioClip burn;
     [SerializeField] public AudioClip[] partnerDeath;
+    
 
     bool playedClip;
 
@@ -67,7 +67,7 @@ public class SekhmetBoss : EnemyAI
 
         playedClip = false;
 
-        PlayAudio(Spawn[0], 0.5f);
+       
     }
 
     // Update is called once per frame
@@ -82,7 +82,7 @@ public class SekhmetBoss : EnemyAI
 
         if (PlayerinAttackRange && canattack)
         {
-            Debug.Log("Did Base Attack");
+          
             StartCoroutine(BaseAAttack());
         }
 
@@ -149,7 +149,7 @@ public class SekhmetBoss : EnemyAI
         
         MeleeWeapon.SetBleed(); // Start bleeding effect
         animator.SetTrigger("Quick jab");
-        Debug.Log("bleeding jab  Called");
+       
 
         // Wait for 3 seconds before stopping the bleeding effect
         yield return new WaitForSeconds(10f);
@@ -192,7 +192,7 @@ public class SekhmetBoss : EnemyAI
     public void CastAttack()
     {
         // Ranged attack logic
-        Debug.Log("Ranged attack");
+      
 
         GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
@@ -222,7 +222,7 @@ public class SekhmetBoss : EnemyAI
 
     void reinforce()
     {
-        Debug.Log("Reinforce Called");
+      
 
         // Find all objects with the "Zombie" tag
         GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
@@ -249,7 +249,7 @@ public class SekhmetBoss : EnemyAI
                 }
                 else
                 {
-                    Debug.LogWarning("Zombie does not have IEnemyDamage component.");
+                  
                 }
             }
         }
@@ -301,7 +301,7 @@ public class SekhmetBoss : EnemyAI
     {
         canattack = false;
 
-        Debug.Log("slow jab");
+       
 
         //animator.SetFloat("Speed", 0);
        
@@ -313,9 +313,6 @@ public class SekhmetBoss : EnemyAI
 
     }
 
-    public void PLAYDUOCALL()
-    {
-        PlayAudio(DuoCall[0], 0.5f);
-    }
+   
 
 }

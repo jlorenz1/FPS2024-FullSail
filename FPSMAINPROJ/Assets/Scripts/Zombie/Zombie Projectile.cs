@@ -186,7 +186,11 @@ public class Projectile : MonoBehaviour
                 if (caster == Caster.Sekhmet)
                 {
                     stun();
-                    gameManager.gameInstance.LightGautlening = true;
+                  
+                    if (gameManager.gameInstance.isUserKareDead == false)
+                    {
+                        gameManager.gameInstance.LightGautlening = true;
+                    }
                 }
 
                 else if (caster == Caster.Userkare)
@@ -194,7 +198,11 @@ public class Projectile : MonoBehaviour
                     if (projectileAblity == ProjectileAblity.Special)
                     {
                         stun();
-                        gameManager.gameInstance.BlinkingJab = true;
+                        if (gameManager.gameInstance.isSekhmetDead == false)
+                        {
+                            gameManager.gameInstance.Userkare.PLAYDUOCALL();
+                            gameManager.gameInstance.BlinkingJab = true;
+                        }
                     }
                     if (projectileAblity != ProjectileAblity.Special)
                     {
@@ -317,6 +325,7 @@ public class Projectile : MonoBehaviour
 
          
             float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
+           
             tracerLineRenderer.startWidth = projectileWidth;
             tracerLineRenderer.endWidth = projectileWidth;
 

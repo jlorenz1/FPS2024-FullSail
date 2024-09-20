@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -78,6 +79,14 @@ public class Userkare : EnemyAI
     float LazerSpeed;
 
 
+    [Header("Audio")]
+    [SerializeField]public AudioClip[] Spawn;
+    [SerializeField]public AudioClip stun;
+    [SerializeField]public AudioClip burn;
+    [SerializeField]public AudioClip[] DuoCall;
+    [SerializeField]public AudioClip[] partnerDeath;
+    [SerializeField] public AudioClip SpecialAbility;
+    [SerializeField] public AudioClip SpecialAbility2;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -108,6 +117,8 @@ public class Userkare : EnemyAI
         DefLifeTime = ProjectileLifeTime;
 
         isStun = false;
+
+        PlayVoice(Spawn[(int)Random.Range(0, Spawn.Length)]);
     }
 
     // Update is called once per frame
@@ -230,11 +241,11 @@ public class Userkare : EnemyAI
     public void TrappingLight()
     {
         //roots the player in place 
-        Debug.Log("casted stun");
+ 
         projectileAblity = ProjectileAblity.Special;
         isStun = true;
         StartCoroutine(CastAttackRoutine());
-
+        PlayVoice(stun);
     }
 
     IEnumerator CastAttackRoutine()
@@ -274,7 +285,7 @@ public class Userkare : EnemyAI
     public void CastAttack()
     {
         // Ranged attack logic
-        Debug.Log("Ranged attack");
+        
         AttackDone = false;
         StartCoroutine(CastAttackRoutine());
 
@@ -328,6 +339,8 @@ public class Userkare : EnemyAI
                 sheildScript = sheild.AddComponent<EnemySheilds>();
             }
             sheildScript.SetHitPoints(sheildHealth);
+
+            PlayVoice(SpecialAbility);
         }
     }
 
@@ -340,7 +353,7 @@ public class Userkare : EnemyAI
         ProjectileSpeed *= 5;
         ProjectileDamage *= 1.5f;
         Type = ProjectileType.Lazer;
-
+        StartCoroutine(CastAttackRoutine());
     }
 
 
@@ -350,7 +363,9 @@ public class Userkare : EnemyAI
     {
         // summons weaker version of the base mummy that will increase his health and try to revevie Sekhemt
 
-        Debug.Log("Summon Called");
+     
+
+        PlayVoice(SpecialAbility2);
 
         float radiusStep = 2f; // Distance between sets of 4 minions
         float radius = 1f; // Initial spawn radius
@@ -393,18 +408,21 @@ public class Userkare : EnemyAI
                    float Healing = FellowZombie.GetMaxHP() * 0.2f;
 
                         FellowZombie.AddHP(Healing);
-                    
+                    AddHP(5);
                 }
             }
         }
-
+        PlayVoice(SpecialAbility);
     }
 
 
 
 
 
-
+    public void PLAYDUOCALL()
+    {
+        PlayVoice(DuoCall[0]);
+    }
 
 
 

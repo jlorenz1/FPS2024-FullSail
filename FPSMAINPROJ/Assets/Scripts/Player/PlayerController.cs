@@ -681,7 +681,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void CutSpeed(float duration, float strength)
     {
-        Debug.Log("CutSpeed called");
+       
        StartCoroutine( CutSpeedrunner(duration, strength));
     }
 
