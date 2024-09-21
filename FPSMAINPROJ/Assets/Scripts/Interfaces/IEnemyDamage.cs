@@ -43,4 +43,7 @@ public interface IEnemyDamage
     void knockback(Vector3 hitPoint, float distance);
 
     float GetMaxHP();
+
+
+    bool isKnockBackRessitant();
 }

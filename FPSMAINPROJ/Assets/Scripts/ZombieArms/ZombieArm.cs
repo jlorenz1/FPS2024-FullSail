@@ -85,5 +85,10 @@ public class ZombieArm : MonoBehaviour, IEnemyDamage
     {
         return 0;
     }
+    public bool isKnockBackRessitant()
+    {
 
+        return true;
+
+    }
 }

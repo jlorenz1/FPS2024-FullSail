@@ -68,6 +68,8 @@ public class SekhmetBoss : EnemyAI
         playedClip = false;
 
         AlwaysSeePlayer = true;
+
+        ressitKnockBack = true;
     }
 
     // Update is called once per frame

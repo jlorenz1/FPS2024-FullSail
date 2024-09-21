@@ -101,7 +101,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     float sfxVolume;
     bool PlayerInSIte;
     bool roaming;
-
+    protected bool ressitKnockBack;
     protected bool AlwaysSeePlayer;
 
     protected virtual void Start()
@@ -109,7 +109,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         AlwaysSeePlayer = false;
 
-
+        ressitKnockBack = false;
 
 
 
@@ -934,7 +934,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
 
-   
+   public bool isKnockBackRessitant()
+    {
+
+        return ressitKnockBack;
+
+    }
 
 
 }
