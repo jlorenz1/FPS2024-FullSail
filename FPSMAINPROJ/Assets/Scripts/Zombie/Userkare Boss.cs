@@ -74,9 +74,9 @@ public class Userkare : EnemyAI
     ProjectileType placeHolder;
     ProjectileAblity placeHolderAbility;
     Caster caster;
+    GameObject sheild;
 
-
-    [SerializeField] Color BulletColor;
+   [SerializeField] Color BulletColor;
     [SerializeField] Material BulletMaterial;
     float LazerSpeed;
 
@@ -122,6 +122,12 @@ public class Userkare : EnemyAI
 
          IsSpecialAttacking = false;
         AlwaysSeePlayer = true;
+        ressitKnockBack = true;
+
+        sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
+        sheild.transform.SetParent(transform);
+
+
     }
 
     // Update is called once per frame
@@ -129,6 +135,21 @@ public class Userkare : EnemyAI
     {
       
         base.Update();
+
+        if (sheild.activeInHierarchy == true)
+        {
+            float SheildHealth = sheild.GetComponent<EnemySheilds>().GetHitPoints();
+
+            if (SheildHealth <= 0)
+            {
+                sheild.SetActive(false);
+            }
+        }
+
+        if (MaxHealth > 1000)
+        {
+            MaxHealth = 1000;
+        }
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
@@ -176,6 +197,7 @@ public class Userkare : EnemyAI
             StartCoroutine(SetUncaped());
         }
 
+       
     }
     IEnumerator RampingAbilites()
     {
@@ -370,23 +392,12 @@ public class Userkare : EnemyAI
     void PerfectDefence()
     {
         // refelcts all ranged damage
-        if (!SheildActive)
-        {
-            GameObject sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
-            EnemySheilds sheildScript = sheild.GetComponent<EnemySheilds>();
-
-
-            sheild.transform.SetParent(transform);
-
-            if (sheildScript == null)
-            {
-                sheildScript = sheild.AddComponent<EnemySheilds>();
-            }
-            sheildScript.SetHitPoints(sheildHealth);
-
+      
+            sheilds.gameObject.SetActive(true);
+            sheilds.SetHitPoints(sheildHealth);
             PlayVoice(SheildOrHealVoiceLine);
-            SheildActive = true;
-        }
+          
+        
 
          IsSpecialAttacking = false;
     }

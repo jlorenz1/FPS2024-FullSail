@@ -8,7 +8,7 @@ using UnityEngine;
 public class EnemySheilds : MonoBehaviour, IEnemyDamage
 {
     public float HitPoints;
-    [SerializeFeild] GameObject Body;
+    [SerializeField] GameObject Body;
     public bool IsActive;
 
 
@@ -21,22 +21,22 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
 
     public void takeDamage(float amountOfDamageTaken) {
 
-        HitPoints -= amountOfDamageTaken;
 
-        if(HitPoints < 0)
+        if (HitPoints > 0)
         {
-            gameManager.gameInstance.Userkare.SheildActive = false;
-            Destroy(gameObject);
-           
+            HitPoints -= amountOfDamageTaken;
         }
 
-
+       
     }
    public void SetHitPoints(float hitPoints)
     {
         HitPoints = hitPoints;
     }
-
+    public float GetHitPoints()
+    {
+        return HitPoints;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -59,7 +59,12 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
         }
     }
 
+    public bool isKnockBackRessitant()
+    {
 
+        return true;
+
+    }
 
     public void TakeTrueDamage(float amountOfDamageTaken) { }
 

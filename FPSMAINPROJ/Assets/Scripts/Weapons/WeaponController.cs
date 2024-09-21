@@ -220,43 +220,15 @@ public class WeaponController : MonoBehaviour
                     Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
                     IEnemyDamage dmg = hit.collider.GetComponent<IEnemyDamage>();
 
-                    IDamage armDmg = hit.collider.gameObject.GetComponent<IDamage>();
+                   
                     if (dmg != null)
                     {
-                        float actualDamage = shootDamage; // Start with the base damage
-/*
-                        // Example condition to modify the damage
-                        if (hit.collider.CompareTag("Zombie Head"))
-                        {
-                            actualDamage *= 2.0f; // Double damage for headshots
-                            Debug.Log("crit shot");
-                        }
-                        else if (hit.collider.CompareTag("Zombie Body"))
-                        {
-                            actualDamage *= 1.0f; // Normal damage for body shots
-                            Debug.Log("body shot");
-                        }
-                        else if (hit.collider.CompareTag("Zombie Legs"))
-                        {
-                            actualDamage *= 0.25f; // Reduced damage for leg shots
-                            Debug.Log("leg shot");
-                            dmg.cutspeed(2, actualDamage);
-                        }
-                        else if (hit.collider.CompareTag("Zombie Arms"))
-                        {
-                            actualDamage *= 0.25f;
-                            dmg.cutdamage(2);
-                        }*/
-
                         // Apply the modified damage
-                        dmg.takeDamage(actualDamage);
+                        dmg.takeDamage(shootDamage);
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                         bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
-                    else if(armDmg != null)
-                    {
-                        armDmg.takeDamage(shootDamage);
-                    }
+                
                     else
                     {
                         ParticleSystem enviormentEffect = Instantiate(gunList[selectedGun].enviormentEffect, hit.point, Quaternion.LookRotation(hit.normal));
