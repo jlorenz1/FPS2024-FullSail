@@ -20,7 +20,9 @@ public class WeaponController : MonoBehaviour
     [SerializeFeild] public Transform gunModel;
     [SerializeField] public Transform muzzleFlashTransform;
     [SerializeField] public Transform casingSpawnTransform;
+    [SerializeField] public Transform ArmTransform;
     [SerializeField] Transform gunTransform;
+    [SerializeField] Transform emptyTransform;
 
     [Header("WEAPON SPECIALTIES")]
     [SerializeField] public float shootDamage;
@@ -405,9 +407,12 @@ public class WeaponController : MonoBehaviour
         currentWeaponInstance = Instantiate(gun.gunModel);
         gunModel = currentWeaponInstance.transform;
 
-        gunModel.SetParent(gunTransform);
-        gunModel.localPosition = Vector3.zero;
-        gunModel.localRotation = Quaternion.identity;
+        Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
+        gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
+        gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
+        //gunModel.SetParent(gunTransform);
+        //gunModel.localPosition = Vector3.zero;
+        //gunModel.localRotation = Quaternion.identity;
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = gun.muzzleFlash;
         gunList.Add(gun);
@@ -418,7 +423,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
-        //gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
+        gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
 
         //recoil
         cameraScript.recoilX = gun.recoilX;
@@ -474,13 +479,14 @@ public class WeaponController : MonoBehaviour
     }
     void changeGun()
     {
+        //currGun.gunModel.transform.parent = ArmTransform;
         currGun = gunList[selectedGun];
         gameManager.gameInstance.gunName.text = currGun.gunName;
         shootDamage = currGun.shootDamage;
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
         fireMode = currGun.fireMode;
-        //sgameManager.gameInstance.armsScript.ChangeGun(currGun.animationLayer);
+        gameManager.gameInstance.armsScript.ChangeGun(GetAnimationLayer());
 
         if (currGun.hekaAbility != null)
         {
@@ -507,12 +513,18 @@ public class WeaponController : MonoBehaviour
         gunModel = currentWeaponInstance.transform;
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = currGun.muzzleFlash;
-        gunModel.SetParent(gunTransform);
-        gunModel.localPosition = Vector3.zero;
-        gunModel.localRotation = Quaternion.identity;
+        Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
+        gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
+        gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
+        
         displayCurrentAmmo();
         displayMaxAmmo();
 
+    }
+
+    private int GetAnimationLayer()
+    {
+        return currGun.animationLayer;
     }
 
     //helper functions for chain effect

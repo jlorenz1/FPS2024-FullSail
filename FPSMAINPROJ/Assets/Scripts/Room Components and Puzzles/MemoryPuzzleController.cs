@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MemoryPuzzleController : MonoBehaviour
 {
     public GameObject door;
     public GameObject placingDisplaysBit; //used for placing display tiles
+    [SerializeField] Light[] roomLights;
+    Color origColor;
+    bool fail, pass;
 
     //display tiles
     public GameObject display1;
@@ -87,6 +91,9 @@ public class MemoryPuzzleController : MonoBehaviour
             displayTiles[pattern[i]-1].transform.position = location;
             location += new Vector3(-1.25f, 0, 0);
         }
+
+
+        origColor = new Color(roomLights[0].color.r, roomLights[0].color.g, roomLights[0].color.b, roomLights[0].color.a);
     }
 
     //updates sequence array and handles when player steps on incorrect tile
@@ -109,6 +116,8 @@ public class MemoryPuzzleController : MonoBehaviour
             Debug.Log("ID added to sequence. Sequence.Count: " + sequence.Count);
         } else //player stepped on incorrect tile
         {
+            fail = true;
+            StartCoroutine(lightsIndicatior());
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Wrong tile. Restart.", 3f));
             transform.parent.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
             //returning all the titles back to the origional place
@@ -122,7 +131,35 @@ public class MemoryPuzzleController : MonoBehaviour
 
         if (sequence.Count == 5) //sequence is completed, and already checked for accuracy
         {
+            pass = true;
+            StartCoroutine(lightsIndicatior());
             door.GetComponent<doorScript>().slide(); //opening door
         }
+    }
+
+    IEnumerator lightsIndicatior()
+    {
+        if (fail)
+        {
+            for (int i = 0; i < roomLights.Length; i++)
+            {
+                roomLights[i].color = Color.red;
+            }
+        }
+        else if (pass)
+        {
+            for (int i = 0; i < roomLights.Length; i++)
+            {
+                roomLights[i].color = Color.green;
+            }
+        }
+
+        yield return new WaitForSeconds(.3f);
+
+        for (int i = 0; i < roomLights.Length; i++)
+        {
+            roomLights[i].color = origColor;
+        }
+
     }
 }

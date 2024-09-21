@@ -181,8 +181,8 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        //if (!isSliding)
-        //    gameManager.gameInstance.armsScript.NoGunMovement();
+        if (!isSliding)
+            gameManager.gameInstance.armsScript.NoGunMovement();
         //else
         //{
         //    gameManager.gameInstance.armsScript.StartAnimationSlide();
