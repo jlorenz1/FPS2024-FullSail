@@ -101,8 +101,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
    
     protected virtual void Start()
     {
-      
-        if(Zombie == null)
+        AudioManager.audioInstance.playSFXAudio(ZombieFootSteps[0], 0.5f);
+        if (Zombie == null)
         {
             Debug.Log("Source not active");
         }
@@ -168,6 +168,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
+
+    
 
         // ApplySeparationAndRandomMovement();
         // OutOfRangeBoost();
@@ -515,21 +517,25 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected void PlaySFX(AudioClip audio)
     {
-        if (audio == null)
+        if (audio != null)
         {
-            Zombie.PlayOneShot(audio, 0.5f);
+            AudioManager.audioInstance.playSFXAudio(audio, 0.5f);
             Debug.Log("sfx played");
         }
+        else
+            Debug.Log("Audio is null");
       
     }
 
 
     protected void PlayVoice(AudioClip audio)
     {
-        if (audio == null)
+        if (audio != null)
         {
-            Zombie.PlayOneShot(audio, 0.5f);
-            Debug.Log("voice played");
+           
+                AudioManager.audioInstance.playSFXAudio(audio, 0.85f);
+                Debug.Log("sfx played");
+            
         }
     }
 
@@ -550,7 +556,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
     public void PlayFootstep()
     {
-        Debug.Log("FootSteps called");
+      
         if (ZombieFootSteps.Length > 0)
         {
             // Randomly select a footstep clip from the array
@@ -559,6 +565,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
             // Play the selected clip through the AudioSource
             PlaySFX(footstep);
+            Debug.Log("FootSteps called");
         }
     }
 
