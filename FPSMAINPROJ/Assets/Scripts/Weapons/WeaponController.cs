@@ -13,9 +13,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("WEAPON MODEL/POSTIONS")]
     [SerializeField] public List<weaponStats> gunList = new List<weaponStats>();
-
     [SerializeFeild] public List<Vector3> RecoilPattern;
-
     [SerializeFeild] GameObject currentWeaponInstance;
     [SerializeFeild] public Transform gunModel;
     [SerializeField] public Transform muzzleFlashTransform;
@@ -43,8 +41,9 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] public AudioSource weaponSource;
 
+    
     private cameraController cameraScript;
-    int selectedGun;
+    public int selectedGun;
     public bool isReloading = false;
     public bool isShooting;
     private weaponStats currGun;
@@ -283,6 +282,11 @@ public class WeaponController : MonoBehaviour
 
     }
 
+    void addWeaponBobbing()
+    {
+        Vector3 inputVector = new Vector3(Input.GetAxis("Vertical"), 0f, Input.GetAxis("Horizontal"));
+    }
+
 
     Vector3 getMiddleOfScreen()
     {
@@ -406,12 +410,12 @@ public class WeaponController : MonoBehaviour
         currentWeaponInstance = Instantiate(gun.gunModel);
         gunModel = currentWeaponInstance.transform;
 
-        Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
-        gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
-        gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
-        //gunModel.SetParent(gunTransform);
-        //gunModel.localPosition = Vector3.zero;
-        //gunModel.localRotation = Quaternion.identity;
+        //Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
+        //gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
+        //gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
+        gunModel.SetParent(gunTransform);
+        gunModel.localPosition = Vector3.zero;
+        gunModel.localRotation = Quaternion.identity;
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = gun.muzzleFlash;
         gunList.Add(gun);
@@ -422,7 +426,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
-        gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
+        //gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
 
         //recoil
         cameraScript.recoilX = gun.recoilX;
@@ -485,7 +489,7 @@ public class WeaponController : MonoBehaviour
         shootDistance = currGun.shootingDistance;
         shootRate = currGun.shootRate;
         fireMode = currGun.fireMode;
-        gameManager.gameInstance.armsScript.ChangeGun(GetAnimationLayer());
+        //gameManager.gameInstance.armsScript.ChangeGun(GetAnimationLayer());
 
         if (currGun.hekaAbility != null)
         {
@@ -512,10 +516,16 @@ public class WeaponController : MonoBehaviour
         gunModel = currentWeaponInstance.transform;
         muzzleFlashTransform = gunModel.Find("MuzzleTransform");
         muzzleFlash = currGun.muzzleFlash;
-        Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
-        gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
-        gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
-        
+        gunModel.SetParent(gunTransform);
+        gunModel.localPosition = Vector3.zero;
+        gunModel.localRotation = Quaternion.identity;
+
+
+
+        //Vector3 newPOS = new Vector3(ArmTransform.position.x + 0.05f, ArmTransform.position.y, ArmTransform.position.z);
+        //gunModel.SetParent(ArmTransform.transform.parent.transform.parent);
+        //gunModel.SetPositionAndRotation(newPOS, Quaternion.LookRotation(Camera.main.transform.forward));
+
         displayCurrentAmmo();
         displayMaxAmmo();
 

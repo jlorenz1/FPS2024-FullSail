@@ -862,6 +862,7 @@ GameObject:
   - component: {fileID: 7001645094824325729}
   - component: {fileID: -8654540429205496583}
   - component: {fileID: 7088181764056788792}
+  - component: {fileID: -2541041523524637342}
   m_Layer: 6
   m_Name: Assualt-Rifle
   m_TagString: Weapon
@@ -930,6 +931,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.11338806, y: 0.35598242, z: 0.9534836}
   m_Center: {x: 0.004623413, y: 0.021290243, z: 0.091602325}
+--- !u!114 &-2541041523524637342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2785887150441299024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d703f83f7972da64f8e6c1ab050c9565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 1.5
+  smoothing: 10
 --- !u!1 &2843425731663431111
 GameObject:
   m_ObjectHideFlags: 0
