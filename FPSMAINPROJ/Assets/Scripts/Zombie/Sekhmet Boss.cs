@@ -58,7 +58,7 @@ public class SekhmetBoss : EnemyAI
         Berserk = false;
         AddativeDamage = true;
         mUserkare = gameManager.gameInstance.UserKare;
-        AttackRange = 30;
+        AttackRange = 2;
         animator.SetFloat("AttackSpeed", AttackSpeed);
         gameManager.gameInstance.SpawnSekhmet();
         nextbuff = true;
@@ -67,13 +67,17 @@ public class SekhmetBoss : EnemyAI
 
         playedClip = false;
 
-       
+        AlwaysSeePlayer = true;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+
+
+      
+
 
        if(gameManager.gameInstance.SekhmetisBerserk && nextbuff)
         {
@@ -168,6 +172,8 @@ public class SekhmetBoss : EnemyAI
         Vector3 teleportPosition = PlayerPosition + forwardDirection * 3;
 
         transform.position = teleportPosition;
+
+        FacePlayer();
 
         animator.SetTrigger("Quick jab");
 
@@ -281,7 +287,7 @@ public class SekhmetBoss : EnemyAI
         switch (chance)
         {
             case 1:
-                vacume();
+               // vacume();
                 break;
             case 2:
                 reinforce();
@@ -289,8 +295,17 @@ public class SekhmetBoss : EnemyAI
             case 3:
                 StartCoroutine(CastAttackRoutine());
                 break;
+
+              
             case 4:
-                BleedingJab();
+                if (PlayerinAttackRange)
+                {
+                    BleedingJab();
+                }
+                else
+                {
+                    BlinkingJab();
+                }
                 break;
         }
 

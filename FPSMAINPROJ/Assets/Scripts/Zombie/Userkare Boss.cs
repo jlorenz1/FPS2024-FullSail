@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class Userkare : EnemyAI
 {
@@ -30,7 +31,7 @@ public class Userkare : EnemyAI
     bool UnCapped;
     bool AddativeAP;
     float AblityCoolDown = 5;
-    float nextAbilityTime = 1;
+    float nextAbilityTime = 8;
     float attackSpeed;
     int SummonCount;
     GameObject[] Summons;
@@ -42,8 +43,8 @@ public class Userkare : EnemyAI
     float BaseAttackSpeed;
 
     float PlayerStartHP;
-
-
+    bool IsSpecialAttacking;
+    public bool SheildActive;
 
     bool nextbuff;
     bool AttackDone;
@@ -70,7 +71,8 @@ public class Userkare : EnemyAI
     [SerializeField] float radius;
     [SerializeField] AOETYPE type;
     bool isStun;
-
+    ProjectileType placeHolder;
+    ProjectileAblity placeHolderAbility;
     Caster caster;
 
 
@@ -80,19 +82,19 @@ public class Userkare : EnemyAI
 
 
     [Header("Audio")]
-    [SerializeField]public AudioClip[] Spawn;
+    [SerializeField]public AudioClip Spawn;
     [SerializeField]public AudioClip stun;
     [SerializeField]public AudioClip burn;
-    [SerializeField]public AudioClip[] DuoCall;
+    [SerializeField]public AudioClip DuoCall;
     [SerializeField]public AudioClip[] partnerDeath;
-    [SerializeField] public AudioClip SpecialAbility;
-    [SerializeField] public AudioClip SpecialAbility2;
+    [SerializeField] public AudioClip SummonVoiceLine;
+    [SerializeField] public AudioClip SheildOrHealVoiceLine;
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-
+        StartCoroutine(SpawnVoiceLine());
         mSekhmet = gameManager.gameInstance.SekhMet;
         UnCapped = false;
         BaseMaxHealth = MaxHealth;
@@ -115,20 +117,24 @@ public class Userkare : EnemyAI
         DefProjectSpeed = ProjectileSpeed;
         DefFollowTime = ProjectileFollowTime;
         DefLifeTime = ProjectileLifeTime;
-
+        SheildActive = false;
         isStun = false;
 
-        PlayVoice(Spawn[(int)Random.Range(0, Spawn.Length)]);
+         IsSpecialAttacking = false;
+        AlwaysSeePlayer = true;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+      
         base.Update();
 
-        if (PlayerinAttackRange && canattack)
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+
+        if (PlayerinAttackRange && canattack &&  !IsSpecialAttacking)
         {
-            projectileAblity = ProjectileAblity.Normal;
+      
             StartCoroutine(CastAttackRoutine());
         }
 
@@ -180,6 +186,15 @@ public class Userkare : EnemyAI
         AddativeAP = true;
     }
 
+    IEnumerator SpawnVoiceLine()
+    {
+
+        yield return new WaitForSeconds(2);
+
+        PlayVoice(Spawn);
+    }
+
+
     IEnumerator SetUncaped()
     {
         nextbuff = false;
@@ -206,7 +221,7 @@ public class Userkare : EnemyAI
 
     void UseSpecialAbility()
     {
-
+         IsSpecialAttacking = true;
         canattack = false;  // Disable normal attacks while using special ability
 
         int chance = UnityEngine.Random.Range(1, 4);  // Randomly select an ability (1-4)
@@ -214,14 +229,19 @@ public class Userkare : EnemyAI
         switch (chance)
         {
             case 1:
-                PerfectDefence();
+                if (!SheildActive)
+                {
+                    PerfectDefence();
+                }
+                else
+                    Heal();
 
                 break;
             case 2:
                 Heal();
                 break;
             case 3:
-                StartCoroutine(CastStunRoutine());
+                animator.SetTrigger("Stun");
                 break;
             case 4:
                 if (UnCapped)
@@ -241,11 +261,18 @@ public class Userkare : EnemyAI
     public void TrappingLight()
     {
         //roots the player in place 
- 
-        projectileAblity = ProjectileAblity.Special;
+       AbilitySetTo(ProjectileAblity.Stun);
         isStun = true;
-        StartCoroutine(CastAttackRoutine());
+        StartCoroutine(CastStunRoutine());
         PlayVoice(stun);
+
+        if (gameManager.gameInstance.isSekhmetDead == false)
+        {
+            PLAYDUOCALL();
+            gameManager.gameInstance.BlinkingJab = true;
+        }
+
+        IsSpecialAttacking = false;
     }
 
     IEnumerator CastAttackRoutine()
@@ -259,14 +286,18 @@ public class Userkare : EnemyAI
             {
                 projectileScript = projectile.AddComponent<Projectile>();
             }
-
-            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-            projectileScript.SetColor(BulletColor, BulletMaterial);
-            if (Type == ProjectileType.AOE)
+            if (projectileScript != null)
             {
-                projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, 1f, caster);
+              
+                projectileScript.SetColor(BulletColor, BulletMaterial);
+                if (Type == ProjectileType.AOE)
+                {
+                    projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+                }
+                else
+                    projectileScript.AoeStats(0, 0, 0, AOETYPE.Damage);
             }
-
 
 
             yield return new WaitForSeconds(1 / castSpeed);
@@ -279,8 +310,35 @@ public class Userkare : EnemyAI
         else
             isStun = false;
         canattack = true;
-        ResetToDefault();
+        //ResetToDefault();
     }
+
+
+    IEnumerator CastStunRoutine()
+    {
+        canattack = false;
+      
+            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            if (projectileScript == null)
+            {
+                projectileScript = projectile.AddComponent<Projectile>();
+            }
+            if (projectileScript != null)
+            {
+                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ProjectileAblity.Stun, AbilityStrength, 1f, caster);
+
+                projectileScript.SetColor(BulletColor, BulletMaterial);
+            
+          
+            yield return new WaitForSeconds(1 / castSpeed);
+        }
+        yield return new WaitForSeconds(1);
+        AttackDone = true;
+    }
+
+
+
 
     public void CastAttack()
     {
@@ -288,20 +346,6 @@ public class Userkare : EnemyAI
         
         AttackDone = false;
         StartCoroutine(CastAttackRoutine());
-
-    }
-
-
-    IEnumerator CastStunRoutine()
-    {
-
-        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
-
-        projectileAblity = ProjectileAblity.Special;
-        animator.SetTrigger("Stun");
-      
-        yield return new WaitForSeconds(1f / AttackSpeed);
-
 
     }
 
@@ -326,7 +370,7 @@ public class Userkare : EnemyAI
     void PerfectDefence()
     {
         // refelcts all ranged damage
-        if (!sheilds.IsActive)
+        if (!SheildActive)
         {
             GameObject sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
             EnemySheilds sheildScript = sheild.GetComponent<EnemySheilds>();
@@ -340,8 +384,11 @@ public class Userkare : EnemyAI
             }
             sheildScript.SetHitPoints(sheildHealth);
 
-            PlayVoice(SpecialAbility);
+            PlayVoice(SheildOrHealVoiceLine);
+            SheildActive = true;
         }
+
+         IsSpecialAttacking = false;
     }
 
     
@@ -354,6 +401,7 @@ public class Userkare : EnemyAI
         ProjectileDamage *= 1.5f;
         Type = ProjectileType.Lazer;
         StartCoroutine(CastAttackRoutine());
+        IsSpecialAttacking = false;
     }
 
 
@@ -365,7 +413,7 @@ public class Userkare : EnemyAI
 
      
 
-        PlayVoice(SpecialAbility2);
+        PlayVoice(SummonVoiceLine);
 
         float radiusStep = 2f; // Distance between sets of 4 minions
         float radius = 1f; // Initial spawn radius
@@ -388,7 +436,7 @@ public class Userkare : EnemyAI
                 radius += radiusStep;
             }
         }
-
+        IsSpecialAttacking = false;
     }
 
     public void Heal()
@@ -412,7 +460,7 @@ public class Userkare : EnemyAI
                 }
             }
         }
-        PlayVoice(SpecialAbility);
+        PlayVoice(SheildOrHealVoiceLine);
     }
 
 
@@ -421,7 +469,7 @@ public class Userkare : EnemyAI
 
     public void PLAYDUOCALL()
     {
-        PlayVoice(DuoCall[0]);
+        PlayVoice(DuoCall);
     }
 
 
@@ -442,4 +490,25 @@ public class Userkare : EnemyAI
         attackSpeed = BaseAttackSpeed;
 
     }
+
+   ProjectileType typeSetTo(ProjectileType newType)
+    {
+
+        placeHolder = newType;
+
+
+        return placeHolder;
+    }
+
+
+
+    ProjectileAblity AbilitySetTo(ProjectileAblity newType)
+    {
+
+        placeHolderAbility = newType;
+
+
+        return placeHolderAbility;
+    }
+
 }

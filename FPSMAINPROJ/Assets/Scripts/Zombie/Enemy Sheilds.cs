@@ -15,6 +15,7 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
 
     void Start()
     {
+        gameObject.tag = "Zombie";
         IsActive = true;
     }
 
@@ -24,7 +25,7 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
 
         if(HitPoints < 0)
         {
-            IsActive = false;
+            gameManager.gameInstance.Userkare.SheildActive = false;
             Destroy(gameObject);
            
         }
@@ -35,6 +36,30 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
     {
         HitPoints = hitPoints;
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            gameManager.gameInstance.pausePlayerControls();
+            // Get the player's position
+            Transform playerTransform = collision.transform;
+
+            // Calculate the direction away from the collision
+            Vector3 knockbackDirection = (playerTransform.position - transform.position).normalized;
+
+            // Define the knockback distance
+            float knockbackForce = 5f; // Adjust this value to change the intensity of the knockback
+
+            // Apply knockback
+           gameManager.gameInstance.player.transform.position += knockbackDirection * knockbackForce;
+
+            gameManager.gameInstance.resumePlayerControls();
+        }
+    }
+
+
 
     public void TakeTrueDamage(float amountOfDamageTaken) { }
 

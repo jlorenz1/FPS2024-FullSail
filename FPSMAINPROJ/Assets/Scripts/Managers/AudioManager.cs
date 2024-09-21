@@ -79,4 +79,10 @@ public class AudioManager : MonoBehaviour
         }
      
     }
+
+    public float GetSFXAudioVolume()
+    {
+        // Return the volume of the _SFXAudio AudioSource, or 1 if it's not assigned
+        return _SFXAudio != null ? _SFXAudio.volume : 1.0f;
+    }
 }

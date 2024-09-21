@@ -122,7 +122,7 @@ public class Projectile : MonoBehaviour
     }
     void Update()
     {
-        round = gameManager.gameInstance.GetGameRound();
+        
         // SetNerfTimer();
         // SetBuffStrength();
         if (followPlayer && player != null)
@@ -195,22 +195,18 @@ public class Projectile : MonoBehaviour
 
                 else if (caster == Caster.Userkare)
                 {
-                    if (projectileAblity == ProjectileAblity.Special)
+                    if (projectileAblity == ProjectileAblity.Stun)
                     {
                         stun();
-                        if (gameManager.gameInstance.isSekhmetDead == false)
-                        {
-                            gameManager.gameInstance.Userkare.PLAYDUOCALL();
-                            gameManager.gameInstance.BlinkingJab = true;
-                        }
+                     
                     }
-                    if (projectileAblity != ProjectileAblity.Special)
+                    if (projectileAblity == ProjectileAblity.Normal)
                     {
                         PlayerDamage.takeDamage(projectileDamage);
                     }
                 }
 
-                if (projectileAblity == ProjectileAblity.Stun || projectileAblity == ProjectileAblity.Slow && projectileType == ProjectileType.AOE) ;
+                if (projectileAblity == ProjectileAblity.Stun || projectileAblity == ProjectileAblity.Slow && projectileType == ProjectileType.AOE) 
                 {
                     stun();
                 }
@@ -278,14 +274,19 @@ public class Projectile : MonoBehaviour
         Destroy(aoe, slowDuration);
     }
 
+    public void SetAbility(ProjectileAblity ability)
+    {
 
-    public void SetStats(float Speed, float LifeTime, float Damage, float FollowTime, ProjectileType Type, ProjectileAblity projectileAblity, float AblityStrength, float AbilityDuration, Caster User)
+    }
+
+    public void SetStats(float Speed, float LifeTime, float Damage, float FollowTime, ProjectileType Type, ProjectileAblity newprojectileAblity, float AblityStrength, float AbilityDuration, Caster User)
     {
         speed = Speed;
         lifetime = LifeTime;
         projectileDamage = Damage;
         followtime = FollowTime;
         projectileType = Type;
+        projectileAblity = newprojectileAblity;
         Strength = AblityStrength;
         EffectDuration = AbilityDuration;
         caster = User;
@@ -341,7 +342,7 @@ public class Projectile : MonoBehaviour
         }
 
         // Destroy the tracer after a short time if needed
-        Destroy(tracer, 0.7f); 
+        Destroy(tracer, 0.25f); 
     }
 }
 

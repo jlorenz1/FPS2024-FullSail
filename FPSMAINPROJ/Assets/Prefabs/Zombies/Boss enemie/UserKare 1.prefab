@@ -1063,9 +1063,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4308596981445705757, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7431725699348479655}
-    - targetCorrespondingSourceObject: {fileID: -2376817416363716198, guid: e8a34632d041691439e8a140000ff417, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4543154444646926510}
     - targetCorrespondingSourceObject: {fileID: 1875910922116443323, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3493461234722883542}
@@ -1539,10 +1536,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 120
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 8
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1562,7 +1559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a2e262d05ef36479526149c9db911f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 8430177449127441804, guid: d256a29b678d2304681ccea46d0febe3, type: 3}
+  Zombie: {fileID: 6383694679730552691}
   ZombieFootSteps:
   - {fileID: 8300000, guid: a619fc1bb57742541a9acfe2d45ea2b0, type: 3}
   - {fileID: 8300000, guid: 54ff91d4fae0f6344a426bd28f8b08a0, type: 3}
@@ -1578,7 +1575,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c3629f55817564b499ddd1832caf3d51, type: 3}
   - {fileID: 8300000, guid: 1c2826975e5efa3468be5f3512fd1b59, type: 3}
   - {fileID: 8300000, guid: 3456c78c5bbd976419f382ada3f71c0a, type: 3}
-  ZombieFootStepsVol: 0.5
+  ZombieFootStepsVol: 0.53
   ZombieGrowl: []
   ZombieGrowlVol: 0
   ZombieHit:
@@ -1586,11 +1583,12 @@ MonoBehaviour:
   ZombieHitVol: 0.3
   ZombieDeath: []
   ZombieDeathVol: 0
+  VoiceLineVolume: 1
   agent: {fileID: 5944349722677308175}
   model: {fileID: 7241079403500992577}
   animator: {fileID: 427859358789054929}
   animatorspeedtrans: 90
-  FacePlayerSpeed: 90
+  FacePlayerSpeed: 500
   ViewAngle: 90
   HeadPos: {fileID: 307655296689372448}
   Body: {fileID: 7907381222501311674}
@@ -1637,11 +1635,12 @@ MonoBehaviour:
   summonpartner: {fileID: 2739583383600373709, guid: 5c9a27891f5247246aeb9b817f5d7149, type: 3}
   SummonAmount: 5
   BuffRange: 20
+  SheildActive: 0
   castAmount: 1
   ProjectileSpeed: 30
   ProjectileLifeTime: 4
   ProjectileDamage: 20
-  ProjectileFollowTime: 3
+  ProjectileFollowTime: 0.35
   Type: 0
   projectileAblity: 2
   AbilityStrength: 70
@@ -1649,20 +1648,18 @@ MonoBehaviour:
   effectDuration: 22
   AoeStrength: 11
   radius: 11
-  type: 0
-  BulletColor: {r: 0, g: 0, b: 0, a: 0}
-  BulletMaterial: {fileID: 0}
-  Spawn:
-  - {fileID: 8300000, guid: 55b9907d885f5264394d9377f860c028, type: 3}
+  type: 4
+  BulletColor: {r: 0.93803144, g: 0.9433962, b: 0.07564971, a: 0}
+  BulletMaterial: {fileID: -463546532230597338, guid: e582857c98df6ff4684e147286ff44b1, type: 3}
+  Spawn: {fileID: 8300000, guid: 55b9907d885f5264394d9377f860c028, type: 3}
   stun: {fileID: 8300000, guid: 074764e30657684469de0e27ea2486bf, type: 3}
   burn: {fileID: 8300000, guid: 60fe0ccbb5dd4df40a7eb1775e4cad27, type: 3}
-  DuoCall:
-  - {fileID: 8300000, guid: 668cc4c576c89ab479399c1cf0353f0e, type: 3}
+  DuoCall: {fileID: 8300000, guid: 668cc4c576c89ab479399c1cf0353f0e, type: 3}
   partnerDeath:
   - {fileID: 8300000, guid: 822fecd2f75fac44c8b1e68a16ed9c36, type: 3}
   - {fileID: 8300000, guid: 7895d150e54865644b8945cd426d3eb5, type: 3}
-  SpecialAbility: {fileID: 8300000, guid: 95a858f897ca8e24dbb2a3c8488819b1, type: 3}
-  SpecialAbility2: {fileID: 8300000, guid: 4cc1643243b159744ae071ab8b5ddd80, type: 3}
+  SummonVoiceLine: {fileID: 8300000, guid: 95a858f897ca8e24dbb2a3c8488819b1, type: 3}
+  SheildOrHealVoiceLine: {fileID: 8300000, guid: 4cc1643243b159744ae071ab8b5ddd80, type: 3}
 --- !u!82 &6383694679730552691
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1672,7 +1669,7 @@ AudioSource:
   m_GameObject: {fileID: 1336715895340559562}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: c8532aeab41622a489aeb150d6e48e0d, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -2560,65 +2557,3 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1001 &7493310832504929460
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4705778859344429057}
-    m_Modifications:
-    - target: {fileID: 4271990252428005580, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_Name
-      value: Sheild
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
---- !u!4 &4543154444646926510 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6408921773586265114, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
-  m_PrefabInstance: {fileID: 7493310832504929460}
-  m_PrefabAsset: {fileID: 0}

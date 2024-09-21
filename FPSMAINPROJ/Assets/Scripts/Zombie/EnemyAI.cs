@@ -13,13 +13,16 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [Header("-----Audio-----")]
     [SerializeField] protected AudioSource Zombie;
     [SerializeField] protected AudioClip[] ZombieFootSteps;
-    [SerializeField] protected float ZombieFootStepsVol;
+    [Range(0, 1)][SerializeField] protected float ZombieFootStepsVol;
     [SerializeField] protected AudioClip[] ZombieGrowl;
-    [SerializeField] protected float ZombieGrowlVol;
+    [Range(0, 1)][SerializeField] protected float ZombieGrowlVol;
     [SerializeField] protected AudioClip[] ZombieHit;
-    [SerializeField] protected float ZombieHitVol;
+    [Range(0, 1)][SerializeField] protected float ZombieHitVol;
     [SerializeField] protected AudioClip[] ZombieDeath;
-    [SerializeField] protected float ZombieDeathVol;
+    [Range(0, 1)][SerializeField] protected float ZombieDeathVol;
+
+    [Range(0, 1)][SerializeField] protected float VoiceLineVolume;
+
 
     [Header("-----Model/Animations-----")]
     [SerializeField] protected NavMeshAgent agent;
@@ -49,7 +52,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float DetectionRange = 10;
 
 
-    public float flockRange = 20;
+    [SerializeField] float flockRange = 20;
     float startsight;
     float stoppingDistance;
     [Header("-----Armor-----")]
@@ -95,21 +98,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     Vector3 currentVelocity;
 
     private GameObject currentModel;
-
+    float sfxVolume;
     bool PlayerInSIte;
     bool roaming;
-   
+
+    protected bool AlwaysSeePlayer;
+
     protected virtual void Start()
     {
-        AudioManager.audioInstance.playSFXAudio(ZombieFootSteps[0], 0.5f);
-        if (Zombie == null)
-        {
-            Debug.Log("Source not active");
-        }
+
+        AlwaysSeePlayer = false;
 
 
-        sfxvolume = (gameManager.gameInstance.SFXVolSlider.value); 
-        mastervolume = (gameManager.gameInstance.masterVolSlider.value);
+
+
 
 
         isBlind = false;
@@ -168,8 +170,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
-
-    
+        if(AlwaysSeePlayer == true)
+        {
+            agent.SetDestination(gameManager.gameInstance.player.transform.position);
+        }
+   
+        sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
 
         // ApplySeparationAndRandomMovement();
         // OutOfRangeBoost();
@@ -405,7 +411,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
 
-    void FacePlayer()
+    protected void FacePlayer()
     {
         Quaternion Rot = Quaternion.LookRotation(PlayerDrr);
         transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * FacePlayerSpeed);
@@ -515,15 +521,16 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     //Genral audio
 
 
-    protected void PlaySFX(AudioClip audio)
+    protected void PlaySFX(AudioClip audio, float vol)
     {
+
+
+      float currentVol =  adjustedVolume(vol);
+
         if (audio != null)
         {
-            AudioManager.audioInstance.playSFXAudio(audio, 0.5f);
-            Debug.Log("sfx played");
+            Zombie.PlayOneShot(audio, currentVol);
         }
-        else
-            Debug.Log("Audio is null");
       
     }
 
@@ -532,9 +539,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         if (audio != null)
         {
-           
-                AudioManager.audioInstance.playSFXAudio(audio, 0.85f);
-                Debug.Log("sfx played");
+            float currentVol = adjustedVolume(VoiceLineVolume);
+            Zombie.PlayOneShot(audio, currentVol);
             
         }
     }
@@ -547,7 +553,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         AudioClip Hit = ZombieGrowl[index];
 
 
-        PlaySFX(Hit);
+        PlaySFX(Hit, ZombieGrowlVol);
         float delay = Random.Range(5f, 10f);
         //use a random delay so each instance doesnt do it at the same time.
         yield return new WaitForSeconds(delay);
@@ -564,9 +570,20 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             AudioClip footstep = ZombieFootSteps[index];
 
             // Play the selected clip through the AudioSource
-            PlaySFX(footstep);
+            PlaySFX(footstep, ZombieFootStepsVol);
             Debug.Log("FootSteps called");
         }
+    }
+
+    float adjustedVolume(float vol)
+    {
+        // Get the current SFX volume
+       
+
+        // Adjust the input volume based on the SFX volume percentage
+        float adjustedVol = vol * sfxVolume;
+
+        return adjustedVol;
     }
 
     /*   // Model and Animations 
@@ -803,7 +820,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         StartCoroutine(flashRed());
 
 
-         PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)]);
+         PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         CurrentHealth -= amountOfDamageTaken;
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         if (MaxHealth <= 0)
@@ -915,6 +932,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         return MaxHealth;
     }
+
+
+   
 
 
 }

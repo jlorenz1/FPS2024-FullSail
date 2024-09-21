@@ -152,7 +152,7 @@ public class SpecialEnemy : EnemyAI
         if (ZombieBuff != null)
         {
 
-            PlaySFX(ZombieBuff);
+            PlaySFX(ZombieBuff, ZombieBuffVol);
         }
 
         if (Summoner)
