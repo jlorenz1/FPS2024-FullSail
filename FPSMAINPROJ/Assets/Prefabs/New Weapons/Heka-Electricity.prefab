@@ -1293,6 +1293,7 @@ GameObject:
   - component: {fileID: 4520785491937025748}
   - component: {fileID: 2508044427795202987}
   - component: {fileID: 4159591827271871655}
+  - component: {fileID: -3303999255096110241}
   m_Layer: 6
   m_Name: Heka-Electricity
   m_TagString: Weapon
@@ -1396,6 +1397,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 11400000, guid: 10c53161948ccf942b78185eac887838, type: 2}
+--- !u!114 &-3303999255096110241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241305393418622996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d703f83f7972da64f8e6c1ab050c9565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 1.5
+  smoothing: 10
 --- !u!1 &2278449127850380858
 GameObject:
   m_ObjectHideFlags: 0

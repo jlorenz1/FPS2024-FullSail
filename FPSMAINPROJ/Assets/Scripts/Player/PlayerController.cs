@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         if (!isSliding)
-            gameManager.gameInstance.armsScript.NoGunMovement();
+            //gameManager.gameInstance.armsScript.NoGunMovement();
         //else
         //{
         //    gameManager.gameInstance.armsScript.StartAnimationSlide();

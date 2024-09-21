@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 9031263884589392824}
   - component: {fileID: 5309088495469821895}
   - component: {fileID: 5431774996359900771}
+  - component: {fileID: -640547391538403915}
   m_Layer: 6
   m_Name: Heka-Floods
   m_TagString: Weapon
@@ -194,6 +195,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 11400000, guid: 7dabb978cd4e66d43ab1347222538eaf, type: 2}
+--- !u!114 &-640547391538403915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185015911520072586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d703f83f7972da64f8e6c1ab050c9565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 1.5
+  smoothing: 10
 --- !u!1 &296148562853854723
 GameObject:
   m_ObjectHideFlags: 0
