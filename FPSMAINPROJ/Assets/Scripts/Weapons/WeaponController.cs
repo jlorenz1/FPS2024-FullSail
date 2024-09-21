@@ -22,7 +22,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] public Transform casingSpawnTransform;
     [SerializeField] public Transform ArmTransform;
     [SerializeField] Transform gunTransform;
-    [SerializeField] Transform emptyTransform;
 
     [Header("WEAPON SPECIALTIES")]
     [SerializeField] public float shootDamage;
