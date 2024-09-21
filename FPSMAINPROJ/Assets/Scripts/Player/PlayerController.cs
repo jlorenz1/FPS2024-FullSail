@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isPlayingSound;
     private Coroutine waitTime;
     private Coroutine manaTime;
-
+    public float speedDuringSprint = 0;
     public static PlayerController playerInstance
     {
         get
@@ -381,6 +381,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
+            speedDuringSprint = speed;
             isSprinting = true;
 
         }

@@ -21,6 +21,9 @@ MonoBehaviour:
   fireMode: Semi-Auto
   hekaSchool: 
   hekaAbility: {fileID: 0}
+  hekaMuzzleFlash: {fileID: 0}
+  hekaShootingSounds: []
+  hekaShootVol: 0
   hekaShootRate: 0
   hekaManaAmount: 0
   recoilX: -1
@@ -30,15 +33,15 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   snapping: 3
   returnSpeed: 3
-  reloadTime: 0.13
+  reloadTime: 0.9
   magazines:
   - magazineCapacity: 15
-    currentAmmoCount: 14
+    currentAmmoCount: 6
+  - magazineCapacity: 15
+    currentAmmoCount: 9
   - magazineCapacity: 15
     currentAmmoCount: 15
-  - magazineCapacity: 15
-    currentAmmoCount: 15
-  currentMagazineIndex: 0
+  currentMagazineIndex: 2
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
   bulletDecals:

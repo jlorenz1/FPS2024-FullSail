@@ -44,6 +44,16 @@ public class weaponBobbing : MonoBehaviour
 
         //using the position of the wave using a targ and lerp can smoothly move the gun, this reduces the snapping that was occuring
         Vector3 targPosition = originalPosition + new Vector3(sinAmountX.x, sinAmountY, sinAmountX.z);
-        gunHolderTrans.localPosition = Vector3.Lerp(gunHolderTrans.localPosition, targPosition, Time.deltaTime * speed);
+        
+        if(gameManager.gameInstance.playerScript.isSprinting)
+        {
+            float sprintSpeed = gameManager.gameInstance.playerScript.speedDuringSprint;
+            gunHolderTrans.localPosition = Vector3.Lerp(gunHolderTrans.localPosition, targPosition, Time.deltaTime * sprintSpeed);
+        }
+        else
+        {
+            gunHolderTrans.localPosition = Vector3.Lerp(gunHolderTrans.localPosition, targPosition, Time.deltaTime * speed);
+        }
+        
     }
 }

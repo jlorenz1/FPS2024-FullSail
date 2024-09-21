@@ -303,7 +303,7 @@ public class WeaponController : MonoBehaviour
     {
         if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length)
         {
-
+            StartCoroutine(startReloadAnim());
             gunList[selectedGun].currentMagazineIndex++;
             gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
         }
@@ -321,6 +321,35 @@ public class WeaponController : MonoBehaviour
 
         displayCurrentAmmo();
         displayMaxAmmo();
+    }
+
+    IEnumerator startReloadAnim()
+    {
+        Quaternion origRot = transform.localRotation;
+        Quaternion targRot = origRot * Quaternion.Euler(0f, 0f, -30f);
+        float elapsed = 0f;
+
+        float halfReloadAnimTime = gunList[selectedGun].reloadTime * 0.5f;
+        //overtime slerp to the targetrot
+        while (elapsed < halfReloadAnimTime)
+        {
+            transform.localRotation = Quaternion.Slerp(origRot, targRot, elapsed / halfReloadAnimTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        
+        transform.localRotation = targRot;
+        //overtime go back to the original rot
+        elapsed = 0f;
+        while (elapsed < halfReloadAnimTime)
+        {
+            transform.localRotation = Quaternion.Slerp(targRot, origRot, elapsed / halfReloadAnimTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localRotation = origRot;
     }
 
     IEnumerator spawnTrail(TrailRenderer trail, RaycastHit hit)
