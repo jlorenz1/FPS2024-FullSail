@@ -44,7 +44,7 @@ public class MemoryPuzzleController : MonoBehaviour
         {
             if (_memPuzzleInstance == null)
             {
-                Debug.LogError("MemoryPuzzleController is null");
+                //do nothing
             }
             return _memPuzzleInstance;
         }
@@ -104,12 +104,9 @@ public class MemoryPuzzleController : MonoBehaviour
     //updates sequence array and handles when player steps on incorrect tile
     public void UpdateSequence(int id, GameObject title)
     {
-        Debug.Log(id);
 
         int index = sequence.Count;
         float origHeight = title.transform.position.y;
-
-        Debug.Log("ID: " + id + ", Pattern Num: " + pattern[index]);
 
         if (pattern[index] == id) //player stepped on correct tile
         {
@@ -119,7 +116,6 @@ public class MemoryPuzzleController : MonoBehaviour
             title.transform.position = new Vector3(title.transform.position.x, newPos, title.transform.position.z);
             correctTitles[index] = title;
             sequence.Add(id);
-            Debug.Log("ID added to sequence. Sequence.Count: " + sequence.Count);
         } else //player stepped on incorrect tile
         {
             fail = true;
