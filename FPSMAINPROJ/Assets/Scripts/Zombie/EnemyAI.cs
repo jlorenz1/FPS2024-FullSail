@@ -118,7 +118,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          startsight = sight;
 
-        stoppingDistance = agent.stoppingDistance;
+        stoppingDistance = Range - 1;
         ChasingPLayer = false;
         speednerfed = false;
         damagenerfed = false;

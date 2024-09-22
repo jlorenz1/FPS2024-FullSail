@@ -40,7 +40,38 @@ public class SpecialEnemy : EnemyAI
 
     bool Buff1, Buff2, Buff3 = false;
 
-    
+    [SerializeField] Transform launchPoint;
+    public GameObject projectilePrefab;
+
+    [SerializeField] float ProjectileSpeed;
+    [SerializeField] float ProjectileLifeTime;
+    [SerializeField] float ProjectileDamage;
+    [SerializeField] float ProjectileFollowTime;
+    [SerializeField] ProjectileType Type;
+    [SerializeField] ProjectileAblity projectileAblity;
+    [SerializeField] float AbilityStrength;
+    [SerializeField] float AbilityDuration;
+    [SerializeField] float AttackDelay;
+
+
+
+
+
+    [SerializeField] float effectDuration;
+    [SerializeField] float AoeStrength;
+    [SerializeField] float radius;
+    [SerializeField] AOETYPE type;
+
+
+    [SerializeField] Color BulletColor;
+    [SerializeField] Material BulletMaterial;
+    float LazerSpeed;
+
+    Caster caster;
+
+
+    bool canAttack;
+
 
     protected override void Start()
     {
@@ -48,7 +79,7 @@ public class SpecialEnemy : EnemyAI
 
         StartMaxHealth = MaxHealth;
         startArmor = Armor;
-
+        canAttack = true;
 
 
     }
@@ -59,7 +90,10 @@ public class SpecialEnemy : EnemyAI
         base.Update();
 
 
-
+        if (PlayerinAttackRange && ChasingPLayer && canAttack)
+        {
+            StartCoroutine(DelayAttack());
+        }
 
         if (auraSphere != null)
         {
@@ -294,6 +328,36 @@ public class SpecialEnemy : EnemyAI
             // Apply the color back to the material
             renderer.material.color = color;
         }
+    }
+
+
+
+    IEnumerator DelayAttack()
+    {
+        canAttack = false;
+        CastAttack();
+        yield return new WaitForSeconds(AttackDelay);
+
+        canAttack = true;
+    }
+
+    void CastAttack()
+    {
+
+        GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectileScript == null)
+        {
+            projectileScript = projectile.AddComponent<Projectile>();
+        }
+
+        projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
+        projectileScript.SetColor(BulletColor, BulletMaterial);
+        if (Type == ProjectileType.AOE)
+        {
+            projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+        }
+
     }
 
 
