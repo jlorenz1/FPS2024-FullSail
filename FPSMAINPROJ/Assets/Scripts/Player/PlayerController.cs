@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool canDodge = true;
     private bool invincible = false;
 
+
     [Header("PLAYER VARIABLES")]
     [SerializeField] float speed;
     [SerializeField] int sprintMod;
@@ -405,7 +406,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             speed *= slowStrength;
         }
-        else
+        else if (!isSprinting)
             speed = originalSpeed;
 
 

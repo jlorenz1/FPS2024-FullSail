@@ -46,7 +46,6 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject NoGems;
     [SerializeField] public GameObject gameOptionsMenu;
     [SerializeField] public Slider sensSlider;
-    [SerializeField] TMP_Text roundCount;
     [SerializeField] TMP_Text enemyCount;
     [SerializeField] TMP_Text pointCount;
     [SerializeField] public GameObject inventoryMenu;
@@ -290,7 +289,6 @@ public class gameManager : MonoBehaviour
         }*/
         displayInventoryMenu();
 
-        roundCount.text = GameRound.ToString("F0");
         pointCount.text = PointCount.ToString("F0");
 
         PlayerPrefs.SetInt("sens", (int)sensSlider.value);
