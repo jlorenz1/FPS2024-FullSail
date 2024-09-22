@@ -51,6 +51,7 @@ public class WeaponController : MonoBehaviour
     int currentPatternIndex = 0;
     public bool sprayPattern = false;
     private PlayerController playerController;
+    private weaponBobbing weaponBobbing;
     public bool hasTempest = false;
     public bool hasEclipse = false;
     public bool hasFloods = false;
@@ -60,7 +61,7 @@ public class WeaponController : MonoBehaviour
         cameraScript = FindObjectOfType<cameraController>();
         playerController = gameManager.gameInstance.playerScript;
         kickBackScript = FindObjectOfType<weaponKickBack>();
-
+        weaponBobbing = FindObjectOfType<weaponBobbing>();
         if(hekaAbility != null)
         {
             hasHeka = true;
@@ -337,7 +338,7 @@ public class WeaponController : MonoBehaviour
     IEnumerator startReloadAnim()
     {
         Quaternion origRot = transform.localRotation;
-        Quaternion targRot = origRot * Quaternion.Euler(0f, 0f, -30f);
+        Quaternion targRot = origRot * Quaternion.Euler(gunTransform.localRotation.x, gunTransform.localRotation.x, -30f);
         float elapsed = 0f;
 
         float halfReloadAnimTime = gunList[selectedGun].reloadTime * 0.5f;
@@ -529,17 +530,55 @@ public class WeaponController : MonoBehaviour
         {
 
             selectedGun++;
-            changeGun();
+            weaponBobbing.enabled = false;
+            StartCoroutine(weaponSwapAnim());
+            weaponBobbing.enabled = true;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
 
             selectedGun--;
-            changeGun();
+            weaponBobbing.enabled = false;
+            StartCoroutine(weaponSwapAnim());
+            weaponBobbing.enabled = true;
         }
 
     }
-    void changeGun()
+
+
+    IEnumerator weaponSwapAnim()
+    {
+        Vector3 startPos = gunTransform.localPosition;
+        Vector3 lowerPos = startPos + new Vector3(0f, -1f, 0);
+
+        float swapTime = 0.5f;
+        float elapsed = 0f;
+
+        while (elapsed < swapTime)
+        {
+            gunTransform.localPosition = Vector3.Lerp(startPos, lowerPos, elapsed / swapTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        gunTransform.localPosition = lowerPos;
+        changeGun(lowerPos);
+        
+        yield return new WaitForSeconds(1f);
+
+        //elapsed = 0f;
+
+        //while(elapsed < swapTime)
+        //{
+        //    gunTransform.localPosition = Vector3.Lerp(lowerPos, startPos, elapsed / swapTime);
+        //    elapsed += Time.deltaTime;
+        //    yield return null;
+        //}
+        //gunTransform.localPosition = startPos;
+
+    }
+
+
+    void changeGun(Vector3 loweredPos)
     {
         
         //currGun.gunModel.transform.parent = ArmTransform;

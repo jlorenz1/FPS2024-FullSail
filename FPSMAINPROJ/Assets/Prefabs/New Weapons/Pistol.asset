@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   gunModel: {fileID: 6530764079120195087, guid: e5de3ed633d7e394c9688504cdabb32e, type: 3}
-  gunName: 
+  gunName: M1911
   animationLayer: 2
   shootDamage: 15
   shootingDistance: 600
@@ -36,12 +36,12 @@ MonoBehaviour:
   reloadTime: 0.9
   magazines:
   - magazineCapacity: 15
-    currentAmmoCount: 6
-  - magazineCapacity: 15
-    currentAmmoCount: 9
+    currentAmmoCount: 15
   - magazineCapacity: 15
     currentAmmoCount: 15
-  currentMagazineIndex: 2
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  currentMagazineIndex: 0
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
   bulletDecals:
