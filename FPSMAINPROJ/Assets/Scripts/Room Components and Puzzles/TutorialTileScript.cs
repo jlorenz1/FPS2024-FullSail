@@ -10,7 +10,6 @@ public class TutorialTileScript : MonoBehaviour {
     //checks around tile to see if an empty spot is in range
     public void CheckArea()
     {
-        Debug.Log("CheckArea() has been called");
 
         //index of tile
         int rowIndex = 0;
@@ -42,7 +41,6 @@ public class TutorialTileScript : MonoBehaviour {
         {
             if (TilePuzzleController.tilePuzzleInstance.posTiles[rowIndex-1, colIndex] == 0) //empty tile above curr tile
             {
-                Debug.Log("moving tile up");
 
                 indexes[2] = rowIndex - 1;
                 indexes[3] = colIndex;
@@ -54,7 +52,6 @@ public class TutorialTileScript : MonoBehaviour {
         {
             if (TilePuzzleController.tilePuzzleInstance.posTiles[rowIndex + 1, colIndex] == 0) //empty tile below curr tile
             {
-                Debug.Log("moving tile down");
 
                 indexes[2] = rowIndex + 1;
                 indexes[3] = colIndex;
@@ -66,7 +63,6 @@ public class TutorialTileScript : MonoBehaviour {
         {
             if (TilePuzzleController.tilePuzzleInstance.posTiles[rowIndex, colIndex - 1] == 0) //empty tile to left of curr tile
             {
-                Debug.Log("moving tile left");
 
                 indexes[2] = rowIndex;
                 indexes[3] = colIndex - 1;
@@ -78,7 +74,6 @@ public class TutorialTileScript : MonoBehaviour {
         {
             if (TilePuzzleController.tilePuzzleInstance.posTiles[rowIndex, colIndex + 1] == 0) //empty tile to right of curr tile
             {
-                Debug.Log("moving tile right");
 
                 indexes[2] = rowIndex;
                 indexes[3] = colIndex + 1;

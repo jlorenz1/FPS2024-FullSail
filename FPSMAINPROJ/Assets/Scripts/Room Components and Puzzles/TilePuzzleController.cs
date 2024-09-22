@@ -45,7 +45,7 @@ public class TilePuzzleController : MonoBehaviour
         {
             if (_tilePuzzleInstance == null)
             {
-                Debug.LogError("TilePuzzleController is null");
+                //do nothing
             }
             return _tilePuzzleInstance;
         }
@@ -194,7 +194,6 @@ public class TilePuzzleController : MonoBehaviour
                 }
                 debugStr += "\n";
             }
-            Debug.Log(debugStr);
         }
 
         //move tile smoothly
@@ -224,10 +223,8 @@ public class TilePuzzleController : MonoBehaviour
                 }
                 debugStr += "\n";
             }
-            Debug.Log(debugStr);
         }
 
-        Debug.Log("(" + posIndices[0] + ", " + posIndices[1] + ") (" + posIndices[2] + ", " + posIndices[3] + ")");
         isTileMoving = false;
         checkPattern();
     }
