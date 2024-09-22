@@ -41,7 +41,8 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] public AudioSource weaponSource;
 
-    
+
+    private weaponKickBack kickBackScript;
     private cameraController cameraScript;
     public int selectedGun;
     public bool isReloading = false;
@@ -58,6 +59,7 @@ public class WeaponController : MonoBehaviour
     {
         cameraScript = FindObjectOfType<cameraController>();
         playerController = gameManager.gameInstance.playerScript;
+        kickBackScript = FindObjectOfType<weaponKickBack>();
 
         if(hekaAbility != null)
         {
@@ -72,13 +74,13 @@ public class WeaponController : MonoBehaviour
             selectGun();
         }
 
-
+        
         if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
         {
             if (!isReloading)
             {
                 isReloading = true;
-                StartCoroutine(reload());
+                
             }
         }
 
@@ -119,7 +121,7 @@ public class WeaponController : MonoBehaviour
 
     void handleFullAuto()
     {
-        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting && !playerController.isSprinting)
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
         {
             StartCoroutine(shoot());
         }
@@ -127,7 +129,7 @@ public class WeaponController : MonoBehaviour
 
     void handleSemiAuto()
     {
-        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting && !playerController.isSprinting)
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting)
         {
             StartCoroutine(shoot());
         }
@@ -135,7 +137,7 @@ public class WeaponController : MonoBehaviour
 
     void handleHeka()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && !playerController.isSprinting)
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
         {
             if (gunList[selectedGun].hekaSchool == "Electricity")
             {
@@ -208,10 +210,11 @@ public class WeaponController : MonoBehaviour
                 muzzleFlashObj.gameObject.transform.SetParent(muzzleFlashTransform);
                 Instantiate(casingEffect, casingSpawnTransform.position, casingSpawnTransform.rotation);
                 cameraScript.RecoilFire();
+                kickBackScript.addKick();
                 RaycastHit hit;
 
+                
                 Vector3 direction = getDirection();
-
 
                 if (Physics.Raycast(Camera.main.transform.position, direction, out hit, shootDistance, ~ignoreMask))
                 {
@@ -236,6 +239,7 @@ public class WeaponController : MonoBehaviour
                     }
 
                 }
+                
                 yield return new WaitForSeconds(shootRate);
 
                 isShooting = false;
@@ -259,6 +263,7 @@ public class WeaponController : MonoBehaviour
         Vector3 inputVector = new Vector3(Input.GetAxis("Vertical"), 0f, Input.GetAxis("Horizontal"));
     }
 
+    
 
     Vector3 getMiddleOfScreen()
     {
@@ -352,6 +357,53 @@ public class WeaponController : MonoBehaviour
         transform.localRotation = origRot;
     }
 
+    //public IEnumerator startRunningAnim()
+    //{
+    //    Quaternion origRot = transform.localRotation;
+    //    Quaternion targRot;
+    //    if(playerController.isSprinting)
+    //    {
+    //        float elapsed = 0f;
+    //        targRot = origRot * Quaternion.Euler(30f, -90f, 0f);
+    //        float weaponPull = 0.3f;
+    //        //overtime slerp to the targetrot
+    //        while (elapsed < weaponPull)
+    //        {
+    //            transform.localRotation = Quaternion.Slerp(origRot, targRot, elapsed / weaponPull);
+    //            elapsed += Time.deltaTime;
+    //            yield return null;
+    //        }
+    //    }
+
+        
+    //}
+
+    //public IEnumerator stopRunningAnim()
+    //{
+    //    Quaternion origRot = transform.localRotation;
+    //    Quaternion targRot;
+       
+    //    if (playerController.isSprinting)
+    //    {
+    //        targRot = origRot;
+    //        transform.localRotation = targRot;
+    //        //overtime go back to the original rot
+    //        float elapsed = 0f;
+    //        float weaponPull = 0.3f;
+
+    //        while (elapsed < weaponPull)
+    //        {
+    //            transform.localRotation = Quaternion.Slerp(targRot * Quaternion.Euler(-30f, 90f, 0f), origRot, elapsed / weaponPull);
+    //            elapsed += Time.deltaTime;
+    //            yield return null;
+    //        }
+
+    //        transform.localRotation = origRot;
+    //    }
+
+
+    //}
+
     IEnumerator spawnTrail(TrailRenderer trail, RaycastHit hit)
     {
         float time = 0;
@@ -402,7 +454,7 @@ public class WeaponController : MonoBehaviour
 
     public void getWeaponStats(weaponStats gun)
     {
-
+       
         if (currentWeaponInstance != null)
         {
             Destroy(currentWeaponInstance);
@@ -483,6 +535,7 @@ public class WeaponController : MonoBehaviour
     }
     void changeGun()
     {
+        
         //currGun.gunModel.transform.parent = ArmTransform;
         currGun = gunList[selectedGun];
         gameManager.gameInstance.gunName.text = currGun.gunName;
@@ -556,6 +609,7 @@ public class WeaponController : MonoBehaviour
 
     GameObject getClosestZombie(GameObject hitZombie, RaycastHit hit)
     {
+
         float distance = 0;
         float MaxDistance = float.MaxValue;
         GameObject closestZombie = null;

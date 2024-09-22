@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool isPlayingSound;
     private Coroutine waitTime;
     private Coroutine manaTime;
+    private Coroutine gunSprintCoroutine;
     public float speedDuringSprint = 0;
     public static PlayerController playerInstance
     {
@@ -188,10 +189,11 @@ public class PlayerController : MonoBehaviour, IDamage
         //    gameManager.gameInstance.armsScript.StartAnimationSlide();
         //}
 
+        
 
         if (!onSprintCoolDown && !isCrouching)
         {
-           sprint();
+            sprint();
         }
 
 
@@ -383,7 +385,7 @@ public class PlayerController : MonoBehaviour, IDamage
             speed *= sprintMod;
             speedDuringSprint = speed;
             isSprinting = true;
-
+            
         }
         else if (Input.GetButtonUp("Sprint") || sprintTimer <= 0 || Input.GetButtonDown("Dodge"))
         {

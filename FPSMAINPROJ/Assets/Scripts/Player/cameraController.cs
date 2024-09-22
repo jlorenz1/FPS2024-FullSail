@@ -19,6 +19,7 @@ public class cameraController : MonoBehaviour
     [SerializeFeild] public float returnSpeed; //takes for the gun to go back down
     private bool isFiring;
 
+
     float rotX;
     // Start is called before the first frame update
     void Start()

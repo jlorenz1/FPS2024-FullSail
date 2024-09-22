@@ -54852,6 +54852,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4764079534928337755, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: kickSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4764079534928337755, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: gunTransform
+      value: 
+      objectReference: {fileID: 1141908958}
+    - target: {fileID: 4764079534928337755, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: kickbackAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772754423598556651, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: kickSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772754423598556651, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: kickAmount
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5772754423598556651, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: kickDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6501708978537130324, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
       propertyPath: speed
       value: 5.2
@@ -54859,7 +54883,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6409642837922477515, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1580132632}
   m_SourcePrefab: {fileID: 100100000, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
 --- !u!43 &978289957
 Mesh:
@@ -64058,6 +64085,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1141908958 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1244221119058567285, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+  m_PrefabInstance: {fileID: 976588191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1142912361
 Mesh:
   m_ObjectHideFlags: 0
@@ -87809,6 +87841,30 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1580132626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6409642837922477515, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+  m_PrefabInstance: {fileID: 976588191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1580132632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580132626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf6132815db4d44ea1627b6fccb21e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunTransform: {fileID: 1141908958}
+  kickAmount: -5
+  kickSpeed: 5
+  kickSnapping: 2
+  kickPosAmount: 0.1
+  kickPosSnapping: 0.1
+  isKicking: 0
 --- !u!43 &1589091682
 Mesh:
   m_ObjectHideFlags: 0
@@ -113854,6 +113910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -3303999255096110241, guid: 7ffeb3ea536f79744bf10b0a67ef0197, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
