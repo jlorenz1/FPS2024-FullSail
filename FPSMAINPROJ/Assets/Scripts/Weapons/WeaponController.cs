@@ -565,16 +565,6 @@ public class WeaponController : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
 
-        //elapsed = 0f;
-
-        //while(elapsed < swapTime)
-        //{
-        //    gunTransform.localPosition = Vector3.Lerp(lowerPos, startPos, elapsed / swapTime);
-        //    elapsed += Time.deltaTime;
-        //    yield return null;
-        //}
-        //gunTransform.localPosition = startPos;
-
     }
 
 

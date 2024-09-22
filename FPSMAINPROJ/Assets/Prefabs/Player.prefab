@@ -507,6 +507,7 @@ MonoBehaviour:
   isShooting: 0
   damage: 1
   hasItems: 0
+  speedDuringSprint: 0
 --- !u!136 &8203031564338902554
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -751,6 +752,7 @@ GameObject:
   - component: {fileID: 5772754423598556651}
   - component: {fileID: 5939180207936928159}
   - component: {fileID: 6501708978537130324}
+  - component: {fileID: 5253063511319977178}
   m_Layer: 6
   m_Name: Gun Holder
   m_TagString: Untagged
@@ -979,7 +981,26 @@ MonoBehaviour:
   offSet: {x: 0, y: 0, z: 0}
   intensity: 0.02
   intensityOnX: 1
-  speed: 8
+  speed: 5.2
+--- !u!114 &5253063511319977178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409642837922477515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf6132815db4d44ea1627b6fccb21e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunTransform: {fileID: 1244221119058567285}
+  kickAmount: -5
+  kickSpeed: 5
+  kickSnapping: 2
+  kickPosAmount: 0.1
+  kickPosSnapping: 0.1
+  isKicking: 0
 --- !u!1 &7968692417210946864
 GameObject:
   m_ObjectHideFlags: 0
