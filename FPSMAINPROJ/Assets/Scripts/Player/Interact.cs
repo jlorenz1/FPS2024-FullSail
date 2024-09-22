@@ -10,6 +10,9 @@ public class Interact : MonoBehaviour
 
     [Header("Interact")]
     [SerializeField] int pickupDis;
+    [SerializeField] AudioSource PlayerAudio;
+    [SerializeField] AudioClip PickUp;
+    [SerializeField] AudioClip Place;
     [SerializeField] LayerMask ignoreMask;
     private Ray interactRay;
     private RaycastHit interactHit;
@@ -79,10 +82,7 @@ public class Interact : MonoBehaviour
                                     StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have required items!", 3f));
                                 }
                             }
-                            else
-                            {
-                                UnityEngine.Debug.Log("not spawning");
-                            }
+                           
                         }
 
                         //tutorial tile puzzle, for each tile in the puzzle
@@ -111,15 +111,9 @@ public class Interact : MonoBehaviour
                             }
                             Destroy(hit.collider.gameObject);
                         }
-                        else
-                        {
-                            Debug.Log("weapon not being handled correctly");
-                        }
+                     
                     }
-                    else
-                    {
-                        Debug.Log("No pickup found.");
-                    }
+                  
                 }
                 isInteractable = true;
             }
@@ -150,7 +144,7 @@ public class Interact : MonoBehaviour
 
                         alter.PlaceObject(Effgies[0]);
                         Effgies.Remove(Effgies[0]);
-
+                        PlayerAudio.PlayOneShot(Place, 1f);
                     }
                     else if (alter.HasObject)
                     {
@@ -186,6 +180,7 @@ public class Interact : MonoBehaviour
             {
                 inventory.AddItem(pickup.item, 1);
                 Effgies.Add(model);
+               PlayerAudio.PlayOneShot(PickUp, 1f);
                 inventory.updateInventoryUI();
                 hit.collider.gameObject.transform.position = new Vector3(10000, 10000, 10000);
             }

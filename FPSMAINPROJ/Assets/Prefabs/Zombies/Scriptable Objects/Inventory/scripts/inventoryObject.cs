@@ -38,7 +38,7 @@ public class inventoryObject : ScriptableObject
                 if (pickupComponent != null)
                 {
                     pickupComponent.useItem();
-                    Debug.Log("in use item inventory");
+                 
                     if (containerForInv[i].pickup.destroyAfterUse)
                     {
                         containerForInv[i].addAmount(-1);
@@ -49,16 +49,11 @@ public class inventoryObject : ScriptableObject
                             
                         }
                     }
-                    else
-                    {
-                        Debug.Log("Didnt destory");
-                    }
+                   
                     break;
                 }
-                else
-                {
-                    Debug.Log("doesnt contain a IPICKUP");
-                }
+              
+                
             }
         }
     }
