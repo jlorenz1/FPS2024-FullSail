@@ -24,15 +24,18 @@ public class MemoryTileScript : MonoBehaviour
         {
             if (!MemoryPuzzleController.memPuzzleInstance.getPassResults())
             {
-                AudioManager.audioInstance.playSFXAudio(sounds[Random.Range(0, sounds.Length)], soundVol);
+                StartCoroutine(playSounds());
+
+                MemoryPuzzleController.memPuzzleInstance.UpdateSequence(id, tile);
+
+                if (MemoryPuzzleController.memPuzzleInstance.getFailResults() || MemoryPuzzleController.memPuzzleInstance.getPassResults())
+                {
+                    StartCoroutine(lightsIndicatior());
+
+                }
             }
 
-            MemoryPuzzleController.memPuzzleInstance.UpdateSequence(id, tile);
-
-            if (MemoryPuzzleController.memPuzzleInstance.getFailResults() || MemoryPuzzleController.memPuzzleInstance.getPassResults())
-            {
-                StartCoroutine(lightsIndicatior());
-            }
+            
 
         }
     }
@@ -61,6 +64,12 @@ public class MemoryTileScript : MonoBehaviour
             roomLights[i].color = origColor;
         }
 
+    }
+
+    IEnumerator playSounds()
+    {
+        AudioManager.audioInstance.playSFXAudio(sounds[Random.Range(0, sounds.Length)], soundVol);
+        yield return new WaitForSeconds(3);
     }
 
 }

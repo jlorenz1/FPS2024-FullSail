@@ -7,6 +7,7 @@ public class MemoryPuzzleController : MonoBehaviour
 {
     public GameObject door;
     public GameObject placingDisplaysBit; //used for placing display tiles
+    [SerializeField] List<GameObject> randLocations;
     bool fail, pass;
 
     //display tiles
@@ -34,7 +35,7 @@ public class MemoryPuzzleController : MonoBehaviour
     int[] pattern; //chosen pattern
 
     ArrayList sequence = new ArrayList(); //the sequence the player steps in
-    GameObject[] correctedTitles = new GameObject[5];
+    GameObject[] correctTitles = new GameObject[5];
 
     private static MemoryPuzzleController _memPuzzleInstance;
     public static MemoryPuzzleController memPuzzleInstance
@@ -83,11 +84,18 @@ public class MemoryPuzzleController : MonoBehaviour
         placingDisplaysBit, placingDisplaysBit, display10, display11, placingDisplaysBit, placingDisplaysBit, 
         display14, display15, placingDisplaysBit, display17, display18, placingDisplaysBit, display20};
 
-        Vector3 location = placingDisplaysBit.transform.position;
-        for (int i = 0; i < pattern.Length; i++) //moving chosen tiles so the player can see them
+        //Vector3 location = placingDisplaysBit.transform.position;
+        //for (int i = 0; i < pattern.Length; i++) //moving chosen tiles so the player can see them
+        //{
+        //    displayTiles[pattern[i] - 1].transform.position = location;
+        //    location += new Vector3(-1.25f, 0, 0);
+        //}
+
+        for (int i = 0; i < pattern.Length; ++i)
         {
-            displayTiles[pattern[i]-1].transform.position = location;
-            location += new Vector3(-1.25f, 0, 0);
+            GameObject location = randLocations[Random.Range(0, randLocations.Count)];
+            randLocations.Remove(location);
+            displayTiles[pattern[i] - 1].transform.SetPositionAndRotation(location.transform.position, location.transform.rotation);
         }
 
 
@@ -109,7 +117,7 @@ public class MemoryPuzzleController : MonoBehaviour
             float newPos = title.transform.position.y - .1f;
             //lowering the titles
             title.transform.position = new Vector3(title.transform.position.x, newPos, title.transform.position.z);
-            correctedTitles[index] = title;
+            correctTitles[index] = title;
             sequence.Add(id);
             Debug.Log("ID added to sequence. Sequence.Count: " + sequence.Count);
         } else //player stepped on incorrect tile
@@ -118,12 +126,12 @@ public class MemoryPuzzleController : MonoBehaviour
 
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Wrong tile. Restart.", 3f));
             transform.parent.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
-            //returning all the titles back to the origional place
-            if (correctedTitles[0] != null)
+            //returning all the titles back to the origional height
+            if (correctTitles[0] != null)
             {
                 for (int i = 0; i < index; i++)
                 {
-                    correctedTitles[i].transform.position = new Vector3(correctedTitles[i].transform.position.x, origHeight, correctedTitles[i].transform.position.z);
+                    correctTitles[i].transform.position = new Vector3(correctTitles[i].transform.position.x, origHeight, correctTitles[i].transform.position.z);
                 }
             }
             sequence.Clear(); //player must restart
