@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour, IDamage
     int controllerHeightOrgi;
     float meeleDuration;
     bool isSliding;
-
+    int NeededItems;
     [Header("Edge Hang")]
     bool isHanging;
 
@@ -411,9 +411,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
 
     }
-
-
-
 
     void sprintTimerUpdate()
     {
