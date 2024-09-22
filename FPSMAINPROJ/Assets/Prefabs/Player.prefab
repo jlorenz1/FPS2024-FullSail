@@ -162,7 +162,7 @@ Rigidbody:
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
@@ -432,7 +432,7 @@ MonoBehaviour:
   jumpMax: 1
   jumpSpeed: 18
   gravity: 55
-  playerHP: 500000
+  playerHP: 500
   flashLight: {fileID: 5962712083955961086}
   HPorig: 0
   currentMana: 0
@@ -548,7 +548,7 @@ CharacterController:
   m_LayerOverridePriority: 1
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 2
   m_Radius: 0.5
@@ -620,6 +620,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupDis: 100
+  PlayerAudio: {fileID: 0}
+  PickUp: {fileID: 8300000, guid: 5926c8d83fcf87d498e7ba69fac40542, type: 3}
+  Place: {fileID: 8300000, guid: 07e5b3beacbb8de4e949d072a4ec7f1d, type: 3}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 128
