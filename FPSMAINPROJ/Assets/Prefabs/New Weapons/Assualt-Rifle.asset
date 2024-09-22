@@ -62,17 +62,17 @@ MonoBehaviour:
   - {x: -0.01, y: 0.02, z: 0}
   snapping: 5
   returnSpeed: 5
-  reloadTime: 1.9
+  reloadTime: 1
   magazines:
   - magazineCapacity: 30
-    currentAmmoCount: 30
+    currentAmmoCount: 0
+  - magazineCapacity: 30
+    currentAmmoCount: 9
+  - magazineCapacity: 30
+    currentAmmoCount: 22
   - magazineCapacity: 30
     currentAmmoCount: 30
-  - magazineCapacity: 30
-    currentAmmoCount: 30
-  - magazineCapacity: 30
-    currentAmmoCount: 30
-  currentMagazineIndex: 0
+  currentMagazineIndex: 2
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
   bulletDecals:
@@ -82,8 +82,7 @@ MonoBehaviour:
   - {fileID: 100000, guid: eea4fa9e05a5afb4c9335e144f8961f1, type: 3}
   enviormentEffect: {fileID: 198000010535933408, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
   shootSound:
-  - {fileID: 8300000, guid: 2dad6543421fa6141b76dbeea4a56768, type: 3}
-  - {fileID: 8300000, guid: 37f8be03e2fe19c4f841bd03fc7aefec, type: 3}
+  - {fileID: 8300000, guid: 72746b1c2f6e92542b13dbb5ec6d9cd7, type: 3}
   shootVol: 0.1
-  reloadSound: {fileID: 8300000, guid: e5198250a6a57408bb36e14bc4a322c4, type: 3}
+  reloadSound: {fileID: 8300000, guid: eb5685b26a6494994af389a3293064e8, type: 3}
   reloadVol: 0.1

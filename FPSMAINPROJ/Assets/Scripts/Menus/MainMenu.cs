@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
     }
     public void play()
     {
-        SceneManager.LoadScene("Jlorenz_Scene");
+        SceneManager.LoadScene("BuildScene");
     }
 
     public void onSensSliderChange(float value)
