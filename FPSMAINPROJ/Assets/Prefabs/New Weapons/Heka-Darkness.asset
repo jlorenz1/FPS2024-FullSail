@@ -15,7 +15,7 @@ MonoBehaviour:
   gunModel: {fileID: 5609505454920245689, guid: bb16d370d40a5e3428fd9756ef08bf7b, type: 3}
   gunName: Pharaoh's Eclipse
   animationLayer: 3
-  shootDamage: 50
+  shootDamage: 10
   shootingDistance: 400
   shootRate: 0.3
   fireMode: Semi-Auto
@@ -36,6 +36,12 @@ MonoBehaviour:
   returnSpeed: 4
   reloadTime: 0.9
   magazines:
+  - magazineCapacity: 10
+    currentAmmoCount: 5
+  - magazineCapacity: 10
+    currentAmmoCount: 10
+  - magazineCapacity: 10
+    currentAmmoCount: 10
   - magazineCapacity: 10
     currentAmmoCount: 10
   - magazineCapacity: 10

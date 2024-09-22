@@ -15,7 +15,7 @@ MonoBehaviour:
   gunModel: {fileID: 6530764079120195087, guid: e5de3ed633d7e394c9688504cdabb32e, type: 3}
   gunName: M1911
   animationLayer: 2
-  shootDamage: 15
+  shootDamage: 4
   shootingDistance: 600
   shootRate: 0.15
   fireMode: Semi-Auto
@@ -35,6 +35,12 @@ MonoBehaviour:
   returnSpeed: 3
   reloadTime: 0.9
   magazines:
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  - magazineCapacity: 15
+    currentAmmoCount: 15
+  - magazineCapacity: 15
+    currentAmmoCount: 15
   - magazineCapacity: 15
     currentAmmoCount: 15
   - magazineCapacity: 15

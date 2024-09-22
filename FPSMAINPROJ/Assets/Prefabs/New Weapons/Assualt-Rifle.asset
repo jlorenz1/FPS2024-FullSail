@@ -21,6 +21,9 @@ MonoBehaviour:
   fireMode: Full-Auto
   hekaSchool: 
   hekaAbility: {fileID: 0}
+  hekaMuzzleFlash: {fileID: 0}
+  hekaShootingSounds: []
+  hekaShootVol: 0
   hekaShootRate: 0
   hekaManaAmount: 0
   recoilX: -2
@@ -61,6 +64,8 @@ MonoBehaviour:
   returnSpeed: 5
   reloadTime: 1.9
   magazines:
+  - magazineCapacity: 30
+    currentAmmoCount: 30
   - magazineCapacity: 30
     currentAmmoCount: 30
   - magazineCapacity: 30
