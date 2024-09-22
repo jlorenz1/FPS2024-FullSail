@@ -109,20 +109,7 @@ public class RangedEnemy : EnemyAI
     
         for (int i = 0; i < castAmount; i++)
         {
-            GameObject projectile =  Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-            if (projectileScript == null)
-            {
-                projectileScript = projectile.AddComponent<Projectile>();
-            }
-
-            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-            projectileScript.SetColor(BulletColor, BulletMaterial);
-            if (Type == ProjectileType.AOE)
-            {
-                projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
-            }
-
+           
 
 
             yield return new WaitForSeconds(1 / castSpeed);
