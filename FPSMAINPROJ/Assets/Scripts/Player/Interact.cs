@@ -82,10 +82,7 @@ public class Interact : MonoBehaviour
                                     StartCoroutine(gameManager.gameInstance.requiredItemsUI("Do not have required items!", 3f));
                                 }
                             }
-                            else
-                            {
-                                UnityEngine.Debug.Log("not spawning");
-                            }
+                           
                         }
 
                         //tutorial tile puzzle, for each tile in the puzzle
@@ -114,15 +111,9 @@ public class Interact : MonoBehaviour
                             }
                             Destroy(hit.collider.gameObject);
                         }
-                        else
-                        {
-                            Debug.Log("weapon not being handled correctly");
-                        }
+                     
                     }
-                    else
-                    {
-                        Debug.Log("No pickup found.");
-                    }
+                  
                 }
                 isInteractable = true;
             }

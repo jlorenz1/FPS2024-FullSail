@@ -18,7 +18,7 @@ public class bossInteraction : MonoBehaviour
 
             DoorToOpen.slide();
             AudioManager.audioInstance.playSFXAudio(placingSound, placingVol);
-            Debug.Log("door open");
+            
         }
         
       
