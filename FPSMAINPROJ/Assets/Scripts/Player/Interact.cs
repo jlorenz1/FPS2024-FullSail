@@ -71,6 +71,7 @@ public class Interact : MonoBehaviour
                                 {
                                     bossInteraction.spawnBoss();
                                     Destroy(hit.collider);
+                                    StartCoroutine(gameManager.gameInstance.requiredItemsUI("Has Items", 3f));
                                 }
                                 else
                                 {
@@ -167,10 +168,7 @@ public class Interact : MonoBehaviour
                 checkForRequiredItems();
 
             }
-            else if (pickup.item.type == itemType.Key)
-            {
-                gameManager.gameInstance.displayRequiredIemsUI("Collected effigy!", 3f);
-            }
+          
             else if (pickup.item.type == itemType.flashlight)
             {
                 gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
@@ -185,10 +183,8 @@ public class Interact : MonoBehaviour
     public void checkForRequiredItems()
     {
         bool hasRunes = false;
-        bool hasLighter = false;
-        bool hasLighterOnce = false;
         bool runeMessageShown = false;
-        bool lighterMessageShown = false;
+        
 
         for (int i = 0; i < inventory.containerForInv.Count; i++)
         {
@@ -201,50 +197,31 @@ public class Interact : MonoBehaviour
                     hasRunes = true;
                     if (!runeMessageShown)
                     {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes!", 3f);
+                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Effigies!", 3f);
 
                         runeMessageShown = true;
                     }
-
-                    if (hasLighter && !lighterMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Runes and Lighter, Find the ritual sight to spawn the boss!", 3f);
-                    }
-                    UnityEngine.Debug.Log(hasRunes);
                 }
                 else
                 {
                     UnityEngine.Debug.Log("Not enough runes");
                     if (!runeMessageShown)
                     {
-                        gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Runes collected!", 3f);
+                        gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Effigies collected!", 3f);
 
                         runeMessageShown = true;
                     }
                     //set UI active coroutine 
                 }
             }
-            else if (inventory.containerForInv[i].pickup.type == itemType.Default)
-            {
-
-                if (inventory.containerForInv[i].amount >= 1)
-                {
-
-                    hasLighter = true;
-                    if (!hasLighterOnce)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected Lighter!", 3f);
-
-                        hasLighterOnce = true;
-                    }
-                }
-            }
+          
         }
-        if (hasRunes && hasLighter)
+        if (hasRunes)
         {
             UnityEngine.Debug.Log("can now spawn boss");
             gameManager.gameInstance.itemsCompleteText.gameObject.SetActive(true);
             hasItems = true;
+            gameManager.gameInstance.playerScript.hasItems = true;
         }
         else
         {
