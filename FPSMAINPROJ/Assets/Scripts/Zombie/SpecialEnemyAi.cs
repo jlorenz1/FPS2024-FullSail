@@ -22,7 +22,6 @@ public class SpecialEnemy : EnemyAI
     [SerializeField] float HealthBuff;
     [SerializeField] float ArmorBuff;
     [SerializeField] float Healing;
-    [SerializeField] private GameObject auraSphere;
     [SerializeField] GameObject SummoningMob;
     [SerializeField] int SummonAmount;
     [SerializeField] public float specialAbilityCooldown = 10f;
@@ -95,14 +94,7 @@ public class SpecialEnemy : EnemyAI
             StartCoroutine(DelayAttack());
         }
 
-        if (auraSphere != null)
-        {
-
-            auraSphere.transform.localScale = new Vector3(AuraRange, AuraRange, AuraRange);
-
-            SetTransparency(auraSphere, 0.1f);
-
-        }
+      
 
         if (Time.time >= nextAbilityTime && ChasingPLayer)
         {

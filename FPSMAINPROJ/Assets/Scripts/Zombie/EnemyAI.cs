@@ -170,6 +170,13 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
+        float distanceToPlayer = Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position);
+        if (ChasingPLayer && distanceToPlayer <= agent.stoppingDistance)
+        {
+            FacePlayer();
+        }
+
+
         if(AlwaysSeePlayer == true)
         {
             agent.SetDestination(gameManager.gameInstance.player.transform.position);
@@ -218,6 +225,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         {
             Armor = MaxArmor;
         }
+
+        
+
 
     }
 
