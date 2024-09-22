@@ -144,7 +144,7 @@ public class Interact : MonoBehaviour
 
                         alter.PlaceObject(Effgies[0]);
                         Effgies.Remove(Effgies[0]);
-                        PlayerAudio.PlayOneShot(Place, 1f);
+                        AudioManager.audioInstance.playSFXAudio(Place, 1f);
                     }
                     else if (alter.HasObject)
                     {
@@ -180,7 +180,8 @@ public class Interact : MonoBehaviour
             {
                 inventory.AddItem(pickup.item, 1);
                 Effgies.Add(model);
-               PlayerAudio.PlayOneShot(PickUp, 1f);
+                //PlayerAudio.PlayOneShot(PickUp, 1f);
+                AudioManager.audioInstance.playSFXAudio(gameManager.gameInstance.playerScript.interactSounds[Random.Range(0, gameManager.gameInstance.playerScript.interactSounds.Length)], gameManager.gameInstance.playerScript.interactVol);
                 inventory.updateInventoryUI();
                 hit.collider.gameObject.transform.position = new Vector3(10000, 10000, 10000);
             }

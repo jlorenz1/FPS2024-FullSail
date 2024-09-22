@@ -36,6 +36,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        Time.timeScale = 1;
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolSlider.value) * 20);
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(SFXVolSlider.value) * 20);
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolSlider.value) * 20);
