@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   gunModel: {fileID: 6530764079120195087, guid: e5de3ed633d7e394c9688504cdabb32e, type: 3}
-  gunName: 
+  gunName: M1911
   animationLayer: 2
   shootDamage: 15
   shootingDistance: 600
@@ -21,6 +21,9 @@ MonoBehaviour:
   fireMode: Semi-Auto
   hekaSchool: 
   hekaAbility: {fileID: 0}
+  hekaMuzzleFlash: {fileID: 0}
+  hekaShootingSounds: []
+  hekaShootVol: 0
   hekaShootRate: 0
   hekaManaAmount: 0
   recoilX: -1
@@ -30,10 +33,10 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   snapping: 3
   returnSpeed: 3
-  reloadTime: 0.13
+  reloadTime: 0.9
   magazines:
   - magazineCapacity: 15
-    currentAmmoCount: 14
+    currentAmmoCount: 15
   - magazineCapacity: 15
     currentAmmoCount: 15
   - magazineCapacity: 15

@@ -68,10 +68,12 @@ MonoBehaviour:
   - {x: 0.018, y: 0.03, z: 0}
   snapping: 6
   returnSpeed: 4
-  reloadTime: 1.27
+  reloadTime: 2
   magazines:
   - magazineCapacity: 35
-    currentAmmoCount: 35
+    currentAmmoCount: 16
+  - magazineCapacity: 35
+    currentAmmoCount: 18
   - magazineCapacity: 35
     currentAmmoCount: 35
   - magazineCapacity: 35
@@ -88,9 +90,7 @@ MonoBehaviour:
     currentAmmoCount: 35
   - magazineCapacity: 35
     currentAmmoCount: 35
-  - magazineCapacity: 35
-    currentAmmoCount: 35
-  currentMagazineIndex: 0
+  currentMagazineIndex: 2
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   zombieHitEffect: {fileID: 198000011143922816, guid: e5a3d6da48298a0458c1990f58c27069, type: 3}
   bulletDecals:
