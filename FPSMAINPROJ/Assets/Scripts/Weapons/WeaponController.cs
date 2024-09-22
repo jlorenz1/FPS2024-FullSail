@@ -80,7 +80,7 @@ public class WeaponController : MonoBehaviour
             if (!isReloading)
             {
                 isReloading = true;
-                
+                StartCoroutine(reload());
             }
         }
 
@@ -198,7 +198,7 @@ public class WeaponController : MonoBehaviour
 
         if (selectedGun >= 0 && selectedGun < gunList.Count)
         {
-            displayCurrentAmmo();
+            
             if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
             {
                 UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
@@ -241,12 +241,18 @@ public class WeaponController : MonoBehaviour
                 }
                 
                 yield return new WaitForSeconds(shootRate);
-
+                displayCurrentAmmo();
                 isShooting = false;
+            }
+            else if(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 0 && !isReloading)
+            {
+                isReloading = true;
+                StartCoroutine(reload());
             }
             else
             {
                 UnityEngine.Debug.Log("need to reload");
+                
 
             }
             
@@ -306,7 +312,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reload()
     {
-        if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length)
+        if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length && isReloading)
         {
             StartCoroutine(startReloadAnim());
             gunList[selectedGun].currentMagazineIndex++;
