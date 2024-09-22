@@ -7,7 +7,7 @@ using UnityEngine;
 public class pickup : MonoBehaviour, IPickup
 {
     public pickupObject item;
-    
+    [SerializeField] GameObject obj;
     internal itemType type;
 
     public void useItem()

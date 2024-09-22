@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Interact : MonoBehaviour
@@ -15,7 +16,7 @@ public class Interact : MonoBehaviour
     bool isPickedUp;
     bool inProcess;
     public bool hasItems;
-
+    List<GameObject> Effgies = new List<GameObject>();
     private void Start()
     {
         inventory = gameManager.gameInstance.playerScript.inventory;
@@ -69,7 +70,7 @@ public class Interact : MonoBehaviour
                             {
                                 if (hasItems)
                                 {
-                                    bossInteraction.spawnBoss();
+                                    //  bossInteraction.spawnBoss();
                                     Destroy(hit.collider);
                                     StartCoroutine(gameManager.gameInstance.requiredItemsUI("Has Items", 3f));
                                 }
@@ -93,18 +94,18 @@ public class Interact : MonoBehaviour
                     }
                 }
             }
-            else if(hit.collider.gameObject.CompareTag("Weapon"))
+            else if (hit.collider.gameObject.CompareTag("Weapon"))
             {
                 gameManager.gameInstance.playerInteract.SetActive(true);
-                if(Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if(hit.collider != null)
+                    if (hit.collider != null)
                     {
                         var weapon = hit.collider.GetComponent<weaponPickup>();
-                        if(weapon != null)
+                        if (weapon != null)
                         {
                             gameManager.gameInstance.playerWeapon.getWeaponStats(weapon.gun);
-                            if(weapon.gun.hekaSchool != null)
+                            if (weapon.gun.hekaSchool != null)
                             {
                                 gameManager.gameInstance.playerWeapon.hasHeka = true;
                             }
@@ -122,14 +123,14 @@ public class Interact : MonoBehaviour
                 }
                 isInteractable = true;
             }
-            else if(hit.collider.gameObject.CompareTag("AlterShop"))
+            else if (hit.collider.gameObject.CompareTag("AlterShop"))
             {
                 gameManager.gameInstance.playerInteract.SetActive(true);
-                if(Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if(hit.collider != null)
+                    if (hit.collider != null)
                     {
-                       gameManager.gameInstance.gameAlterMenu.SetActive(true);
+                        gameManager.gameInstance.gameAlterMenu.SetActive(true);
 
                         gameManager.gameInstance.pausePlayerControls();
 
@@ -137,6 +138,29 @@ public class Interact : MonoBehaviour
                 }
                 isInteractable = true;
             }
+
+            else if (hit.collider.gameObject.CompareTag("Altar"))
+            {
+                Altarinteract alter = hit.collider.gameObject.GetComponent<Altarinteract>();
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    if (alter.HasObject == false && Effgies[0] != null)
+                    {
+
+                        alter.PlaceObject(Effgies[0]);
+                        Effgies.Remove(Effgies[0]);
+
+                    }
+                    else if (alter.HasObject)
+                    {
+                        alter.takeObject();
+                    }
+                    else
+                        return;
+                }
+            }
+
             else
             {
                 gameManager.gameInstance.playerInteract.SetActive(false);
@@ -157,18 +181,16 @@ public class Interact : MonoBehaviour
         if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             pickup pickup = hit.collider.GetComponent<pickup>();
+            GameObject model = hit.collider.gameObject;
             if (pickup != null)
             {
                 inventory.AddItem(pickup.item, 1);
+                Effgies.Add(model);
                 inventory.updateInventoryUI();
-                Destroy(hit.collider.gameObject);
-            }
-            if (pickup.item.type == itemType.Default || pickup.item.type == itemType.Rune)
-            {
-                checkForRequiredItems();
-
+                hit.collider.gameObject.transform.position = new Vector3(10000, 10000, 10000);
             }
           
+       
             else if (pickup.item.type == itemType.flashlight)
             {
                 gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
@@ -180,56 +202,6 @@ public class Interact : MonoBehaviour
         gameManager.gameInstance.playerInteract.SetActive(false);
     }
 
-    public void checkForRequiredItems()
-    {
-        bool hasRunes = false;
-        bool runeMessageShown = false;
-        
-
-        for (int i = 0; i < inventory.containerForInv.Count; i++)
-        {
-            if (inventory.containerForInv[i].pickup.type == itemType.Rune)
-            {
-
-
-                if (inventory.containerForInv[i].amount >= 4)
-                {
-                    hasRunes = true;
-                    if (!runeMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI("Collected all Effigies!", 3f);
-
-                        runeMessageShown = true;
-                    }
-                }
-                else
-                {
-                    UnityEngine.Debug.Log("Not enough runes");
-                    if (!runeMessageShown)
-                    {
-                        gameManager.gameInstance.displayRequiredIemsUI(inventory.containerForInv[i].amount.ToString() + " of 4 Effigies collected!", 3f);
-
-                        runeMessageShown = true;
-                    }
-                    //set UI active coroutine 
-                }
-            }
-          
-        }
-        if (hasRunes)
-        {
-            UnityEngine.Debug.Log("can now spawn boss");
-            gameManager.gameInstance.itemsCompleteText.gameObject.SetActive(true);
-            hasItems = true;
-            gameManager.gameInstance.playerScript.hasItems = true;
-        }
-        else
-        {
-            UnityEngine.Debug.Log("required items missing");
-
-            hasItems = false;
-        }
-    }
 
     public void OnApplicationQuit()
     {

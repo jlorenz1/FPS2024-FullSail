@@ -9,19 +9,29 @@ public class bossInteraction : MonoBehaviour
     public GameObject bossRitualPrefab;
     [SerializeField] public AudioClip placingSound;
     [Range(0, 1)][SerializeFeild] public float placingVol;
-    public void spawnBoss()
+    int Effigies;
+    public void Update()
     {
 
-        Debug.Log("door open");
-        if (gameManager.gameInstance.playerScript.hasItems)
+        if (Effigies >= 4)
         {
+
             DoorToOpen.slide();
             AudioManager.audioInstance.playSFXAudio(placingSound, placingVol);
             Debug.Log("door open");
         }
-        else
-        {
-            Debug.Log("doesnt have items");
-        }
+        
+      
     }
+
+    public void EffigiesPlaced()
+    {
+        Effigies++;
+    }
+
+    public void EffigiesTaken()
+    {
+        Effigies--;
+    }
+
 }
