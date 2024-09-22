@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
     }
     public void play()
     {
-        SceneManager.LoadScene("Jlorenz_Scene");
+        SceneManager.LoadScene("Build Scene");
     }
 
     public void onSensSliderChange(float value)
@@ -77,7 +77,6 @@ public class MainMenu : MonoBehaviour
 
     public void onMasterSliderChange(float value)
     {
-        Debug.Log("Master Volume Slider Value: " + value);
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(value) * 20); //log10 for decibles 
         saveSettings();
     }

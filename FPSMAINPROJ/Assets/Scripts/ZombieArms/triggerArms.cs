@@ -5,6 +5,9 @@ using UnityEngine;
 public class triggerArms : MonoBehaviour
 {
     [SerializeField] public GameObject[] arms;
+
+    [SerializeField] public AudioClip armSoundQue;
+    public float armAudioVol;
     public float spawnDuration = 3;
     public float disableTime = 3;
 
@@ -30,6 +33,9 @@ public class triggerArms : MonoBehaviour
             {
                 if(arm != null)
                 {
+                    arm.GetComponentInChildren<AudioSource>().clip = armSoundQue;
+                    arm.GetComponentInChildren<AudioSource>().PlayOneShot(armSoundQue, armAudioVol);
+                    
                     arm.SetActive(true);
                     yield return new WaitForSeconds(1);
                 }

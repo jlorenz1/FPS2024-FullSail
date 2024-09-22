@@ -581,7 +581,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
             // Play the selected clip through the AudioSource
             PlaySFX(footstep, ZombieFootStepsVol);
-            Debug.Log("FootSteps called");
+           
         }
     }
 
