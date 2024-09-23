@@ -417,7 +417,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator spawnBulletHole(RaycastHit hit)
     {
-        GameObject newBulletHole = Instantiate(gunList[selectedGun].bulletDecals[UnityEngine.Random.Range(0, gunList[selectedGun].bulletDecals.Length)], hit.point + hit.normal * 0.0001f, Quaternion.LookRotation(hit.normal));
+        GameObject newBulletHole = Instantiate(gunList[selectedGun].bulletDecals[UnityEngine.Random.Range(0, gunList[selectedGun].bulletDecals.Length)], hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal));
         newBulletHole.transform.up = hit.normal;
         yield return new WaitForSeconds(2);
         Destroy(newBulletHole);

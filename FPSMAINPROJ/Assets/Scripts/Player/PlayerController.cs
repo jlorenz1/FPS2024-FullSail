@@ -779,5 +779,22 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.enabled = true;
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Zombie") && !collision.collider.isTrigger)
+        {
+
+            Vector3 pushDirection = collision.contacts[0].normal;
+
+            // Move the object in the opposite direction of the collision
+            transform.position += pushDirection * Time.deltaTime * 5;
+
+        }
+
+
+
+
+    }
+
 }
 
