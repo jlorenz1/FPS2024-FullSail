@@ -199,10 +199,10 @@ public class WeaponController : MonoBehaviour
 
         if (selectedGun >= 0 && selectedGun < gunList.Count)
         {
-            
+
             if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
             {
-                UnityEngine.Debug.Log(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount);
+
                 gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
                 isShooting = true;
                 //StartCoroutine(flashMuzzel());
@@ -214,17 +214,17 @@ public class WeaponController : MonoBehaviour
                 kickBackScript.addKick();
                 RaycastHit hit;
 
-                
+
                 Vector3 direction = getDirection();
 
                 if (Physics.Raycast(Camera.main.transform.position, direction, out hit, shootDistance, ~ignoreMask))
                 {
                     TrailRenderer trail = Instantiate(bulletTrail, muzzleFlashTransform.position, Quaternion.identity);
                     StartCoroutine(spawnTrail(trail, hit));
-                    Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+
                     IEnemyDamage dmg = hit.collider.GetComponent<IEnemyDamage>();
 
-                   
+
                     if (dmg != null)
                     {
                         // Apply the modified damage
@@ -232,7 +232,7 @@ public class WeaponController : MonoBehaviour
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                         bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
-                
+
                     else
                     {
                         ParticleSystem enviormentEffect = Instantiate(gunList[selectedGun].enviormentEffect, hit.point, Quaternion.LookRotation(hit.normal));
@@ -240,29 +240,17 @@ public class WeaponController : MonoBehaviour
                     }
 
                 }
-                
+
                 yield return new WaitForSeconds(shootRate);
                 displayCurrentAmmo();
                 isShooting = false;
             }
-            else if(gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 0 && !isReloading)
+            else if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 0 && !isReloading)
             {
                 isReloading = true;
                 StartCoroutine(reload());
             }
-            else
-            {
-                UnityEngine.Debug.Log("need to reload");
-                
-
-            }
-            
         }
-        else
-        {
-            UnityEngine.Debug.LogError("selectedGun index out of range");
-        }
-
     }
 
     void addWeaponBobbing()
@@ -321,13 +309,13 @@ public class WeaponController : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.Log("No more mags!");
+            gameManager.gameInstance.displayRequiredIemsUI("No more mags in weapon", 2f);
         }
+        
 
         AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
         yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
-        //StartCoroutine(fillWhileReloading());
-        //checks if there are mags to reload with
+      
 
         isReloading = false;
 
@@ -455,7 +443,7 @@ public class WeaponController : MonoBehaviour
         {
             amountToDisplay = 0;
         }
-        //UnityEngine.Debug.Log(amountToDisplay);
+ 
         gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
     }
 
