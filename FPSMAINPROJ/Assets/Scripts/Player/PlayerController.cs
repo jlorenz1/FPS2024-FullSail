@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public float currentMana;
     float Sprintorig;
 
-    [SerializeField] Collider meleeWeapon;
+   
 
     // climbing video variables
     [Header("Reference")]
@@ -306,12 +306,6 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(PerformDodge());
         }
 
-
-        if (Input.GetButtonDown("Melee") && canMelee)
-        {
-            UnityEngine.Debug.Log("Melee input detected");
-            StartCoroutine(PerformMelee());
-        }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -759,25 +753,6 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
 
-    private IEnumerator PerformMelee()
-    {
-        canMelee = false;
-
-
-        meleeWeapon.enabled = true;
-        float elapsedTime = 0f;
-        while (elapsedTime < meeleDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        meleeWeapon.enabled = false;
-
-        yield return new WaitForSeconds(1f);
-
-        canMelee = true;
-    }
 
     void enableFlashLight()
     {
