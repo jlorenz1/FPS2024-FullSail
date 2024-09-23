@@ -250,7 +250,7 @@ public class gameManager : MonoBehaviour
     void Update()
     {
         // Pause Menu Logic
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("p"))
         {
             if (gameAlterMenu.activeSelf)
             {
