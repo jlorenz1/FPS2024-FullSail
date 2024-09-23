@@ -143,7 +143,7 @@ public class SpawnTrigger : MonoBehaviour
             }
         }
 
-        chance = (int)(Random.Range(0, PrimaryList.Count()));
+        chance = (int)(Random.Range(0, PrimaryList.Length));
     }
     void SpawnSpecifc(GameObject Zombie, int round)
     {
