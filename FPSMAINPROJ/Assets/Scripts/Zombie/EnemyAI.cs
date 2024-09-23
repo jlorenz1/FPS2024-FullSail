@@ -118,7 +118,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          startsight = sight;
 
-        stoppingDistance = Range - 1;
+        stoppingDistance = Range;
         ChasingPLayer = false;
         speednerfed = false;
         damagenerfed = false;
@@ -227,7 +227,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
         
-
+        if(ChasingPLayer)
+        {
+            roaming = false;
+        }
 
     }
 
@@ -462,7 +465,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         roaming = true;
         float roamRange = 10f;
-        agent.stoppingDistance = 0;
+       
         // Get a random point within a short range around the enemy
         Vector3 randomPosition = GetRandomPositionWithinRange(transform.position, roamRange);
 
@@ -477,7 +480,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     IEnumerator WaitThenRoamAgain()
     {
-
+        agent.stoppingDistance = 0;
         while (agent.remainingDistance > agent.stoppingDistance)
         {
             yield return null; // Wait until the next frame
@@ -485,13 +488,14 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         if (ChasingPLayer)
         {
+            agent.stoppingDistance = Range;
             yield break;
         }
 
         yield return new WaitForSeconds(2);
 
         roam();
-
+        agent.stoppingDistance = Range;
     }
 
 
