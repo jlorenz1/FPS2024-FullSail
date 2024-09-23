@@ -146,7 +146,6 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (_playerInstance == null)
             {
-                Debug.LogError("PlayerController is null");
             }
             return _playerInstance;
         }
@@ -302,7 +301,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Dodge") && canDodge)
         {
-            UnityEngine.Debug.Log("Dodge input detected");
             StartCoroutine(PerformDodge());
         }
 
@@ -583,7 +581,6 @@ public class PlayerController : MonoBehaviour, IDamage
     void crouchCheck()
     {
         underObject = Physics.SphereCast(controller.transform.position, aboveCastRadius, controller.transform.up, out objectHit, aboveDetectionLength);
-        //Debug.DrawRay(animator.transform.position, -animator.transform.up, Color.blue);
     }
 
     void stopCrouch()
@@ -690,7 +687,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         SpeedStateSlow = true;
 
-        Debug.Log("Speed State Slow");
 
         yield return new WaitForSeconds(duration);
 
