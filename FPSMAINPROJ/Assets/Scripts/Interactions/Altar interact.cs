@@ -7,12 +7,19 @@ public class Altarinteract : MonoBehaviour
     [SerializeField] bossInteraction BossThing;
     [SerializeField] Transform EffigyPosition;
     public bool HasObject;
-public void PlaceObject(GameObject effigy)
+    public int AltarNumber;
+    public GameObject GlowAura;
+
+    private void Start()
+    {
+        GlowAura.SetActive(false);
+    }
+    public void PlaceObject(GameObject effigy)
     {
 
         Instantiate(effigy, EffigyPosition.position, EffigyPosition.rotation);
 
-        BossThing.EffigiesPlaced();
+        BossThing.EffigiesPlaced(AltarNumber);
 
         HasObject = true;
 
@@ -20,8 +27,20 @@ public void PlaceObject(GameObject effigy)
     public void takeObject()
     {
 
-        BossThing.EffigiesTaken();
+        BossThing.EffigiesTaken(AltarNumber);
         HasObject = false;
 
     }
+
+   public void setAltarNumber(int altarNumber)
+    {
+        AltarNumber = altarNumber;
+    }
+
+    public void SetAura()
+    {
+        GlowAura.SetActive(!GlowAura.activeSelf);
+    }
+
+
 }
