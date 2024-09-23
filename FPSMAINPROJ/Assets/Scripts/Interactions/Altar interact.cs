@@ -8,7 +8,13 @@ public class Altarinteract : MonoBehaviour
     [SerializeField] Transform EffigyPosition;
     public bool HasObject;
     public int AltarNumber;
-public void PlaceObject(GameObject effigy)
+    public GameObject GlowAura;
+
+    private void Start()
+    {
+        GlowAura.SetActive(false);
+    }
+    public void PlaceObject(GameObject effigy)
     {
 
         Instantiate(effigy, EffigyPosition.position, EffigyPosition.rotation);
@@ -31,7 +37,10 @@ public void PlaceObject(GameObject effigy)
         AltarNumber = altarNumber;
     }
 
-
+    public void SetAura()
+    {
+        GlowAura.SetActive(!GlowAura.activeSelf);
+    }
 
 
 }

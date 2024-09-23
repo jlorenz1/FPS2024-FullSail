@@ -31,9 +31,21 @@ public class bossInteraction : MonoBehaviour
                 AudioManager.audioInstance.playSFXAudio(placingSound, placingVol);
 
             }
-            
-        }
 
+
+            for (int i = 0; i < Patter.Count; i++)
+            {
+
+                if (input[i] == Patter[i])
+                {
+                    AlterNumber[i].SetAura();
+                }
+
+            }
+
+
+        }
+   
         
     }
 
