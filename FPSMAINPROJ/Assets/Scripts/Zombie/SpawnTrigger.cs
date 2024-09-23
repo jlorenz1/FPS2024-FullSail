@@ -40,13 +40,13 @@ public class SpawnTrigger : MonoBehaviour
     private void Start()
     {
         TriggerEntered = false;
-         wiped = false;
+        wiped = false;
         BossIsSpawned = false;
     }
     private void Update()
     {
-        Count = gameManager.gameInstance.GetEnemyCount(); 
-        if(Count == 0 && isActivated && isEndless)
+        Count = gameManager.gameInstance.GetEnemyCount();
+        if (Count == 0 && isActivated && isEndless)
         {
             SpawnEnemies(ZombieSpawnCount);
         }
@@ -57,22 +57,24 @@ public class SpawnTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            if (wiped == false) { 
-            GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-            foreach (GameObject zombie in zombies)
+
+            if (wiped == false)
             {
+                GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+                foreach (GameObject zombie in zombies)
+                {
                     IEnemyDamage Zombies = zombie.GetComponent<IEnemyDamage>();
 
-                if (Zombies != null)
-                {
+                    if (Zombies != null)
+                    {
 
-                    Zombies.DieWithoutDrops();
+                        Zombies.DieWithoutDrops();
+
+                    }
 
                 }
-
+                wiped = true;
             }
-            wiped = true;
-        }
             if (!TriggerEntered)
             {
 
@@ -80,6 +82,7 @@ public class SpawnTrigger : MonoBehaviour
                 {
                     SpawnLocation[i].SetActive(true);
                 }
+
                 gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
 
                 if (!isSpecific && !isSet)
@@ -113,7 +116,7 @@ public class SpawnTrigger : MonoBehaviour
     }
 
 
-   void SpawnEnemies(int Amount)
+    void SpawnEnemies(int Amount)
     {
 
         gameManager.gameInstance.enemySpawner.ZombieSpawner(Amount);
@@ -122,7 +125,8 @@ public class SpawnTrigger : MonoBehaviour
 
     void GetWhichType()
     {
-        if (isSpecific) {
+        if (isSpecific)
+        {
             if (TypeMelee)
             {
                 PrimaryList = MeleeEnemy;
@@ -138,9 +142,9 @@ public class SpawnTrigger : MonoBehaviour
                 PrimaryList = SpecialEnemy;
             }
         }
-       
-         chance = (int)(Random.Range(0, PrimaryList.Count()));
-    }      
+
+        chance = (int)(Random.Range(0, PrimaryList.Count()));
+    }
     void SpawnSpecifc(GameObject Zombie, int round)
     {
         gameManager.gameInstance.enemySpawner.SpawnSpecficAtRandomPoint(Zombie, round);
@@ -153,14 +157,14 @@ public class SpawnTrigger : MonoBehaviour
         {
             for (int i = 0; i < meelecount; i++)
             {
-                SpawnSpecifc(MeleeEnemy[(int)(Random.Range(0, MeleeEnemy.Count()))], roomlevel);
+                SpawnSpecifc(MeleeEnemy[(int)(Random.Range(0, MeleeEnemy.Length))], roomlevel);
             }
         }
         if (specialcount > 0)
         {
             for (int i = 0; i < specialcount; i++)
             {
-                SpawnSpecifc(SpecialEnemy[(int)(Random.Range(0, SpecialEnemy.Count()))], roomlevel);
+                SpawnSpecifc(SpecialEnemy[(int)(Random.Range(0, SpecialEnemy.Length))], roomlevel);
             }
         }
 
@@ -169,10 +173,9 @@ public class SpawnTrigger : MonoBehaviour
             for (int i = 0; i < rangedcount; i++)
             {
 
-                SpawnSpecifc(RangedEnemy[(int)(Random.Range(0, RangedEnemy.Count()))], roomlevel);
-
+                SpawnSpecifc(RangedEnemy[(int)(Random.Range(0, RangedEnemy.Length))], roomlevel);
             }
+
         }
     }
-
 }

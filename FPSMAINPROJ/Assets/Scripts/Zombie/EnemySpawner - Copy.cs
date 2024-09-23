@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Vector3 spawnAreaCenter;
     [SerializeField] Vector3 spawnAreaSize;
     [SerializeField] float spawnRadius = 1f;
-    [SerializeField] int maxAttempts = 10;
+    
     [SerializeField] bool ScalingDamage;
     [SerializeField] bool ScalingHealth;
     [SerializeField] bool IsBufferSpawn;
@@ -161,7 +161,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (spawnPoints.Count == 0)
         {
-            Debug.LogWarning("No spawn points assigned!");
+          
             return;
         }
 

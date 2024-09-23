@@ -14,7 +14,7 @@ public class Userkare : EnemyAI
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
-
+    bool AttackDone;
     [SerializeField] EnemySheilds sheilds;
     [SerializeField] GameObject Sheild;
     [SerializeField] Transform SheildPosition;
@@ -47,7 +47,7 @@ public class Userkare : EnemyAI
     public bool SheildActive;
 
     bool nextbuff;
-    bool AttackDone;
+    
     [SerializeField] int castAmount;
     int DefCastAmount;
     [SerializeField] float ProjectileSpeed;

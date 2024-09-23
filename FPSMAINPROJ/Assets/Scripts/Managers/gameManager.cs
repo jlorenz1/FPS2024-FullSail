@@ -29,7 +29,7 @@ public class gameManager : MonoBehaviour
     }
     private float lastRoundStartTime = 0f;
     [Header("----ROUND SETTINGS----")]
-    [SerializeField] private float minRoundDuration = 10f;
+   
     [SerializeField] int EndRound;
     [SerializeField] float RoundDelay;
     [SerializeField] int SpecialZombieIncrament;
@@ -114,7 +114,7 @@ public class gameManager : MonoBehaviour
     private bool isNewEnemies;
 
 
-    int cycle = 0;
+   
     public bool BlinkingJab;
     public bool LightGautlening;
     int BossesKilled;
