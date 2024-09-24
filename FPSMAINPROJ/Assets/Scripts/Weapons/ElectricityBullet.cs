@@ -42,18 +42,21 @@ public class ElectricityBullet : MonoBehaviour
         {
 
             damageable.takeDamage(damage);
-            if(currentBounces < bounceMax)
+            if(spawnBounce != null)
             {
-                
-                currentBounces++;
-                StartCoroutine(startNextBounce(zombieHit, spawnBounce, closestZombie));
-                //Transform spawnBounce = zombieHit.transform.Find("HekaOutting");
-                //if (spawnBounce != null)
-                //{
-                //    Debug.Log("no spawn");
-                //}
-                //shootSecond(spawnBounce, closestZombie);
-                //currentBounces++;
+                if (currentBounces < bounceMax)
+                {
+
+                    currentBounces++;
+                    StartCoroutine(startNextBounce(zombieHit, spawnBounce, closestZombie));
+                    //Transform spawnBounce = zombieHit.transform.Find("HekaOutting");
+                    //if (spawnBounce != null)
+                    //{
+                    //    Debug.Log("no spawn");
+                    //}
+                    //shootSecond(spawnBounce, closestZombie);
+                    //currentBounces++;
+                }
             }
         }
         else
