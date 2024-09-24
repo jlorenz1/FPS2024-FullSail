@@ -26,6 +26,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeFeild] string fireMode;
+    [SerializeFeild] int maxAmmoCount;
+    [SerializeFeild] int currentAmmoCount;
+    int reserveAmmoCount = 0;
 
     [Header("HEKA SPECIALTIES")]
     [SerializeField] public GameObject hekaAbility;
