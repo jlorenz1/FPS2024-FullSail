@@ -76,13 +76,20 @@ public class WeaponController : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!isReloading)
+            if(gunList.Count > 0)
             {
-                isReloading = true;
-                StartCoroutine(reload());
+                if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
+                {
+                    if (!isReloading)
+                    {
+                        isReloading = true;
+                        StartCoroutine(reload());
+                    }
+                }
             }
+            
         }
 
         if (gunList.Count >= 1)
