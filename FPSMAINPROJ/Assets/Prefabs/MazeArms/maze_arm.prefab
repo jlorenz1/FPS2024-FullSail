@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 4876026680451531426}
   - component: {fileID: 8392576384601887881}
   - component: {fileID: 161504563514629365}
+  - component: {fileID: 235616006440069062}
   m_Layer: 0
   m_Name: maze_arm
   m_TagString: Untagged
@@ -577,6 +578,27 @@ MonoBehaviour:
   HP: 40
   HPMax: 40
   damage: 20
+--- !u!65 &235616006440069062
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4432686920497723583}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 1.25, y: -0.5, z: 0}
 --- !u!1 &4696774300079211636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1198,6 @@ GameObject:
   - component: {fileID: 6751026628481459648}
   - component: {fileID: 7139589460422307707}
   - component: {fileID: 867380611768721443}
-  - component: {fileID: 1663621038489365357}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -1270,21 +1291,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1663621038489365357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7964285675557160984}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 536e169c153bad14ab0f52004ba789d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 40
-  HPMax: 40
-  damage: 20
 --- !u!1 &8045847162110232028
 GameObject:
   m_ObjectHideFlags: 0

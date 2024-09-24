@@ -26,6 +26,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeFeild] string fireMode;
+    [SerializeFeild] int maxAmmoCount;
+    [SerializeFeild] int currentAmmoCount;
+    int reserveAmmoCount = 0;
 
     [Header("HEKA SPECIALTIES")]
     [SerializeField] public GameObject hekaAbility;
@@ -76,13 +79,20 @@ public class WeaponController : MonoBehaviour
         }
 
         
-        if (Input.GetKeyDown(KeyCode.R) && gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (!isReloading)
+            if(gunList.Count > 0)
             {
-                isReloading = true;
-                StartCoroutine(reload());
+                if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
+                {
+                    if (!isReloading)
+                    {
+                        isReloading = true;
+                        StartCoroutine(reload());
+                    }
+                }
             }
+            
         }
 
         if (gunList.Count >= 1)

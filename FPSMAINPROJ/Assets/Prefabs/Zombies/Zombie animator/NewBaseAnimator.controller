@@ -17,13 +17,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 34f80d7b36cca7647b3d3c2a9455a59f, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: AttackSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -233,7 +233,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Attacking
     m_StateMachine: {fileID: 4596504702215193926}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: 16bb5b1904b4c9e4491c9df9f2a9e6e5, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 1
