@@ -258,15 +258,14 @@ public class Interact : MonoBehaviour
                     inventory.updateInventoryUI();
                     Destroy(hit.collider.gameObject);
                 }
-            
+                else if (pickup.item.type == itemType.flashlight)
+                {
+                    gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
+                    inventory.AddItem(pickup.item, 1);
+                    Destroy(hit.collider.gameObject);
 
-
-            else if (pickup.item.type == itemType.flashlight)
-            {
-                gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
-
+                }
             }
-        }
         }
 
         yield return new WaitForSeconds(1);
