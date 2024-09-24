@@ -44,7 +44,7 @@ public class RangedEnemy : EnemyAI
     float LazerSpeed;
 
     Caster caster;
-
+    bool canattack;
     protected override void Start()
     {
         base.Start();
@@ -53,7 +53,7 @@ public class RangedEnemy : EnemyAI
         AttackDone = true;
         inPosition = false;
         caster = Caster.NormalCaster;
-        LazerSpeed = ProjectileSpeed * 10;
+        LazerSpeed = ProjectileSpeed * 2;
 
     }
 
@@ -85,46 +85,58 @@ public class RangedEnemy : EnemyAI
 
         if (PlayerinAttackRange && canAttack && ChasingPLayer)
         {
-            StartCoroutine(CastAttackRoutine());
+            canAttack = false;
+            animator.SetTrigger("Shoot");
+
         }
     }
 
 
     IEnumerator CastAttackRoutine()
     {
-        canAttack = false;
-        animator.SetFloat("CastSpeed", castSpeed); // New: Set animator speed to match cast speed
+      
+
+        animator.SetFloat("CastSpeed", castSpeed);
+
+        for (int i = 0; i < castAmount; i++)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            if (projectileScript == null)
+            {
+                projectileScript = projectile.AddComponent<Projectile>();
+            }
+            if (projectileScript != null)
+            {
+                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, 1f, caster);
+
+                projectileScript.SetColor(BulletColor, BulletMaterial);
+                if (Type == ProjectileType.AOE)
+                {
+                    projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+                }
+                else
+                    projectileScript.AoeStats(0, 0, 0, AOETYPE.Damage);
+            }
+            yield return new WaitForSeconds((1 / castSpeed)  );
+        }
+
+       
         animator.SetTrigger("Shoot");
-        agent.speed = 0;
-
-        yield return new WaitUntil(() => AttackDone == true);
-
-        agent.speed = startSpeed;
         canAttack = true;
     }
 
 
-    IEnumerator Cast()
-    {
-    
-        for (int i = 0; i < castAmount; i++)
-        {
-           
-
-
-            yield return new WaitForSeconds(1 / castSpeed);
-        }
-        yield return new WaitForSeconds(1);
-        AttackDone = true;
-        animator.SetTrigger("Shoot");
-    }
+   
 
     public void CastAttack()
     {
         // Ranged attack logic
-       
-        AttackDone = false;
-        StartCoroutine(Cast());
+
+
+           
+            StartCoroutine(CastAttackRoutine());
+      
     }
 
 

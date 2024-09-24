@@ -1468,10 +1468,10 @@ MonoBehaviour:
   Range: 20
   damage: 3
   AttackSpeed: 0.75
-  castSpeed: 7
+  castSpeed: 0.75
   AttentionSpan: 10
-  sight: 30
-  DetectionRange: 10
+  sight: 45
+  DetectionRange: 45
   flockRange: 8
   Helmate: {fileID: 0}
   Drops:
@@ -1483,16 +1483,16 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  projectilePrefab: {fileID: 1683480588852259282, guid: 9d4491233607ca84887a0263a97dacea, type: 3}
+  projectilePrefab: {fileID: 893157898015144882, guid: e2929c4a495ef2343aafb05c37f0b1de, type: 3}
   fireRate: 1
   launchPoint: {fileID: 8993173921901159720}
   CastPortal1: {fileID: 5111190999861667437}
   CastPortal2: {fileID: 0}
-  castAmount: 5
-  castRange: 20
+  castAmount: 1
+  castRange: 50
   HasRangedAttacks: 1
-  ProjectileSpeed: 10
-  ProjectileLifeTime: 5
+  ProjectileSpeed: 50
+  ProjectileLifeTime: 2
   ProjectileDamage: 2
   ProjectileFollowTime: 0.55
   Type: 1
@@ -1504,7 +1504,7 @@ MonoBehaviour:
   radius: 0
   type: 0
   BulletColor: {r: 1, g: 0.983102, b: 0, a: 0}
-  BulletMaterial: {fileID: 2100000, guid: ca27248772ccede4d841d9222cf64b33, type: 2}
+  BulletMaterial: {fileID: 2100000, guid: 43a28e2a2c1fd2e46bc2a93cffcb12e2, type: 2}
 --- !u!82 &8379499431177908522
 AudioSource:
   m_ObjectHideFlags: 0
