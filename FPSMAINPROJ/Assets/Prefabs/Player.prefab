@@ -376,11 +376,11 @@ GameObject:
   m_Component:
   - component: {fileID: 465270188490484554}
   - component: {fileID: 7417277121821538128}
+  - component: {fileID: 2279828800420457110}
   - component: {fileID: 8203031564338902554}
   - component: {fileID: 5719176374025190790}
   - component: {fileID: 5210717050584315553}
   - component: {fileID: 8216761864754983274}
-  - component: {fileID: 2279828800420457110}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -436,7 +436,6 @@ MonoBehaviour:
   flashLight: {fileID: 5962712083955961086}
   HPorig: 0
   currentMana: 0
-  meleeWeapon: {fileID: 0}
   whatToClimb:
     serializedVersion: 2
     m_Bits: 8
@@ -508,6 +507,26 @@ MonoBehaviour:
   damage: 1
   hasItems: 0
   speedDuringSprint: 0
+--- !u!114 &2279828800420457110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541054881267062660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8c52ab3b27ebc4f9ad50735d62c04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupDis: 2.6
+  PlayerAudio: {fileID: 0}
+  PickUp: {fileID: 8300000, guid: 5926c8d83fcf87d498e7ba69fac40542, type: 3}
+  Place: {fileID: 8300000, guid: 07e5b3beacbb8de4e949d072a4ec7f1d, type: 3}
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 128
+  hasItems: 0
 --- !u!136 &8203031564338902554
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -607,26 +626,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2279828800420457110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541054881267062660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d8c52ab3b27ebc4f9ad50735d62c04e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupDis: 100
-  PlayerAudio: {fileID: 0}
-  PickUp: {fileID: 8300000, guid: 5926c8d83fcf87d498e7ba69fac40542, type: 3}
-  Place: {fileID: 8300000, guid: 07e5b3beacbb8de4e949d072a4ec7f1d, type: 3}
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 128
-  hasItems: 0
 --- !u!1 &3664045996777181562
 GameObject:
   m_ObjectHideFlags: 0

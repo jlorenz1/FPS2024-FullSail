@@ -9,7 +9,7 @@ public class Interact : MonoBehaviour
     PlayerController playerScript;
 
     [Header("Interact")]
-    [SerializeField] int pickupDis;
+    [SerializeField] float pickupDis;
     [SerializeField] AudioSource PlayerAudio;
     [SerializeField] AudioClip PickUp;
     [SerializeField] AudioClip Place;
