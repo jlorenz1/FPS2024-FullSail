@@ -97,6 +97,7 @@ public class Projectile : MonoBehaviour
             ProjectileAudio.Play(); // Start playing the audio
         }
 
+       
 
         // Destroy the projectile after a certain amount of time
         Destroy(gameObject, lifetime);
@@ -297,6 +298,14 @@ public class Projectile : MonoBehaviour
         bulletColor = color;
         bulletMaterial = material;
         bulletMaterial.color = color;
+
+
+       
+        Renderer projectileRenderer = ProjectileBody.GetComponent<Renderer>();
+        if (projectileType == ProjectileType.Ball)
+        {
+            projectileRenderer.material.color = color;
+        }
     }
 
 
