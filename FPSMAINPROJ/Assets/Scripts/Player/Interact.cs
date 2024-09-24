@@ -14,20 +14,66 @@ public class Interact : MonoBehaviour
     [SerializeField] AudioClip PickUp;
     [SerializeField] AudioClip Place;
     [SerializeField] LayerMask ignoreMask;
+    bool DisplayActive;
     private Ray interactRay;
     private RaycastHit interactHit;
     bool isPickedUp;
     bool inProcess;
     public bool hasItems;
-    List<GameObject> Effgies = new List<GameObject>();
+    List<EffigyScript> Effgies = new List<EffigyScript>();
     private void Start()
     {
         inventory = gameManager.gameInstance.playerScript.inventory;
         playerScript = gameManager.gameInstance.playerScript;
+        DisplayActive = gameManager.gameInstance.EffigyImage.gameObject.activeInHierarchy;
     }
     void Update()
     {
       interact();
+
+        if(Effgies.Count > 1 && Input.GetKeyDown("t"))
+        {
+            EffigyScript currentEffigy = Effgies[0];
+            Effgies.RemoveAt(0);
+            Effgies.Add(currentEffigy);
+           
+        }
+        if (Effgies != null && Effgies.Count > 0)
+        {
+            if (!DisplayActive)
+            {
+                gameManager.gameInstance.ActivateEffigiDisplay();
+                DisplayActive = true;
+            }
+
+            gameManager.gameInstance.SetInHand(Effgies[0].gameObject.name);
+        }
+        else if (Effgies == null || Effgies.Count <= 0)
+        {
+            if (DisplayActive)
+            {
+                gameManager.gameInstance.SetInHand("None");
+                StartCoroutine(HideDisplay());
+            }
+        }
+        else if(Effgies == null || Effgies.Count <= 0 && DisplayActive == false)
+        {
+            return;
+        }
+    }
+
+    IEnumerator HideDisplay()
+    {
+
+        yield return new WaitForSeconds(4);
+
+        if (Effgies == null || Effgies.Count <= 0)
+        {
+            gameManager.gameInstance.DeactivateEffigyDisplay();
+            DisplayActive = false;
+        }
+
+
     }
 
     public void interact()
@@ -135,24 +181,31 @@ public class Interact : MonoBehaviour
 
             else if (hit.collider.gameObject.CompareTag("Altar"))
             {
-                Altarinteract alter = hit.collider.gameObject.GetComponent<Altarinteract>();
-
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Effgies.Count > 0)
                 {
-                    if (alter.HasObject == false && Effgies[0] != null)
-                    {
+                    gameManager.gameInstance.displayRequiredIemsUI("('E')", 5);
+                    Altarinteract alter = hit.collider.gameObject.GetComponent<Altarinteract>();
 
-                        alter.PlaceObject(Effgies[0]);
-                        Effgies.Remove(Effgies[0]);
-                        AudioManager.audioInstance.playSFXAudio(Place, 1f);
-                    }
-                    else if (alter.HasObject)
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
-                        alter.takeObject();
+                        if (alter.HasObject == false && Effgies[0] != null)
+                        {
+
+                            alter.PlaceObject(Effgies[0]);
+
+                            Effgies.Remove(Effgies[0]);
+                            AudioManager.audioInstance.playSFXAudio(Place, 1f);
+                        }
+                        else if (alter.HasObject)
+                        {
+                            alter.takeObject();
+                        }
+                        else
+                            return;
                     }
-                    else
-                        return;
                 }
+                else
+                    return;
             }
 
             else
@@ -175,23 +228,45 @@ public class Interact : MonoBehaviour
         if (Physics.Raycast(gameManager.gameInstance.MainCam.transform.position, gameManager.gameInstance.MainCam.transform.forward, out hit, pickupDis, ~ignoreMask))
         {
             pickup pickup = hit.collider.GetComponent<pickup>();
-            GameObject model = hit.collider.gameObject;
+            EffigyScript model = hit.collider.GetComponent<EffigyScript>();
             if (pickup != null)
             {
-                inventory.AddItem(pickup.item, 1);
-                Effgies.Add(model);
-                //PlayerAudio.PlayOneShot(PickUp, 1f);
-                AudioManager.audioInstance.playSFXAudio(gameManager.gameInstance.playerScript.interactSounds[Random.Range(0, gameManager.gameInstance.playerScript.interactSounds.Length)], gameManager.gameInstance.playerScript.interactVol);
-                inventory.updateInventoryUI();
-                hit.collider.gameObject.transform.position = new Vector3(10000, 10000, 10000);
-            }
-          
-       
+                if (pickup.item.type == itemType.Rune)
+                {
+                    inventory.AddItem(pickup.item, 1);
+                    if (model != null)
+                    {
+
+                        GameObject newEffigyObject = Instantiate(model.GetModel(), Vector3.zero, Quaternion.identity);
+
+                        EffigyScript newModel = newEffigyObject.GetComponent<EffigyScript>();
+                        if (newModel == null)
+                        {
+                            newModel = newEffigyObject.AddComponent<EffigyScript>();
+                        }
+                        newModel.SetNumber(model.GetNumber());
+                        newModel.SetModel(newEffigyObject);
+                        newModel.setItem(model.GetItem());
+                        newModel.SetGameObject(newEffigyObject);
+                        newModel.SetType(model.getType());
+                        
+                        Effgies.Add(newModel);
+
+                    }
+                    //PlayerAudio.PlayOneShot(PickUp, 1f);
+                    AudioManager.audioInstance.playSFXAudio(PickUp, gameManager.gameInstance.playerScript.interactVol);
+                    inventory.updateInventoryUI();
+                    Destroy(hit.collider.gameObject);
+                }
+            
+
+
             else if (pickup.item.type == itemType.flashlight)
             {
                 gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
 
             }
+        }
         }
 
         yield return new WaitForSeconds(1);

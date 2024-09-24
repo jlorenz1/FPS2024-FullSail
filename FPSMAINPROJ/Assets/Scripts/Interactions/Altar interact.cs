@@ -14,20 +14,40 @@ public class Altarinteract : MonoBehaviour
     {
         GlowAura.SetActive(false);
     }
-    public void PlaceObject(GameObject effigy)
+    public void PlaceObject(EffigyScript effigy)
     {
 
-        Instantiate(effigy, EffigyPosition.position, EffigyPosition.rotation);
+        if (HasObject == false)
+        {
 
-        BossThing.EffigiesPlaced(AltarNumber);
+            HasObject = true;
 
-        HasObject = true;
+            effigy.transform.position = EffigyPosition.position;
+
+            effigy.transform.rotation = Quaternion.Euler(-90, 0, 0);
+
+            if (AltarNumber == effigy.GetNumber())
+            {
+                GlowAura.SetActive(true);
+                BossThing.EffigiesPlaced();
+            }
+
+
+           
+        }
+
+        else
+            takeObject();
 
     }
     public void takeObject()
     {
+        if (GlowAura.activeInHierarchy)
+        {
+            GlowAura.SetActive(false);
+            BossThing.EffigiesTaken();
+        }
 
-        BossThing.EffigiesTaken(AltarNumber);
         HasObject = false;
 
     }

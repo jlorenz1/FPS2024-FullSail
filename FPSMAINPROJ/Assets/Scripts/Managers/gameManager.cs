@@ -52,6 +52,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public TMP_Text runesCount;
     [SerializeField] public TMP_Text lighterCount;
     [SerializeField] public TMP_Text keyCount;
+    [SerializeField] public TMP_Text Effigie;
     [SerializeField] public TMP_Text itemsCompleteText;
     [SerializeField] public GameObject ritualInProgress;
     [SerializeField] public GameObject quickTime;
@@ -71,6 +72,8 @@ public class gameManager : MonoBehaviour
     public Image AmmoHUD;
     public Image checkpoint;
     public Image gem;
+    public Image EffigyImage;
+  
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
@@ -291,8 +294,29 @@ public class gameManager : MonoBehaviour
 
         pointCount.text = PointCount.ToString("F0");
 
+
+      
+
+
+
+
         PlayerPrefs.SetInt("sens", (int)sensSlider.value);
     }
+
+    public void SetInHand(string Effigy)
+    {
+        Effigie.text = Effigy.Replace("(Clone)", "");
+    }
+
+    public void DeactivateEffigyDisplay()
+    {
+        EffigyImage.gameObject.SetActive(false) ;
+    }
+    public void ActivateEffigiDisplay()
+    {
+        EffigyImage.gameObject.SetActive(true);
+    }
+
 
     // Pause the Game
     public void PauseGame()

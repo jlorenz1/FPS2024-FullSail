@@ -43,7 +43,34 @@ public class pickup : MonoBehaviour, IPickup
         }
     }
 
+
+   public  void setItem(pickupObject newItem)
+    {
+        item = newItem;
+    }
+
+    public pickupObject GetItem()
+    {
+        return item;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return obj;
+    }
+
+    public void SetGameObject(GameObject go)
+    {
+        obj = go;
+    }
+
     public itemType getType()
         { return type; }
     
+
+    public void SetType(itemType Type) 
+    {
+        type = Type;
+    }
+
 }

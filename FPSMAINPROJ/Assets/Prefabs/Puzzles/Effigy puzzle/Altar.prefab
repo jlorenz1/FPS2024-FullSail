@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 7673005530928110504}
   - component: {fileID: 1458592896295592315}
   - component: {fileID: 7654452051407854561}
-  - component: {fileID: 693179170998096441}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,27 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &693179170998096441
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2951908865428281366}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4451548602159463179
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,11 +94,10 @@ GameObject:
   - component: {fileID: 3241225133523340612}
   - component: {fileID: 1542119406843512170}
   - component: {fileID: 7134406790570205220}
-  - component: {fileID: 252039872326461053}
-  - component: {fileID: 6843263171902533810}
-  m_Layer: 0
+  - component: {fileID: 3128150320924003134}
+  m_Layer: 15
   m_Name: Altar
-  m_TagString: Altar
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,6 +119,7 @@ Transform:
   - {fileID: 4173221493440460822}
   - {fileID: 4807964768619706032}
   - {fileID: 7673005530928110504}
+  - {fileID: 7716673445776541447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1542119406843512170
@@ -194,8 +172,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &252039872326461053
-CapsuleCollider:
+--- !u!65 &3128150320924003134
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -212,28 +190,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &6843263171902533810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4451548602159463179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf97d00f604fed4a8caa2e99cdeb277, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BossThing: {fileID: 0}
-  EffigyPosition: {fileID: 4807964768619706032}
-  HasObject: 0
-  AltarNumber: 0
-  GlowAura: {fileID: 2951908865428281366}
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2.75, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4952854383153858850
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +205,7 @@ GameObject:
   - component: {fileID: 2032971610367888405}
   - component: {fileID: 7223123007873593007}
   - component: {fileID: 3880075653477884085}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,9 +311,9 @@ GameObject:
   - component: {fileID: 5976978911504125407}
   - component: {fileID: 4020957791177099897}
   - component: {fileID: 4763450756275467500}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: EffigyPosition
-  m_TagString: pickup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -459,6 +418,77 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.038384274, y: 0.025745066, z: 0.13782984}
   m_Center: {x: -0.0075399047, y: -0.00017148022, z: -0.005271379}
+--- !u!1 &5704178819038237778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7716673445776541447}
+  - component: {fileID: 7435120913869078257}
+  - component: {fileID: 6216799622163200033}
+  m_Layer: 15
+  m_Name: GameObject
+  m_TagString: Altar
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7716673445776541447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704178819038237778}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2.5, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3241225133523340612}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7435120913869078257
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704178819038237778}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6216799622163200033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704178819038237778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf97d00f604fed4a8caa2e99cdeb277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossThing: {fileID: 0}
+  EffigyPosition: {fileID: 4807964768619706032}
+  HasObject: 0
+  AltarNumber: 0
+  GlowAura: {fileID: 2951908865428281366}
 --- !u!1 &6522390527980131977
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +501,7 @@ GameObject:
   - component: {fileID: 1624078903097261038}
   - component: {fileID: 3586693241564150566}
   - component: {fileID: 6697002291380033121}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
