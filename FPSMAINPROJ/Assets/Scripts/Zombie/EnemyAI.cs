@@ -115,7 +115,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          startsight = sight;
 
-        stoppingDistance = Range;
+       
         ChasingPLayer = false;
         speednerfed = false;
         damagenerfed = false;
@@ -175,8 +175,14 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         CheckRange();
 
+        if (Range / 2 >= 2)
+        {
+            agent.stoppingDistance = Range / 2;
+        }
+        else
+            agent.stoppingDistance = 2;
 
-            agent.SetDestination(gameManager.gameInstance.player.transform.position);
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
         
    
         sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
