@@ -16,10 +16,7 @@ public class RangedEnemy : EnemyAI
     float castDelay = 1;
     [SerializeField] float castRange;
     bool canAttack;
-    float basespeed;
-    bool waitdone;
-    bool AttackDone;
-    bool inPosition;
+  
 
 
     [SerializeField] bool HasRangedAttacks;
@@ -50,8 +47,7 @@ public class RangedEnemy : EnemyAI
         base.Start();
         agent.stoppingDistance = castRange / 2;
         canAttack = true;
-        AttackDone = true;
-        inPosition = false;
+    
         caster = Caster.NormalCaster;
         LazerSpeed = ProjectileSpeed * 2;
 
@@ -148,12 +144,7 @@ public class RangedEnemy : EnemyAI
         base.Die();
     }
 
-    IEnumerator wait(float time)
-    {
-        waitdone = false;
-        yield return new WaitForSeconds(time);
-        waitdone = true;
-    }
+
  
 
 

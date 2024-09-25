@@ -253,7 +253,7 @@ public class Projectile : MonoBehaviour
 
     void burn()
     {
-        float TickStrength = Strength / 10;
+        float TickStrength = Strength;
         float tickrate = EffectDuration / 2 * Strength;
         PlayerDamage.TickDamage(EffectDuration, TickStrength, tickrate);
     }

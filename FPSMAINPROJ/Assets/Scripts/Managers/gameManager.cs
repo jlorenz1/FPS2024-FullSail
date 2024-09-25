@@ -73,7 +73,10 @@ public class gameManager : MonoBehaviour
     public Image checkpoint;
     public Image gem;
     public Image EffigyImage;
-  
+    public Image StatusBurn;
+    public Image StatusSlow;
+    public Image StatusStun;
+
 
     [Header("----PLAYER----")]
     public PlayerController playerScript;
@@ -246,6 +249,9 @@ public class gameManager : MonoBehaviour
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolSlider.value) * 20);
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(SFXVolSlider.value) * 20);
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolSlider.value) * 20);
+       StatusSlow.enabled = false;
+       StatusStun.enabled = false;
+       StatusBurn.enabled = false;
     }
 
 

@@ -399,11 +399,21 @@ public class PlayerController : MonoBehaviour, IDamage
         if (SpeedStateSlow)
         {
             speed *= slowStrength;
+            if (speed > 0)
+            {
+                gameManager.gameInstance.StatusSlow.enabled = true;
+            }
+            else if (speed <= 0)
+                gameManager.gameInstance.StatusStun.enabled = true;
+
         }
         else if (!isSprinting)
+        {
             speed = originalSpeed;
+            gameManager.gameInstance.StatusSlow.enabled = false;
+            gameManager.gameInstance.StatusStun.enabled = false;
 
-
+        }
     }
 
     void sprintTimerUpdate()
@@ -685,15 +695,24 @@ public class PlayerController : MonoBehaviour, IDamage
 
         slowStrength = 1 - (strength / 100f);
 
-
+       
 
         SpeedStateSlow = true;
+
+        if(playerHP <= 0)
+        {
+            SpeedStateSlow = false;
+           
+            yield break;
+
+        }
 
 
         yield return new WaitForSeconds(duration);
 
-      
+
         SpeedStateSlow = false;
+        slowStrength = 1f;
     }
 
    public void TickDamage(float duration, float amountpertick, float tickrate)
@@ -704,6 +723,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator TakeTickDamage(float duration,  float amountpertick, float tickrate)
     {
+
+        gameManager.gameInstance.StatusBurn.enabled = true; 
         int numberOfTicks = Mathf.CeilToInt(duration / tickrate);
         for (int i = 0; i < numberOfTicks; i++)
         {
@@ -712,6 +733,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         yield return new WaitForSeconds(duration);
+        gameManager.gameInstance.StatusBurn.enabled = true;
     }
 
     private IEnumerator PerformDodge()
@@ -775,7 +797,7 @@ public class PlayerController : MonoBehaviour, IDamage
         controllerHeightOrgi = ((int)controller.height);
         currentMana = maxMana;
         updatePlayerUI();
-
+        SpeedStateSlow = false;
         controller.enabled = false;
         transform.position = gameManager.gameInstance.playerSpawnPoint.transform.position;
         controller.enabled = true;
