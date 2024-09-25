@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1686370724490997022}
   - component: {fileID: 1267636924786219957}
   - component: {fileID: 3480490385564838682}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +784,6 @@ MonoBehaviour:
   AttentionSpan: 9
   sight: 25
   DetectionRange: 10
-  flockRange: 8
   Helmate: {fileID: 0}
   Drops:
   - {fileID: 5661173919019611973, guid: 43e2fa7cb8349284395bbbdd3f540ce1, type: 3}
@@ -950,7 +949,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
