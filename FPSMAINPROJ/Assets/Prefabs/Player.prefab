@@ -673,7 +673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7601987394530848931
 Transform:
   m_ObjectHideFlags: 0
@@ -686,7 +686,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1244221119058567285}
   m_Father: {fileID: 3719972434953410602}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8406061015328258944
@@ -771,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 6409642837922477515}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.481, y: -0.429, z: 0.804}
+  m_LocalPosition: {x: 0.48098755, y: -0.4289999, z: 0.80400085}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -781,7 +782,7 @@ Transform:
   - {fileID: 598867705372442235}
   - {fileID: 3165293990442255300}
   - {fileID: 4269393112354961173}
-  m_Father: {fileID: 3719972434953410602}
+  m_Father: {fileID: 7601987394530848931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4229361147743948734
 MeshFilter:
@@ -858,6 +859,8 @@ MonoBehaviour:
   shootDamage: 0
   shootRate: 0
   shootDistance: 0
+  maxMageCount: 0
+  reserveAmmoCount: 0
   hekaAbility: {fileID: 0}
   hasHeka: 0
   muzzleFlash: {fileID: 3379390861019551599}
@@ -1131,7 +1134,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1244221119058567285}
   - {fileID: 7601987394530848931}
   - {fileID: 7123618806059994596}
   - {fileID: 2514323510124623274}

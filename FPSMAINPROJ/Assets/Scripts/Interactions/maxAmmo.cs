@@ -12,7 +12,7 @@ public class maxAmmo : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-       if (other.CompareTag("Player"))
+       if (other.CompareTag("Player") && gameManager.gameInstance.playerWeapon.gunList.Count > 0)
         {
             WeaponManager.WeaponsInstance.resetAllPlayerWeapons();
             AudioManager.audioInstance.playSFXAudio(pickupSound, pickupVol);
