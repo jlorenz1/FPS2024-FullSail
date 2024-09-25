@@ -206,7 +206,7 @@ public class WeaponController : MonoBehaviour
     IEnumerator shoot()
     {
 
-        if (selectedGun >= 0 && selectedGun < gunList.Count)
+        if (selectedGun >= 0 && selectedGun < gunList.Count && !gameManager.gameInstance.gameIsPaused)
         {
 
             if (gunList[selectedGun].currentAmmo >= 1 && !isReloading)
