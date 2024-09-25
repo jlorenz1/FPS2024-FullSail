@@ -160,8 +160,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         HasSpeedBuffed = false;
         AttackSpeedBuffed = false;
 
-
-     /*   roam();*/
+        SetTagRecursively(gameObject, "Zombie");
+        /*   roam();*/
 
     }
 
@@ -199,7 +199,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         CanSeePlayer();
         ApplyGravity();
 
- 
+       
 
 
         if (legdamage >= MaxHealth / 2)
@@ -226,7 +226,17 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
     // Death and Damage mechanics 
+    void SetTagRecursively(GameObject obj, string tag)
+    {
+        // Set the tag for the parent object
+        obj.tag = tag;
 
+        
+        foreach (Transform child in obj.transform)
+        {
+            SetTagRecursively(child.gameObject, tag);
+        }
+    }
     public virtual void takeDamage(float amount)
     {
       

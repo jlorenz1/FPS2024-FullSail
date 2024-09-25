@@ -733,7 +733,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         yield return new WaitForSeconds(duration);
-        gameManager.gameInstance.StatusBurn.enabled = true;
+        gameManager.gameInstance.StatusBurn.enabled = false;
     }
 
     private IEnumerator PerformDodge()
