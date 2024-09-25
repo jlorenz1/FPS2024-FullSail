@@ -89,7 +89,7 @@ public class SpecialEnemy : EnemyAI
         base.Update();
 
 
-        if (PlayerinAttackRange && ChasingPLayer && canAttack)
+        if (PlayerinAttackRange && canAttack)
         {
             StartCoroutine(DelayAttack());
         }
@@ -105,18 +105,6 @@ public class SpecialEnemy : EnemyAI
         }
 
 
-        float Distance = Vector3.Distance((gameManager.gameInstance.player.transform.position), transform.position);
-
-        if (Distance < AuraRange && willharm)
-        {
-
-            StartCoroutine(Exhaust());
-            if (!ChasingPLayer)
-            {
-                TargetPlayer();
-            }
-
-        }
 
         ZombiesInRange();
 
@@ -291,18 +279,7 @@ public class SpecialEnemy : EnemyAI
         base.Die();
     }
 
-    IEnumerator Exhaust()
-    {
-        willharm = false;
 
-        gameManager.gameInstance.playerScript.takeDamage(1 * SelfBuff);
-        gameManager.gameInstance.playerScript.CutSpeed(1, SelfBuff);
-
-        yield return new WaitForSeconds(1);
-        willharm = true;
-
-
-    }
 
     void SetTransparency(GameObject obj, float alpha)
     {

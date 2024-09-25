@@ -194,11 +194,47 @@ PrefabInstance:
       propertyPath: playerHP
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 8203031564338902554, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 503ef7b5a2779ca4ca747ac929dd76ff, type: 3}
+--- !u!1 &52581137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5774493416368366731, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
+  m_PrefabInstance: {fileID: 1308666767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &52581144
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52581137}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &219461832 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3903979259846224923, guid: 0131861e943975e41be04c9e4c7bd643, type: 3}
@@ -1880,10 +1916,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6443280935997272763, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
+    - {fileID: 273913782500672464, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
+    - {fileID: 5290875205454752075, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5774493416368366731, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 52581144}
   m_SourcePrefab: {fileID: 100100000, guid: b752020e5d609ee4d95301d3965dfdec, type: 3}
 --- !u!82 &1313964291 stripped
 AudioSource:

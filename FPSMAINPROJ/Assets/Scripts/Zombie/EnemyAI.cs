@@ -52,7 +52,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     [SerializeField] protected float DetectionRange = 10;
 
 
-    [SerializeField] float flockRange = 20;
+  //  [SerializeField] float flockRange = 20;
     float startsight;
     float stoppingDistance;
     [Header("-----Armor-----")]
@@ -113,9 +113,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-
-        isBlind = false;
-
          startsight = sight;
 
         stoppingDistance = Range;
@@ -164,7 +161,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         AttackSpeedBuffed = false;
 
 
-        roam();
+     /*   roam();*/
 
     }
 
@@ -176,11 +173,11 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             FacePlayer();
         }
 
+        CheckRange();
 
-        if(AlwaysSeePlayer == true)
-        {
+
             agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        }
+        
    
         sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
 
@@ -196,19 +193,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         CanSeePlayer();
         ApplyGravity();
 
-        if (ChasingPLayer)
-        {
-            TargetPlayer();
-        }
-        else if (!ChasingPLayer && !roaming)
-        {
-            roam();
-        }
-        CheckRange();
-        if (canGroan == true)
-        {
-            StartCoroutine(Groan());
-        }
+ 
 
 
         if (legdamage >= MaxHealth / 2)
@@ -239,7 +224,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     public virtual void takeDamage(float amount)
     {
       
-        StartCoroutine(flashRed());
+     
 
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
@@ -444,24 +429,21 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             else
                 PlayerinAttackRange = false;
 
-            if(Distance> DetectionRange && !isBlind)
-            {
-                ChasingPLayer = true;
-            }
+       
         }
     }
 
 
-   protected void TargetPlayer()
+/*   protected void TargetPlayer()
     {
       
         agent.stoppingDistance = stoppingDistance;
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
         FlockPlayer();
     }
+*/
 
-
-    void roam()
+  /*  void roam()
     {
         roaming = true;
         float roamRange = 10f;
@@ -496,7 +478,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         roam();
         agent.stoppingDistance = Range;
-    }
+    }*/
 
 
 
@@ -831,7 +813,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     public void TakeTrueDamage(float amountOfDamageTaken)
     {
 
-        StartCoroutine(flashRed());
+      
 
 
          PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
@@ -880,7 +862,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent.speed = startSpeed;
     }
 
-    public void FlockPlayer()
+/*    public void FlockPlayer()
     {
 
 
@@ -901,7 +883,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
                 }
             }
         }
-    }
+    }*/
 
    public void knockback(Vector3 hitPoint, float distance)
     {
