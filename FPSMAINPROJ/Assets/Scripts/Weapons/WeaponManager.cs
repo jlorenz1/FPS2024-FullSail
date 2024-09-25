@@ -37,24 +37,18 @@ public class WeaponManager : MonoBehaviour
     {
         for(int i = 0; i < allWeaponsInScene.Length; i++)
         {
-            allWeaponsInScene[i].currentMagazineIndex = 0;
-            for(int magIndex = 0; magIndex < allWeaponsInScene[i].magazines.Length; magIndex++)
-            {
-                allWeaponsInScene[i].magazines[magIndex].currentAmmoCount = allWeaponsInScene[i].magazines[magIndex].magazineCapacity;
-            }
+            allWeaponsInScene[i].currentAmmo = allWeaponsInScene[i].magMaxAmmount;
+            allWeaponsInScene[i].currentMaxAmmo = allWeaponsInScene[i].maxReserve;
         }
     }
 
     public void resetAllPlayerWeapons()
     {
         List<weaponStats> playerWeapons = gameManager.gameInstance.playerWeapon.gunList;
-        for(int i = 0; i < playerWeapons.Count; i++)
+        for (int i = 0; i < playerWeapons.Count; i++)
         {
-            playerWeapons[i].currentMagazineIndex = 0;
-            for (int magIndex = 0; magIndex < playerWeapons[i].magazines.Length; magIndex++)
-            {
-                playerWeapons[i].magazines[magIndex].currentAmmoCount = playerWeapons[i].magazines[magIndex].magazineCapacity;
-            }
+            playerWeapons[i].currentAmmo = playerWeapons[i].magMaxAmmount;
+
         }
         gameManager.gameInstance.playerWeapon.displayCurrentAmmo();
         gameManager.gameInstance.playerWeapon.displayMaxAmmo();

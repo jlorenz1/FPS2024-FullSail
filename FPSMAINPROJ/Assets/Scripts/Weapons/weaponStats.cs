@@ -35,8 +35,11 @@ public class weaponStats : ScriptableObject
     public float returnSpeed;
     [Header("----- Gun Ammo/Magazines -----")]
     public float reloadTime;
-    [SerializeField] public Magazines[] magazines; // Array of magazines used by the weapon
-    public int currentMagazineIndex = 0;
+    [SerializeFeild] public int currentAmmo;
+    [SerializeFeild] public int currentMaxAmmo;
+    [SerializeField] public int magMaxAmmount;
+    [SerializeFeild] public int maxReserve;
+
 
     [Header("----- Gun SFX/FX -----")]
     public GameObject muzzleFlash;
@@ -50,16 +53,4 @@ public class weaponStats : ScriptableObject
 
 }
 
-[System.Serializable]
-public class Magazines
-{
-    public int magazineCapacity = 30;   // Capacity of the magazine
-    public int currentAmmoCount = 30;  // Current number of bullets within magazine
 
-    public Magazines(int _magazineCapacity, int _currentAmmoCount)
-    {
-        magazineCapacity = _magazineCapacity;
-        currentAmmoCount = _currentAmmoCount;
-    }
-
-}

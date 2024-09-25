@@ -26,9 +26,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] int shootDistance;
     [SerializeFeild] string fireMode;
-    [SerializeFeild] int maxAmmoCount;
-    [SerializeFeild] int currentAmmoCount;
-    int reserveAmmoCount = 0;
+    
+    public int maxMageCount = 0;
+    public int reserveAmmoCount = 0;
 
     [Header("HEKA SPECIALTIES")]
     [SerializeField] public GameObject hekaAbility;
@@ -83,14 +83,13 @@ public class WeaponController : MonoBehaviour
         {
             if(gunList.Count > 0)
             {
-                if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount < gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity)
-                {
+                
                     if (!isReloading)
                     {
                         isReloading = true;
                         StartCoroutine(reload());
                     }
-                }
+                
             }
             
         }
@@ -210,10 +209,10 @@ public class WeaponController : MonoBehaviour
         if (selectedGun >= 0 && selectedGun < gunList.Count)
         {
 
-            if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 1 && !isReloading)
+            if (gunList[selectedGun].currentAmmo >= 1 && !isReloading)
             {
 
-                gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount--;
+                gunList[selectedGun].currentAmmo--;
                 isShooting = true;
                 //StartCoroutine(flashMuzzel());
                 AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].shootSound[UnityEngine.Random.Range(0, gunList[selectedGun].shootSound.Length)], gunList[selectedGun].shootVol);
@@ -239,6 +238,8 @@ public class WeaponController : MonoBehaviour
                     {
                         // Apply the modified damage
                         dmg.takeDamage(shootDamage);
+                        
+                        
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                         bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
@@ -255,7 +256,7 @@ public class WeaponController : MonoBehaviour
                 displayCurrentAmmo();
                 isShooting = false;
             }
-            else if (gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount >= 0 && !isReloading)
+            else if (gunList[selectedGun].currentAmmo <= 0 && !isReloading)
             {
                 isReloading = true;
                 StartCoroutine(reload());
@@ -311,17 +312,22 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reload()
     {
-        if (gunList[selectedGun].currentMagazineIndex + 1 < gunList[selectedGun].magazines.Length && isReloading)
+        int ammoNeeded = gunList[selectedGun].magMaxAmmount - gunList[selectedGun].currentAmmo;
+
+        if (gunList[selectedGun].currentMaxAmmo > 0)
         {
+            if (ammoNeeded > gunList[selectedGun].currentMaxAmmo)
+            {
+                ammoNeeded = gunList[selectedGun].currentMaxAmmo;
+            }
             StartCoroutine(startReloadAnim());
-            gunList[selectedGun].currentMagazineIndex++;
-            gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].magazineCapacity;
+            gunList[selectedGun].currentMaxAmmo -= ammoNeeded;
+            gunList[selectedGun].currentAmmo += ammoNeeded;
         }
         else
         {
-            gameManager.gameInstance.displayRequiredIemsUI("No more mags in weapon", 2f);
+            gameManager.gameInstance.displayRequiredIemsUI("No more ammo!", 2f);
         }
-        
 
         AudioManager.audioInstance.playSFXAudio(gunList[selectedGun].reloadSound, gunList[selectedGun].reloadVol);
         yield return new WaitForSeconds(gunList[selectedGun].reloadTime);
@@ -434,27 +440,14 @@ public class WeaponController : MonoBehaviour
     }
     public void displayCurrentAmmo()
     {
-        gameManager.gameInstance.ammoCount.text = gunList[selectedGun].magazines[gunList[selectedGun].currentMagazineIndex].currentAmmoCount.ToString("F0");
+        gameManager.gameInstance.ammoCount.text = gunList[selectedGun].currentAmmo.ToString("F0");
     }
 
     public void displayMaxAmmo()
     {
-        int amountToDisplay = 0;
-        for (int i = 0; i < gunList[selectedGun].magazines.Length; i++)
-        {
-            if(i < gunList[selectedGun].currentMagazineIndex)
-            {
-                continue;
-            }
-            amountToDisplay += gunList[selectedGun].magazines[i].currentAmmoCount;
-        }
-
-        if (gunList[selectedGun].currentMagazineIndex == gunList[selectedGun].magazines.Length - 1)
-        {
-            amountToDisplay = 0;
-        }
+        
  
-        gameManager.gameInstance.maxAmmoCount.text = amountToDisplay.ToString("F0");
+        gameManager.gameInstance.maxAmmoCount.text = gunList[selectedGun].currentMaxAmmo.ToString("F0");
     }
 
     public void getWeaponStats(weaponStats gun)
@@ -484,6 +477,9 @@ public class WeaponController : MonoBehaviour
         shootDistance = gun.shootingDistance;
         shootRate = gun.shootRate;
         fireMode = gun.fireMode;
+
+        
+
         //gameManager.gameInstance.armsScript.ChangeGun(gun.animationLayer);
 
         //recoil
