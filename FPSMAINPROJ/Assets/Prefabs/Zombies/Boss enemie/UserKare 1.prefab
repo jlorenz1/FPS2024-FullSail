@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1581569474851438141}
   m_Layer: 0
   m_Name: Cast Position
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7431725699348479655}
   m_Layer: 0
   m_Name: HekaOutting
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: final
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ae30fadcd4a0a344d846d5cd65c78a7a, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -154,11 +158,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9136418272992050547, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Head
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -8893078617153529600, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -8893078617153529600, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalScale.x
@@ -216,69 +224,129 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -8231985748732325105, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -7848369159158506728, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -7848369159158506728, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -7749954531557587584, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -7749954531557587584, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -7665695681066324938, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -7665695681066324938, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -7580674726233461017, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -7580674726233461017, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -7480308591867911057, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -7480308591867911057, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -7379991069318578728, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -7379991069318578728, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -7269728169905626603, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -7269728169905626603, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Head
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -6641415448970445652, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -6641415448970445652, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -6464442196715338680, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -6464442196715338680, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -6174616617585957727, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -6174616617585957727, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -5807882937595556629, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -5807882937595556629, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -5414624395751510879, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -5414624395751510879, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -5371340195093405708, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -5371340195093405708, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -4828883697708649473, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -4828883697708649473, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -4041843679934593160, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -4041843679934593160, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -3962647829050528788, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -286,27 +354,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3962647829050528788, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Body
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -3739190549483330935, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -3739190549483330935, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -3291235408406092113, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -3291235408406092113, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -3135291856957443891, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -3135291856957443891, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -3122781417413711294, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -3122781417413711294, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Legs
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -2928631036446536291, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -314,31 +394,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2928631036446536291, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Legs
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -2877383546989289611, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -2877383546989289611, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -2761226029462635039, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -2761226029462635039, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -2674198313801352495, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -2674198313801352495, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -2443496126575484628, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -2443496126575484628, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -1881965479880549823, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -1881965479880549823, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Legs
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -1725203512906818228, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -346,19 +442,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1725203512906818228, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -1271887500338679504, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -1271887500338679504, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -985985529979333096, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -985985529979333096, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: -932324769010898406, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: -932324769010898406, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -706658983441424561, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -366,23 +474,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -706658983441424561, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: -386015588449943590, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: -386015588449943590, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 39393839640448542, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 39393839640448542, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 283039404166705607, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 283039404166705607, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 353511925560422564, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 353511925560422564, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Name
@@ -404,57 +528,97 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 976506834366898501, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 1020948974440007045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1020948974440007045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 1136803088928199088, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 1136803088928199088, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 1276668221320053691, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276668221320053691, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 1770222384848715757, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 1770222384848715757, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 1945040816612613005, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1945040816612613005, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Legs
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 2750158988369709503, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 2750158988369709503, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 3187348372319397752, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3187348372319397752, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 3242671571992157913, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 3242671571992157913, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 3524756410954936840, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524756410954936840, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 3942624108592472809, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 3942624108592472809, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 4041770083595180687, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4041770083595180687, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 5061499379818021415, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -462,55 +626,95 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5061499379818021415, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 5447311324554542751, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 5447311324554542751, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 5901213795655131968, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901213795655131968, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 5923066636456171116, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 5923066636456171116, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 7311561063055367063, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311561063055367063, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 7547691395978512338, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7547691395978512338, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 7575159684894143055, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7575159684894143055, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 7763364265815274417, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7763364265815274417, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 7911950043651772996, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7911950043651772996, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 7942950104825480166, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7942950104825480166, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 7965746210909779490, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7965746210909779490, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 8515130166721925627, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8515130166721925627, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 8587201446677717949, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
@@ -518,7 +722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8587201446677717949, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_TagString
-      value: Zombie Arms
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 8804795166771358170, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -532,13 +736,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 8821932391240933978, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 8912401658242538923, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 8912401658242538923, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
+      objectReference: {fileID: 0}
     - target: {fileID: 9107990444132268871, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107990444132268871, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -737,7 +953,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000014373567, y: 0.43286902, z: -0.0000012898818}
+  m_ConnectedAnchor: {x: -0.000005901791, y: 0.4328743, z: 0.0000001937151}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -836,7 +1052,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000016781982, y: 0.41587842, z: 0.041526355}
+  m_ConnectedAnchor: {x: -0.0000035630765, y: 0.41588068, z: 0.04152799}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -937,7 +1153,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.18809357, y: 0.31194296, z: -0.0077715553}
+  m_ConnectedAnchor: {x: -0.18807323, y: 0.31194416, z: -0.007771373}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -1085,7 +1301,6 @@ MonoBehaviour:
   AttentionSpan: 0
   sight: 25
   DetectionRange: 10
-  flockRange: 8
   Helmate: {fileID: 0}
   Drops: []
   DropChance: 0
@@ -1328,7 +1543,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000130846165, y: 0.43294805, z: -0.00000041071326}
+  m_ConnectedAnchor: {x: 0.0000072033145, y: 0.4329525, z: -0.00000026635826}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1429,7 +1644,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.09374989, y: -0.049105983, z: -0.0054120934}
+  m_ConnectedAnchor: {x: 0.09372955, y: -0.049104787, z: -0.0054133646}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1528,7 +1743,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000016781974, y: 0.08836055, z: -0.013610803}
+  m_ConnectedAnchor: {x: -0.0000035633911, y: 0.088357925, z: -0.013608259}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1639,7 +1854,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.18808645, y: 0.31172124, z: -0.0063287206}
+  m_ConnectedAnchor: {x: 0.18808645, y: 0.31172192, z: -0.0063286126}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -1740,7 +1955,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000092945993, y: 0.26920992, z: -0.0000002682209}
+  m_ConnectedAnchor: {x: -0.0000006556511, y: 0.26918963, z: -0.0000021606684}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -1841,7 +2056,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000074505806, y: 0.26917645, z: 0.000000044703484}
+  m_ConnectedAnchor: {x: 0.0000003222376, y: 0.26919687, z: -0.0000013485551}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -1995,7 +2210,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.09375011, y: -0.049106024, z: -0.0052536954}
+  m_ConnectedAnchor: {x: -0.09372977, y: -0.04910197, z: -0.0052549676}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -2096,6 +2311,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
       propertyPath: m_Name
       value: staff
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
+      propertyPath: m_TagString
+      value: Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 4762433505248599282, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
       propertyPath: m_LocalRotation.w

@@ -230,9 +230,12 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-        else if (projectileType == ProjectileType.AOE && !other.CompareTag("Player") && !other.CompareTag("Zombie"))
+        else if (  !other.CompareTag("Player") && !other.CompareTag("Zombie"))
         {
-            CreateAOE(gameObject.transform.position);
+            if (projectileType == ProjectileType.AOE)
+            {
+                CreateAOE(gameObject.transform.position);
+            }
             Destroy(gameObject);
 
         }
@@ -254,7 +257,7 @@ public class Projectile : MonoBehaviour
     void burn()
     {
         float TickStrength = Strength;
-        float tickrate = EffectDuration / 2 * Strength;
+        float tickrate = 0.1f;
         PlayerDamage.TickDamage(EffectDuration, TickStrength, tickrate);
     }
 
