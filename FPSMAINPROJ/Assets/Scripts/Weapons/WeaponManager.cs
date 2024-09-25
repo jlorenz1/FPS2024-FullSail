@@ -47,7 +47,7 @@ public class WeaponManager : MonoBehaviour
         List<weaponStats> playerWeapons = gameManager.gameInstance.playerWeapon.gunList;
         for (int i = 0; i < playerWeapons.Count; i++)
         {
-            playerWeapons[i].currentAmmo = playerWeapons[i].magMaxAmmount;
+            playerWeapons[i].currentMaxAmmo += playerWeapons[i].magMaxAmmount;
 
         }
         gameManager.gameInstance.playerWeapon.displayCurrentAmmo();
