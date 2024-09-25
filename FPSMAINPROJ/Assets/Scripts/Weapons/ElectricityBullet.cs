@@ -42,7 +42,7 @@ public class ElectricityBullet : MonoBehaviour
         {
 
             damageable.takeDamage(damage);
-            if(spawnBounce != null && closestZombie.transform.Find("mixamorig5:Hips/HekaOutting") != null) 
+            if (closestZombie != null)
             {
                 if (currentBounces < bounceMax)
                 {
@@ -58,6 +58,7 @@ public class ElectricityBullet : MonoBehaviour
                     //currentBounces++;
                 }
             }
+            
         }
         else
         {
