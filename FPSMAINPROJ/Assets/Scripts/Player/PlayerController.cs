@@ -164,6 +164,8 @@ public class PlayerController : MonoBehaviour, IDamage
             _playerInstance = this;
         }
 
+        originalSpeed = speed;
+
         HPorig = playerHP;
         damage = playerWeapon.shootDamage;
         spawnPlayer();
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isSprinting = false;
         isShooting = false;
         isCrouching = false;
-        currentSpeed = originalSpeed;
+        speed = originalSpeed;
     }
 
 
@@ -767,7 +769,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         playerHP = HPorig;
         sprintTimer = maxSprintTimer;
-        originalSpeed = speed;
+    
         crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);
