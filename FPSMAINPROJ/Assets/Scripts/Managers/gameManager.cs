@@ -322,7 +322,7 @@ public class gameManager : MonoBehaviour
     public void PauseGame()
     {
         // Toggle the pause state of the game
-        gameIsPaused = !gameIsPaused;
+        gameIsPaused = true;
         // Adjust the game's time scale
         Time.timeScale = 0;
         // Adjust the cursor visibility and restrictions
@@ -351,7 +351,7 @@ public class gameManager : MonoBehaviour
     // Unpause the Game
     public void UnpauseGame()
     {
-        gameIsPaused = !gameIsPaused;
+        gameIsPaused = false;
         // Adjust the timescale
         Time.timeScale = 1;
         // Readjust the cursor properties and it's visibility
