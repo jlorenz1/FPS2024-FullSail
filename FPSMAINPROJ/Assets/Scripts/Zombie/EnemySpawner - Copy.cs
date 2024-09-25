@@ -34,12 +34,22 @@ public class EnemySpawner : MonoBehaviour
     }
     public void RefeshSpawnPoints()
     {
-        PopulateSpawnPoints();
+        if(spawnPoints.Count > 0)
+        {
+            foreach(Transform t in spawnPoints)
+            {
+                t.gameObject.SetActive(false);
+            }
+        }
+
+
+        spawnPoints.Clear();
+       
     }
 
     public void PopulateSpawnPoints()
     {
-        spawnPoints.Clear(); // Clear any existing points 
+      
 
         // Find all GameObjects with the "SpawnPoint" tag and add them to the list
         GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");

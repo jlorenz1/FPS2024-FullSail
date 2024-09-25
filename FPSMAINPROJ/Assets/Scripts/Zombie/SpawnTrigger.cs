@@ -77,13 +77,14 @@ public class SpawnTrigger : MonoBehaviour
             }
             if (!TriggerEntered)
             {
+                gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
 
                 for (int i = 0; i < SpawnLocation.Length; i++)
                 {
                     SpawnLocation[i].SetActive(true);
                 }
 
-                gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
+                gameManager.gameInstance.enemySpawner.PopulateSpawnPoints();
 
                 if (!isSpecific && !isSet)
                     SpawnEnemies(ZombieSpawnCount);
