@@ -58,7 +58,8 @@ public class WeaponController : MonoBehaviour
     public bool hasTempest = false;
     public bool hasEclipse = false;
     public bool hasFloods = false;
-   
+    bool isSwapping = false;
+
     void Start()
     {
         cameraScript = FindObjectOfType<cameraController>();
@@ -131,7 +132,7 @@ public class WeaponController : MonoBehaviour
 
     void handleFullAuto()
     {
-        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting)
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && !isShooting && !isSwapping)
         {
             StartCoroutine(shoot());
         }
@@ -139,7 +140,7 @@ public class WeaponController : MonoBehaviour
 
     void handleSemiAuto()
     {
-        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting)
+        if (Input.GetButtonDown("Fire1") && gunList.Count > 0 && !isShooting && !isSwapping)
         {
             StartCoroutine(shoot());
         }
@@ -147,7 +148,7 @@ public class WeaponController : MonoBehaviour
 
     void handleHeka()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting)
+        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && !isSwapping)
         {
             if (gunList[selectedGun].hekaSchool == "Electricity")
             {
@@ -166,7 +167,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator shootElectricity()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
+        if (gameManager.gameInstance.playerScript.currentMana > hekaManaAmount) 
         {
             playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
@@ -175,7 +176,7 @@ public class WeaponController : MonoBehaviour
     }
     IEnumerator shootDarkness()
     {
-        if(Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
+        if(gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
             playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
@@ -185,7 +186,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator shootFloods()
     {
-        if (Input.GetButtonDown("Fire2") && hasHeka && !isShooting && gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
+        if (gameManager.gameInstance.playerScript.currentMana > hekaManaAmount)
         {
             playHekaEffects();
             gameManager.gameInstance.playerScript.mana(hekaManaAmount);
@@ -206,7 +207,7 @@ public class WeaponController : MonoBehaviour
     IEnumerator shoot()
     {
 
-        if (selectedGun >= 0 && selectedGun < gunList.Count)
+        if (selectedGun >= 0 && selectedGun < gunList.Count && !gameManager.gameInstance.gameIsPaused && !isSwapping)
         {
 
             if (gunList[selectedGun].currentAmmo >= 1 && !isReloading)
@@ -542,6 +543,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator weaponSwapAnim()
     {
+        isSwapping = true;
         Vector3 startPos = gunTransform.localPosition;
         Vector3 lowerPos = startPos + new Vector3(0f, -1f, 0);
 
@@ -559,6 +561,7 @@ public class WeaponController : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
 
+        isSwapping = false;
     }
 
 
