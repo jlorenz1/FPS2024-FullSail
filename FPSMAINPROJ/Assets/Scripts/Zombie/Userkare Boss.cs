@@ -132,22 +132,6 @@ public class Userkare : EnemyAI
       
         base.Update();
 
-        if (sheild != null && sheild.activeInHierarchy == true)
-        {
-            float SheildHealth = sheild.GetComponent<EnemySheilds>().GetHitPoints();
-
-            if (SheildHealth <= 0)
-            {
-                Destroy(sheild);
-            }
-        }
-        else
-            return;
-
-        if (MaxHealth > 1000)
-        {
-            MaxHealth = 1000;
-        }
 
         agent.SetDestination(gameManager.gameInstance.player.transform.position);
 
@@ -166,11 +150,32 @@ public class Userkare : EnemyAI
 
         if (PlayerinAttackRange && canattack)
         {
-            animator.SetTrigger("Heal");
-           // animator.SetTrigger("Shoot");
+
+            animator.SetTrigger("Shoot");
 
             canattack = false;
         }
+
+
+
+        if (sheild != null && sheild.activeInHierarchy == true)
+        {
+            float SheildHealth = sheild.GetComponent<EnemySheilds>().GetHitPoints();
+
+            if (SheildHealth <= 0)
+            {
+                Destroy(sheild);
+            }
+        }
+        else
+            return;
+
+        if (MaxHealth > 1000)
+        {
+            MaxHealth = 1000;
+        }
+
+  
 
       
 

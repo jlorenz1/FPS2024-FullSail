@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     private GameObject currentModel;
     float sfxVolume;
-    bool PlayerInSIte;
+    protected bool PlayerInSIte;
     bool roaming;
     protected bool ressitKnockBack;
     protected bool AlwaysSeePlayer;
@@ -347,6 +347,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     }
 
+
     //movement mechanics 
     void ApplySeparationAndRandomMovement()
     {
@@ -430,20 +431,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             if (hit.collider.CompareTag("Player") && AngleToPlayer <= ViewAngle)
             {
                 PlayerInSIte = true;
-                // Ensure we're in chasing mode if the player is spotted
-                if (!ChasingPLayer)
-                {
-                    ChasingPLayer = true;
-                }
+              
             }
             else
             {
                 PlayerInSIte = false;
-                // Switch back to roaming if the player is no longer in sight
-                if (ChasingPLayer)
-                {
-                    ChasingPLayer = false;
-                }
+              
             }
         }
  

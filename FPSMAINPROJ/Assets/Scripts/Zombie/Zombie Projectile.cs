@@ -147,9 +147,10 @@ public class Projectile : MonoBehaviour
         // Update tracer if it exists
         if (tracerLineRenderer != null)
         {
- 
-            tracerLineRenderer.SetPosition(0, transform.position);
-            tracerLineRenderer.SetPosition(1, transform.position + currentDirection * 100); 
+
+            tracerLineRenderer.SetPosition(0, transform.position - transform.forward * 10); 
+
+            tracerLineRenderer.SetPosition(1, transform.position); 
         }
     }
 
@@ -345,7 +346,7 @@ public class Projectile : MonoBehaviour
             
             tracerLineRenderer.positionCount = 2; 
             tracerLineRenderer.SetPosition(0, transform.position); 
-            tracerLineRenderer.SetPosition(1, transform.position + transform.forward * 100); 
+            tracerLineRenderer.SetPosition(1, transform.position ); 
 
            
             tracerLineRenderer.material = new Material(Shader.Find("Unlit/Color")); 

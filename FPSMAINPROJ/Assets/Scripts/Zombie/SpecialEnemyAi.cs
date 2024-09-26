@@ -89,21 +89,27 @@ public class SpecialEnemy : EnemyAI
         base.Update();
 
 
-        if (PlayerinAttackRange && canAttack)
-        {
-            StartCoroutine(DelayAttack());
-        }
 
-      
 
-        if (Time.time >= nextAbilityTime && ChasingPLayer)
+        if (Time.time >= nextAbilityTime && PlayerInSIte && canAttack)
         {
 
             animator.SetTrigger("Support");
 
             nextAbilityTime = Time.time + specialAbilityCooldown;
+
+            canAttack = false;
         }
 
+
+
+
+        if (PlayerinAttackRange && canAttack && PlayerInSIte)
+        {
+            canAttack = false;
+        }
+
+      
 
 
         ZombiesInRange();
@@ -299,32 +305,25 @@ public class SpecialEnemy : EnemyAI
         }
     }
 
-
-
-    IEnumerator DelayAttack()
+    public void EnableAttack()
     {
-        canAttack = false;
-        CastAttack();
-        yield return new WaitForSeconds(AttackDelay);
-
         canAttack = true;
     }
 
-    void CastAttack()
-    {
 
+    public void CastAttack(ProjectileAblity ABILITY)
+    {
         GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
         if (projectileScript == null)
         {
             projectileScript = projectile.AddComponent<Projectile>();
         }
-
-        projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-        projectileScript.SetColor(BulletColor, BulletMaterial);
-        if (Type == ProjectileType.AOE)
+        if (projectileScript != null)
         {
-            projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
+            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ABILITY, AbilityStrength, 1f, caster);
+
+            projectileScript.SetColor(BulletColor, BulletMaterial);
         }
 
     }
