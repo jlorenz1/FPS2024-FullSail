@@ -23,20 +23,11 @@ public class AlterShopController : MonoBehaviour
     public bool pickedWeaponUp = false;
     void Start()
     {
-        activeArm = Instantiate(emptyArm, armStartPoint.position, emptyArm.transform.rotation);
+        armStartPoint.localRotation = Quaternion.Euler(0f, -90f, -90f);
+        activeArm = Instantiate(emptyArm, armStartPoint.position, armStartPoint.transform.localRotation);
         activeArm.transform.SetParent(armStartPoint.transform);
         
         weaponArmActive = false;
-    }
-
-    private void Update()
-    {
-        if(!changingArm && pickedWeaponUp)
-        {
-            StartCoroutine(changeArm(emptyArm));
-            pickedWeaponUp = false;
-            weaponArmActive = false;
-        }
     }
 
     public IEnumerator changeArm(GameObject armToSpawn)
@@ -67,7 +58,7 @@ public class AlterShopController : MonoBehaviour
         }
         
         
-        GameObject newArm = Instantiate(armToSpawn, armStartPoint.position, armToSpawn.transform.localRotation);
+        GameObject newArm = Instantiate(armToSpawn, armStartPoint.position, Quaternion.Euler(0f, -90f, -90f));
         newArm.transform.SetParent(armStartPoint.transform);
         activeArm = newArm;
         activeArm.SetActive(true); 
@@ -113,7 +104,7 @@ public class AlterShopController : MonoBehaviour
 
     public void pharoahsEclipse()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 25 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && !weaponArmActive) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 20 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && !weaponArmActive) 
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasEclipse)
@@ -164,7 +155,7 @@ public class AlterShopController : MonoBehaviour
 
     public void healPlayer()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 5 && gameManager.gameInstance.playerScript.playerHP != gameManager.gameInstance.playerScript.HPorig) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 5 && gameManager.gameInstance.playerScript.playerHP != gameManager.gameInstance.playerScript.HPorig) //2 for testing
         {
             float healthAmount = 25;
 
