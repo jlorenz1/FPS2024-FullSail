@@ -44,6 +44,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gameLoseMenu;
     [SerializeField] public GameObject gameAlterMenu;
     [SerializeField] public GameObject NoGems;
+    [SerializeField] public TMP_Text altarPromtText;
     [SerializeField] public GameObject gameOptionsMenu;
     [SerializeField] public Slider sensSlider;
     [SerializeField] TMP_Text enemyCount;
@@ -296,7 +297,6 @@ public class gameManager : MonoBehaviour
             enemySpawner.ZombieSpawner(3);
             cycle = 0;
         }*/
-        displayInventoryMenu();
 
         pointCount.text = PointCount.ToString("F0");
 
@@ -520,32 +520,7 @@ public class gameManager : MonoBehaviour
         isReqItemsUIDisplay = false;
     }
 
-    public void displayInventoryMenu()
-    {
-        if (!hasStartedRitual)
-        {
-            if (Input.GetKey(KeyCode.Tab))
-            {
-                inventoryMenu.SetActive(true);
-
-            }
-            else
-            {
-                inventoryMenu.SetActive(false);
-            }
-        }
-        else if (hasStartedRitual)
-        {
-            if(Input.GetKey(KeyCode.Tab)) 
-            {
-                ritualInProgress.SetActive(true);
-            }
-            else
-            {
-                ritualInProgress.SetActive(false);
-            }
-        }
-    }
+    
 
     public IEnumerator fadeOut()
     {

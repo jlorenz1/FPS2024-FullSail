@@ -7,7 +7,7 @@ using UnityEngine;
 public class AlterShopController : MonoBehaviour
 {
     [SerializeField] Transform armStartPoint;
-    
+
     [SerializeField] GameObject emptyArm;
     [SerializeField] GameObject tempestArm;
     [SerializeField] GameObject darknessArm;
@@ -17,7 +17,7 @@ public class AlterShopController : MonoBehaviour
     public GameObject activeArm;
     GameObject activeArmInstance;
 
-    
+
     bool changingArm;
     public bool weaponArmActive = false;
     public bool pickedWeaponUp;
@@ -26,16 +26,16 @@ public class AlterShopController : MonoBehaviour
         armStartPoint.localRotation = Quaternion.Euler(0f, -90f, -90f);
         activeArm = Instantiate(emptyArm, armStartPoint.position, armStartPoint.transform.localRotation);
         activeArm.transform.SetParent(armStartPoint.transform);
-        
+
         weaponArmActive = false;
         pickedWeaponUp = true;
     }
 
-   
+
 
     public IEnumerator changeArm(GameObject armToSpawn)
     {
-        
+
         changingArm = true;
 
         Vector3 startPos = armStartPoint.localPosition;
@@ -46,7 +46,7 @@ public class AlterShopController : MonoBehaviour
 
         while (elapsed < swapTime)
         {
-            armStartPoint.localPosition  = Vector3.Lerp(startPos, lowerPos, elapsed / swapTime);
+            armStartPoint.localPosition = Vector3.Lerp(startPos, lowerPos, elapsed / swapTime);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -54,17 +54,17 @@ public class AlterShopController : MonoBehaviour
         activeArm.transform.localPosition = lowerPos;
 
 
-        if(armStartPoint.transform.childCount > 0)
+        if (armStartPoint.transform.childCount > 0)
         {
             Transform currentArm = armStartPoint.GetChild(0);
             Destroy(currentArm.gameObject);
         }
-        
-        
+
+
         GameObject newArm = Instantiate(armToSpawn, armStartPoint.position, Quaternion.Euler(0f, -90f, -90f));
         newArm.transform.SetParent(armStartPoint.transform);
         activeArm = newArm;
-        activeArm.SetActive(true); 
+        activeArm.SetActive(true);
 
         elapsed = 0f;
 
@@ -83,7 +83,7 @@ public class AlterShopController : MonoBehaviour
 
     public void hekaTempest()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 35 && !gameManager.gameInstance.playerWeapon.hasTempest && !changingArm && pickedWeaponUp) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 35 && !gameManager.gameInstance.playerWeapon.hasTempest && !changingArm && pickedWeaponUp)
         {
             pickedWeaponUp = false;
             activeArm = tempestArm;
@@ -91,15 +91,16 @@ public class AlterShopController : MonoBehaviour
             gameManager.gameInstance.playerScript.inventory.takeGems(35);
             gameManager.gameInstance.PointCount -= 35;
             weaponArmActive = true;
-            
+
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 35)
         {
-            StartCoroutine(FlashNoGems());
+            //StartCoroutine(FlashNoGems());
+            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
         }
-        else
+        else if (!pickedWeaponUp)
         {
-            //UI for arm already active. 
+            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
         }
 
 
@@ -107,7 +108,7 @@ public class AlterShopController : MonoBehaviour
 
     public void pharoahsEclipse()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 20 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && pickedWeaponUp) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 20 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && pickedWeaponUp)
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasEclipse)
@@ -122,18 +123,19 @@ public class AlterShopController : MonoBehaviour
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 20)
         {
-            StartCoroutine(FlashNoGems());
+            //StartCoroutine(FlashNoGems());
+            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
         }
-        else
+        else if (!pickedWeaponUp)
         {
-            //UI for arm already active. 
+            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
         }
 
     }
 
     public void nilesWrath()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 25 && !gameManager.gameInstance.playerWeapon.hasFloods && !changingArm && pickedWeaponUp) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 25 && !gameManager.gameInstance.playerWeapon.hasFloods && !changingArm && pickedWeaponUp)
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasFloods)
@@ -148,11 +150,12 @@ public class AlterShopController : MonoBehaviour
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 25)
         {
-            StartCoroutine(FlashNoGems());
+            //StartCoroutine(FlashNoGems());
+            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
         }
-        else
+        else if(!pickedWeaponUp)
         {
-            //UI for arm already active. 
+            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
         }
     }
 
@@ -175,14 +178,37 @@ public class AlterShopController : MonoBehaviour
             gameManager.gameInstance.playerScript.inventory.takeGems(5);
             gameManager.gameInstance.PointCount -= 5;
         }
-        else
-            StartCoroutine(FlashNoGems());
+        else if(gameManager.gameInstance.playerScript.inventory.gemCount() < 5)
+        {
+            //StartCoroutine(FlashNoGems());
+            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
+        }
+        else if (gameManager.gameInstance.playerScript.playerHP != gameManager.gameInstance.playerScript.HPorig)
+        {
+            //StartCoroutine(FlashNoGems());
+            StartCoroutine(flashPrompt("Full HP", 0.5f));
+        }
+
+
     }
 
-    IEnumerator FlashNoGems()
+    //    IEnumerator FlashNoGems()
+    //    {
+    //        gameManager.gameInstance.NoGems.GameObject().SetActive(true);
+    //        yield return new WaitForSeconds(0.5f);
+    //        gameManager.gameInstance.NoGems.GameObject().SetActive(false);
+    //    }
+     IEnumerator flashPrompt(string  prompt, float duration)
     {
+
+        gameManager.gameInstance.altarPromtText.text = prompt;
         gameManager.gameInstance.NoGems.GameObject().SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(duration);
         gameManager.gameInstance.NoGems.GameObject().SetActive(false);
+        gameManager.gameInstance.altarPromtText.text = string.Empty;
+
+
+
     }
-}
+
+} 

@@ -128,6 +128,11 @@ public class inventoryObject : ScriptableObject
             }
         }
     }
+
+    public void clearInventory()
+    {
+        containerForInv.Clear();
+    }
 }
 
     
