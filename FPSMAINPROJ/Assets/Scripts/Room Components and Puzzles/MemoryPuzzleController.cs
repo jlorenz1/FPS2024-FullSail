@@ -90,11 +90,14 @@ public class MemoryPuzzleController : MonoBehaviour
         //    displayTiles[pattern[i] - 1].transform.position = location;
         //    location += new Vector3(-1.25f, 0, 0);
         //}
-
-        for (int i = 0; i < pattern.Length; ++i)
+        int minRange = 0; //minimum range for randomly generated range
+        for (int i = 0; i < 5; ++i)
         {
-            GameObject location = randLocations[Random.Range(0, randLocations.Count)];
-            randLocations.Remove(location);
+            //randomly select tiles, must be in ascending order
+            GameObject location = randLocations[Random.Range(minRange, minRange + 2)]; //chooses between two tiles
+
+            minRange += 2; //to move onto next set of tiles
+
             displayTiles[pattern[i] - 1].transform.SetPositionAndRotation(location.transform.position, location.transform.rotation);
         }
 
