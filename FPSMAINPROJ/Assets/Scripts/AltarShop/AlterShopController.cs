@@ -20,7 +20,7 @@ public class AlterShopController : MonoBehaviour
     
     bool changingArm;
     public bool weaponArmActive = false;
-    public bool pickedWeaponUp = false;
+    public bool pickedWeaponUp;
     void Start()
     {
         armStartPoint.localRotation = Quaternion.Euler(0f, -90f, -90f);
@@ -28,7 +28,10 @@ public class AlterShopController : MonoBehaviour
         activeArm.transform.SetParent(armStartPoint.transform);
         
         weaponArmActive = false;
+        pickedWeaponUp = true;
     }
+
+   
 
     public IEnumerator changeArm(GameObject armToSpawn)
     {
@@ -80,9 +83,9 @@ public class AlterShopController : MonoBehaviour
 
     public void hekaTempest()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 35 && !gameManager.gameInstance.playerWeapon.hasTempest && !changingArm && !weaponArmActive) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 35 && !gameManager.gameInstance.playerWeapon.hasTempest && !changingArm && pickedWeaponUp) 
         {
-            
+            pickedWeaponUp = false;
             activeArm = tempestArm;
             StartCoroutine(changeArm(tempestArm));
             gameManager.gameInstance.playerScript.inventory.takeGems(35);
@@ -104,12 +107,12 @@ public class AlterShopController : MonoBehaviour
 
     public void pharoahsEclipse()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 20 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && !weaponArmActive) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 20 && !gameManager.gameInstance.playerWeapon.hasEclipse && !changingArm && pickedWeaponUp) 
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasEclipse)
             {
-                
+                pickedWeaponUp = false;
                 activeArm = darknessArm;
                 StartCoroutine(changeArm(darknessArm));
                 gameManager.gameInstance.playerScript.inventory.takeGems(20);
@@ -130,12 +133,12 @@ public class AlterShopController : MonoBehaviour
 
     public void nilesWrath()
     {
-        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 25 && !gameManager.gameInstance.playerWeapon.hasFloods && !changingArm && !weaponArmActive) 
+        if (gameManager.gameInstance.playerScript.inventory.gemCount() >= 25 && !gameManager.gameInstance.playerWeapon.hasFloods && !changingArm && pickedWeaponUp) 
         {
             //if player has gems amount
             if (!gameManager.gameInstance.playerWeapon.hasFloods)
             {
-                
+                pickedWeaponUp = false;
                 activeArm = floodsArm;
                 StartCoroutine(changeArm(floodsArm));
                 gameManager.gameInstance.playerScript.inventory.takeGems(25);
