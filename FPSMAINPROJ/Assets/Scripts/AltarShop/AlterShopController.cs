@@ -93,6 +93,10 @@ public class AlterShopController : MonoBehaviour
             gameManager.gameInstance.PointCount -= 35;
             weaponArmActive = true;
 
+            gameManager.gameInstance.gameAlterMenu.SetActive(false);
+            gameManager.gameInstance.gameActiveMenu = null;
+            gameManager.gameInstance.resumePlayerControls();
+
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 35)
         {
@@ -121,6 +125,11 @@ public class AlterShopController : MonoBehaviour
                 gameManager.gameInstance.playerScript.inventory.takeGems(20);
                 gameManager.gameInstance.PointCount -= 20;
                 weaponArmActive = true;
+
+
+                gameManager.gameInstance.gameAlterMenu.SetActive(false);
+                gameManager.gameInstance.gameActiveMenu = null;
+                gameManager.gameInstance.resumePlayerControls();
             }
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 20)
@@ -150,6 +159,10 @@ public class AlterShopController : MonoBehaviour
                 gameManager.gameInstance.playerScript.inventory.takeGems(25);
                 gameManager.gameInstance.PointCount -= 25;
                 weaponArmActive = true;
+
+                gameManager.gameInstance.gameAlterMenu.SetActive(false);
+                gameManager.gameInstance.gameActiveMenu = null;
+                gameManager.gameInstance.resumePlayerControls();
             }
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 25)

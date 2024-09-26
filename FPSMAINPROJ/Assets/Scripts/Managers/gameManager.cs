@@ -37,7 +37,7 @@ public class gameManager : MonoBehaviour
     [Header("----UI----")]
     [SerializeField] public Image fadeOverlay;
     public float fadeDuration;
-    [SerializeField] GameObject gameActiveMenu;
+    [SerializeField] public GameObject gameActiveMenu;
     [SerializeField] GameObject gameMainMenu;
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;

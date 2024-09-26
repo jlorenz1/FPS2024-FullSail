@@ -155,7 +155,7 @@ public class Interact : MonoBehaviour
                             
                             if (weapon.gun.hekaSchool != "None")
                             {
-                                gameManager.gameInstance.displayRequiredIemsUI("(Right Click / V) to use Heka Ability!", 1.0f);
+                                gameManager.gameInstance.displayRequiredIemsUI("(Right Click / V) to use Heka Ability!", 3.0f);
                                 gameManager.gameInstance.playerWeapon.hasHeka = true;
                                 var arm = weapon.transform.parent;
                                 var altar = arm.GetComponentInParent<AlterShopController>();
