@@ -20,12 +20,7 @@ public class Userkare : EnemyAI
     [SerializeField] Transform SheildPosition;
     [SerializeField] float sheildHealth; 
 
-    IEnemyDamage FellowZombie;
-    IEnemyDamage Partner;
-    [SerializeField] GameObject SummoningMob;
-    [SerializeField] GameObject summonpartner;
-    [SerializeField] int SummonAmount;
-    GameObject[] zombies;
+
     [SerializeField] float BuffRange;
     float PushBackRadius;
     bool UnCapped;
@@ -70,6 +65,7 @@ public class Userkare : EnemyAI
     [SerializeField] float AoeStrength;
     [SerializeField] float radius;
     [SerializeField] AOETYPE type;
+    [SerializeField] AOEDamage Heal;
     bool isStun;
     ProjectileType placeHolder;
     ProjectileAblity placeHolderAbility;
@@ -170,15 +166,15 @@ public class Userkare : EnemyAI
 
         if (PlayerinAttackRange && canattack)
         {
-
-            animator.SetTrigger("Shoot");
+            animator.SetTrigger("Heal");
+           // animator.SetTrigger("Shoot");
 
             canattack = false;
         }
 
       
 
-        zombies = GameObject.FindGameObjectsWithTag("Zombie");
+       
 
       
 
@@ -233,7 +229,7 @@ public class Userkare : EnemyAI
                     animator.SetTrigger("Sheild");
                 }
                 else
-                    Heal();
+                    animator.SetTrigger("Heal");
                 break;
 
          
@@ -289,29 +285,23 @@ public class Userkare : EnemyAI
         canattack = true;
     }
 
-    public void Heal()
+
+
+    public void CreateHeal()
     {
-        // heals all allies up to 70% of thier Hp
+        // Instantiate the HealArea and place it at the launchPoint position
+        GameObject HealArea = Instantiate(Heal.gameObject, launchPoint.position, Quaternion.identity);
 
+        // Get the AOEDamage component from the instantiated object
+        AOEDamage aoeDamage = HealArea.GetComponent<AOEDamage>();
 
-        foreach (GameObject zombie in zombies)
+        if (aoeDamage != null)
         {
-            float distance = Vector3.Distance(transform.position, zombie.transform.position);
-            if (distance < BuffRange)
-            {
-
-                IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
-                if (FellowZombie != null)
-                {
-                    float Healing = FellowZombie.GetMaxHP() * 0.2f;
-
-                    FellowZombie.AddHP(Healing);
-                    AddHP(5);
-                }
-            }
+            aoeDamage.expand(AoeStrength, BuffRange); // Call expand on the AOEDamage script
         }
-        PlayVoice(SheildOrHealVoiceLine);
     }
+
+
 
 
     public void CastBasic()
