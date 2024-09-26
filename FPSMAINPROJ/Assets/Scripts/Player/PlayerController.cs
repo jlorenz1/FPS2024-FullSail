@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public enum InventoryPos //for inventory
 {
@@ -140,6 +141,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private Coroutine manaTime;
     private Coroutine gunSprintCoroutine;
     public float speedDuringSprint = 0;
+    bool timerStarted;
+
     public static PlayerController playerInstance
     {
         get
@@ -462,28 +465,39 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator waitTimer()
     {
-        float startingFill = gameManager.gameInstance.playerSprintBar.fillAmount;
-        while (sprintTimer < maxSprintTimer)
+        if (!timerStarted)
         {
-            if (!onSprintCoolDown)
-                gameManager.gameInstance.playerSprintBar.color = Color.white;
-            else
+            timerStarted = true;
+            float startingFill = gameManager.gameInstance.playerSprintBar.fillAmount;
+            while (sprintTimer < maxSprintTimer)
             {
-                gameManager.gameInstance.playerSprintBar.color = new Color(Color.grey.r, Color.grey.g, Color.grey.b, 0.3f);
+                if (!onSprintCoolDown)
+                    gameManager.gameInstance.playerSprintBar.color = Color.white;
+                else
+                {
+                    gameManager.gameInstance.playerSprintBar.color = new Color(Color.grey.r, Color.grey.g, Color.grey.b, 0.3f);
+                }
+
+
+
+                sprintTimer += Time.deltaTime;
+                float fillAmount = Mathf.Lerp(startingFill, 1f, sprintTimer / maxSprintTimer);
+                gameManager.gameInstance.playerSprintBar.fillAmount = fillAmount;
+                yield return null;
             }
+            gameManager.gameInstance.playerSprintBar.fillAmount = 1f;
+            onSprintCoolDown = false;
+            timerStarted = false;
 
-
-
-            sprintTimer += Time.deltaTime;
-            float fillAmount = Mathf.Lerp(startingFill, 1f, sprintTimer / maxSprintTimer);
-            gameManager.gameInstance.playerSprintBar.fillAmount = fillAmount;
+            yield return new WaitForSeconds(.3f);
+            gameManager.gameInstance.SprintBarBoarder.transform.GameObject().SetActive(false);
+        }
+        else
+        {
             yield return null;
         }
-        gameManager.gameInstance.playerSprintBar.fillAmount = 1f;
-        onSprintCoolDown = false;
 
-        yield return new WaitForSeconds(.3f);
-        gameManager.gameInstance.SprintBarBoarder.transform.GameObject().SetActive(false);
+
 
     }
 
