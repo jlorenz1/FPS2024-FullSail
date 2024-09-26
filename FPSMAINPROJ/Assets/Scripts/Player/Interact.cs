@@ -151,7 +151,8 @@ public class Interact : MonoBehaviour
                         if (weapon != null)
                         {
                             gameManager.gameInstance.playerWeapon.getWeaponStats(weapon.gun);
-                            if (weapon.gun.hekaSchool != null)
+                            
+                            if (weapon.gun.hekaSchool != "None")
                             {
                                 gameManager.gameInstance.playerWeapon.hasHeka = true;
                                 var arm = weapon.transform.parent;
