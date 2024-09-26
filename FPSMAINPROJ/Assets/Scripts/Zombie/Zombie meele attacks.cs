@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Zombiemeeleattacks : MonoBehaviour
 {
@@ -14,7 +15,15 @@ public class Zombiemeeleattacks : MonoBehaviour
     {
         causesBleed = false;
 
+        gameObject.GetComponent<Collider>().enabled = false;
     }
+
+   public void ToggleColider()
+    {
+        gameObject.GetComponent<Collider>().enabled = !gameObject.GetComponent<Collider>().enabled;
+    }
+
+
 
 
 
@@ -28,12 +37,15 @@ public class Zombiemeeleattacks : MonoBehaviour
 
             if (causesBleed )
             {
-                player.TickDamage(duration, 0.5f, 3f);
+                player.TickDamage(duration, 10, 1f);
             }
         }
         else
             return;
     }
+
+
+
 
     public void SetDamage(float amount)
     {
@@ -46,16 +58,5 @@ public class Zombiemeeleattacks : MonoBehaviour
         causesBleed = !causesBleed;
     }
 
-    IEnumerator Bleed()
-    {
-        yield return new WaitForSeconds(duration); float bleedTick = 0.5f; // How often to apply bleed damage (every 0.5 seconds)
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            gameManager.gameInstance.playerScript.takeDamage(3f); // Apply 2% damage
-            elapsed += bleedTick;
-            yield return new WaitForSeconds(bleedTick);
-        }
-    }
+  
 }

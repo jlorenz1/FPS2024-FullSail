@@ -167,11 +167,9 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position);
-        if (ChasingPLayer && distanceToPlayer <= agent.stoppingDistance)
-        {
+      
             FacePlayer();
-        }
+        
 
         CheckRange();
 
@@ -427,10 +425,24 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected void FacePlayer()
     {
-        Quaternion Rot = Quaternion.LookRotation(PlayerDrr);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * FacePlayerSpeed);
+        Vector3 direction = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));  // Ignore y-axis for rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);  // Adjust the rotation speed
     }
 
+    void OnAnimatorIK(int layerIndex)
+    {
+        Animator animator = GetComponent<Animator>();
+
+        if (animator)
+        {
+            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
+            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 1);
+
+            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 1);
+        }
+    }
 
 
     void CheckRange()

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SekhmetBoss : EnemyAI
 {
@@ -16,36 +17,20 @@ public class SekhmetBoss : EnemyAI
     bool inAbilityRange;
     bool nextbuff;
     [SerializeField] Transform launchPoint;
+    [SerializeField] Transform meleeTip;
     [SerializeField] GameObject ProjectilePrefab;
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
+    [SerializeField] float rotationSpeed;
 
-    [Header("Projectile Stats")]
-    [SerializeField] float ProjectileSpeed;
-    [SerializeField] float ProjectileLifeTime;
-    [SerializeField] float ProjectileDamage;
-    [SerializeField] float ProjectileFollowTime;
-    [SerializeField] ProjectileType Type;
-    [SerializeField] ProjectileAblity projectileAblity;
-    [SerializeField] float AbilityStrength;
-    [SerializeField] float AbilityDuration;
-
-    [SerializeField] float effectDuration;
-    [SerializeField] float AoeStrength;
-    [SerializeField] float radius;
-    [SerializeField] AOETYPE type;
-
-    Caster caster;
-    [SerializeField] Color BulletColor;
-    [SerializeField] Material BulletMaterial;
-    float LazerSpeed;
 
     [Header("Audio")]
     
-    [SerializeField] public AudioClip stun;
     [SerializeField] public AudioClip burn;
     [SerializeField] public AudioClip[] partnerDeath;
+    public Transform rightHandTarget; 
     
+    public float weight = 1.0f;
 
     bool playedClip;
 
@@ -63,13 +48,15 @@ public class SekhmetBoss : EnemyAI
         gameManager.gameInstance.SpawnSekhmet();
         nextbuff = true;
         MeleeWeapon.SetDamage(damage);
-        caster = Caster.Sekhmet;
+
 
         playedClip = false;
 
         AlwaysSeePlayer = true;
 
         ressitKnockBack = true;
+
+        startSpeed = agent.speed;
     }
 
     // Update is called once per frame
@@ -78,22 +65,30 @@ public class SekhmetBoss : EnemyAI
         base.Update();
 
 
-      
+        if (rightHandTarget != null)
+        {
+          
+            Vector3 directionToPlayer = gameManager.gameInstance.player.transform.position - meleeTip.position;
 
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
-       if(gameManager.gameInstance.SekhmetisBerserk && nextbuff)
+           
+            Melee.transform.rotation = Quaternion.Slerp(meleeTip.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+
+        if (gameManager.gameInstance.SekhmetisBerserk && nextbuff)
         {
            StartCoroutine( GoBerserk());
         }
 
         if (PlayerinAttackRange && canattack)
         {
-          
+
             StartCoroutine(BaseAAttack());
         }
 
 
-        if (Time.time >= nextAbilityTime)
+        if (Time.time >= nextAbilityTime && canattack)
         {
             UseSpecialAbility();
           
@@ -155,7 +150,9 @@ public class SekhmetBoss : EnemyAI
         
         MeleeWeapon.SetBleed(); // Start bleeding effect
         animator.SetTrigger("Quick jab");
-       
+        yield return new WaitForSeconds(2f);
+
+        animator.SetBool("isMoving", true);
 
         // Wait for 3 seconds before stopping the bleeding effect
         yield return new WaitForSeconds(10f);
@@ -167,6 +164,20 @@ public class SekhmetBoss : EnemyAI
     public void BlinkingJab()
     {
         // teleports infront of the player and attacks them for 20% of their hp;
+        canattack = false;
+
+        animator.SetTrigger("JumpBack");
+
+
+        StartCoroutine(BlinkJab());
+     
+
+    }
+
+    IEnumerator BlinkJab()
+    {
+
+    
 
         Vector3 PlayerPosition = gameManager.gameInstance.player.transform.position;
         Vector3 forwardDirection = gameManager.gameInstance.player.transform.forward;
@@ -175,49 +186,17 @@ public class SekhmetBoss : EnemyAI
 
         transform.position = teleportPosition;
 
-        FacePlayer();
 
-        animator.SetTrigger("Quick jab");
+        animator.SetTrigger("Blink");
 
-        
+        yield return new WaitForSeconds(2);
 
+        canattack = true;
+
+        animator.SetBool("isMoving", true);
     }
-
    
       
-
-    IEnumerator CastAttackRoutine()
-    {
-   
-        animator.SetFloat("AttackSpeed", AttackSpeed); // New: Set animator speed to match cast speed
-        animator.SetTrigger("Shoot");
-        StartCoroutine(DisableWeapon());
-        yield return new WaitForSeconds(1f / AttackSpeed);
-
-      
-    }
-
-    public void CastAttack()
-    {
-        // Ranged attack logic
-      
-
-        GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
-        if (projectileScript == null)
-        {
-            projectileScript = projectile.AddComponent<Projectile>();
-        }
-
-        projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, AbilityDuration, caster);
-        projectileScript.SetColor(BulletColor, BulletMaterial);
-        if (Type == ProjectileType.AOE)
-        {
-            projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
-        }
-
-
-    }
 
     IEnumerator DisableWeapon()
     {
@@ -264,21 +243,9 @@ public class SekhmetBoss : EnemyAI
     }
 
 
-    void vacume()
-    {
-        //pulls the player closer in 
 
-        if (inAbilityRange)
-        {
-            Vector3 newPosition = agent.transform.position + (agent.transform.forward * (AttackRange / 2));
+   
 
-            // Update player's position
-            gameManager.gameInstance.playerScript.transform.position = newPosition;
-        }
-
-
-
-    }
 
     void UseSpecialAbility()
     {
@@ -295,11 +262,6 @@ public class SekhmetBoss : EnemyAI
                 reinforce();
                 break;
             case 3:
-                StartCoroutine(CastAttackRoutine());
-                break;
-
-              
-            case 4:
                 if (PlayerinAttackRange)
                 {
                     BleedingJab();
@@ -314,22 +276,52 @@ public class SekhmetBoss : EnemyAI
       canattack = true;
     }
 
+    public void AttackDone()
+    {
+        canattack = true;
+    }
+
     IEnumerator BaseAAttack()
     {
         canattack = false;
-
-       
-
-        //animator.SetFloat("Speed", 0);
        
         animator.SetTrigger("Slow jab");
 
-        yield return new WaitForSeconds(1/AttackSpeed);
+        yield return new WaitForSeconds(2.14f);
+
+        animator.SetBool("isMoving", true);
+     
+
+        yield return new WaitForSeconds(2.86f);
 
         canattack = true;
+    }
+
+    public void StopMoving()
+    {
+        animator.SetBool("isMoving", false);
 
     }
 
-   
 
+    public void ToggelCollider()
+    {
+        MeleeWeapon.ToggleColider();
+    }
+
+    void OnAnimatorIK(int layerIndex)
+    {
+        if (animator)
+        {
+            // Set the position and rotation of the right hand to the target
+            animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
+            animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
+
+            // Control the weight of the IK
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, weight);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightHand, weight);
+        }
+    }
+
+ 
 }
