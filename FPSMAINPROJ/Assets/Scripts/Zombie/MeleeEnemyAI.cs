@@ -12,7 +12,8 @@ public class MeleeEnemy : EnemyAI
     [SerializeField] Collider MeeleColider;
     [SerializeField] float rotationSpeed;
     public Transform rightHandTarget;
-    public float weight = 1.0f;
+    public Transform meleeTip;
+    public float weight = 10.0f;
 
 
     protected override void Start()
@@ -29,7 +30,8 @@ public class MeleeEnemy : EnemyAI
 
         if (PlayerinAttackRange && canAttack)
         {
-            StartCoroutine(DelayAttack());
+            AttackPlayer();
+            canAttack = false;
         }
 
         AdjustColliderRange();
@@ -39,12 +41,12 @@ public class MeleeEnemy : EnemyAI
         if (rightHandTarget != null)
         {
 
-            Vector3 directionToPlayer = gameManager.gameInstance.player.transform.position - weapon.transform.position;
+            Vector3 directionToPlayer = gameManager.gameInstance.player.transform.position - meleeTip.position;
 
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
 
 
-            weapon.transform.rotation = Quaternion.Slerp(weapon.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            meleeTip.rotation = Quaternion.Slerp(meleeTip.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
 
 
@@ -73,20 +75,13 @@ public class MeleeEnemy : EnemyAI
     }
 
 
-    IEnumerator DelayAttack()
+    public void CanAttack()
     {
-        canAttack = false;
-       
-        AttackPlayer();
-        yield return new WaitForSeconds(1/AttackSpeed);
         canAttack = true;
     }
 
-
     private void AttackPlayer()
     {
-
-        animator.SetFloat("AttackSpeed", AttackSpeed);
 
         animator.SetTrigger("Hit");
 

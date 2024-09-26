@@ -256,13 +256,41 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
+
+        animator.enabled = false;
+
+        Collider body = agent.GetComponent<Collider>();
+        if (body != null)
+        {
+            body.enabled = false;
+        }
+
+        Rigidbody Fall = agent.GetComponent<Rigidbody>();
+
+        if(Fall == null)
+        {
+            Fall = agent.AddComponent<Rigidbody>();
+        }
+        if (Fall != null)
+        {
+            Fall.isKinematic = false; // Ensure it's not kinematic
+            Fall.constraints = RigidbodyConstraints.FreezePositionY;
+            // Calculate the force direction
+            Vector3 forceDirection = -transform.forward; 
+            forceDirection.y = 0.25f; 
+            float forceMagnitude = 5f; 
+
+            // Apply the force
+            Fall.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+        }
+
         if (Drops.Count > 0)
         {
             LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
-        Destroy(gameObject);
+        Destroy(gameObject, 4);
     }
 
     public void DieWithoutDrops()
