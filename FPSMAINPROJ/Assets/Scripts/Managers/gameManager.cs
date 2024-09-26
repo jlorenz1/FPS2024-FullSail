@@ -548,12 +548,7 @@ public class gameManager : MonoBehaviour
         isUserKareDead = true;
     }
 
-    public void SekhmetDead()
-    {
-        UserkareIsUncaped = true;
-        isSekhmetDead = true;
-
-    }
+  
 
     public void SekhmetDeathLocation(Transform location)
     {

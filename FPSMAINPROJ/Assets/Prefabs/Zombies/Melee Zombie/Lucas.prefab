@@ -1534,7 +1534,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.05
-  m_Speed: 20
+  m_Speed: 8
   m_Acceleration: 120
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -1621,6 +1621,7 @@ MonoBehaviour:
   MeleeWeapon: {fileID: 8992262891581953208}
   Melee: {fileID: 8229097847163424598}
   rotationSpeed: 20
+  isBoss: 0
   burn: {fileID: 8300000, guid: b5ad89e242f130f4b88bf1a851742eda, type: 3}
   partnerDeath:
   - {fileID: 8300000, guid: 652383357fb0bb0438f1f98b2650a831, type: 3}

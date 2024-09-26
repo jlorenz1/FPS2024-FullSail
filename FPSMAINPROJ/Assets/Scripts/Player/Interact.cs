@@ -23,8 +23,9 @@ public class Interact : MonoBehaviour
     List<EffigyScript> Effgies = new List<EffigyScript>();
     private void Start()
     {
-        inventory = gameManager.gameInstance.playerScript.inventory;
+        
         playerScript = gameManager.gameInstance.playerScript;
+        inventory = playerScript.inventory;
         DisplayActive = gameManager.gameInstance.EffigyImage.gameObject.activeInHierarchy;
     }
     void Update()
@@ -257,10 +258,10 @@ public class Interact : MonoBehaviour
                         
                         Effgies.Add(newModel);
 
+
                     }
                     //PlayerAudio.PlayOneShot(PickUp, 1f);
                     AudioManager.audioInstance.playSFXAudio(PickUp, gameManager.gameInstance.playerScript.interactVol);
-                    inventory.updateInventoryUI();
                     Destroy(hit.collider.gameObject);
                 }
                 else if (pickup.item.type == itemType.flashlight)
