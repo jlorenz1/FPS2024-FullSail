@@ -154,6 +154,9 @@ public class Interact : MonoBehaviour
                             if (weapon.gun.hekaSchool != null)
                             {
                                 gameManager.gameInstance.playerWeapon.hasHeka = true;
+                                var arm = weapon.transform.parent;
+                                var altar = arm.GetComponentInParent<AlterShopController>();
+                                altar.pickedWeaponUp = true;
                             }
                             Destroy(hit.collider.gameObject);
                         }
@@ -263,7 +266,6 @@ public class Interact : MonoBehaviour
                     gameManager.gameInstance.displayRequiredIemsUI("'F' to use flashlight.", 3f);
                     inventory.AddItem(pickup.item, 1);
                     Destroy(hit.collider.gameObject);
-
                 }
             }
         }
