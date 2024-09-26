@@ -20,7 +20,15 @@ public class ButtonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        gameManager.gameInstance.playerScript.spawnPlayer();
+        if (gameManager.gameInstance.CurrentCheckPoint != null)
+        {
+            gameManager.gameInstance.playerScript.RespawnPlayer();
+        }
+        else
+            gameManager.gameInstance.playerScript.spawnPlayer();
+
+
+
         gameManager.gameInstance.UnpauseGame();
     }
 

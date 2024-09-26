@@ -31,10 +31,10 @@ public class SpawnTrigger : MonoBehaviour
     [SerializeField] GameObject SpecifcEnemy;
 
     bool isActivated;
-    bool wiped;
-    bool TriggerEntered;
+   public bool wiped;
+  public  bool TriggerEntered;
     int Count;
-    bool BossIsSpawned;
+  public  bool BossIsSpawned;
     int range;
     int chance;
     private void Start()
@@ -57,24 +57,11 @@ public class SpawnTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-
             if (wiped == false)
             {
-                GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-                foreach (GameObject zombie in zombies)
-                {
-                    IEnemyDamage Zombies = zombie.GetComponent<IEnemyDamage>();
-
-                    if (Zombies != null)
-                    {
-
-                        Zombies.DieWithoutDrops();
-
-                    }
-
-                }
-                wiped = true;
+                DespawnZombies();
             }
+
             if (!TriggerEntered)
             {
                 gameManager.gameInstance.enemySpawner.RefeshSpawnPoints();
@@ -116,13 +103,48 @@ public class SpawnTrigger : MonoBehaviour
 
     }
 
-
+    public void DisableSpawn()
+    {
+        for (int i = 0; i < SpawnLocation.Length; i++)
+        {
+            SpawnLocation[i].SetActive(false);
+        }
+    }
     void SpawnEnemies(int Amount)
     {
 
         gameManager.gameInstance.enemySpawner.ZombieSpawner(Amount);
 
     }
+
+    public void DespawnZombies()
+    {
+
+
+        
+            gameManager.gameInstance.playerRespawned = true;
+            StartCoroutine(delay());
+            GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
+            foreach (GameObject zombie in zombies)
+            {
+                IEnemyDamage Zombies = zombie.GetComponent<IEnemyDamage>();
+
+                if (Zombies != null)
+                {
+
+                    Zombies.DieWithoutDrops();
+
+                }
+
+            }
+         
+
+
+        
+    }
+
+
+
 
     void GetWhichType()
     {
@@ -178,5 +200,14 @@ public class SpawnTrigger : MonoBehaviour
             }
 
         }
+    }
+
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(5);
+
+        gameManager.gameInstance.playerRespawned = false ;
+      
+       
     }
 }
