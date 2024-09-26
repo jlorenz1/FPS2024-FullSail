@@ -20,12 +20,7 @@ public class Userkare : EnemyAI
     [SerializeField] Transform SheildPosition;
     [SerializeField] float sheildHealth; 
 
-    IEnemyDamage FellowZombie;
-    IEnemyDamage Partner;
-    [SerializeField] GameObject SummoningMob;
-    [SerializeField] GameObject summonpartner;
-    [SerializeField] int SummonAmount;
-    GameObject[] zombies;
+
     [SerializeField] float BuffRange;
     float PushBackRadius;
     bool UnCapped;
@@ -70,6 +65,7 @@ public class Userkare : EnemyAI
     [SerializeField] float AoeStrength;
     [SerializeField] float radius;
     [SerializeField] AOETYPE type;
+    [SerializeField] AOEDamage Heal;
     bool isStun;
     ProjectileType placeHolder;
     ProjectileAblity placeHolderAbility;
@@ -136,100 +132,74 @@ public class Userkare : EnemyAI
       
         base.Update();
 
-        if (sheild.activeInHierarchy == true)
+
+        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+
+
+
+        if (Time.time >= nextAbilityTime && canattack)
+        {
+            UseSpecialAbility();
+
+            nextAbilityTime = Time.time + AblityCoolDown;
+
+            canattack = false;
+        }
+
+
+
+        if (PlayerinAttackRange && canattack)
+        {
+
+            animator.SetTrigger("Shoot");
+
+            canattack = false;
+        }
+
+
+
+        if (sheild != null && sheild.activeInHierarchy == true)
         {
             float SheildHealth = sheild.GetComponent<EnemySheilds>().GetHitPoints();
 
             if (SheildHealth <= 0)
             {
-                sheild.SetActive(false);
+                Destroy(sheild);
             }
         }
+        else
+            return;
 
         if (MaxHealth > 1000)
         {
             MaxHealth = 1000;
         }
 
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
+  
 
-        if (PlayerinAttackRange && canattack &&  !IsSpecialAttacking)
-        {
       
-            StartCoroutine(CastAttackRoutine());
-        }
 
-        Summons = GameObject.FindGameObjectsWithTag("Summon");
+       
 
-        zombies = GameObject.FindGameObjectsWithTag("Zombie");
-
-        SummonCount = Summons.Length;
-
-        if (SummonCount > 30)
-        {
-            RespawnSekmet();
-        }
+      
 
 
-        if (Time.time >= nextAbilityTime)
-        {
-            UseSpecialAbility();
-
-            nextAbilityTime = Time.time + AblityCoolDown;
-        }
-
-
-        if (UnCapped && AddativeAP)
-        {
-            damage = PlayerStartHP - (PlayerStartHP * 0.1f);
-            StartCoroutine(RampingAbilites());
-        }
-
-
-        if (gameManager.gameInstance.LightGautlening == true)
-        {
-            LightGautling();
-            gameManager.gameInstance.LightGautlening = false;
-        }
-
-        if (gameManager.gameInstance.UserkareIsUncaped && nextbuff)
-        {
-            StartCoroutine(SetUncaped());
-        }
+   
 
        
     }
-    IEnumerator RampingAbilites()
-    {
-        AddativeAP = false;
-        damage++;
-        attackSpeed += 0.01f;
-        yield return new WaitForSeconds(4);
-        AddativeAP = true;
-    }
+  
 
     IEnumerator SpawnVoiceLine()
     {
-
+        canattack = false;
         yield return new WaitForSeconds(2);
 
         PlayVoice(Spawn);
+
+        canattack = true;
     }
 
-
-    IEnumerator SetUncaped()
-    {
-        nextbuff = false;
-
-        Armor = 0;
-        MaxHealth *= 2;
-        CurrentHealth *= 1;
-
-        yield return new WaitForSeconds(4);
-
-        nextbuff = true;
-
-    }
 
 
     protected override void Die()
@@ -243,283 +213,125 @@ public class Userkare : EnemyAI
 
     void UseSpecialAbility()
     {
-         IsSpecialAttacking = true;
+        IsSpecialAttacking = true;
         canattack = false;  // Disable normal attacks while using special ability
 
-        int chance = UnityEngine.Random.Range(1, 4);  // Randomly select an ability (1-4)
+        int chance = UnityEngine.Random.Range(1, 3);  // Randomly select an ability (1-4)
 
         switch (chance)
         {
             case 1:
-                if (!SheildActive)
-                {
-                    PerfectDefence();
-                }
-                else
-                    Heal();
-
-                break;
-            case 2:
-                Heal();
-                break;
-            case 3:
                 animator.SetTrigger("Stun");
                 break;
-            case 4:
-                if (UnCapped)
+
+            case 2:
+                BurstSHot();
+                break;
+
+            case 3:
+                if (!sheild.activeInHierarchy)
                 {
-                    Summon();
+                    animator.SetTrigger("Sheild");
                 }
                 else
-                    Heal();
+                    animator.SetTrigger("Heal");
                 break;
+
+         
         }
-
-        canattack = true;
-
-
     }
-
+    //Attacks 
     public void TrappingLight()
     {
-        //roots the player in place 
-       AbilitySetTo(ProjectileAblity.Stun);
-        isStun = true;
-        StartCoroutine(CastStunRoutine());
         PlayVoice(stun);
-
-        if (gameManager.gameInstance.isSekhmetDead == false)
-        {
-            PLAYDUOCALL();
-            gameManager.gameInstance.BlinkingJab = true;
-        }
-
-        IsSpecialAttacking = false;
+        CastAttack(ProjectileAblity.Stun);
     }
 
-    IEnumerator CastAttackRoutine()
+
+    void BurstSHot()
     {
-        canattack = false;
-        for (int i = 0; i < castAmount; i++)
-        {
-            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-            if (projectileScript == null)
-            {
-                projectileScript = projectile.AddComponent<Projectile>();
-            }
-            if (projectileScript != null)
-            {
-                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, projectileAblity, AbilityStrength, 1f, caster);
-              
-                projectileScript.SetColor(BulletColor, BulletMaterial);
-                if (Type == ProjectileType.AOE)
-                {
-                    projectileScript.AoeStats(effectDuration, AoeStrength, radius, type);
-                }
-                else
-                    projectileScript.AoeStats(0, 0, 0, AOETYPE.Damage);
-            }
-
-
-            yield return new WaitForSeconds(1 / castSpeed);
-        }
-        yield return new WaitForSeconds(1);
-        AttackDone = true;
-
-        if (!isStun)
-            animator.SetTrigger("Shoot");
-        else
-            isStun = false;
-        canattack = true;
-        //ResetToDefault();
+        animator.SetTrigger("BurstShot");
     }
 
-
-    IEnumerator CastStunRoutine()
-    {
-        canattack = false;
-      
-            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-            if (projectileScript == null)
-            {
-                projectileScript = projectile.AddComponent<Projectile>();
-            }
-            if (projectileScript != null)
-            {
-                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ProjectileAblity.Stun, AbilityStrength, 1f, caster);
-
-                projectileScript.SetColor(BulletColor, BulletMaterial);
-            
-          
-            yield return new WaitForSeconds(1 / castSpeed);
-        }
-        yield return new WaitForSeconds(1);
-        AttackDone = true;
-    }
-
-
-
-
-    public void CastAttack()
-    {
-        // Ranged attack logic
-        
-        AttackDone = false;
-        StartCoroutine(CastAttackRoutine());
-
-    }
-
-    private void ResetToDefault()
-    {
-        castAmount = DefCastAmount;
-        projectileAblity = DefAblility;
-        ProjectileDamage = DefDamage;
-        AbilityDuration = DefDuration;
-        AbilityStrength = DefStrength;
-        Type = DefType;
-        ProjectileSpeed = DefProjectSpeed;
-        ProjectileFollowTime = DefFollowTime;
-        ProjectileLifeTime = DefLifeTime;
-
-
-
-
-
-    }
-
-    void PerfectDefence()
-    {
-        // refelcts all ranged damage
-      
-            sheilds.gameObject.SetActive(true);
-            sheilds.SetHitPoints(sheildHealth);
-            PlayVoice(SheildOrHealVoiceLine);
-          
-        
-
-         IsSpecialAttacking = false;
-    }
-
-    
 
     public void LightGautling()
     {
-        // fires buffed base attacks at the player at 5 times the base speed 
-        castAmount = 5;
-        ProjectileSpeed *= 5;
-        ProjectileDamage *= 1.5f;
-        Type = ProjectileType.Lazer;
-        StartCoroutine(CastAttackRoutine());
-        IsSpecialAttacking = false;
+        StartCoroutine(RapidFire());
+       
     }
-
-
-
-
-    public void Summon()
+    IEnumerator RapidFire()
     {
-        // summons weaker version of the base mummy that will increase his health and try to revevie Sekhemt
 
+        for (int i = 0; i < castAmount; i++)
+        {
+            CastAttack(ProjectileAblity.Normal);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        animator.SetTrigger("Finsih Attack");
+        canattack = true;
+    }
+  public  void PerfectDefence()
+    {
+        if (sheild == null)
+        {
+            sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
+            sheild.transform.SetParent(transform);
+            sheilds.SetHitPoints(sheildHealth);
+
+            PlayVoice(SheildOrHealVoiceLine);
+        }
+        else return;
      
+    }
 
-        PlayVoice(SummonVoiceLine);
+    public void EnableAttack()
+    {
+        canattack = true;
+    }
 
-        float radiusStep = 2f; // Distance between sets of 4 minions
-        float radius = 1f; // Initial spawn radius
-        int minionsPerCircle = 4;
 
-        for (int i = 0; i < SummonAmount; i++)
+
+    public void CreateHeal()
+    {
+        // Instantiate the HealArea and place it at the launchPoint position
+        GameObject HealArea = Instantiate(Heal.gameObject, launchPoint.position, Quaternion.identity);
+
+        // Get the AOEDamage component from the instantiated object
+        AOEDamage aoeDamage = HealArea.GetComponent<AOEDamage>();
+
+        if (aoeDamage != null)
         {
-            // Calculate the angle in radians for more precision
-            float angle = (i % minionsPerCircle) * (360f / minionsPerCircle) * Mathf.Deg2Rad;
-
-            // Set the spawn position using cosine and sine
-            Vector3 spawnPosition = transform.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
-
-            // Instantiate the minion
-            Instantiate(SummoningMob, spawnPosition, Quaternion.identity);
-
-            // Increase the radius after spawning every 4 minions
-            if ((i + 1) % minionsPerCircle == 0)
-            {
-                radius += radiusStep;
-            }
+            aoeDamage.expand(AoeStrength, BuffRange); // Call expand on the AOEDamage script
         }
-        IsSpecialAttacking = false;
     }
 
-    public void Heal()
+
+
+
+    public void CastBasic()
     {
-        // heals all allies up to 70% of thier Hp
+        CastAttack(ProjectileAblity.Burn);
+    }
 
-
-        foreach (GameObject zombie in zombies)
-        {
-            float distance = Vector3.Distance(transform.position, zombie.transform.position);
-            if (distance < BuffRange)
+    public void CastAttack(ProjectileAblity ABILITY)
+    {
+            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+            if (projectileScript == null)
             {
-
-                IEnemyDamage FellowZombie = zombie.GetComponent<IEnemyDamage>();
-                if (FellowZombie != null)
-                { 
-                   float Healing = FellowZombie.GetMaxHP() * 0.2f;
-
-                        FellowZombie.AddHP(Healing);
-                    AddHP(5);
-                }
+                projectileScript = projectile.AddComponent<Projectile>();
             }
-        }
-        PlayVoice(SheildOrHealVoiceLine);
+            if (projectileScript != null)
+            {
+                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ABILITY, AbilityStrength, 1f, caster);
+
+                projectileScript.SetColor(BulletColor, BulletMaterial);
+            }
+      
     }
 
 
 
-
-
-    public void PLAYDUOCALL()
-    {
-        PlayVoice(DuoCall);
-    }
-
-
-
-
-    void RespawnSekmet()
-    {
-
-        Instantiate(summonpartner, gameManager.gameInstance.SekhmetRespawn);
-        UnCapped = false;
-        ResetStats();
-
-
-    }
-    private void ResetStats()
-    {
-        MaxHealth = BaseMaxHealth;
-        attackSpeed = BaseAttackSpeed;
-
-    }
-
-   ProjectileType typeSetTo(ProjectileType newType)
-    {
-
-        placeHolder = newType;
-
-
-        return placeHolder;
-    }
-
-
-
-    ProjectileAblity AbilitySetTo(ProjectileAblity newType)
-    {
-
-        placeHolderAbility = newType;
-
-
-        return placeHolderAbility;
-    }
 
 }

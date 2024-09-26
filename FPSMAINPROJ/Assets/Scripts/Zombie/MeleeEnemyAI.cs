@@ -10,6 +10,10 @@ public class MeleeEnemy : EnemyAI
   
     bool canAttack = true;
     [SerializeField] Collider MeeleColider;
+    [SerializeField] float rotationSpeed;
+    public Transform rightHandTarget;
+    public Transform meleeTip;
+    public float weight = 10.0f;
 
 
     protected override void Start()
@@ -26,10 +30,26 @@ public class MeleeEnemy : EnemyAI
 
         if (PlayerinAttackRange && canAttack)
         {
-            StartCoroutine(DelayAttack());
+            AttackPlayer();
+            canAttack = false;
         }
 
         AdjustColliderRange();
+
+
+
+        if (rightHandTarget != null)
+        {
+
+            Vector3 directionToPlayer = gameManager.gameInstance.player.transform.position - meleeTip.position;
+
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+
+            meleeTip.rotation = Quaternion.Slerp(meleeTip.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+
+
     }
 
 
@@ -55,20 +75,13 @@ public class MeleeEnemy : EnemyAI
     }
 
 
-    IEnumerator DelayAttack()
+    public void CanAttack()
     {
-        canAttack = false;
-       
-        AttackPlayer();
-        yield return new WaitForSeconds(1/AttackSpeed);
         canAttack = true;
     }
 
-
     private void AttackPlayer()
     {
-
-        animator.SetFloat("AttackSpeed", AttackSpeed);
 
         animator.SetTrigger("Hit");
 
@@ -93,8 +106,20 @@ public class MeleeEnemy : EnemyAI
     }
 
 
+    void OnAnimatorIK(int layerIndex)
+    {
+        if (animator)
+        {
+            // Set the position and rotation of the right hand to the target
+            animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandTarget.position);
+            animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandTarget.rotation);
 
- 
+            // Control the weight of the IK
+            animator.SetIKPositionWeight(AvatarIKGoal.RightHand, weight);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightHand, weight);
+        }
+    }
+
 
 
 

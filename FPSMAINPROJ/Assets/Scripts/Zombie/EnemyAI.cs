@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     private GameObject currentModel;
     float sfxVolume;
-    bool PlayerInSIte;
+    protected bool PlayerInSIte;
     bool roaming;
     protected bool ressitKnockBack;
     protected bool AlwaysSeePlayer;
@@ -160,18 +160,16 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         HasSpeedBuffed = false;
         AttackSpeedBuffed = false;
 
-
-     /*   roam();*/
+        SetTagRecursively(gameObject, "Zombie");
+        /*   roam();*/
 
     }
 
     protected virtual void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, gameManager.gameInstance.player.transform.position);
-        if (ChasingPLayer && distanceToPlayer <= agent.stoppingDistance)
-        {
+      
             FacePlayer();
-        }
+        
 
         CheckRange();
 
@@ -199,7 +197,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         CanSeePlayer();
         ApplyGravity();
 
- 
+       
 
 
         if (legdamage >= MaxHealth / 2)
@@ -226,7 +224,17 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     }
 
     // Death and Damage mechanics 
+    void SetTagRecursively(GameObject obj, string tag)
+    {
+        // Set the tag for the parent object
+        obj.tag = tag;
 
+        
+        foreach (Transform child in obj.transform)
+        {
+            SetTagRecursively(child.gameObject, tag);
+        }
+    }
     public virtual void takeDamage(float amount)
     {
       
@@ -248,13 +256,41 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
+
+        animator.enabled = false;
+
+        Collider body = agent.GetComponent<Collider>();
+        if (body != null)
+        {
+            body.enabled = false;
+        }
+
+        Rigidbody Fall = agent.GetComponent<Rigidbody>();
+
+        if(Fall == null)
+        {
+            Fall = agent.AddComponent<Rigidbody>();
+        }
+        if (Fall != null)
+        {
+            Fall.isKinematic = false; // Ensure it's not kinematic
+            Fall.constraints = RigidbodyConstraints.FreezePositionY;
+            // Calculate the force direction
+            Vector3 forceDirection = -transform.forward; 
+            forceDirection.y = 0.25f; 
+            float forceMagnitude = 5f; 
+
+            // Apply the force
+            Fall.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+        }
+
         if (Drops.Count > 0)
         {
             LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
         StopAllCoroutines();
-        Destroy(gameObject);
+        Destroy(gameObject, 4);
     }
 
     public void DieWithoutDrops()
@@ -310,6 +346,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         }
 
     }
+
 
     //movement mechanics 
     void ApplySeparationAndRandomMovement()
@@ -394,20 +431,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             if (hit.collider.CompareTag("Player") && AngleToPlayer <= ViewAngle)
             {
                 PlayerInSIte = true;
-                // Ensure we're in chasing mode if the player is spotted
-                if (!ChasingPLayer)
-                {
-                    ChasingPLayer = true;
-                }
+              
             }
             else
             {
                 PlayerInSIte = false;
-                // Switch back to roaming if the player is no longer in sight
-                if (ChasingPLayer)
-                {
-                    ChasingPLayer = false;
-                }
+              
             }
         }
  
@@ -417,10 +446,24 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected void FacePlayer()
     {
-        Quaternion Rot = Quaternion.LookRotation(PlayerDrr);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Rot, Time.deltaTime * FacePlayerSpeed);
+        Vector3 direction = (gameManager.gameInstance.player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));  // Ignore y-axis for rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);  // Adjust the rotation speed
     }
 
+    void OnAnimatorIK(int layerIndex)
+    {
+        Animator animator = GetComponent<Animator>();
+
+        if (animator)
+        {
+            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
+            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 1);
+
+            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
+            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 1);
+        }
+    }
 
 
     void CheckRange()

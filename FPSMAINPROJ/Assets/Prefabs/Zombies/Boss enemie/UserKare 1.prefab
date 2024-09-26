@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6772187006269990594}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5786070510308952677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9131403294585113924}
+  m_Layer: 14
+  m_Name: CastPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9131403294585113924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786070510308952677}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.010504508, y: -0.08240294, z: 0.057120603, w: 0.9949054}
+  m_LocalPosition: {x: -0.03, y: 0.263, z: -0.008}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1205683353659297536}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9177430718895330355
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 361.3772
+      value: 349.7491
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.y
@@ -190,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.867413
+      value: 23.783289
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8a34632d041691439e8a140000ff417, type: 3}
       propertyPath: m_LocalRotation.w
@@ -765,6 +796,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1875910922116443323, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 512267403402059595}
+    - targetCorrespondingSourceObject: {fileID: -8145072973764649317, guid: e8a34632d041691439e8a140000ff417, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9131403294585113924}
     - targetCorrespondingSourceObject: {fileID: 9038862152142785130, guid: e8a34632d041691439e8a140000ff417, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1758248029900676571}
@@ -1187,6 +1221,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!4 &1205683353659297536 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8145072973764649317, guid: e8a34632d041691439e8a140000ff417, type: 3}
+  m_PrefabInstance: {fileID: 2183561749891469723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1336715895340559562 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a34632d041691439e8a140000ff417, type: 3}
@@ -1310,20 +1349,17 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
-  launchPoint: {fileID: 1581569474851438141}
-  ProjectilePrefab: {fileID: 7989539704885820802, guid: 8ceaa380d58dfc54fb73f04ed2b38811, type: 3}
+  launchPoint: {fileID: 9131403294585113924}
+  ProjectilePrefab: {fileID: 893157898015144882, guid: e2929c4a495ef2343aafb05c37f0b1de, type: 3}
   MeleeWeapon: {fileID: 0}
   Melee: {fileID: 4891534311284395641}
   sheilds: {fileID: 8432938172824395943, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
   Sheild: {fileID: 4271990252428005580, guid: c4713aff40112374bad7b395e8e0b5e8, type: 3}
   SheildPosition: {fileID: 4705778859344429057}
   sheildHealth: 100
-  SummoningMob: {fileID: 3834371293188694096, guid: 078f354a5a8382a40a753f884f259859, type: 3}
-  summonpartner: {fileID: 2739583383600373709, guid: 5c9a27891f5247246aeb9b817f5d7149, type: 3}
-  SummonAmount: 5
   BuffRange: 20
   SheildActive: 0
-  castAmount: 1
+  castAmount: 5
   ProjectileSpeed: 30
   ProjectileLifeTime: 1
   ProjectileDamage: 20
@@ -1331,11 +1367,12 @@ MonoBehaviour:
   Type: 0
   projectileAblity: 2
   AbilityStrength: 70
-  AbilityDuration: 10
+  AbilityDuration: 2
   effectDuration: 22
-  AoeStrength: 11
-  radius: 11
+  AoeStrength: 20
+  radius: 40
   type: 4
+  Heal: {fileID: 3685370248433739613, guid: 9c2d1cc444f975f4b868a08b59d6318d, type: 3}
   BulletColor: {r: 0.93803144, g: 0.9433962, b: 0.07564971, a: 0}
   BulletMaterial: {fileID: -463546532230597338, guid: e582857c98df6ff4684e147286ff44b1, type: 3}
   Spawn: {fileID: 8300000, guid: 55b9907d885f5264394d9377f860c028, type: 3}
@@ -1456,7 +1493,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -2311,6 +2348,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
       propertyPath: m_Name
       value: staff
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e820a57cc9f649041a13168a385a0cd5, type: 3}
       propertyPath: m_TagString

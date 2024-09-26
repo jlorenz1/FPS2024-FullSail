@@ -41,7 +41,7 @@ public class RangedEnemy : EnemyAI
     float LazerSpeed;
 
     Caster caster;
-    bool canattack;
+  
     protected override void Start()
     {
         base.Start();
@@ -79,7 +79,7 @@ public class RangedEnemy : EnemyAI
         }
 
 
-        if (PlayerinAttackRange && canAttack && ChasingPLayer)
+        if (PlayerinAttackRange && canAttack && PlayerInSIte)
         {
             canAttack = false;
             animator.SetTrigger("Shoot");
@@ -88,14 +88,8 @@ public class RangedEnemy : EnemyAI
     }
 
 
-    IEnumerator CastAttackRoutine()
+    public void CastBaseAttack()
     {
-      
-
-        animator.SetFloat("CastSpeed", castSpeed);
-
-        for (int i = 0; i < castAmount; i++)
-        {
             GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
             Projectile projectileScript = projectile.GetComponent<Projectile>();
             if (projectileScript == null)
@@ -114,29 +108,16 @@ public class RangedEnemy : EnemyAI
                 else
                     projectileScript.AoeStats(0, 0, 0, AOETYPE.Damage);
             }
-            yield return new WaitForSeconds((1 / castSpeed)  );
-        }
+    }
 
-       
-        animator.SetTrigger("Shoot");
+
+
+
+    public void EnableAttack()
+    {
         canAttack = true;
     }
 
-
-   
-
-    public void CastAttack()
-    {
-        // Ranged attack logic
-
-
-           
-            StartCoroutine(CastAttackRoutine());
-      
-    }
-
-
-  
 
     protected override void Die()
     {

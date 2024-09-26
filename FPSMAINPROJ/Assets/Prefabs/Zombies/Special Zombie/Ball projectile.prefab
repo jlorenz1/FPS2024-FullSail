@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3204220711879688376}
-  - component: {fileID: 7267275754720829577}
   - component: {fileID: 394371080627329663}
   - component: {fileID: -6753623061651480123}
   - component: {fileID: -6912371964447810220}
@@ -35,27 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7267275754720829577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 893157898015144882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f598c7654a8b09e499b937ff63267429, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProjectileAudio: {fileID: 0}
-  ZombieProjectileAudio: {fileID: 0}
-  ZombieProjectileAudioVol: 0
-  SekhmetAttack: 0
-  UserKareBaseAttack: 0
-  UserKareSpecialAttack1: 0
-  UserKareSpecialAttack2: 0
-  aoePrefab: {fileID: 7449492061352380429, guid: 162391672b4a0b247a8c643345343923, type: 3}
-  ProjectileBody: {fileID: 893157898015144882}
 --- !u!135 &394371080627329663
 SphereCollider:
   m_ObjectHideFlags: 0
