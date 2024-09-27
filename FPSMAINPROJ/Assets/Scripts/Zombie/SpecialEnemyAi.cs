@@ -106,6 +106,7 @@ public class SpecialEnemy : EnemyAI
 
         if (PlayerinAttackRange && canAttack && PlayerInSIte)
         {
+            animator.SetTrigger("Shoot");
             canAttack = false;
         }
 
@@ -309,6 +310,15 @@ public class SpecialEnemy : EnemyAI
     {
         canAttack = true;
     }
+
+
+    public void CastBaseAttack()
+    {
+
+        CastAttack(ProjectileAblity.Normal);
+
+    }
+
 
 
     public void CastAttack(ProjectileAblity ABILITY)

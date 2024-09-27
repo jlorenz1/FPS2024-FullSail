@@ -340,8 +340,8 @@ public class Projectile : MonoBehaviour
          
             float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
            
-            tracerLineRenderer.startWidth = projectileWidth;
-            tracerLineRenderer.endWidth = projectileWidth;
+            tracerLineRenderer.startWidth = projectileWidth/2;
+            tracerLineRenderer.endWidth = projectileWidth/4;
 
             
             tracerLineRenderer.positionCount = 2; 
