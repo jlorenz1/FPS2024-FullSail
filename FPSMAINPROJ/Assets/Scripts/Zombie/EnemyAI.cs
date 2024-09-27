@@ -911,58 +911,43 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent.speed = startSpeed;
     }
 
-/*    public void FlockPlayer()
+  
+
+    public void knockback(Vector3 hitPoint, float distance)
     {
-
-
-        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-
-        foreach (GameObject zombie in zombies)
-        {
-            EnemyAI enemyAI = zombie.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                float distance = Vector3.Distance(transform.position, zombie.transform.position);
-                if (distance < flockRange && enemyAI.ChasingPLayer == false)
-                {
-
-                    enemyAI.ChasingPLayer = true;
-
-
-                }
-            }
-        }
-    }*/
-
-   public void knockback(Vector3 hitPoint, float distance)
-    {
-
+        float duration = 2;
         Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
+        knockbackDirection.y = 0;
+        StartCoroutine(ApplyKnockback(knockbackDirection, distance, duration));
+    }
 
-        // Apply force in the knockback direction (you can use either a Rigidbody or modify the position directly)
-        Vector3 knockbackPosition = transform.position + knockbackDirection * distance;
+    private IEnumerator ApplyKnockback(Vector3 direction, float distance, float duration)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
 
-     
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+      
+        Vector3 targetPosition = startPosition + (direction * distance);
+        targetPosition.y = startPosition.y;
+
+        while (elapsedTime < duration)
         {
-            rb.AddForce(knockbackDirection * distance, ForceMode.Impulse);
+           
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+            newPosition.y = startPosition.y; 
+
+            transform.position = newPosition;
+            elapsedTime += Time.deltaTime;
+            yield return null; 
         }
-        else
-        {
-            
-            transform.position = knockbackPosition;
-        }
 
-
-
-
+       
+        targetPosition.y = startPosition.y;
+        transform.position = targetPosition;
     }
 
 
-
-
-   protected IEnumerator Stop(float duration)
+    protected IEnumerator Stop(float duration)
     {
        
         agent.acceleration = 300;
