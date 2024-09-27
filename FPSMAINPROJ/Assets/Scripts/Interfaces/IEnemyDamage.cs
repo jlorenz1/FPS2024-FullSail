@@ -40,7 +40,7 @@ public interface IEnemyDamage
 
     void Stun(float duration);
 
-    void knockback(Vector3 hitPoint, float distance);
+    void knockback(Vector3 hitPoint, float distance, float Duration);
 
     float GetMaxHP();
 

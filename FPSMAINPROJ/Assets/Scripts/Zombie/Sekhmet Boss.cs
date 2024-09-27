@@ -22,7 +22,7 @@ public class SekhmetBoss : EnemyAI
     [SerializeField] Zombiemeeleattacks MeleeWeapon;
     [SerializeField] GameObject Melee;
     [SerializeField] float rotationSpeed;
-
+    [SerializeField] bool isBoss;
 
     [Header("Audio")]
     
@@ -132,9 +132,12 @@ public class SekhmetBoss : EnemyAI
 
     protected override void Die()
     {
-        gameManager.gameInstance.BossKilled();
-        gameManager.gameInstance.SekhmetDead();
-       gameManager.gameInstance.SekhmetDeathLocation(agent.transform);
+
+        if (isBoss == true)
+        {
+            gameManager.gameInstance.BossKilled();
+        }
+      
         DieWithoutDrops();
 
     }

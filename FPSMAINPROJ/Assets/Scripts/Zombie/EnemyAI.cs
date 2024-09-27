@@ -167,60 +167,61 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
-      
+        if (agent.enabled == true)
+        {
             FacePlayer();
-        
 
-        CheckRange();
+            CheckRange();
 
-        if (Range / 2 >= 2)
-        {
-            agent.stoppingDistance = Range / 2;
+            if (Range / 2 >= 2)
+            {
+                agent.stoppingDistance = Range / 2;
+            }
+            else
+                agent.stoppingDistance = 2;
+
+
+            agent.SetDestination(gameManager.gameInstance.player.transform.position);
+
+
+            sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
+
+            // ApplySeparationAndRandomMovement();
+            // OutOfRangeBoost();
+            currentVelocity = agent.velocity;
+            float maxSpeed = agent.speed;
+            float currentSpeed = currentVelocity.magnitude;
+
+            float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
+            animator.SetFloat("Speed", normalizedSpeed);
+
+            CanSeePlayer();
+            ApplyGravity();
+
+
+
+
+            if (legdamage >= MaxHealth / 2)
+            {
+                Cripple();
+            }
+
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+
+            if (Armor > MaxArmor)
+            {
+                Armor = MaxArmor;
+            }
+
+
+            if (ChasingPLayer)
+            {
+                roaming = false;
+            }
         }
-        else
-            agent.stoppingDistance = 2;
-
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        
-   
-        sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
-
-        // ApplySeparationAndRandomMovement();
-        // OutOfRangeBoost();
-        currentVelocity = agent.velocity;
-        float maxSpeed = agent.speed;
-        float currentSpeed = currentVelocity.magnitude;
-
-        float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
-        animator.SetFloat("Speed", normalizedSpeed);
-
-        CanSeePlayer();
-        ApplyGravity();
-
-       
-
-
-        if (legdamage >= MaxHealth / 2)
-        {
-            Cripple();
-        }
-
-        if (CurrentHealth > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }
-
-        if (Armor > MaxArmor)
-        {
-            Armor = MaxArmor;
-        }
-
-        
-        if(ChasingPLayer)
-        {
-            roaming = false;
-        }
-
     }
 
     // Death and Damage mechanics 
@@ -243,7 +244,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
         //  PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
         CurrentHealth -= TotalDamage;
         if (CurrentHealth <= 0)
         {
@@ -256,40 +256,15 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
-
-        animator.enabled = false;
-
-        Collider body = agent.GetComponent<Collider>();
-        if (body != null)
-        {
-            body.enabled = false;
-        }
-
-        Rigidbody Fall = agent.GetComponent<Rigidbody>();
-
-        if(Fall == null)
-        {
-            Fall = agent.AddComponent<Rigidbody>();
-        }
-        if (Fall != null)
-        {
-            Fall.isKinematic = false; // Ensure it's not kinematic
-            Fall.constraints = RigidbodyConstraints.FreezePositionY;
-            // Calculate the force direction
-            Vector3 forceDirection = -transform.forward; 
-            forceDirection.y = 0.25f; 
-            float forceMagnitude = 5f; 
-
-            // Apply the force
-            Fall.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
-        }
+        StopAllCoroutines();
+        RagDoll();
 
         if (Drops.Count > 0)
         {
             LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
-        StopAllCoroutines();
+      
         Destroy(gameObject, 4);
     }
 
@@ -297,6 +272,35 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         gameManager.gameInstance.UpdateGameGoal(-1);
         Destroy(gameObject);
+    }
+
+
+    void RagDoll()
+    {
+
+        animator.enabled = false;
+
+
+        agent.enabled = false;
+
+        Rigidbody Fall = agent.GetComponent<Rigidbody>();
+        if (Fall == null)
+        {
+            Fall = agent.gameObject.AddComponent<Rigidbody>();
+        }
+
+        if (Fall != null)
+        {
+            Fall.isKinematic = false;
+            Fall.useGravity = true;
+            Fall.constraints = RigidbodyConstraints.FreezePositionY;
+            Fall.collisionDetectionMode = CollisionDetectionMode.Continuous;
+           
+           
+        }
+
+
+
     }
 
     void LootRoll(float DropChance)
@@ -867,7 +871,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         CurrentHealth -= amountOfDamageTaken;
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
         if (MaxHealth <= 0)
         {
             Die();
@@ -911,58 +914,43 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent.speed = startSpeed;
     }
 
-/*    public void FlockPlayer()
+  
+
+    public void knockback(Vector3 hitPoint, float distance, float Duration)
     {
-
-
-        GameObject[] zombies = GameObject.FindGameObjectsWithTag("Zombie");
-
-        foreach (GameObject zombie in zombies)
-        {
-            EnemyAI enemyAI = zombie.GetComponent<EnemyAI>();
-            if (enemyAI != null)
-            {
-                float distance = Vector3.Distance(transform.position, zombie.transform.position);
-                if (distance < flockRange && enemyAI.ChasingPLayer == false)
-                {
-
-                    enemyAI.ChasingPLayer = true;
-
-
-                }
-            }
-        }
-    }*/
-
-   public void knockback(Vector3 hitPoint, float distance)
-    {
-
+        float duration = 2;
         Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
+        knockbackDirection.y = 0;
+        StartCoroutine(ApplyKnockback(knockbackDirection, distance, duration));
+    }
 
-        // Apply force in the knockback direction (you can use either a Rigidbody or modify the position directly)
-        Vector3 knockbackPosition = transform.position + knockbackDirection * distance;
+    private IEnumerator ApplyKnockback(Vector3 direction, float distance, float duration)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
 
-     
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+      
+        Vector3 targetPosition = startPosition + (direction * distance);
+        targetPosition.y = startPosition.y;
+
+        while (elapsedTime < duration)
         {
-            rb.AddForce(knockbackDirection * distance, ForceMode.Impulse);
+           
+            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
+            newPosition.y = startPosition.y; 
+
+            transform.position = newPosition;
+            elapsedTime += Time.deltaTime;
+            yield return null; 
         }
-        else
-        {
-            
-            transform.position = knockbackPosition;
-        }
 
-
-
-
+       
+        targetPosition.y = startPosition.y;
+        transform.position = targetPosition;
     }
 
 
-
-
-   protected IEnumerator Stop(float duration)
+    protected IEnumerator Stop(float duration)
     {
        
         agent.acceleration = 300;

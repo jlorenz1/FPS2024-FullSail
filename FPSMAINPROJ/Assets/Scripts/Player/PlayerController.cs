@@ -816,8 +816,17 @@ public class PlayerController : MonoBehaviour, IDamage
         return StartHP;
     }
 
+    public void RespawnPlayer()
+    {
+        gameManager.gameInstance.CurrentCheckPoint.ResetTrigger();
+        spawnPlayer();
+    }
+
+
     public void spawnPlayer()
     {
+
+      
         playerHP = HPorig;
         sprintTimer = maxSprintTimer;
         StopCoroutine(TakeTickDamage(1,1,1));
@@ -829,6 +838,7 @@ public class PlayerController : MonoBehaviour, IDamage
         SpeedStateSlow = false;
         controller.enabled = false;
         transform.position = gameManager.gameInstance.playerSpawnPoint.transform.position;
+
         controller.enabled = true;
     }
 

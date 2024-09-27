@@ -1220,13 +1220,13 @@ MonoBehaviour:
   ZombieBuff: {fileID: 8300000, guid: dad51a6509285da4fa5e41b1a345a9f9, type: 3}
   ZombieBuffVol: 0.215
   launchPoint: {fileID: 7571134614362017420}
-  projectilePrefab: {fileID: 893157898015144882, guid: e2929c4a495ef2343aafb05c37f0b1de, type: 3}
+  projectilePrefab: {fileID: 7208996230651670851, guid: 2487fcb041cbd9e46b56d09271147d7b, type: 3}
   ProjectileSpeed: 50
   ProjectileLifeTime: 1
   ProjectileDamage: 20
   ProjectileFollowTime: 0.2
-  Type: 0
-  projectileAblity: 1
+  Type: 2
+  projectileAblity: 3
   AbilityStrength: 30
   AbilityDuration: 5
   AttackDelay: 1
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   AoeStrength: 0
   radius: 0
   type: 0
-  BulletColor: {r: 1, g: 1, b: 1, a: 0}
+  BulletColor: {r: 0.98085845, g: 1, b: 0, a: 0}
   BulletMaterial: {fileID: 2100000, guid: 70d049f27165c91478399a7e332d9de5, type: 2}
 --- !u!82 &5513036727809118154
 AudioSource:

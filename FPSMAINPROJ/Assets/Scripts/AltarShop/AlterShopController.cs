@@ -21,6 +21,7 @@ public class AlterShopController : MonoBehaviour
     bool changingArm;
     public bool weaponArmActive = false;
     public bool pickedWeaponUp;
+    bool isDisplayActive = false;
     void Start()
     {
         armStartPoint.localRotation = Quaternion.Euler(0f, -90f, -90f);
@@ -92,15 +93,20 @@ public class AlterShopController : MonoBehaviour
             gameManager.gameInstance.PointCount -= 35;
             weaponArmActive = true;
 
+            gameManager.gameInstance.gameAlterMenu.SetActive(false);
+            gameManager.gameInstance.gameActiveMenu = null;
+            gameManager.gameInstance.resumePlayerControls();
+
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 35)
         {
             //StartCoroutine(FlashNoGems());
-            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
+            displayPromptText("Not enough gems!", 0.5f);
         }
         else if (!pickedWeaponUp)
         {
-            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
+            
+            displayPromptText("Pick up current weapon on altar!", 0.5f);
         }
 
 
@@ -119,16 +125,23 @@ public class AlterShopController : MonoBehaviour
                 gameManager.gameInstance.playerScript.inventory.takeGems(20);
                 gameManager.gameInstance.PointCount -= 20;
                 weaponArmActive = true;
+
+
+                gameManager.gameInstance.gameAlterMenu.SetActive(false);
+                gameManager.gameInstance.gameActiveMenu = null;
+                gameManager.gameInstance.resumePlayerControls();
             }
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 20)
         {
             //StartCoroutine(FlashNoGems());
-            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
+           
+            displayPromptText("Not enough gems!", 0.5f);
         }
         else if (!pickedWeaponUp)
         {
-            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
+          
+            displayPromptText("Pick up current weapon on altar!", 0.5f);
         }
 
     }
@@ -146,16 +159,22 @@ public class AlterShopController : MonoBehaviour
                 gameManager.gameInstance.playerScript.inventory.takeGems(25);
                 gameManager.gameInstance.PointCount -= 25;
                 weaponArmActive = true;
+
+                gameManager.gameInstance.gameAlterMenu.SetActive(false);
+                gameManager.gameInstance.gameActiveMenu = null;
+                gameManager.gameInstance.resumePlayerControls();
             }
         }
         else if (gameManager.gameInstance.playerScript.inventory.gemCount() < 25)
         {
             //StartCoroutine(FlashNoGems());
-            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
+            
+            displayPromptText("Not enough gems!", 0.5f);
         }
         else if(!pickedWeaponUp)
         {
-            StartCoroutine(flashPrompt("Pick up current weapon on altar!", 0.5f));
+            
+            displayPromptText("Pick up current weapon on altar!", 0.5f);
         }
     }
 
@@ -181,12 +200,14 @@ public class AlterShopController : MonoBehaviour
         else if(gameManager.gameInstance.playerScript.inventory.gemCount() < 5)
         {
             //StartCoroutine(FlashNoGems());
-            StartCoroutine(flashPrompt("Not enough gems!", 0.5f));
+           
+            displayPromptText("Not enough gems!", 0.5f);
         }
         else if (gameManager.gameInstance.playerScript.playerHP != gameManager.gameInstance.playerScript.HPorig)
         {
             //StartCoroutine(FlashNoGems());
-            StartCoroutine(flashPrompt("Full HP", 0.5f));
+            
+            displayPromptText("Full HP", 0.5f);
         }
 
 
@@ -209,6 +230,15 @@ public class AlterShopController : MonoBehaviour
 
 
 
+    }
+
+    void displayPromptText(string prompt, float duration)
+    {
+        if (isDisplayActive)
+        {
+            StopCoroutine("flashPrompt");
+        }
+        StartCoroutine(flashPrompt(prompt, duration));
     }
 
 } 

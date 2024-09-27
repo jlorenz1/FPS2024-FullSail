@@ -37,11 +37,13 @@ public class gameManager : MonoBehaviour
     [Header("----UI----")]
     [SerializeField] public Image fadeOverlay;
     public float fadeDuration;
-    [SerializeField] GameObject gameActiveMenu;
+    [SerializeField] public GameObject gameActiveMenu;
     [SerializeField] GameObject gameMainMenu;
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
+    [SerializeField] public GameObject loadingScreen;
+    [SerializeFeild] public Image loadingBar;
     [SerializeField] public GameObject gameAlterMenu;
     [SerializeField] public GameObject NoGems;
     [SerializeField] public TMP_Text altarPromtText;
@@ -94,10 +96,12 @@ public class gameManager : MonoBehaviour
 
     [Header("----Misc---")]
     //Objects
+    public Checkpoint CurrentCheckPoint;
     public GameObject playerSpawnPoint;
     public EnemySpawner enemySpawner;
     public bool isReqItemsUIDisplay = false;
     private GameObject enemy;
+    public bool playerRespawned;
   
     private bool isNewRoundStarting = false;
     public bool isUserKareDead;
@@ -219,6 +223,10 @@ public class gameManager : MonoBehaviour
         weaponManager = FindAnyObjectByType<WeaponManager>();
         //weaponScript = FindObjectOfType<Weapon>();
         playerSpawnPoint = GameObject.FindWithTag("Player Spawner");
+
+      
+
+
 
         enemySpawner = FindObjectOfType<EnemySpawner>();
         enemySpawner.PopulateSpawnPoints();
@@ -368,6 +376,15 @@ public class gameManager : MonoBehaviour
         gameActiveMenu = null;
 
     }
+
+
+    public void setSpawn(Checkpoint newSpawn)
+    {
+        playerSpawnPoint = newSpawn.gameObject;
+        CurrentCheckPoint = newSpawn;
+    }
+
+
     // Toggle Between Pause State
     private void TogglePause()
     {
@@ -410,7 +427,10 @@ public class gameManager : MonoBehaviour
 
     public void BossKilled()
     {
-        BossesKilled ++;
+        if (playerRespawned)
+            BossesKilled = 0;
+        else
+         BossesKilled ++;
 
     }
     public int GetEnemyCount()
@@ -548,12 +568,7 @@ public class gameManager : MonoBehaviour
         isUserKareDead = true;
     }
 
-    public void SekhmetDead()
-    {
-        UserkareIsUncaped = true;
-        isSekhmetDead = true;
-
-    }
+  
 
     public void SekhmetDeathLocation(Transform location)
     {
