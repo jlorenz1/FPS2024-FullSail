@@ -109,7 +109,13 @@ public class MemoryPuzzleController : MonoBehaviour
     {
         int index = sequence.Count;
 
-        if (pattern[index] == id) //player stepped on correct tile
+        //checking if player stepped on the same, correct, tile twice
+        if (index > 0 && pattern[index-1] == id)
+        {
+            //do nothing, this way the tile isnt registered as wrong but does not add to sequence array
+            Debug.Log("Tile ID: " + id + ". Previous Tile ID: " + pattern[index - 1] + ".");
+        } 
+        else if (pattern[index] == id) //player stepped on correct tile
         {
             fail = false;
             float newPos = title.transform.position.y - .1f;
@@ -128,8 +134,6 @@ public class MemoryPuzzleController : MonoBehaviour
             {
                 for (int i = 0; i < index; i++)
                 {
-                    Debug.Log("Putting tiles back");
-
                     correctTitles[i].transform.position = new Vector3(correctTitles[i].transform.position.x, correctTitles[i].transform.position.y + .1f, correctTitles[i].transform.position.z);
                 }
             }
