@@ -60,6 +60,7 @@ public class SpawnTrigger : MonoBehaviour
             if (wiped == false)
             {
                 DespawnZombies();
+                wiped = true;
             }
 
             if (!TriggerEntered)

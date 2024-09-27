@@ -13,6 +13,7 @@ public class Checkpoint : MonoBehaviour
         {
             gameManager.gameInstance.setSpawn(this);
             StartCoroutine(flashCheckpoint());
+            GetComponent<Collider>().enabled = false;
         }
 
     }
