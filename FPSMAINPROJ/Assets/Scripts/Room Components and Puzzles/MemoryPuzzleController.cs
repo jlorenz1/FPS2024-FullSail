@@ -107,9 +107,7 @@ public class MemoryPuzzleController : MonoBehaviour
     //updates sequence array and handles when player steps on incorrect tile
     public void UpdateSequence(int id, GameObject title)
     {
-
         int index = sequence.Count;
-        float origHeight = title.transform.position.y;
 
         if (pattern[index] == id) //player stepped on correct tile
         {
@@ -124,15 +122,18 @@ public class MemoryPuzzleController : MonoBehaviour
             fail = true;
 
             StartCoroutine(gameManager.gameInstance.requiredItemsUI("Wrong tile. Restart.", 3f));
-            transform.parent.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
+
             //returning all the titles back to the origional height
             if (correctTitles[0] != null)
             {
                 for (int i = 0; i < index; i++)
                 {
-                    correctTitles[i].transform.position = new Vector3(correctTitles[i].transform.position.x, origHeight, correctTitles[i].transform.position.z);
+                    Debug.Log("Putting tiles back");
+
+                    correctTitles[i].transform.position = new Vector3(correctTitles[i].transform.position.x, correctTitles[i].transform.position.y + .1f, correctTitles[i].transform.position.z);
                 }
             }
+
             sequence.Clear(); //player must restart
         }
 
