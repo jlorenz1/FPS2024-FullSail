@@ -32,12 +32,7 @@ public class FloodBullets : MonoBehaviour
         knockBackDistance = speed * destroyTime;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      
-    }
-
+   
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,7 +47,7 @@ public class FloodBullets : MonoBehaviour
         {
             damage += AmountHit * 4;
             Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
-            Damageable.knockback(contactPoint, knockBackDistance);
+            Damageable.knockback(contactPoint, knockBackDistance, destroyTime);
             Damageable.takeDamage(damage);
             AmountHit++;
             return;

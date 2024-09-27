@@ -97,7 +97,7 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
 
     public void Stun(float duration) { }
 
-    public void knockback(Vector3 hitPoint, float distance) { }
+    public void knockback(Vector3 hitPoint, float distance, float Duration) { }
 
     public float GetMaxHP() {
 

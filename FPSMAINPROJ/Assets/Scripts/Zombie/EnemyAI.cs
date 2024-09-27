@@ -167,60 +167,61 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     protected virtual void Update()
     {
-      
+        if (agent.enabled == true)
+        {
             FacePlayer();
-        
 
-        CheckRange();
+            CheckRange();
 
-        if (Range / 2 >= 2)
-        {
-            agent.stoppingDistance = Range / 2;
+            if (Range / 2 >= 2)
+            {
+                agent.stoppingDistance = Range / 2;
+            }
+            else
+                agent.stoppingDistance = 2;
+
+
+            agent.SetDestination(gameManager.gameInstance.player.transform.position);
+
+
+            sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
+
+            // ApplySeparationAndRandomMovement();
+            // OutOfRangeBoost();
+            currentVelocity = agent.velocity;
+            float maxSpeed = agent.speed;
+            float currentSpeed = currentVelocity.magnitude;
+
+            float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
+            animator.SetFloat("Speed", normalizedSpeed);
+
+            CanSeePlayer();
+            ApplyGravity();
+
+
+
+
+            if (legdamage >= MaxHealth / 2)
+            {
+                Cripple();
+            }
+
+            if (CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+
+            if (Armor > MaxArmor)
+            {
+                Armor = MaxArmor;
+            }
+
+
+            if (ChasingPLayer)
+            {
+                roaming = false;
+            }
         }
-        else
-            agent.stoppingDistance = 2;
-
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
-        
-   
-        sfxVolume = AudioManager.audioInstance.GetSFXAudioVolume();
-
-        // ApplySeparationAndRandomMovement();
-        // OutOfRangeBoost();
-        currentVelocity = agent.velocity;
-        float maxSpeed = agent.speed;
-        float currentSpeed = currentVelocity.magnitude;
-
-        float normalizedSpeed = Mathf.Clamp(currentSpeed / maxSpeed, 0, 1);
-        animator.SetFloat("Speed", normalizedSpeed);
-
-        CanSeePlayer();
-        ApplyGravity();
-
-       
-
-
-        if (legdamage >= MaxHealth / 2)
-        {
-            Cripple();
-        }
-
-        if (CurrentHealth > MaxHealth)
-        {
-            CurrentHealth = MaxHealth;
-        }
-
-        if (Armor > MaxArmor)
-        {
-            Armor = MaxArmor;
-        }
-
-        
-        if(ChasingPLayer)
-        {
-            roaming = false;
-        }
-
     }
 
     // Death and Damage mechanics 
@@ -243,7 +244,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         float damageReduced = amount * Armor / 500;
         float TotalDamage = amount - damageReduced;
         //  PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
         CurrentHealth -= TotalDamage;
         if (CurrentHealth <= 0)
         {
@@ -256,40 +256,15 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     protected virtual void Die()
     {
         // Common death logic
-
-        animator.enabled = false;
-
-        Collider body = agent.GetComponent<Collider>();
-        if (body != null)
-        {
-            body.enabled = false;
-        }
-
-        Rigidbody Fall = agent.GetComponent<Rigidbody>();
-
-        if(Fall == null)
-        {
-            Fall = agent.AddComponent<Rigidbody>();
-        }
-        if (Fall != null)
-        {
-            Fall.isKinematic = false; // Ensure it's not kinematic
-            Fall.constraints = RigidbodyConstraints.FreezePositionY;
-            // Calculate the force direction
-            Vector3 forceDirection = -transform.forward; 
-            forceDirection.y = 0.25f; 
-            float forceMagnitude = 5f; 
-
-            // Apply the force
-            Fall.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
-        }
+        StopAllCoroutines();
+        RagDoll();
 
         if (Drops.Count > 0)
         {
             LootRoll(DropChance);
         }
        gameManager.gameInstance.UpdateGameGoal(-1);
-        StopAllCoroutines();
+      
         Destroy(gameObject, 4);
     }
 
@@ -297,6 +272,35 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
     {
         gameManager.gameInstance.UpdateGameGoal(-1);
         Destroy(gameObject);
+    }
+
+
+    void RagDoll()
+    {
+
+        animator.enabled = false;
+
+
+        agent.enabled = false;
+
+        Rigidbody Fall = agent.GetComponent<Rigidbody>();
+        if (Fall == null)
+        {
+            Fall = agent.gameObject.AddComponent<Rigidbody>();
+        }
+
+        if (Fall != null)
+        {
+            Fall.isKinematic = false;
+            Fall.useGravity = true;
+            Fall.constraints = RigidbodyConstraints.FreezePositionY;
+            Fall.collisionDetectionMode = CollisionDetectionMode.Continuous;
+           
+           
+        }
+
+
+
     }
 
     void LootRoll(float DropChance)
@@ -867,7 +871,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          PlaySFX(ZombieHit[Random.Range(0, ZombieHit.Length)], ZombieHitVol);
         CurrentHealth -= amountOfDamageTaken;
-        agent.SetDestination(gameManager.gameInstance.player.transform.position);
         if (MaxHealth <= 0)
         {
             Die();
@@ -913,7 +916,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
   
 
-    public void knockback(Vector3 hitPoint, float distance)
+    public void knockback(Vector3 hitPoint, float distance, float Duration)
     {
         float duration = 2;
         Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
