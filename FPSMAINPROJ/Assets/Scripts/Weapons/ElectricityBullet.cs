@@ -77,7 +77,7 @@ public class ElectricityBullet : MonoBehaviour
         Debug.Log("Attempting to instantiate bounce projectile...");
         if (closestZombie != null)
         {
-            spawnBounce.LookAt(closestZombie.transform.Find("mixamorig5:Hips"));
+            spawnBounce.LookAt(closestZombie.transform);
         }
         GameObject projectile = Instantiate(gameManager.gameInstance.playerWeapon.hekaAbility, spawnBounce.position, spawnBounce.rotation);
 
