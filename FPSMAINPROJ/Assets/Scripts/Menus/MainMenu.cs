@@ -14,6 +14,9 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] public AudioMixer audioMixer;
 
+    [SerializeField] public Image loadingBar;
+    [SerializeField] public GameObject loadingScreen;
+
     [SerializeField] public Slider sensSlider;
     [SerializeField] public Slider masterVolSlider;
     [SerializeField] public Slider playerVolSlider;
@@ -37,6 +40,11 @@ public class MainMenu : MonoBehaviour
     public void Start()
     {
         Time.timeScale = 1;
+        if(loadingScreen.activeSelf == true)
+        {
+            loadingScreen.SetActive(false);
+        }
+     
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(masterVolSlider.value) * 20);
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(SFXVolSlider.value) * 20);
         audioMixer.SetFloat("MusicVolume", Mathf.Log10(musicVolSlider.value) * 20);
@@ -66,7 +74,26 @@ public class MainMenu : MonoBehaviour
     }
     public void play()
     {
-        SceneManager.LoadScene("Build Scene");
+        StartCoroutine(loadNextSceneAsync(1));
+    }
+
+    IEnumerator loadNextSceneAsync(int sceneIndex)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        
+        loadingScreen.SetActive(true);
+
+        
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f); //progress goes to .9 due to 2 sets of thing happening while loading in unity, this will let the bar fill full making the progress go to 1
+
+            loadingBar.fillAmount = progress;
+            
+            yield return null;
+        }
+
+        loadingBar.fillAmount = 1;
     }
 
     public void onSensSliderChange(float value)

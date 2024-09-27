@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -41,15 +42,28 @@ public class ButtonFunctions : MonoBehaviour
     #endif
     }
 
-    public void play()
+    public void quitToMainMenu()
     {
-        SceneManager.LoadScene(1);
+        StartCoroutine(loadNextSceneAsync(0));
         gameManager.gameInstance.playerScript.inventory.clearInventory();
     }
 
-    public void quitToMainMenu()
+    IEnumerator loadNextSceneAsync(int sceneIndex)
     {
-        SceneManager.LoadScene(0);
-        gameManager.gameInstance.playerScript.inventory.clearInventory();
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+
+        gameManager.gameInstance.loadingScreen.SetActive(true);
+
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f); //progress goes to .9 due to 2 sets of thing happening while loading in unity, this will let the bar fill full making the progress go to 1
+
+            gameManager.gameInstance.loadingBar.fillAmount = progress;
+
+            yield return null;
+        }
+
+        gameManager.gameInstance.loadingBar.fillAmount = 1;
     }
 }

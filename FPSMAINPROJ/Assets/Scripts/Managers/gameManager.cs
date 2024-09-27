@@ -42,6 +42,8 @@ public class gameManager : MonoBehaviour
     [SerializeField] GameObject gamePauseMenu;
     [SerializeField] GameObject gameWinMenu;
     [SerializeField] GameObject gameLoseMenu;
+    [SerializeField] public GameObject loadingScreen;
+    [SerializeFeild] public Image loadingBar;
     [SerializeField] public GameObject gameAlterMenu;
     [SerializeField] public GameObject NoGems;
     [SerializeField] public TMP_Text altarPromtText;
