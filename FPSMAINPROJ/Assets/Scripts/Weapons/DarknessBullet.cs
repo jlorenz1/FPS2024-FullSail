@@ -8,6 +8,7 @@ public class DarknessBullet : MonoBehaviour
     [SerializeField] private float speed = 10f; // Speed of the bullet
     [SerializeField] private float destroyTime = 5f; // Time before the bullet is destroyed
     [SerializeField] private int damage = 10; // Damage dealt by the bullet
+    [SerializeFeild] private int armorAmountTaken = 40;
     [SerializeField] private float maxDist;
     [SerializeField] private float blindDuration;
     [SerializeField] private LayerMask damageableLayer;
@@ -47,7 +48,7 @@ public class DarknessBullet : MonoBehaviour
         if(damageable != null)
         {
             damageable.takeDamage(damage);
-            damageable.Blind(blindDuration);
+            damageable.AddArmor(-armorAmountTaken);
             
         }
 
