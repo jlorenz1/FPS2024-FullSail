@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (SpeedStateSlow)
         {
-            speed *= slowStrength;
+            speed = Mathf.Max(originalSpeed * slowStrength, 0);
             if (speed > 0)
             {
                 gameManager.gameInstance.StatusSlow.enabled = true;
@@ -702,8 +702,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void CutSpeed(float duration, float strength)
     {
-       
-       StartCoroutine( CutSpeedrunner(duration, strength));
+        if (SpeedStateSlow == false)
+        {
+            StartCoroutine(CutSpeedrunner(duration, strength));
+        }
     }
 
     IEnumerator CutSpeedrunner(float duration, float strength)
@@ -749,7 +751,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if(playerHP <= 0)
             {
                 gameManager.gameInstance.StatusBurn.enabled = false;
-                break;
+                yield break;
             }
 
 
@@ -760,9 +762,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
         }
         
-
-
-
 
         yield return new WaitForSeconds(duration);
         gameManager.gameInstance.StatusBurn.enabled = false;
