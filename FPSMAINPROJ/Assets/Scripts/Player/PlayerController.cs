@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public float currentMana;
     float Sprintorig;
 
-   
+    bool isBurning;
 
     // climbing video variables
     [Header("Reference")]
@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
         isCrouching = false;
         speed = originalSpeed;
+        isBurning = false;
     }
 
 
@@ -736,7 +737,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
    public void TickDamage(float duration, float amountpertick, float tickrate)
     {
-        StartCoroutine(TakeTickDamage(duration, amountpertick, tickrate));
+        if (isBurning == false)
+        {
+            StartCoroutine(TakeTickDamage(duration, amountpertick, tickrate));
+            isBurning = true;
+        }
     }
 
 
@@ -751,6 +756,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if(playerHP <= 0)
             {
                 gameManager.gameInstance.StatusBurn.enabled = false;
+                isBurning = false;
                 yield break;
             }
 
@@ -765,6 +771,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(duration);
         gameManager.gameInstance.StatusBurn.enabled = false;
+        isBurning = false;
     }
 
     private IEnumerator PerformDodge()

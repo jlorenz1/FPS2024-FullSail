@@ -92,7 +92,14 @@ public class Projectile : MonoBehaviour
         if (ProjectileAudio != null)
         {
             ProjectileAudio.clip = ZombieProjectileAudio;
-            ProjectileAudio.volume = ZombieProjectileAudioVol;
+            if (AudioManager.audioInstance != null)
+            {
+                ProjectileAudio.volume = AudioManager.audioInstance.GetSFXAudioVolume()*ZombieProjectileAudioVol;
+            }
+            else
+            {
+                ProjectileAudio.volume = 0.1f;
+            }
             ProjectileAudio.loop = true; // Enable looping
             ProjectileAudio.Play(); // Start playing the audio
         }
@@ -299,18 +306,23 @@ public class Projectile : MonoBehaviour
 
     public void SetColor(Color color, Material material)
     {
+
+        Color emissionColor = color * 1.2f;
+
         bulletColor = color;
         bulletMaterial = material;
         bulletMaterial.color = color;
-        bulletMaterial.SetColor("_EmissionColor", color);
+        bulletMaterial.SetColor("_EmissionColor", emissionColor);
         bulletMaterial.EnableKeyword("_EMISSION");
+       
 
 
         Renderer projectileRenderer = ProjectileBody.GetComponent<Renderer>();
         if (projectileType == ProjectileType.Ball || projectileType == ProjectileType.AOE)
         {
             projectileRenderer.material.color = color;
-            projectileRenderer.material.SetColor("_EmissionColor", color);
+          
+            projectileRenderer.material.SetColor("_EmissionColor", emissionColor);
             projectileRenderer.material.EnableKeyword("_EMISSION");
 
         }
