@@ -68,6 +68,7 @@ public class Projectile : MonoBehaviour
     IDamage PlayerDamage;
     [SerializeField] GameObject aoePrefab;    // Assign your AoE slow effect prefab here
     [SerializeField] GameObject ProjectileBody;
+    [SerializeField] TrailRenderer Trial;
     Transform LaunchPoint;
      Color bulletColor;
     Material bulletMaterial;
@@ -84,11 +85,11 @@ public class Projectile : MonoBehaviour
         int projectileLayer = gameObject.layer;
         int zombieLayer = LayerMask.NameToLayer("Zombie");
         Physics.IgnoreLayerCollision(projectileLayer, zombieLayer);
-        if (projectileType == ProjectileType.Lazer)
+       /* if (projectileType == ProjectileType.Lazer)
         {
            
             CreateTracer();
-        }
+        }*/
         if (ProjectileAudio != null)
         {
             ProjectileAudio.clip = ZombieProjectileAudio;
@@ -315,7 +316,10 @@ public class Projectile : MonoBehaviour
         bulletMaterial.SetColor("_EmissionColor", emissionColor);
         bulletMaterial.EnableKeyword("_EMISSION");
        
-
+        if(projectileType == ProjectileType.Lazer)
+        {
+            Trial.material.color = color *2 ;
+        }
 
         Renderer projectileRenderer = ProjectileBody.GetComponent<Renderer>();
         if (projectileType == ProjectileType.Ball || projectileType == ProjectileType.AOE)

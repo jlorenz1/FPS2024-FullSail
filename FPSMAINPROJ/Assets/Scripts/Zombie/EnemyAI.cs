@@ -71,6 +71,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
     bool isBlind;
 
+    Rigidbody rb;
 
     float sfxvolume;
     float mastervolume;
@@ -111,7 +112,8 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
         ressitKnockBack = false;
 
-
+        rb = gameObject.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
 
          startsight = sight;
 
@@ -124,12 +126,12 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
 
 
-     /*   Transform bodyAttatch = transform.Find("mixamorig5:Hips");
-        Transform hekaOutting = new GameObject("HekaOutting").transform;
-        hekaOutting.SetParent(bodyAttatch);
-        hekaOutting.localPosition = new Vector3(0, .79f, 0);*/
+        /*   Transform bodyAttatch = transform.Find("mixamorig5:Hips");
+           Transform hekaOutting = new GameObject("HekaOutting").transform;
+           hekaOutting.SetParent(bodyAttatch);
+           hekaOutting.localPosition = new Vector3(0, .79f, 0);*/
 
-      
+        rb.isKinematic = true;
 
         for (int i = 0; i < Legs.Length; i++)
         {
@@ -199,7 +201,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             ApplyGravity();
 
 
-
+            rb.velocity = Vector3.zero;
 
             if (legdamage >= MaxHealth / 2)
             {
@@ -221,6 +223,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             {
                 roaming = false;
             }
+         
         }
     }
 
@@ -914,41 +917,32 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         agent.speed = startSpeed;
     }
 
-  
 
-    public void knockback(Vector3 hitPoint, float distance, float Duration)
+
+    public void knockback(Vector3 hitPoint, float distance, float duration)
     {
-        float duration = 2;
-        Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
-        knockbackDirection.y = 0;
-        StartCoroutine(ApplyKnockback(knockbackDirection, distance, duration));
-    }
-
-    private IEnumerator ApplyKnockback(Vector3 direction, float distance, float duration)
-    {
-        float elapsedTime = 0f;
-        Vector3 startPosition = transform.position;
-
-      
-        Vector3 targetPosition = startPosition + (direction * distance);
-        targetPosition.y = startPosition.y;
-
-        while (elapsedTime < duration)
+        if (!ressitKnockBack)
         {
-           
-            Vector3 newPosition = Vector3.Lerp(startPosition, targetPosition, elapsedTime / duration);
-            newPosition.y = startPosition.y; 
+            NavMeshAgent agent = GetComponent<NavMeshAgent>();
+            agent.enabled = false; // Disable NavMesh Agent during knockback
+            Vector3 knockbackDirection = (transform.position - hitPoint).normalized;
+            knockbackDirection.y = 0;
 
-            transform.position = newPosition;
-            elapsedTime += Time.deltaTime;
-            yield return null; 
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(knockbackDirection * distance, ForceMode.Impulse); // Apply force for knockback
+
+            StartCoroutine(ResetNavMeshAgent(agent, duration)); // Reset the agent after the knockback
         }
-
-       
-        targetPosition.y = startPosition.y;
-        transform.position = targetPosition;
+        else return;
     }
 
+    private IEnumerator ResetNavMeshAgent(NavMeshAgent agent, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        agent.enabled = true; // Re-enable NavMesh Agent
+     
+    }
 
     protected IEnumerator Stop(float duration)
     {
