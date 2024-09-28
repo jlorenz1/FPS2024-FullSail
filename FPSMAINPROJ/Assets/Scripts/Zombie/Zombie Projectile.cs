@@ -302,13 +302,17 @@ public class Projectile : MonoBehaviour
         bulletColor = color;
         bulletMaterial = material;
         bulletMaterial.color = color;
+        bulletMaterial.SetColor("_EmissionColor", color);
+        bulletMaterial.EnableKeyword("_EMISSION");
 
 
-       
         Renderer projectileRenderer = ProjectileBody.GetComponent<Renderer>();
-        if (projectileType == ProjectileType.Ball)
+        if (projectileType == ProjectileType.Ball || projectileType == ProjectileType.AOE)
         {
             projectileRenderer.material.color = color;
+            projectileRenderer.material.SetColor("_EmissionColor", color);
+            projectileRenderer.material.EnableKeyword("_EMISSION");
+
         }
     }
 
@@ -333,29 +337,27 @@ public class Projectile : MonoBehaviour
 
         if (tracerLineRenderer != null)
         {
-          
             tracerLineRenderer.startColor = bulletColor;
             tracerLineRenderer.endColor = bulletColor;
 
-         
             float projectileWidth = ProjectileBody.GetComponent<Collider>().bounds.size.x;
-           
-            tracerLineRenderer.startWidth = projectileWidth/2;
-            tracerLineRenderer.endWidth = projectileWidth/4;
+            tracerLineRenderer.startWidth = projectileWidth / 2;
+            tracerLineRenderer.endWidth = projectileWidth / 4;
 
-            
-            tracerLineRenderer.positionCount = 2; 
-            tracerLineRenderer.SetPosition(0, transform.position); 
-            tracerLineRenderer.SetPosition(1, transform.position ); 
+            tracerLineRenderer.positionCount = 2;
+            tracerLineRenderer.SetPosition(0, transform.position); // Set the start position at the projectile
 
-           
-            tracerLineRenderer.material = new Material(Shader.Find("Unlit/Color")); 
+            // Set the second position ahead of the current position in the forward direction
+            Vector3 tracerEndPosition = transform.position + transform.forward * 10f; // Adjust 10f based on the desired tracer length
+            tracerLineRenderer.SetPosition(1, tracerEndPosition);
+
+            tracerLineRenderer.material = new Material(Shader.Find("Unlit/Color"));
             tracerLineRenderer.material.color = bulletColor;
             tracerLineRenderer.widthMultiplier = 1;
         }
 
         // Destroy the tracer after a short time if needed
-        Destroy(tracer, 0.25f); 
+        Destroy(tracer, 0.25f);
     }
 }
 
