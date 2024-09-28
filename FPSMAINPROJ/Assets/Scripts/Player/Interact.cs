@@ -151,6 +151,7 @@ public class Interact : MonoBehaviour
                         var weapon = hit.collider.GetComponent<weaponPickup>();
                         if (weapon != null)
                         {
+                            AudioManager.audioInstance.playSFXAudio(gameManager.gameInstance.playerScript.interactSounds[Random.Range(0, gameManager.gameInstance.playerScript.interactSounds.Length)], gameManager.gameInstance.playerScript.interactVol);
                             gameManager.gameInstance.playerWeapon.getWeaponStats(weapon.gun);
                             
                             if (weapon.gun.hekaSchool != "None")

@@ -8,6 +8,13 @@ public class pickup : MonoBehaviour, IPickup
 {
     public pickupObject item;
     [SerializeField] GameObject obj;
+
+    [SerializeField] AudioSource gemSource;
+    [SerializeField] AudioClip pickupSoundGem;
+    [SerializeField] float gemVol;
+
+
+
     internal itemType type;
 
     public void useItem()
@@ -36,6 +43,7 @@ public class pickup : MonoBehaviour, IPickup
             {
                 if (other.gameObject.CompareTag("Player"))
                 {
+                    gemSource.PlayOneShot(pickupSoundGem, gemVol);
                     useItem();
                     Destroy(gameObject);
                 }
