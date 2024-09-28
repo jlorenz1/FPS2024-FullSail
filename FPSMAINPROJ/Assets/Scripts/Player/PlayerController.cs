@@ -114,6 +114,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(0, 1)][SerializeField] public float slideVol;
     public AudioClip[] hurtSounds;
     [Range(0, 1)][SerializeField] public float hurtVol;
+    public AudioClip gemSound;
+    [Range(0, 1)][SerializeField] public float gemVol;
 
     // Weapon Vars
     //public Weapon primaryWeapon;

@@ -22,6 +22,7 @@ public class gemPickup : pickupObject, IPickup
     }
     public void useItem()
     {
+        AudioManager.audioInstance.playSFXAudio(gameManager.gameInstance.playerScript.gemSound, gameManager.gameInstance.playerScript.gemVol);
         gameManager.gameInstance.playerScript.inventory.AddItem(this, amount);
         gameManager.gameInstance.PointCount++;
         Destroy(prefab);

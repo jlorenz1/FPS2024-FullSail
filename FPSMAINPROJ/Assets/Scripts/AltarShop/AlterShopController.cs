@@ -36,7 +36,7 @@ public class AlterShopController : MonoBehaviour
 
     public IEnumerator changeArm(GameObject armToSpawn)
     {
-
+      
         changingArm = true;
 
         Vector3 startPos = armStartPoint.localPosition;
