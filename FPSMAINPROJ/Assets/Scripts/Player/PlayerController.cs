@@ -442,6 +442,7 @@ public class PlayerController : MonoBehaviour, IDamage
             if (waitTime != null)
             {
                 StopCoroutine(waitTime);
+                timerStarted = false;
                 waitTime = null;
             }
 
