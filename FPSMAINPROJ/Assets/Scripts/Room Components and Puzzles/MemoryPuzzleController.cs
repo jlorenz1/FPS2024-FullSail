@@ -84,12 +84,7 @@ public class MemoryPuzzleController : MonoBehaviour
         placingDisplaysBit, placingDisplaysBit, display10, display11, placingDisplaysBit, placingDisplaysBit, 
         display14, display15, placingDisplaysBit, display17, display18, placingDisplaysBit, display20};
 
-        //Vector3 location = placingDisplaysBit.transform.position;
-        //for (int i = 0; i < pattern.Length; i++) //moving chosen tiles so the player can see them
-        //{
-        //    displayTiles[pattern[i] - 1].transform.position = location;
-        //    location += new Vector3(-1.25f, 0, 0);
-        //}
+        
         int minRange = 0; //minimum range for randomly generated range
         for (int i = 0; i < 5; ++i)
         {
