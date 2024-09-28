@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private Coroutine gunSprintCoroutine;
     public float speedDuringSprint = 0;
     bool timerStarted;
+    bool hasJumped = false;
 
     public static PlayerController playerInstance
     {
@@ -243,7 +244,12 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount = 0;
             playerVel = Vector3.zero;
             climbTimer = maxClimbTimer;
-
+            if(hasJumped)
+            {
+                AudioManager.audioInstance.playSFXAudio(stepSounds[Random.Range(0, stepSounds.Length)], stepVol);
+                hasJumped = false;
+            }
+            
         }
 
      
@@ -284,8 +290,10 @@ public class PlayerController : MonoBehaviour, IDamage
             }
 
             jumpCount++;
+            hasJumped = true;
             playerVel.y = jumpSpeed;
             AudioManager.audioInstance.playSFXAudio(jumpSounds[Random.Range(0, jumpSounds.Length)], jumpVol);
+
         }
 
         if (!isHanging)
