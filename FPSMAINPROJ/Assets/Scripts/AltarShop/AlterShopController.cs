@@ -40,7 +40,7 @@ public class AlterShopController : MonoBehaviour
         changingArm = true;
 
         Vector3 startPos = armStartPoint.localPosition;
-        Vector3 lowerPos = startPos + new Vector3(0f, -1.3f, 0);
+        Vector3 lowerPos = startPos + new Vector3(0f, -3.3f, 0);
 
         float swapTime = changeWaitTime * 0.5f;
         float elapsed = 0f;
