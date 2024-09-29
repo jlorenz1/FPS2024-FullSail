@@ -19,6 +19,13 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
       
         IsActive = true;
     }
+    void Update()
+    {
+if(HitPoints == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void takeDamage(float amountOfDamageTaken) {
 

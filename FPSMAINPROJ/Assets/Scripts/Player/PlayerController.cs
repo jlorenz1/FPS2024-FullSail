@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool timerStarted;
     bool hasJumped = false;
 
+    
     public static PlayerController playerInstance
     {
         get
@@ -677,6 +678,7 @@ public class PlayerController : MonoBehaviour, IDamage
             updatePlayerUI();
             if (playerHP <= 0)
             {
+                StopBurning();
                 gameManager.gameInstance.loseScreen();
             }
 
@@ -745,11 +747,15 @@ public class PlayerController : MonoBehaviour, IDamage
 
    public void TickDamage(float duration, float amountpertick, float tickrate)
     {
+
         if (isBurning == false)
         {
-            StartCoroutine(TakeTickDamage(duration, amountpertick, tickrate));
             isBurning = true;
+            StartCoroutine(TakeTickDamage(duration, amountpertick, tickrate));
+           
         }
+           
+        
     }
 
 
@@ -758,19 +764,25 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gameManager.gameInstance.StatusBurn.enabled = true; 
         int numberOfTicks = Mathf.CeilToInt(duration / tickrate);
-        int i = 0;
-        while ( i < numberOfTicks && isBurning == true)
+       
+        for (int i = 0; i < numberOfTicks && isBurning; i++)
         {
-
-            if(playerHP <= 0 )
+            if (playerHP <= 0)
             {
-                isBurning = false;
+                StopBurning();
                 break;
             }
 
             takeDamage(amountpertick);
+          
             yield return new WaitForSeconds(tickrate);
         }
+        gameManager.gameInstance.StatusBurn.enabled = false;
+        isBurning = false;
+    }
+
+    void StopBurning()
+    {
         gameManager.gameInstance.StatusBurn.enabled = false;
         isBurning = false;
     }
