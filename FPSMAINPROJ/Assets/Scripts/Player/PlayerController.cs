@@ -758,26 +758,19 @@ public class PlayerController : MonoBehaviour, IDamage
 
         gameManager.gameInstance.StatusBurn.enabled = true; 
         int numberOfTicks = Mathf.CeilToInt(duration / tickrate);
-        for (int i = 0; i < numberOfTicks; i++)
+        int i = 0;
+        while ( i < numberOfTicks && isBurning == true)
         {
 
-            if(playerHP <= 0)
+            if(playerHP <= 0 )
             {
-                gameManager.gameInstance.StatusBurn.enabled = false;
                 isBurning = false;
-                yield break;
+                break;
             }
-
-
 
             takeDamage(amountpertick);
             yield return new WaitForSeconds(tickrate);
-
-
         }
-        
-
-        yield return new WaitForSeconds(duration);
         gameManager.gameInstance.StatusBurn.enabled = false;
         isBurning = false;
     }
@@ -846,7 +839,6 @@ public class PlayerController : MonoBehaviour, IDamage
       
         playerHP = HPorig;
         sprintTimer = maxSprintTimer;
-        StopCoroutine(TakeTickDamage(1,1,1));
         crouchSpeed = speed / 2;
         startingYScale = transform.localScale.y;
         controllerHeightOrgi = ((int)controller.height);

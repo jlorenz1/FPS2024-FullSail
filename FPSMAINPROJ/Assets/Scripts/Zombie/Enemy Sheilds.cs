@@ -8,7 +8,7 @@ using UnityEngine;
 public class EnemySheilds : MonoBehaviour, IEnemyDamage
 {
     public float HitPoints;
-    [SerializeField] GameObject Body;
+    [SerializeField] public GameObject Body;
     public bool IsActive;
 
 
@@ -16,6 +16,7 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
     void Start()
     {
         gameObject.tag = "Zombie";
+      
         IsActive = true;
     }
 

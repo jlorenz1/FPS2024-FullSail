@@ -117,6 +117,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
 
          startsight = sight;
 
+        if(ZombieFootStepsVol == 0)
+        {
+            ZombieFootStepsVol = 0.1f;
+        }
        
         ChasingPLayer = false;
         speednerfed = false;
@@ -621,7 +625,10 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             AudioClip footstep = ZombieFootSteps[index];
 
             // Play the selected clip through the AudioSource
-            PlaySFX(footstep, ZombieFootStepsVol);
+            if (footstep != null && Zombie != null)
+            {
+                PlaySFX(footstep, ZombieFootStepsVol);
+            }
            
         }
     }

@@ -16,17 +16,17 @@ public class Userkare : EnemyAI
     [SerializeField] GameObject Melee;
     bool AttackDone;
     [SerializeField] EnemySheilds sheilds;
-    [SerializeField] GameObject Sheild;
+    [SerializeField] GameObject SheildPrefab;
     [SerializeField] Transform SheildPosition;
-    [SerializeField] float sheildHealth; 
+    [SerializeField] float sheildHealth;
 
 
     [SerializeField] float BuffRange;
     float PushBackRadius;
     bool UnCapped;
     bool AddativeAP;
-    float AblityCoolDown = 5;
-    float nextAbilityTime = 8;
+    float AblityCoolDown = 10;
+    float nextAbilityTime = 0;
     float attackSpeed;
     int SummonCount;
     GameObject[] Summons;
@@ -42,7 +42,7 @@ public class Userkare : EnemyAI
     public bool SheildActive;
 
     bool nextbuff;
-    
+
     [SerializeField] int castAmount;
     int DefCastAmount;
     [SerializeField] float ProjectileSpeed;
@@ -72,17 +72,17 @@ public class Userkare : EnemyAI
     Caster caster;
     GameObject sheild;
 
-   [SerializeField] Color BulletColor;
+    [SerializeField] Color BulletColor;
     [SerializeField] Material BulletMaterial;
     float LazerSpeed;
 
-
+    private bool isForceAttackResetRunning = false;
     [Header("Audio")]
-    [SerializeField]public AudioClip Spawn;
-    [SerializeField]public AudioClip stun;
-    [SerializeField]public AudioClip burn;
-    [SerializeField]public AudioClip DuoCall;
-    [SerializeField]public AudioClip[] partnerDeath;
+    [SerializeField] public AudioClip Spawn;
+    [SerializeField] public AudioClip stun;
+    [SerializeField] public AudioClip burn;
+    [SerializeField] public AudioClip DuoCall;
+    [SerializeField] public AudioClip[] partnerDeath;
     [SerializeField] public AudioClip SummonVoiceLine;
     [SerializeField] public AudioClip SheildOrHealVoiceLine;
 
@@ -116,11 +116,13 @@ public class Userkare : EnemyAI
         SheildActive = false;
         isStun = false;
 
-         IsSpecialAttacking = false;
+        IsSpecialAttacking = false;
         AlwaysSeePlayer = true;
         ressitKnockBack = true;
 
-        sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
+
+
+        sheild = Instantiate(sheilds.Body, SheildPosition.position, Quaternion.identity);
         sheild.transform.SetParent(transform);
 
 
@@ -129,7 +131,7 @@ public class Userkare : EnemyAI
     // Update is called once per frame
     protected override void Update()
     {
-      
+
         base.Update();
 
 
@@ -139,21 +141,23 @@ public class Userkare : EnemyAI
 
         if (Time.time >= nextAbilityTime && canattack)
         {
+
             UseSpecialAbility();
 
             nextAbilityTime = Time.time + AblityCoolDown;
 
-            canattack = false;
+           
         }
 
 
 
         if (PlayerinAttackRange && canattack)
         {
+            canattack = false;
 
             animator.SetTrigger("Shoot");
 
-            canattack = false;
+          
         }
 
 
@@ -165,6 +169,7 @@ public class Userkare : EnemyAI
             if (SheildHealth <= 0)
             {
                 Destroy(sheild);
+                sheild = null;
             }
         }
         else
@@ -175,29 +180,33 @@ public class Userkare : EnemyAI
             MaxHealth = 1000;
         }
 
-  
-
-      
-
-       
-
-      
 
 
-   
+          if (!canattack && !isForceAttackResetRunning)
+        {
+            StartCoroutine(ForceAttackReset());
+        }
 
-       
+
+
+
+
+
+
+
+
     }
-  
+
 
     IEnumerator SpawnVoiceLine()
     {
-        canattack = false;
+      
+
         yield return new WaitForSeconds(2);
 
         PlayVoice(Spawn);
 
-        canattack = true;
+      
     }
 
 
@@ -213,15 +222,15 @@ public class Userkare : EnemyAI
 
     void UseSpecialAbility()
     {
-        IsSpecialAttacking = true;
-        canattack = false;  // Disable normal attacks while using special ability
+       
+        canattack = false;  
 
-        int chance = UnityEngine.Random.Range(1, 3);  // Randomly select an ability (1-4)
+        int chance = UnityEngine.Random.Range(1, 4);  
 
         switch (chance)
         {
             case 1:
-                animator.SetTrigger("Stun");
+                stunAnimation();
                 break;
 
             case 2:
@@ -229,16 +238,17 @@ public class Userkare : EnemyAI
                 break;
 
             case 3:
-                if (!sheild.activeInHierarchy)
+                if (sheild == null || !sheild.activeInHierarchy)
                 {
-                    animator.SetTrigger("Sheild");
+                    DefenceAnimation();
                 }
                 else
-                    animator.SetTrigger("Heal");
+                    HealAnimation();
                 break;
 
-         
+             
         }
+       
     }
     //Attacks 
     public void TrappingLight()
@@ -252,12 +262,27 @@ public class Userkare : EnemyAI
     {
         animator.SetTrigger("BurstShot");
     }
+    void DefenceAnimation()
+    {
+        animator.SetTrigger("Sheild");
+    }
+
+    void HealAnimation()
+    {
+        animator.SetTrigger("Heal");
+    }
+
+
+    void stunAnimation()
+    {
+        animator.SetTrigger("Stun");
+    }
 
 
     public void LightGautling()
     {
         StartCoroutine(RapidFire());
-       
+
     }
     IEnumerator RapidFire()
     {
@@ -271,18 +296,19 @@ public class Userkare : EnemyAI
         animator.SetTrigger("Finsih Attack");
         canattack = true;
     }
-  public  void PerfectDefence()
+    public void PerfectDefence()
     {
-        if (sheild == null)
+        if (sheild == null || !sheild.activeInHierarchy)
         {
-            sheild = Instantiate(Sheild, SheildPosition.position, Quaternion.identity);
+            if (sheild != null)
+            {
+                Destroy(sheild);  // Cleanup if the old shield is still there
+            }
+            sheild = Instantiate(sheilds.Body, SheildPosition.position, Quaternion.identity);
             sheild.transform.SetParent(transform);
             sheilds.SetHitPoints(sheildHealth);
-
             PlayVoice(SheildOrHealVoiceLine);
         }
-        else return;
-     
     }
 
     public void EnableAttack()
@@ -312,23 +338,59 @@ public class Userkare : EnemyAI
     public void CastBasic()
     {
         CastAttack(ProjectileAblity.Burn);
+        EnableAttack();
     }
 
     public void CastAttack(ProjectileAblity ABILITY)
     {
-            GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
-            Projectile projectileScript = projectile.GetComponent<Projectile>();
-            if (projectileScript == null)
-            {
-                projectileScript = projectile.AddComponent<Projectile>();
-            }
-            if (projectileScript != null)
-            {
-                projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ABILITY, AbilityStrength, 1f, caster);
+        GameObject projectile = Instantiate(ProjectilePrefab, launchPoint.position, Quaternion.identity);
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if (projectileScript == null)
+        {
+            projectileScript = projectile.AddComponent<Projectile>();
+        }
+        if (projectileScript != null)
+        {
+            projectileScript.SetStats(ProjectileSpeed, ProjectileLifeTime, ProjectileDamage, ProjectileFollowTime, Type, ABILITY, AbilityStrength, 1f, caster);
 
-                projectileScript.SetColor(BulletColor, BulletMaterial);
+            projectileScript.SetColor(BulletColor, BulletMaterial);
+        }
+
+    }
+
+
+    IEnumerator ForceAttackReset()
+    {
+        float timer = 0f;
+        isForceAttackResetRunning = true;
+        while (!canattack)
+        {
+            yield return new WaitForSeconds(0.5f);  
+            timer += 0.5f;  
+
+         
+            if (timer >= 5f)
+            {
+                EnableAttack();
             }
-      
+        }
+        isForceAttackResetRunning = false;
+    }
+
+    public void StartDelay()
+    {
+        StartCoroutine(ShootDelay());
+    }
+
+    IEnumerator ShootDelay()
+    {
+
+
+        yield return new WaitForSeconds(2);
+
+        canattack = true;
+
+
     }
 
 

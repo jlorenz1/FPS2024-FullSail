@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4381461188818107126}
   - component: {fileID: 1932873243388582752}
   - component: {fileID: 8432938172824395943}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sheild
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,5 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2751c8b5a729934592480a182a203f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitPoints: 0
+  HitPoints: 100
+  Body: {fileID: 4271990252428005580}
   IsActive: 0
