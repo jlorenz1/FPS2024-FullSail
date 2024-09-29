@@ -244,8 +244,7 @@ public class WeaponController : MonoBehaviour
                         ParticleSystem bloodEffect = Instantiate(gunList[selectedGun].zombieHitEffect, hit.point, Quaternion.LookRotation(hit.normal));
                         bloodEffect.transform.SetParent(hit.collider.gameObject.transform);
                     }
-
-                    else
+                    else if(hit.collider.CompareTag("Untagged"))
                     {
                         ParticleSystem enviormentEffect = Instantiate(gunList[selectedGun].enviormentEffect, hit.point, Quaternion.LookRotation(hit.normal));
                         StartCoroutine(spawnBulletHole(hit));
