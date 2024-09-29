@@ -162,19 +162,6 @@ public class Userkare : EnemyAI
 
 
 
-        if (sheild != null && sheild.activeInHierarchy == true)
-        {
-            float SheildHealth = sheild.GetComponent<EnemySheilds>().GetHitPoints();
-
-            if (SheildHealth <= 0)
-            {
-                Destroy(sheild);
-                sheild = null;
-            }
-        }
-        else
-            return;
-
         if (MaxHealth > 1000)
         {
             MaxHealth = 1000;
