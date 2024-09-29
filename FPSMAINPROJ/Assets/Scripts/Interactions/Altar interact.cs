@@ -61,6 +61,4 @@ public class Altarinteract : MonoBehaviour
     {
         GlowAura.SetActive(!GlowAura.activeSelf);
     }
-
-
 }

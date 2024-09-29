@@ -28,34 +28,17 @@ public class bossInteraction : MonoBehaviour
 
     private void Start()
     {
-        AssignRandomNumbers();
         Effigies = 0;
+        AssignNumbers();
     }
 
 
-    void AssignRandomNumbers()
+    void AssignNumbers()
     {
-        // Create a list of integers equal to the number of altars
-        List<int> randomNumbers = new List<int>();
-        for (int i = 0; i < AlterNumber.Count; i++)
+        // Assign the numbers to each effigy
+        for (int i = 1; i <= 4; i++)
         {
-            randomNumbers.Add(i); // Add numbers from 0 to AlterNumber.Count - 1
-        }
-
-        // Shuffle the list using Fisher-Yates algorithm or Unity's random shuffle
-        for (int i = randomNumbers.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            int temp = randomNumbers[i];
-            randomNumbers[i] = randomNumbers[randomIndex];
-            randomNumbers[randomIndex] = temp;
-        }
-
-        // Assign the shuffled numbers to each Altar
-        for (int i = 0; i < AlterNumber.Count; i++)
-        {
-            AlterNumber[i].setAltarNumber(randomNumbers[i]);
-            EffigyNumber[i].SetNumber(randomNumbers[i]);
+            EffigyNumber[i-1].SetNumber(i);
         }
         
     }
