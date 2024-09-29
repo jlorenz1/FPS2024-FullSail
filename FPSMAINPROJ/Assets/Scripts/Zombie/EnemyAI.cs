@@ -113,7 +113,7 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
         ressitKnockBack = false;
 
         rb = gameObject.GetComponent<Rigidbody>();
-        rb.isKinematic = false;
+        rb.isKinematic = true;
 
          startsight = sight;
 
@@ -201,7 +201,6 @@ public class EnemyAI : MonoBehaviour, IEnemyDamage
             ApplyGravity();
 
 
-            rb.velocity = Vector3.zero;
 
             if (legdamage >= MaxHealth / 2)
             {
