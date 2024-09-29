@@ -840,8 +840,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void RespawnPlayer()
     {
+       
         gameManager.gameInstance.CurrentCheckPoint.ResetTrigger();
         spawnPlayer();
+        gameManager.gameInstance.BossesKilled = 0;
     }
 
 

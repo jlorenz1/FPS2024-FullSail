@@ -128,7 +128,7 @@ public class gameManager : MonoBehaviour
    
     public bool BlinkingJab;
     public bool LightGautlening;
-    int BossesKilled;
+    public int BossesKilled;
 
     // Public property to access the Player
 

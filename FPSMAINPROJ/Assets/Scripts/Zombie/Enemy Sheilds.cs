@@ -21,7 +21,7 @@ public class EnemySheilds : MonoBehaviour, IEnemyDamage
     }
     void Update()
     {
-if(HitPoints == 0)
+if(HitPoints <= 0)
         {
             Destroy(gameObject);
         }
