@@ -93,8 +93,6 @@ public class TilePuzzleController : MonoBehaviour
         int[,] posTiles1 = { { -1, 4, 2 }, { 3, 0, -2 }, { -3, 1, -4 } };
         Vector3[] pattern3 = { pos8, pos3, pos6, pos1, pos2, pos4, pos7, pos9 };
         int[,] posTiles3 = { { 4, -1, 2 }, { -2, 0, 3 }, { -3, 1, -4 } };
-        Vector3[] pattern4 = { pos3, pos9, pos6, pos7, pos1, pos2, pos4, pos8 };
-        int[,] posTiles4 = { { -1, -2, 1 }, { -3, 0, 3 }, { 4, -4, 2 } };
         Vector3[] pattern5 = { pos9, pos1, pos8, pos6, pos2, pos3, pos4, pos7 };
         int[,] posTiles5 = { { 2, -1, -2}, { -3, 0, 4}, { -4, 3, 1 } };
         Vector3[] pattern6 = { pos3, pos7, pos6, pos9, pos1, pos2, pos4, pos8 };
@@ -109,8 +107,8 @@ public class TilePuzzleController : MonoBehaviour
         int[,] posTiles10 = { { -1,2,4}, { 3,0,-2}, { -3,-4,1 } };
 
         //randomly choosing a pattern to display
-        Vector3[][] patterns = { pattern1, pattern3, pattern4, pattern5, pattern6, pattern7, pattern8, pattern9, pattern10 };
-        int[][,] posTilesPatterns = { posTiles1, posTiles3, posTiles4, posTiles5, posTiles6, posTiles7, posTiles8, posTiles9, posTiles10 };
+        Vector3[][] patterns = { pattern1, pattern3, pattern5, pattern6, pattern7, pattern8, pattern9, pattern10 };
+        int[][,] posTilesPatterns = { posTiles1, posTiles3, posTiles5, posTiles6, posTiles7, posTiles8, posTiles9, posTiles10 };
         int randVal = Random.Range(0, patterns.Count());
 
         Place(patterns[randVal], posTilesPatterns[randVal]);
